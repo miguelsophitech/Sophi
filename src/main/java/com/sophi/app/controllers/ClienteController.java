@@ -1,0 +1,112 @@
+package com.sophi.app.controllers;
+
+import java.util.List;
+import java.util.Map;
+
+import javax.validation.Valid;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.support.SessionStatus;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import com.sophi.app.models.entity.Cliente;
+import com.sophi.app.models.entity.Sector;
+import com.sophi.app.models.service.IClienteService;
+import com.sophi.app.models.service.ISectorService;
+
+@Controller
+@SessionAttributes("clientes")
+public class ClienteController {
+
+	@Autowired
+	private IClienteService clienteService;
+	
+	@Autowired
+	private ISectorService sectorService;
+	
+	@RequestMapping(value = "/listaClientes", method = RequestMethod.GET)
+	public String clientes(Model model) {
+		model.addAttribute("titulo", "Lista de clientes");
+		model.addAttribute("clientes", clienteService.findAll());
+		return "listaClientes";
+	}
+	
+	@RequestMapping(value = "/dataCliente/{id}")
+	public String verCliente(@PathVariable(value = "id") Long codCliente, Map<String, Object> model, RedirectAttributes flash) {
+		Cliente cliente = null;
+		if (codCliente > 0) {
+			cliente = clienteService.findOne(codCliente);
+			if(cliente == null) {
+				flash.addFlashAttribute("error", "El codigo del cliente no existe en base de datos!");
+				return "redirect:/listaClientes";
+			}
+		} else {
+			flash.addFlashAttribute("error", "El codigo del cliente no debe ser cero!");
+			return "redirect:/listaClientes";
+		}
+		model.put("cliente", cliente);
+		List<Sector> sectores = sectorService.findAll();
+		model.put("sectoresList",sectores);
+		model.put("titulo", "Formulario cliente");
+		return "dataCliente";
+	}
+	
+	@RequestMapping(value = "/formCliente")
+	public String crearCliente(Map<String, Object> model) {
+		Cliente cliente = new Cliente();
+		model.put("cliente", cliente);
+		List<Sector> sectores = sectorService.findAll();
+		model.put("sectoresList",sectores);
+		model.put("titulo", "Formulario cliente");
+		return "formCliente";
+	}
+	
+	@RequestMapping(value="/formCliente", method = RequestMethod.POST)
+	public String guardarCliente(@Valid Cliente cliente, BindingResult result, Model model,RedirectAttributes flash,SessionStatus status) {
+		if(result.hasErrors()) {
+			model.addAttribute("titulo", "Formulario cliente");
+			List<Sector> sectores = sectorService.findAll();
+			model.addAttribute("sectoresList",sectores);
+			return "formCliente";
+		}
+		clienteService.save(cliente);
+		status.setComplete();
+		flash.addFlashAttribute("success", "Cliente guardado con exito");
+		return "redirect:/listaClientes";
+	}
+	
+	@RequestMapping(value = "/formCliente/{id}")
+	public String editarCliente(@PathVariable(value = "id") Long codCliente, Map<String, Object> model, RedirectAttributes flash) {
+		Cliente cliente = null;
+		if (codCliente > 0) {
+			cliente = clienteService.findOne(codCliente);
+			if(cliente == null) {
+				flash.addFlashAttribute("error", "El codigo del cliente no existe en base de datos!");
+				return "redirect:/listaClientes";
+			}
+		} else {
+			flash.addFlashAttribute("error", "El codigo del cliente no debe ser cero!");
+			return "redirect:/listaClientes";
+		}
+		List<Sector> sectores = sectorService.findAll();
+		model.put("sectoresList",sectores);
+		model.put("cliente", cliente);
+		model.put("titulo", "Formulario cliente");
+		return "formCliente";
+	}
+	
+	@GetMapping(value = "/listaClientes/{id}")
+    public String eliminarCliente(Model model, @PathVariable(value = "id") long codCliente) {
+        clienteService.delete(codCliente);
+        return "redirect:/listaClientes";
+    }
+	
+}

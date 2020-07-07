@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head th:replace="layout/layout::head"></head>
+
+<body id="page-top">
+
+  <!-- Page Wrapper -->
+  <div id="wrapper">
+
+    <!-- Sidebar -->
+    <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+
+      <!-- Sidebar - Brand -->
+      <a class="sidebar-brand d-flex align-items-center justify-content-center" th:href="@{/}">
+        <div class="sidebar-brand-icon">
+          <!--<i class="fas fa-laugh-wink"></i>  rotate-n-15-->
+          <img th:src="@{/img/logo-img.png}" alt="">
+        </div> 
+        <div class="sidebar-brand-text mx-3"><img th:src="@{/img/logo-texto.png}" alt=""></div>
+      </a>
+
+      <!-- Divider -->
+      <hr class="sidebar-divider my-0">
+
+      <!-- Nav Item - Dashboard -->
+      <li class="nav-item">
+        <a class="nav-link" th:href="@{/}">
+          <i class="fas fa-fw fa-tachometer-alt"></i>
+          <span>Alta de un contacto</span></a>
+      </li>
+
+      <!-- Divider -->
+      <hr class="sidebar-divider">
+
+      <!-- Heading Proyecto -->
+      <div class="sidebar-heading">
+        Proyecto
+      </div>
+
+      <!-- Nav Item - Gastos y tiempo Collapse Menu -->
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+          <i class="fas fa-fw fa-cog"></i>
+          <span>Gastos y tiempo</span>
+        </a>
+        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+          <div class="bg-white py-2 collapse-inner rounded">
+            <h6 class="collapse-header">Registrar:</h6>
+            <a class="collapse-item" href="#">Horas</a>
+            <a class="collapse-item" href="#">Gastos</a>
+          </div>
+        </div>
+      </li>
+
+      <!-- Nav Item - Actividades Collapse Menu -->
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities" aria-expanded="true" aria-controls="collapseUtilities">
+          <i class="fas fa-fw fa-wrench"></i>
+          <span>Actividades</span>
+        </a>
+        <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
+          <div class="bg-white py-2 collapse-inner rounded">
+            <h6 class="collapse-header">Ver:</h6>
+            <a class="collapse-item" href="#">Mis actividades</a>
+            <a class="collapse-item" href="#">Mi forecast</a>
+          </div>
+        </div>
+      </li>
+
+      <!-- Divider -->
+      <hr class="sidebar-divider">
+
+     <!-- Heading Recursos humanos -->
+      <div class="sidebar-heading">
+        Recursos Humanos
+      </div>
+
+      <!-- Nav Item - Pages Collapse Menu -->
+      <li class="nav-item active">
+        <a class="nav-link" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="true" aria-controls="collapsePages">
+          <i class="fas fa-fw fa-folder"></i>
+          <span>Recursos</span>
+        </a>
+        <div id="collapsePages" class="collapse show" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+          <div class="bg-white py-2 collapse-inner rounded">
+            <h6 class="collapse-header">Gestionar</h6>
+            <a class="collapse-item active" href="#">Alta</a>
+            <a class="collapse-item " th:href="@{/listarRecursos}">Todos</a>
+            <div class="collapse-divider"></div>
+            <h6 class="collapse-header">Experiencia</h6>
+            <a class="collapse-item" href="#">Skills</a>
+            <a class="collapse-item" href="#">Capacitaci&oacute;n</a>
+          </div>
+        </div>
+      </li>
+
+      <!-- Nav Item - Charts -->
+      <!-- <li class="nav-item">
+        <a class="nav-link" href="charts.html">
+          <i class="fas fa-fw fa-chart-area"></i>
+          <span>Charts</span></a>
+      </li> -->
+
+      <!-- Nav Item - Tables -->
+     <!-- <li class="nav-item">
+        <a class="nav-link" href="tables.html">
+          <i class="fas fa-fw fa-table"></i>
+          <span>Tables</span></a>
+      </li> -->
+
+      <!-- Divider -->
+      <hr class="sidebar-divider d-none d-md-block">
+
+      <!-- Sidebar Toggler (Sidebar) -->
+      <div class="text-center d-none d-md-inline">
+        <button class="rounded-circle border-0" id="sidebarToggle"></button>
+      </div>
+
+    </ul>
+    <!-- End of Sidebar -->
+
+    <!-- Content Wrapper -->
+    <div id="content-wrapper" class="d-flex flex-column">
+
+      <!-- Main Content -->
+      <div id="content">
+
+         <header th:replace="layout/layout :: header"></header>
+         
+        <!-- Begin Page Content -->
+        <div class="container-fluid">
+
+          <!-- Page Heading -->
+          <h1 class="h3 mb-2 text-gray-800">Alta de contacto</h1>
+          <p class="mb-4">Secci&oacute;n para dar de alta un nuevo contacto. Completa la informaci&oacute;n del nuevo contacto.</p>
+			
+			<form th:action="@{/dataContacto}" th:Object="${agenda}" method="GET">
+				<div class="card shadow mb-4">
+					<!-- Card Header - Accordion -->
+					<a href="#collapseCardExample" class="d-block card-header py-3" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="collapseCardExample">
+						<h6 class="m-0 font-weight-bold text-primary">Datos del contacto</h6>
+					</a>
+					<!-- Card Content - Collapse -->
+					<div class="collapse show" id="collapseCardExample">
+						<div class="card-body">
+
+							<div class="row">
+								<div class="form-group col-12 col-md-3">
+									<label class="col-form-label">Nombre</label>
+									<input type="text" th:field="*{descContacto}" class="form-control" th:errorClass="form-control alert-danger" disabled/>
+									<small class="form-text text-danger" th:if="${#fields.hasErrors('descContacto')}" th:errors="*{descContacto}"></small>
+								</div>
+								<div class="form-group col-12 col-md-3">
+									<label class="col-form-label">Puesto</label>
+									<input type="text" th:field="*{descPuesto}" class="form-control" th:errorClass="form-control alert-danger" disabled/>
+									<small class="form-text text-danger" th:if="${#fields.hasErrors('descPuesto')}" th:errors="*{descPuesto}"></small>
+								</div>
+								<div class="form-group col-12 col-md-3">
+									<label class="col-form-label">Recursos a cargo</label>
+									<input type="text" th:field="*{valRecursosACargo}" class="form-control" disabled/>
+								</div>
+								<div class="form-group col-12 col-md-3">
+									<label class="col-form-label">Correo electronico</label>
+									<input type="text" th:field="*{descCorreoElectronico}" class="form-control" th:errorClass="form-control alert-danger" disabled/>
+									<small class="form-text text-danger" th:if="${#fields.hasErrors('descCorreoElectronico')}" th:errors="*{descCorreoElectronico}"></small>
+								</div>
+							</div>
+							
+							<div class="row">
+								<div class="form-group col-12 col-md-3">
+									<label class="col-form-label">Fecha nacimiento</label>
+									<input type="text" th:field="*{fecNacimiento}" class="form-control" disabled/>
+								</div>
+								<div class="form-group col-12 col-md-3">
+									<label class="col-form-label">Telefono celular</label>
+									<input type="text" th:field="*{descTelCelular}" class="form-control" th:errorClass="form-control alert-danger" disabled/>
+									<small class="form-text text-danger" th:if="${#fields.hasErrors('descTelCelular')}" th:errors="*{descTelCelular}"></small>
+								</div>
+								<div class="form-group col-12 col-md-3">
+									<label class="col-form-label">Telefono empresa</label>
+									<input type="text" th:field="*{descTelEmpresa}" class="form-control" th:errorClass="form-control alert-danger" disabled/>
+									<small class="form-text text-danger" th:if="${#fields.hasErrors('descTelEmpresa')}" th:errors="*{descTelEmpresa}"></small>
+								</div>
+								<div class="form-group col-12 col-md-3">
+									<label class="col-form-label">Extension</label>
+									<input type="text" th:field="*{descTelExt}" class="form-control" disabled/>
+								</div>
+							</div>
+							
+							<div class="row">
+								<div class="form-group col-12 col-md-4">
+									<label class="col-form-label">Cliente</label>
+									<!-- <select class="custom-select" id="inputGroupSelectCliente">
+										<option selected>Seleccione...</option>
+                                        <option value="1" th:field="*{codCliente}">BBVA</option>
+                                    </select> -->
+									<input type="text" th:field="*{codCliente}" class="form-control" disabled/>
+								</div>
+								<div class="form-group col-6 col-md-2">
+									<label class="col-form-label">Cargo</label>
+									<!-- <select class="custom-select" id="inputGroupSelectCliente">
+										<option selected>Seleccione...</option>
+                                        <option value="1" th:field="*{codCargo}">Consultor Asociado</option>
+                                        <option value="2" th:field="*{codCargo}">Consultor Jr.</option>
+                                        <option value="3" th:field="*{codCargo}">Consultor Sr.</option>
+                                        <option value="4" th:field="*{codCargo}">Especialista</option>
+                                    </select> -->
+									<input type="text" th:field="*{codCargo}" class="form-control" disabled/>
+								</div>
+							</div>
+							
+							<div class="row">
+								<div class="col-sm-6">
+									<a th:href="@{/agenda}" class="btn btn-secondary">Regresar</a>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				
+			</form>
+
+		</div>
+        <!-- /.container-fluid -->
+
+      </div>
+      <!-- End of Main Content -->
+
+       <!-- Footer -->
+      <footer th:replace="layout/layout :: footer"></footer>
+      <!-- End of Footer -->
+
+
+    </div>
+    <!-- End of Content Wrapper -->
+
+  </div>
+  <!-- End of Page Wrapper -->
+
+  <!-- Scroll to Top Button-->
+  <a class="scroll-to-top rounded" href="#page-top">
+    <i class="fas fa-angle-up"></i>
+  </a>
+
+	 <!-- ModalLogout -->
+      <footer th:replace="layout/layout :: modalLogout"></footer>
+      <!-- End ModalLogout -->
+
+  <!-- Bootstrap core JavaScript-->
+  <script th:src="@{/vendor/jquery/jquery.min.js}"></script>
+  <script th:src="@{/vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>
+
+  <!-- Core plugin JavaScript-->
+  <script th:src="@{/vendor/jquery-easing/jquery.easing.min.js}"></script>
+
+  <!-- Custom scripts for all pages-->
+  <script th:src="@{/js/sb-admin-2.min.js}"></script>
+
+  <!-- Page level plugins -->
+  <script th:src="@{/vendor/datatables/jquery.dataTables.min.js}"></script>
+  <script th:src="@{/vendor/datatables/dataTables.bootstrap4.min.js}"></script>
+
+  <!-- Page level custom scripts -->
+  <script th:src="@{/js/demo/datatables-demo.js}"></script>
+  
+
+</body>
+
+</html>
