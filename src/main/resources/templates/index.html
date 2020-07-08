@@ -93,6 +93,52 @@
             <a class="collapse-item" href="#">Capacitaci&oacute;n</a>
           </div>
         </div>
+
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseAgenda" aria-expanded="true" aria-controls="collapsePages">
+          <i class="fas fa-fw fa-folder"></i>
+          <span>Agenda</span>
+        </a>
+        <div id="collapseAgenda" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+          <div class="bg-white py-2 collapse-inner rounded">
+            <h6 class="collapse-header">Gestionar</h6>
+            <a class="collapse-item" th:href="@{/formContacto}">Alta</a>
+            <a class="collapse-item" th:href="@{/agenda}">Agenda</a>
+          </div>
+        </div>
+        
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseClientes" aria-expanded="true" aria-controls="collapsePages">
+          <i class="fas fa-fw fa-folder"></i>
+          <span>Clientes</span>
+        </a>
+        <div id="collapseClientes" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+          <div class="bg-white py-2 collapse-inner rounded">
+            <h6 class="collapse-header">Gestionar</h6>
+            <a class="collapse-item" th:href="@{/formCliente}">Alta</a>
+            <a class="collapse-item" th:href="@{/listaClientes}">Listado</a>
+          </div>
+        </div>
+        
+       <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseHoras" aria-expanded="true" aria-controls="collapsePages">
+          <i class="fas fa-fw fa-folder"></i>
+          <span>Captura de Horas</span>
+        </a>
+        <div id="collapseHoras" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+          <div class="bg-white py-2 collapse-inner rounded">
+            <h6 class="collapse-header">Gestionar</h6>
+            <a class="collapse-item" th:href="@{/aprobaciónhoras}">Aprobación de horas</a>
+          </div>
+        </div>
+        
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseGastos" aria-expanded="true" aria-controls="collapsePages">
+        <i class="fas fa-fw fa-folder"></i>
+        <span>Captura de Gastos</span>
+      </a>
+      <div id="collapseGastos" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+        <div class="bg-white py-2 collapse-inner rounded">
+          <h6 class="collapse-header">Gestionar</h6>
+          <a class="collapse-item" th:href="@{/aprobacióngastos}">Aprobación de gastos</a>
+        </div>
+      </div>
       </li>
 
 

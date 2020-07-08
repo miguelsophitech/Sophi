@@ -153,13 +153,9 @@
                                 <div class="input-group-prepend">
                                     <label class="input-group-text" for="inputGroupSelectCliente">Colaborador</label>
                                 </div>
-                                <select class="custom-select" id="inputGroupSelectCliente">
-                                    <option selected>Seleccione...</option>
-                                    <option>Colaborador 1</option>
-                                    <option>Colaborador 2</option>
-                                    <option>Colaborador 3</option>
-                                    <option>Colaborador 4</option>
-                                    <option>Colaborador 5</option>
+                                <select name="recurso" class="custom-select" id="inputGroupSelectCliente">
+                                    <option selected>Seleccione un recurso...</option>
+                                    <option th:each="recurso : ${recursos}" th:value="${recurso.codRecurso}" th:text="${recurso.descRecurso}"></option>
                                 </select>
                             </div>
                         </div>
@@ -190,21 +186,6 @@
                                     <option>Semana 3</option>
                                     <option>Semana 4</option>
                                     <option>Semana 5</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="input-group col-sm">
-                            <div class="input-group mb-4">
-                                <div class="input-group-prepend">
-                                    <label class="input-group-text" for="inputGroupSelectCliente">Aprobado/NoAprobado</label>
-                                </div>
-                                <select class="custom-select" id="inputGroupSelectCliente">
-                                    <option selected>Seleccione...</option>
-                                    <option>Aprobacion 1</option>
-                                    <option>Aprobacion 2</option>
-                                    <option>Aprobacion 3</option>
-                                    <option>Aprobacion 4</option>
-                                    <option>Aprobacion 5</option>
                                 </select>
                             </div>
                         </div>
@@ -242,13 +223,14 @@
                                     </tfoot>
                                     <tbody>
                                         <tr th:each="aprobacionhoras: ${aprobacionhoras}">
-                                            <td><input type="checkbox" th:field="*{valDuracionValidada}" aria-label="Checkbox for following text input" class="form-control" th:errorClass="form-control alert-danger"/></td>
-                                            <td>2020/06/08</td>
-                                            <td>Esferas BBVA</td>
-                                            <td>David Moreno</td>
-                                            <td>Analisis - Sesion de entendimiento de negocio</td>
-                                            <td>8</td>
-                                            <td>6</td>
+                                            <td><input type="checkbox" id="check" onChange="checkbox(this);"/></td>
+                                            <td th:text="${aprobacionhoras.fecRegistro}"></td>
+                                            <td th:text="${aprobacionhoras.codCliente}"></td>
+                                            <td th:text="${aprobacionhoras.codRecurso}"></td>
+                                            <td th:text="${aprobacionhoras.descComentarioDetalle}"></td>
+                                            <td th:text="${aprobacionhoras.valDuracionReportada}"></td>
+                                            <td><input type="number" id="horasvalidadas" readonly/></td>
+                                        </tr>
                                     </tbody>
                                 </table>
                             </div>
@@ -256,8 +238,9 @@
                     </div>
                     <div class="row">
                         <div class="col-sm-5 mb-3 mb-sm-0">
-                            <a class="btn btn-primary" href="#" role="button">Aprobar Horas</a>
-                            <a class="btn btn-primary" href="#" role="button">Guardar</a>
+                            <input type="submit" value="Aprobar Horas" class="btn btn-primary"/>
+                            <input type="submit" value="Guardar" class="btn btn-primary"/>
+                            <a th:href="@{/}" class="btn btn-secondary" role="button">Cancelar</a>
                         </div>
                         <div class="col-sm-5 mb-3 mb-sm-0">
                         </div>
@@ -270,378 +253,7 @@
                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#staticBackdrop">
                     Launch static backdrop modal
                 </button>-->
-
-                <!-- Modal Crear -->
-                <div class="modal fade" id="staticBackdropCrear" data-backdrop="static" data-keyboard="false"
-                    tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                    <div class="modal-dialog modal-xl">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="staticBackdropLabel">Ver Datos de Contacto</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                            <div class="modal-body">
-                                <div class="container-fluid">
-                                    <div class="row">
-                                        <div class="col-md-4">
-                                            <div class="form-group">
-                                                <label for="formGroupInputNombre">Compa��a</label>
-                                                <select class="custom-select" id="inputGroupSelectCliente">
-                                                    <option selected>Seleccione compa��a...</option>
-                                                    <option value="1">Sophitech</option>
-                                                    <option value="2">BBVA</option>
-                                                    <option value="3">Inbursa</option>
-                                                    <option value="4">BX+</option>
-                                                    <option value="5">Quala</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-md-4">
-                                            <div class="form-group">
-                                                <label for="formGroupInputNombre">Nombre</label>
-                                                <input type="text" class="form-control" id="formGroupInputNombre"
-                                                    placeholder="Ingrese aqu�">
-                                            </div>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <div class="form-group">
-                                                <label for="formGroupInputApPat">Apellido Paterno</label>
-                                                <input type="text" class="form-control" id="formGroupInputApPat"
-                                                    placeholder="Ingrese aqu�">
-                                            </div>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <div class="form-group">
-                                                <label for="formGroupInputApMat">Apellido Materno</label>
-                                                <input type="text" class="form-control" id="formGroupInputApMat"
-                                                    placeholder="Ingrese aqu�">
-                                            </div>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <div class="form-group">
-                                                <label for="formGroupInputCargo">Cargo</label>
-                                                <input type="text" class="form-control" id="formGroupInputCargo"
-                                                    placeholder="Ingrese aqu�">
-                                            </div>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <div class="form-group">
-                                                <label for="formGroupInputPerfil">Perfil</label>
-                                                <input type="text" class="form-control" id="formGroupInputPerfil"
-                                                    placeholder="Ingrese aqu�">
-                                            </div>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <div class="form-group">
-                                                <label for="formGroupInputJefeDirecto">Jefe directo</label>
-                                                <input type="text" class="form-control" id="formGroupInputJefeDirecto"
-                                                    placeholder="Ingrese aqu�">
-                                            </div>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <div class="form-group">
-                                                <label for="formGroupInputCorreo">Correo</label>
-                                                <input type="text" class="form-control" id="formGroupInputCorreo"
-                                                    placeholder="Ingrese aqu�">
-                                            </div>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <div class="form-group">
-                                                <label for="formGroupInputPersonasCargo">No. de personas a cargo</label>
-                                                <input type="text" class="form-control" id="formGroupInputPersonasCargo"
-                                                    placeholder="Ingrese aqu�">
-                                            </div>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <div class="form-group">
-                                                <label for="formGroupInputFijo">Tel�fono Fijo</label>
-                                                <input type="text" class="form-control" id="formGroupInputFijo"
-                                                    placeholder="Ingrese aqu�">
-                                            </div>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <div class="form-group">
-                                                <label for="formGroupInputCelular">Tel�fono Celular</label>
-                                                <input type="text" class="form-control" id="formGroupInputCelular"
-                                                    placeholder="Ingrese aqu�">
-                                            </div>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <div class="form-group">
-                                                <label for="formGroupInputOficina">Tel�fono Oficina</label>
-                                                <input type="text" class="form-control" id="formGroupInputOficina"
-                                                    placeholder="Ingrese aqu�">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                                <button type="button" class="btn btn-primary" data-dismiss="modal">Guardar</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
                 
-                <!-- Modal Ver -->
-                <div class="modal fade" id="staticBackdropVer" data-backdrop="static" data-keyboard="false"
-                    tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                    <div class="modal-dialog modal-xl">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="staticBackdropLabel">Ver Datos de Contacto</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                            <div class="modal-body">
-                                <div class="container-fluid">
-                                    <div class="row">
-                                        <div class="col-md-4">
-                                            <div class="form-group">
-                                                <label for="formGroupInputNombre">Compa��a</label>
-                                                <select class="custom-select" id="inputGroupSelectCliente" disabled>
-                                                    <option selected>Seleccione compa��a...</option>
-                                                    <option value="1">Sophitech</option>
-                                                    <option value="2">BBVA</option>
-                                                    <option value="3">Inbursa</option>
-                                                    <option value="4">BX+</option>
-                                                    <option value="5">Quala</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-md-4">
-                                            <div class="form-group">
-                                                <label for="formGroupInputNombre">Nombre</label>
-                                                <input type="text" class="form-control" id="formGroupInputNombre"
-                                                    placeholder="Ver dato" disabled>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <div class="form-group">
-                                                <label for="formGroupInputApPat">Apellido Paterno</label>
-                                                <input type="text" class="form-control" id="formGroupInputApPat"
-                                                    placeholder="Ver dato" disabled>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <div class="form-group">
-                                                <label for="formGroupInputApMat">Apellido Materno</label>
-                                                <input type="text" class="form-control" id="formGroupInputApMat"
-                                                    placeholder="Ver dato" disabled>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <div class="form-group">
-                                                <label for="formGroupInputCargo">Cargo</label>
-                                                <input type="text" class="form-control" id="formGroupInputCargo"
-                                                    placeholder="Ver dato" disabled>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <div class="form-group">
-                                                <label for="formGroupInputPerfil">Perfil</label>
-                                                <input type="text" class="form-control" id="formGroupInputPerfil"
-                                                    placeholder="Ver dato" disabled>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <div class="form-group">
-                                                <label for="formGroupInputJefeDirecto">Jefe directo</label>
-                                                <input type="text" class="form-control" id="formGroupInputJefeDirecto"
-                                                    placeholder="Ver dato" disabled>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <div class="form-group">
-                                                <label for="formGroupInputCorreo">Correo</label>
-                                                <input type="text" class="form-control" id="formGroupInputCorreo"
-                                                    placeholder="Ver dato" disabled>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <div class="form-group">
-                                                <label for="formGroupInputPersonasCargo">No. de personas a cargo</label>
-                                                <input type="text" class="form-control" id="formGroupInputPersonasCargo"
-                                                    placeholder="Ver dato" disabled>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <div class="form-group">
-                                                <label for="formGroupInputFijo">Tel�fono Fijo</label>
-                                                <input type="text" class="form-control" id="formGroupInputFijo"
-                                                    placeholder="Ver dato" disabled>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <div class="form-group">
-                                                <label for="formGroupInputCelular">Tel�fono Celular</label>
-                                                <input type="text" class="form-control" id="formGroupInputCelular"
-                                                    placeholder="Ver dato" disabled>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <div class="form-group">
-                                                <label for="formGroupInputOficina">Tel�fono Oficina</label>
-                                                <input type="text" class="form-control" id="formGroupInputOficina"
-                                                    placeholder="Ver dato" disabled>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-primary" data-dismiss="modal">Entendido</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Modal Editar -->
-                <div class="modal fade" id="staticBackdropEditar" data-backdrop="static" data-keyboard="false"
-                    tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                    <div class="modal-dialog modal-xl">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="staticBackdropLabel">Editar datos de contacto</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                            <div class="modal-body">
-                                <div class="container-fluid">
-                                    <div class="row">
-                                        <div class="col-md-4">
-                                            <div class="form-group">
-                                                <label for="formGroupInputNombre">Compa��a</label>
-                                                <select class="custom-select" id="inputGroupSelectCliente">
-                                                    <option selected>Seleccione compa��a...</option>
-                                                    <option value="1">Sophitech</option>
-                                                    <option value="2">BBVA</option>
-                                                    <option value="3">Inbursa</option>
-                                                    <option value="4">BX+</option>
-                                                    <option value="5">Quala</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-md-4">
-                                            <div class="form-group">
-                                                <label for="formGroupInputNombre">Nombre</label>
-                                                <input type="text" class="form-control" id="formGroupInputNombre"
-                                                    placeholder="Editar dato">
-                                            </div>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <div class="form-group">
-                                                <label for="formGroupInputApPat">Apellido Paterno</label>
-                                                <input type="text" class="form-control" id="formGroupInputApPat"
-                                                    placeholder="Editar dato">
-                                            </div>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <div class="form-group">
-                                                <label for="formGroupInputApMat">Apellido Materno</label>
-                                                <input type="text" class="form-control" id="formGroupInputApMat"
-                                                    placeholder="Editar dato">
-                                            </div>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <div class="form-group">
-                                                <label for="formGroupInputCargo">Cargo</label>
-                                                <input type="text" class="form-control" id="formGroupInputCargo"
-                                                    placeholder="Editar dato">
-                                            </div>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <div class="form-group">
-                                                <label for="formGroupInputPerfil">Perfil</label>
-                                                <input type="text" class="form-control" id="formGroupInputPerfil"
-                                                    placeholder="IEditar dato">
-                                            </div>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <div class="form-group">
-                                                <label for="formGroupInputJefeDirecto">Jefe directo</label>
-                                                <input type="text" class="form-control" id="formGroupInputJefeDirecto"
-                                                    placeholder="Editar dato">
-                                            </div>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <div class="form-group">
-                                                <label for="formGroupInputCorreo">Correo</label>
-                                                <input type="text" class="form-control" id="formGroupInputCorreo"
-                                                    placeholder="Editar dato">
-                                            </div>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <div class="form-group">
-                                                <label for="formGroupInputPersonasCargo">No. de personas a cargo</label>
-                                                <input type="text" class="form-control" id="formGroupInputPersonasCargo"
-                                                    placeholder="Editar dato">
-                                            </div>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <div class="form-group">
-                                                <label for="formGroupInputFijo">Tel�fono Fijo</label>
-                                                <input type="text" class="form-control" id="formGroupInputFijo"
-                                                    placeholder="Editar dato">
-                                            </div>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <div class="form-group">
-                                                <label for="formGroupInputCelular">Tel�fono Celular</label>
-                                                <input type="text" class="form-control" id="formGroupInputCelular"
-                                                    placeholder="Editar dato">
-                                            </div>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <div class="form-group">
-                                                <label for="formGroupInputOficina">Tel�fono Oficina</label>
-                                                <input type="text" class="form-control" id="formGroupInputOficina"
-                                                    placeholder="Editar dato">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                                <button type="button" class="btn btn-primary" data-dismiss="modal">Guardar</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Modal Eliminar -->
-                <div class="modal fade" id="staticBackdropEliminar" data-backdrop="static" data-keyboard="false"
-                    tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="staticBackdropLabel">Eliminar contacto</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                            <div class="modal-body">
-                                �Est� seguro que desea eliminar este contacto?
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                                <button type="button" class="btn btn-primary">Eliminar</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
             </div>
             <!-- End of Main Content -->
 
@@ -680,9 +292,8 @@
 
     <!-- Page level custom scripts -->
     <script th:src="@{/js/demo/datatables-demo.js}"></script>
-    <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
-    <script th:src="@{/js/funciones.js}"></script>
+
+    <script th:src="@{/js/checkbox.js}"></script>
 
 </body>
 

@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.sophi.app.models.entity.Recurso;
-import com.sophi.app.models.service.IAprobacionHorasService;
+import com.sophi.app.models.service.IAprobacionGastosService;
 import com.sophi.app.models.service.IRecursoService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,23 +15,23 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 @Controller
-@SessionAttributes("aprobacionhoras")
-public class AprobacionHorasController {
+@SessionAttributes("aprobaciongastos")
+public class AprobaciónGastosController {
 
     @Autowired
-    private IAprobacionHorasService aprobacionHorasService;
+    private IAprobacionGastosService aprobaciongastosService;
 
     @Autowired
     private IRecursoService recursoService;
 
-    @RequestMapping(value = "aprobaciónhoras", method = RequestMethod.GET)
-    public String AprobacionHoras(Model model){
+    @RequestMapping(value = "aprobacióngastos", method = RequestMethod.GET)
+    public String AprobacionGastos(Model model) {
         List<Recurso> listaRecursos = new ArrayList<Recurso>();
         listaRecursos = recursoService.findAll();
-        model.addAttribute("titulo", "Listado de horas capturadas");
-        model.addAttribute("aprobacionhoras", aprobacionHorasService.findAll());
+        model.addAttribute("titulo", "Listado de gastos capturados");
+        model.addAttribute("aprobaciongastos", aprobaciongastosService.findAll());
         model.addAttribute("recursos", listaRecursos);
-        return "aprobaciónhoras";
+        return "aprobacióngastos";
     }
-
+    
 }

@@ -21,10 +21,10 @@ public class AprobacionHorasServicelmpl implements IAprobacionHorasService {
 		return (List<AprobacionHoras>) aprobacionhorasDao.findAll();
 	}
 
-	@Override
+	/*@Override
 	@Transactional(readOnly = true)
 	public AprobacionHoras findOne(Long codActividad) {
 		return aprobacionhorasDao.findById(codActividad).orElse(null);
-	}
+	}*/
 
 }

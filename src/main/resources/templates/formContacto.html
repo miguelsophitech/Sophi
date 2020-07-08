@@ -164,7 +164,7 @@
                       </div>
                       <div class="form-group col-12 col-md-3">
                         <label class="col-form-label">Recursos a cargo</label>
-                        <input type="text" th:field="*{valRecursosACargo}" class="form-control"/>
+                        <input type="number" th:field="*{valRecursosACargo}" class="form-control"/>
                       </div>
                       <div class="form-group col-12 col-md-3">
                         <label class="col-form-label">Correo electronico</label>
@@ -173,17 +173,17 @@
                       </div>
                       <div class="form-group col-12 col-md-3">
                         <label class="col-form-label">Fecha nacimiento</label>
-                        <input type="text" th:field="*{fecNacimiento}" class="form-control" th:errorClass="form-control alert-danger"/>
+                        <input type="date" th:field="*{fecNacimiento}" class="form-control" th:errorClass="form-control alert-danger"/>
                         <small class="form-text text-danger" th:if="${#fields.hasErrors('fecNacimiento')}" th:errors="*{fecNacimiento}"></small>
                       </div>
                       <div class="form-group col-12 col-md-3">
                         <label class="col-form-label">Telefono celular</label>
-                        <input type="text" th:field="*{descTelCelular}" class="form-control" th:errorClass="form-control alert-danger"/>
+                        <input type="tel" th:field="*{descTelCelular}" class="form-control" th:errorClass="form-control alert-danger"/>
                         <small class="form-text text-danger" th:if="${#fields.hasErrors('descTelCelular')}" th:errors="*{descTelCelular}"></small>
                       </div>
                       <div class="form-group col-12 col-md-3">
                         <label class="col-form-label">Telefono empresa</label>
-                        <input type="text" th:field="*{descTelEmpresa}" class="form-control" th:errorClass="form-control alert-danger"/>
+                        <input type="tel" th:field="*{descTelEmpresa}" class="form-control" th:errorClass="form-control alert-danger"/>
                         <small class="form-text text-danger" th:if="${#fields.hasErrors('descTelEmpresa')}" th:errors="*{descTelEmpresa}"></small>
                       </div>
                       <div class="form-group col-12 col-md-3">
@@ -193,18 +193,17 @@
                       </div>
                       <div class="form-group col-12 col-md-4">
                         <label class="col-form-label">Cliente</label>
-                        <!--<select class="custom-select" id="inputGroupSelectCliente">
-                          <option selected>Seleccione un cliente...</option>
-                          <option th:each="cliente:${clientes}" th:value="${cliente.codCliente}" th:text="${cliente.descCliente}"/>
-                      </select>-->
-                        <input type="text" th:field="*{codCliente}" class="form-control"/>
+                        <select th:field="*{codCliente}" class="custom-select">
+                          <option th:each="cliente:${clienteList}" th:value="${cliente.codCliente}" th:text="${cliente.descCliente}">
+                          </option>
+                        </select>
                       </div>
                       <div class="form-group col-6 col-md-2">
                         <label class="col-form-label">Cargo</label>
-							<select th:field="*{codCargo}" class="custom-select">
-							<option th:each="cargo : ${cargoList}" th:value="${cargo.codCargo}" th:text="${cargo.descCargo}">
-							</option>
-							</select>
+                        <select th:field="*{codCargo}" class="custom-select">
+                        <option th:each="cargo : ${cargoList}" th:value="${cargo.codCargo}" th:text="${cargo.descCargo}">
+                        </option>
+                        </select>
 <!--                           <select class="custom-select" id="inputGroupSelectCliente"> -->
 <!--                           <option selected>Seleccione...</option> -->
 <!--                           <option th:field="cargo:${cargos}" th:value="${cargo.codCargo}" th:text="${cargo.descCargo}"></option> -->

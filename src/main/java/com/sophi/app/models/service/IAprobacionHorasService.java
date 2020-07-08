@@ -8,6 +8,6 @@ public interface IAprobacionHorasService {
 	
 	public List<AprobacionHoras> findAll();
 	
-	public AprobacionHoras findOne(Long codActividad);
+	//public AprobacionHoras findOne(Long codActividad);
 
 }

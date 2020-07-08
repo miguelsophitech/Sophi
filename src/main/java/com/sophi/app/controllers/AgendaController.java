@@ -41,7 +41,7 @@ public class AgendaController {
 	
 	@RequestMapping(value = "/agenda", method = RequestMethod.GET)
 	public String Agenda(Model model) {
-		List<Cliente> listaClientes = clienteService.listaClientes();
+		List<Cliente> listaClientes = clienteService.findAll();
 		model.addAttribute("titulo", "Lista de Contactos");
 		model.addAttribute("contactos", agendaService.findAll());
 		model.addAttribute("clientes", listaClientes);
@@ -62,8 +62,11 @@ public class AgendaController {
 			return "redirect:/agenda";
 		}
 		List<Cargo> cargoList = new ArrayList<Cargo>();
+		List<Cliente> clienteList = new ArrayList<Cliente>();
 		cargoList = cargoService.findAll();
+		clienteList = clienteService.findAll();
 		model.put("cargoList",cargoList);
+		model.put("clienteList",clienteList);
 		model.put("agenda", agenda);
 		model.put("titulo", "Formulario contacto");
 		return "dataContacto";
@@ -74,8 +77,11 @@ public class AgendaController {
 		Agenda agenda = new Agenda();
 		model.put("agenda", agenda);
 		List<Cargo> cargoList = new ArrayList<Cargo>();
+		List<Cliente> clienteList = new ArrayList<Cliente>();
 		cargoList = cargoService.findAll();
+		clienteList = clienteService.findAll();
 		model.put("cargoList",cargoList);
+		model.put("clienteList",clienteList);
 		model.put("titulo", "Formulario contacto");
 		return "formContacto";
 	}
@@ -85,8 +91,11 @@ public class AgendaController {
 		if(result.hasErrors()) {
 			model.addAttribute("titulo", "Formulario contacto");
 			List<Cargo> cargoList = new ArrayList<Cargo>();
+			List<Cliente> clienteList = new ArrayList<Cliente>();
 			cargoList = cargoService.findAll();
+			clienteList = clienteService.findAll();
 			model.addAttribute("cargoList",cargoList);
+			model.addAttribute("clienteList",clienteList);
 			return "formContacto";
 		}
 		agendaService.save(agenda);
@@ -109,8 +118,11 @@ public class AgendaController {
 			return "redirect:/agenda";
 		}
 		List<Cargo> cargoList = new ArrayList<Cargo>();
+		List<Cliente> clienteList = new ArrayList<Cliente>();
 		cargoList = cargoService.findAll();
+		clienteList = clienteService.findAll();
 		model.put("cargoList",cargoList);
+		model.put("clienteList",clienteList);
 		model.put("agenda", agenda);
 		model.put("titulo", "Formulario contacto");
 		return "formContacto";
