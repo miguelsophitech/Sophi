@@ -99,11 +99,11 @@
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseMenu"
                     aria-expanded="true" aria-controls="collapsePages">
                     <i class="fas fa-fw fa-folder"></i>
-                    <span>Men�</span>
+                    <span>Men&uacute;</span>
                 </a>
                 <div id="collapseMenu" class="collapse" aria-labelledby="headingMenu" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Menú:</h6>
+                        <h6 class="collapse-header">Men&uacute;:</h6>
                         <a class="collapse-item" href="#">Proyectos</a>
                         <a class="collapse-item" href="#">Clientes</a>
                         <a class="collapse-item" href="#">Recursos</a>
@@ -116,7 +116,7 @@
             <li class="nav-item active">
                 <a class="nav-link" href="#">
                     <i class="fas fa-fw fa-table"></i>
-                    <span>Lista de capturas</span></a>
+                    <span>Lista de gastos</span></a>
             </li>
 
             <!-- Divider -->
@@ -143,12 +143,12 @@
 
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-2 text-gray-800">Aprobación de gastos</h1>
+                        <h1 class="h3 mb-2 text-gray-800">Aprobaci&oacute;n de gastos</h1>
                     </div>
 
                     <!-- Filter -->
                     <div class="row">
-                        <div class="input-group col-sm">
+                        <!--<div class="input-group col-sm">
                             <div class="input-group mb-4">
                                 <div class="input-group-prepend">
                                     <label class="input-group-text" for="inputGroupSelectCliente">Colaborador</label>
@@ -158,8 +158,8 @@
                                     <option th:each="recurso : ${recursos}" th:value="${recurso.codRecurso}" th:text="${recurso.descRecurso}"></option>
                                 </select>
                             </div>
-                        </div>
-                        <div class="input-group col-sm">
+                        </div>-->
+                        <div class="input-group col-sm-4">
                             <div class="input-group mb-4">
                                 <div class="input-group-prepend">
                                     <label class="input-group-text" for="inputGroupSelectCliente">Proyecto</label>
@@ -171,21 +171,6 @@
                                     <option>Proyecto 3</option>
                                     <option>Proyecto 4</option>
                                     <option>Proyecto 5</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="input-group col-sm">
-                            <div class="input-group mb-4">
-                                <div class="input-group-prepend">
-                                    <label class="input-group-text" for="inputGroupSelectCliente">Semana</label>
-                                </div>
-                                <select class="custom-select" id="inputGroupSelectCliente">
-                                    <option selected>Seleccione...</option>
-                                    <option>Semana 1</option>
-                                    <option>Semana 2</option>
-                                    <option>Semana 3</option>
-                                    <option>Semana 4</option>
-                                    <option>Semana 5</option>
                                 </select>
                             </div>
                         </div>
@@ -204,7 +189,6 @@
                                             <th>Check</th>
                                             <th>Tipo de Gasto</th>
                                             <th>Fecha</th>
-                                            <th>Proyecto</th>
                                             <th>Colaborador</th>
                                             <th>Descripci&oacute;n</th>
                                             <th>Importe</th>
@@ -215,7 +199,6 @@
                                             <th>Check</th>
                                             <th>Tipo de Gasto</th>
                                             <th>Fecha</th>
-                                            <th>Proyecto</th>
                                             <th>Colaborador</th>
                                             <th>Descripci&oacute;n</th>
                                             <th>Importe</th>
@@ -223,13 +206,14 @@
                                     </tfoot>
                                     <tbody>
                                         <tr th:each="aprobaciongastos:${aprobaciongastos}">
-                                            <td><input type="checkbox"></td>
-                                            <td th:text="${aprobaciongastos.codTipoGasto}"></td>
-                                            <td th:text="${aprobaciongastos.fecRegistro}"></td>
-                                            <td th:text="${aprobaciongastos.codProyecto}"></td>
-                                            <td th:text="${aprobaciongastos.codRecurso}"></td>
-                                            <td th:text="${aprobaciongastos.descComentario}"></td>
-                                            <td th:text="${aprobaciongastos.impGasto}">$</td>
+                                            <form th:action="@{/aprobaciongastos}" th:Object="${aprobaciongastos}" method="POST">
+                                                <td><input type="checkbox"></td>
+                                                <td th:text="${aprobaciongastos.codTipoGasto}"></td>
+                                                <td th:text="${aprobaciongastos.fecRegistro}"></td>
+                                                <td th:text="${aprobaciongastos.codRecurso}"></td>
+                                                <td th:text="${aprobaciongastos.descComentario}"></td>
+                                                <td th:text="${aprobaciongastos.impGasto}"></td>
+                                            </form>
                                         </tr>
                                     </tbody>
                                 </table>

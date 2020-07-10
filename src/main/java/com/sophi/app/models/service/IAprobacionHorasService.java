@@ -7,7 +7,7 @@ import com.sophi.app.models.entity.AprobacionHoras;
 public interface IAprobacionHorasService {
 	
 	public List<AprobacionHoras> findAll();
-	
-	//public AprobacionHoras findOne(Long codActividad);
+
+	public List<AprobacionHoras> findAprobacionHorasBycodProyecto(Long codProyecto);
 
 }

@@ -1,12 +1,8 @@
 $(document).ready(function() {
 
-	$( "#filterCliente" ).change(function() {
+	$( "#filterRecurso" ).change(function() {
             $.ajax({
-                type: "GET",
-                url: "/cargaContactos",
-                data: {
-                    id: $( "#filterCliente" ).val()
-                },
+                url: "/recursos",
                 success: function(res){
                     //alert(res);
                     document.getElementById("contenidoTabla").innerHTML = "";

@@ -45,7 +45,7 @@ public class AprobacionHoras implements Serializable {
 	private Date fecFinActividad;
 	
 	@Column(name = "fec_registro")
-	@Temporal(TemporalType.TIMESTAMP)
+	@Temporal(TemporalType.DATE)
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date fecRegistro;
 	

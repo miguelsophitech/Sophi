@@ -143,49 +143,34 @@
 
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-2 text-gray-800">Aprobación de horas</h1>
+                        <h1 class="h3 mb-2 text-gray-800">Aprobaci&oacute;n de horas</h1>
                     </div>
 
                     <!-- Filter -->
                     <div class="row">
-                        <div class="input-group col-sm">
+                        <!--<div class="input-group col-sm">
                             <div class="input-group mb-4">
                                 <div class="input-group-prepend">
                                     <label class="input-group-text" for="inputGroupSelectCliente">Colaborador</label>
                                 </div>
-                                <select name="recurso" class="custom-select" id="inputGroupSelectCliente">
+                                <select name="recurso" class="custom-select" id="filterRecurso">
                                     <option selected>Seleccione un recurso...</option>
                                     <option th:each="recurso : ${recursos}" th:value="${recurso.codRecurso}" th:text="${recurso.descRecurso}"></option>
                                 </select>
                             </div>
-                        </div>
-                        <div class="input-group col-sm">
+                        </div>-->
+                        <div class="input-group col-sm-4">
                             <div class="input-group mb-4">
                                 <div class="input-group-prepend">
                                     <label class="input-group-text" for="inputGroupSelectCliente">Proyecto</label>
                                 </div>
                                 <select class="custom-select" id="inputGroupSelectCliente">
-                                    <option selected>Seleccione...</option>
+                                    <option selected value="-1">Todos</option>
                                     <option>Proyecto 1</option>
                                     <option>Proyecto 2</option>
                                     <option>Proyecto 3</option>
                                     <option>Proyecto 4</option>
                                     <option>Proyecto 5</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="input-group col-sm">
-                            <div class="input-group mb-4">
-                                <div class="input-group-prepend">
-                                    <label class="input-group-text" for="inputGroupSelectCliente">Semana</label>
-                                </div>
-                                <select class="custom-select" id="inputGroupSelectCliente">
-                                    <option selected>Seleccione...</option>
-                                    <option>Semana 1</option>
-                                    <option>Semana 2</option>
-                                    <option>Semana 3</option>
-                                    <option>Semana 4</option>
-                                    <option>Semana 5</option>
                                 </select>
                             </div>
                         </div>
@@ -196,16 +181,15 @@
                         <div class="card-header py-3">
                             <h6 class="m-0 font-weight-bold text-primary">Detalle de horas de la semana 08/06/2020 al 12/06/2020</h6>
                         </div>
-                        <div class="card-body">
+                        <div class="card-body" id="contenidoTabla">
                             <div class="table-responsive">
                                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                     <thead>
                                         <tr>
                                             <th>Check</th>
                                             <th>Fecha</th>
-                                            <th>Proyecto</th>
                                             <th>Colaborador</th>
-                                            <th>Tarea/Descripcion</th>
+                                            <th>Tarea</th>
                                             <th>Horas Capturadas</th>
                                             <th>Horas Validadas</th>
                                         </tr>
@@ -214,9 +198,8 @@
                                         <tr>
                                             <th>Check</th>
                                             <th>Fecha</th>
-                                            <th>Proyecto</th>
                                             <th>Colaborador</th>
-                                            <th>Tarea/Descripcion</th>
+                                            <th>Tarea</th>
                                             <th>Horas Capturadas</th>
                                             <th>Horas Validadas</th>
                                         </tr>
@@ -225,7 +208,7 @@
                                         <tr th:each="aprobacionhoras: ${aprobacionhoras}">
                                             <td><input type="checkbox" id="check" onChange="checkbox(this);"/></td>
                                             <td th:text="${aprobacionhoras.fecRegistro}"></td>
-                                            <td th:text="${aprobacionhoras.codCliente}"></td>
+                                            <!--<td th:text="${aprobacionhoras.codCliente}"></td>-->
                                             <td th:text="${aprobacionhoras.codRecurso}"></td>
                                             <td th:text="${aprobacionhoras.descComentarioDetalle}"></td>
                                             <td th:text="${aprobacionhoras.valDuracionReportada}"></td>
@@ -294,6 +277,7 @@
     <script th:src="@{/js/demo/datatables-demo.js}"></script>
 
     <script th:src="@{/js/checkbox.js}"></script>
+    <script th:src="@{/js/mostrarHorasRecurso.js}"></script>
 
 </body>
 

@@ -13,5 +13,7 @@ public interface IAgendaService {
 	public void delete(Long codContacto);
 	
 	public Agenda findOne(Long codContacto);
+
+	public List<Agenda> findContactosBycodCliente(Long codCliente);
 	
 }

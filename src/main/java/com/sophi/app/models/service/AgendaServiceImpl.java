@@ -38,4 +38,9 @@ public class AgendaServiceImpl implements IAgendaService {
 		
 	}
 
+	@Override
+	public List<Agenda> findContactosBycodCliente(Long codCliente) {
+		return agendaDao.findContactosBycodCliente(codCliente);
+	}
+
 }

@@ -24,14 +24,14 @@ public class AprobaciónGastosController {
     @Autowired
     private IRecursoService recursoService;
 
-    @RequestMapping(value = "aprobacióngastos", method = RequestMethod.GET)
+    @RequestMapping(value = "aprobaciongastos", method = RequestMethod.GET)
     public String AprobacionGastos(Model model) {
         List<Recurso> listaRecursos = new ArrayList<Recurso>();
         listaRecursos = recursoService.findAll();
         model.addAttribute("titulo", "Listado de gastos capturados");
         model.addAttribute("aprobaciongastos", aprobaciongastosService.findAll());
         model.addAttribute("recursos", listaRecursos);
-        return "aprobacióngastos";
+        return "aprobaciongastos";
     }
     
 }

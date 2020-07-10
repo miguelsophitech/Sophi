@@ -32,7 +32,7 @@ public class AprobacionGastos implements Serializable {
 
     @NotEmpty
     @Column(name = "fec_gasto")
-    @Temporal(TemporalType.TIMESTAMP)
+    @Temporal(TemporalType.DATE)
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date fecGasto;
 
