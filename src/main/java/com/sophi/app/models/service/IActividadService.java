@@ -15,4 +15,14 @@ public interface IActividadService {
 	public Actividad findOne(Long codActividad);
 	
 	public void delete(Actividad actividad);
+	
+	public List<Long> findListaProyectoByRecurso(Long codRecurso);
+	
+	public List<Actividad> findListaActividadesByRecursoProyecto(Long codRecurso, Long codProyecto);
+	
+	public List<String> findListaActividadesPrimariasByRecursoProyecto(Long codRecurso, Long codProyecto);
+	
+	public List<Actividad> findListaActividadesByRecursoProyectoPrimaria(Long codRecurso, Long codProyecto, String descPrimaria);
+	
+	
 }

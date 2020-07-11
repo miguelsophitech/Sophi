@@ -116,10 +116,10 @@ public class PlaneacionController {
 	    	                	actividad.setDescActividadPrimaria(actividadPrimaria);
 	    	                	actividad.setDescActividadSecundaria(actividadSecundaria);
 	    	                	actividad.setValNumActividad((long) i);
-	    	                	actividad.setCodCliente(1L);
+	    	                	actividad.setCodCliente(2L);
 	    	                	actividad.setCodEstatusProyecto(1L);
-	    	                	actividad.setCodProyecto(11L);
-	    	                	actividad.setValDuracionActividad(Float.parseFloat(actividadesPlanStg.get(i).getEsfuerzo().replaceAll("hora","").replaceAll("s","")));
+	    	                	actividad.setCodProyecto(85L);
+	    	                	actividad.setValDuracionActividad(Float.parseFloat(actividadesPlanStg.get(i).getEsfuerzo().replaceAll("hora","").replaceAll("s",""))/listaRecursos.length);
 	    	                	actividad.setValNuevaActividad(0L);
 	    	                	actividad.setFecInicioActividad(format.parse(actividadesPlanStg.get(i).getInicio().substring(0, 10)));
 	    	                	actividad.setFecFinActividad(format.parse(actividadesPlanStg.get(i).getFin().substring(0, 10)));

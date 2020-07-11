@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head th:replace="layout/layout::head"></head>
+
+<body id="page-top">
+
+  <!-- Page Wrapper -->
+  <div id="wrapper">
+
+    <!-- Sidebar -->
+    <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+
+      <!-- Sidebar - Brand -->
+      <a class="sidebar-brand d-flex align-items-center justify-content-center" th:href="@{/}">
+        <div class="sidebar-brand-icon">
+          <!--<i class="fas fa-laugh-wink"></i>  rotate-n-15-->
+          <img th:src="@{/img/logo-img.png}" alt="">
+        </div> 
+        <div class="sidebar-brand-text mx-3"><img th:src="@{/img/logo-texto.png}" alt=""></div>
+      </a>
+
+      <!-- Divider -->
+      <hr class="sidebar-divider my-0">
+
+      <!-- Nav Item - Dashboard -->
+      <li class="nav-item">
+        <a class="nav-link" th:href="@{/}">
+          <i class="fas fa-fw fa-tachometer-alt"></i>
+          <span>Dashboard</span></a>
+      </li>
+
+      <!-- Divider -->
+      <hr class="sidebar-divider">
+
+      <!-- Heading Proyecto -->
+      <div class="sidebar-heading">
+        Proyecto
+      </div>
+
+      <!-- Nav Item - Gastos y tiempo Collapse Menu -->
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+          <i class="fas fa-fw fa-cog"></i>
+          <span>Gastos y tiempo</span>
+        </a>
+        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+          <div class="bg-white py-2 collapse-inner rounded">
+            <h6 class="collapse-header">Registrar:</h6>
+            <a class="collapse-item" href="#">Horas</a>
+            <a class="collapse-item" href="#">Gastos</a>
+          </div>
+        </div>
+      </li>
+
+      <!-- Nav Item - Actividades Collapse Menu -->
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities" aria-expanded="true" aria-controls="collapseUtilities">
+          <i class="fas fa-fw fa-wrench"></i>
+          <span>Actividades</span>
+        </a>
+        <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
+          <div class="bg-white py-2 collapse-inner rounded">
+            <h6 class="collapse-header">Ver:</h6>
+            <a class="collapse-item" href="#">Mis actividades</a>
+            <a class="collapse-item" href="#">Mi forecast</a>
+          </div>
+        </div>
+      </li>
+
+      <!-- Divider -->
+      <hr class="sidebar-divider">
+
+     <!-- Heading Recursos humanos -->
+      <div class="sidebar-heading">
+        Recursos Humanos
+      </div>
+
+      <!-- Nav Item - Pages Collapse Menu -->
+      <li class="nav-item active">
+        <a class="nav-link" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="true" aria-controls="collapsePages">
+          <i class="fas fa-fw fa-folder"></i>
+          <span>Recursos</span>
+        </a>
+        <div id="collapsePages" class="collapse show" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+          <div class="bg-white py-2 collapse-inner rounded">
+            <h6 class="collapse-header">Gestionar</h6>
+            <a class="collapse-item active" href="#">Alta</a>
+            <a class="collapse-item " th:href="@{/listarRecursos}">Todos</a>
+            <div class="collapse-divider"></div>
+            <h6 class="collapse-header">Experiencia</h6>
+            <a class="collapse-item" href="#">Skills</a>
+            <a class="collapse-item" href="#">Capacitaci&oacute;n</a>
+          </div>
+        </div>
+      </li>
+
+      <!-- Nav Item - Charts -->
+      <!-- <li class="nav-item">
+        <a class="nav-link" href="charts.html">
+          <i class="fas fa-fw fa-chart-area"></i>
+          <span>Charts</span></a>
+      </li> -->
+
+      <!-- Nav Item - Tables -->
+     <!-- <li class="nav-item">
+        <a class="nav-link" href="tables.html">
+          <i class="fas fa-fw fa-table"></i>
+          <span>Tables</span></a>
+      </li> -->
+
+      <!-- Divider -->
+      <hr class="sidebar-divider d-none d-md-block">
+
+      <!-- Sidebar Toggler (Sidebar) -->
+      <div class="text-center d-none d-md-inline">
+        <button class="rounded-circle border-0" id="sidebarToggle"></button>
+      </div>
+
+    </ul>
+    <!-- End of Sidebar -->
+
+    <!-- Content Wrapper -->
+    <div id="content-wrapper" class="d-flex flex-column">
+
+      <!-- Main Content -->
+      <div id="content">
+
+         <header th:replace="layout/layout :: header"></header>
+         
+        <!-- Begin Page Content -->
+        <div class="container-fluid">
+
+          <!-- Page Heading -->
+          <h1 class="h3 mb-2 text-gray-800" th:text="${titulo}"></h1>
+          <p class="mb-4">Completa la informaci&oacute;n del nuevo recurso.</p>
+          
+          
+          <p id="fechaDiaActual"></p>
+          <div class="pb-3">
+          <a type="button" class="btn btn-primary" id="antDia">
+              <i class="fas fa-caret-left fa-sm text-white-50"></i>
+            </a>
+          <a type="button" class="btn btn-primary" id="sigDia">
+              <i class="fas fa-caret-right fa-sm text-white-50"></i>
+            </a>
+              
+          <a class="btn btn-primary" data-toggle="modal" data-target="#capHoraModal"  href="#" role="button">
+              <i class="fas fa-calendar-plus fa-sm text-white-50"></i> Nueva captura</a>
+          </div>
+          
+          <div class="card shadow mb-4">
+			
+			<div id="semanaDias">
+				<div class="list-group list-group-horizontal-sm">
+				  <a id="da0" href="#" class="list-group-item list-group-item-action">Dom<br><span id="d0" style="font-size: 12px;"></span></a>
+				  <a id="da1" href="#" class="list-group-item list-group-item-action">Lun<br><span id="d1" style="font-size: 12px;"></span></a>
+				  <a id="da2" href="#" class="list-group-item list-group-item-action">Mar<br><span id="d2" style="font-size: 12px;"></span></a>
+				  <a id="da3" href="#" class="list-group-item list-group-item-action">Mie<br><span id="d3" style="font-size: 12px;"></span></a>
+				  <a id="da4" href="#" class="list-group-item list-group-item-action">Jue<br><span id="d4" style="font-size: 12px;"></span></a>
+				  <a id="da5" href="#" class="list-group-item list-group-item-action">Vie<br><span id="d5" style="font-size: 12px;"></span></a>
+				  <a id="da6" href="#" class="list-group-item list-group-item-action">Sab<br><span id="d6" style="font-size: 12px;"></span></a>
+				  <a id="da7" href="#" class="list-group-item list-group-item-action disabled" tabindex="-1" aria-disabled="true">Total:<br><span id="d6" style="font-weight: 700;"> 40</span></a>
+				</div>
+			</div>
+			
+			
+			<div id="detalleHorasCapturadas">
+			
+				
+			
+			</div>
+
+          </div>
+			
+		</div>
+        <!-- /.container-fluid -->
+
+      </div>
+      <!-- End of Main Content -->
+
+       <!-- Footer -->
+      <footer th:replace="layout/layout :: footer"></footer>
+      <!-- End of Footer -->
+
+
+    </div>
+    <!-- End of Content Wrapper -->
+
+  </div>
+  <!-- End of Page Wrapper -->
+
+  <!-- Scroll to Top Button-->
+  <a class="scroll-to-top rounded" href="#page-top">
+    <i class="fas fa-angle-up"></i>
+  </a>
+  
+  
+  <div th:fragment="modalCapHora">
+ <!-- Logout Modal-->
+  <div class="modal fade" id="capHoraModal" tabindex="-1" role="dialog" aria-labelledby="capHoraModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          	<h5 class="modal-title" id="capHoraModalLabel">
+			    Captura de horas<br>
+			    <span style="font-size: 12px;" id="fechaModal">
+			        
+			    </span>
+			</h5>
+          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+        <div class="modal-body">
+		
+			<div class="row">
+				<div class="form-group col-12 col-md-12">
+					<div id="resultListProyecto">
+						<label class="col-form-label">Proyecto</label>
+						<div class="input-group">
+							<select class="custom-select" id="selectProyecto">
+								<option th:each="proyecto : ${proyectoList}" th:value="${proyecto}" th:text="${proyecto}"></option>
+							</select>
+						</div>
+					</div>
+				</div>
+			</div>
+			
+			<div class="row">
+				<div class="form-group col-12 col-md-12">	
+					<div id="resultListActividadesPrimarias">
+						<!--aqui va listado de actividades primarias por proyecto y recurso -->
+					</div>
+				</div>
+			</div>
+			
+			<div class="row">
+				<div class="form-group col-12 col-md-12">	
+					<div id="resultListActividadesSecundarias">
+						<!--aqui va listado de actividades por proyecto y recurso -->
+					</div>
+				</div>
+			</div>
+			
+			<div class="row">
+				<div id="resultDetActividades">
+						<!--aqui va el complemento para el detalle de actividades -->
+					</div>
+			</div>
+			
+			<button onclick="tomarValor();">ir</button>
+		
+<!--    	</form> -->
+		</div>
+       <div class="modal-footer">
+          <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
+          
+          	<button onclick="document.getElementById('capHorasForm').submit();" type="submit" class="btn btn-primary">Aceptar</button>
+      
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+  
+  
+
+	 <!-- ModalLogout -->
+      <footer th:replace="layout/layout :: modalLogout"></footer>
+      <!-- End ModalLogout -->
+      
+  
+
+  <!-- Bootstrap core JavaScript-->
+  <script th:src="@{/vendor/jquery/jquery.min.js}"></script>
+  <script th:src="@{/vendor/jquery/jquery-ui.min.js}"></script>
+  <script th:src="@{/vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>
+
+  <!-- Core plugin JavaScript-->
+  <script th:src="@{/vendor/jquery-easing/jquery.easing.min.js}"></script>
+
+  <!-- Custom scripts for all pages-->
+  <script th:src="@{/js/sb-admin-2.min.js}"></script>
+
+  <!-- Page level plugins -->
+  <script th:src="@{/vendor/datatables/jquery.dataTables.min.js}"></script>
+  <script th:src="@{/vendor/datatables/dataTables.bootstrap4.min.js}"></script>
+
+  <!-- Page level custom scripts -->
+  <script th:src="@{/js/demo/datatables-demo.js}"></script>
+  
+  <!-- Page level custom scripts -->
+  <script th:src="@{/js/capHoras.js}"></script>
+
+</body>
+
+</html>

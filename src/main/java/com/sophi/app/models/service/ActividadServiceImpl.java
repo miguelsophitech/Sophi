@@ -44,5 +44,25 @@ public class ActividadServiceImpl implements IActividadService {
 		actividadDao.saveAll(actividades);
 	}
 
+	@Override
+	public List<Long> findListaProyectoByRecurso(Long codRecurso) {
+		return actividadDao.findListaProyectoByRecurso(codRecurso);
+	}
+
+	@Override
+	public List<Actividad> findListaActividadesByRecursoProyecto(Long codRecurso, Long codProyecto) {
+		return actividadDao.findListaActividadesByRecursoProyecto(codRecurso, codProyecto);
+	}
+
+	@Override
+	public List<Actividad> findListaActividadesByRecursoProyectoPrimaria(Long codRecurso, Long codProyecto, String descPrimaria) {
+		return actividadDao.findListaActividadesByRecursoProyectoPrimaria(codRecurso, codProyecto, descPrimaria);
+	}
+
+	@Override
+	public List<String> findListaActividadesPrimariasByRecursoProyecto(Long codRecurso, Long codProyecto) {
+		return actividadDao.findListaActividadesPrimariasByRecursoProyecto(codRecurso, codProyecto);
+	}
+
 
 }
