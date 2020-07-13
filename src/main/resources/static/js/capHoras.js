@@ -22,13 +22,7 @@ $(document).ready(function() {
 		cargarActividadesPrimariasProyecto();
 	});
 	
-	
-	$("#selectActividades").change(function() {
-		alert("holra");
-	});
-	
-	
-	
+
 //	cargarActividadesProyecto();
 
 });
@@ -38,23 +32,20 @@ function cargarActividadesPrimariasProyecto(){
 	$("#resultListActividadesPrimarias").load(url);
 }
 
-function cargarActividadesSecundariasProyecto(){
-	var url="/cargarActividadSecundaria/1/"+$("#selectProyecto").val()+"/"+$("#selectActividadPrimaria").val();
-	$("#resultListActividades").load(url);
-}
-
 function filtraActPorFase(){
-	cargarDetActividad();
+	cargarActividadesSecundariasProyecto();
 }
 
-function tomarValor(){
-	alert($("#selectActividades").val());
-	cargardetActividad();
+function cargarActividadesSecundariasProyecto(){
+	var url="/cargarActividadSecundaria/1/"+$("#selectProyecto").val()+"/"+encodeURIComponent($("#selectActividadesPrimarias").val());
+	alert(url);
+	$("#resultListActividadesSecundarias").load(url);
 }
 
-function cargarDetActividad(){
+
+function altaCapHoraActividad(){
 	var fech = $("#semanaDias .active span").text();
-	var url="/cargarDetActividad/"+$("#selectActividades").val()+"/"+fech;
+	var url="/cargarDetActividad/"+$("#selectActividadesSecundarias").val()+"/"+fech;
 	alert(url);
 	$("#resultDetActividades").load(url);
 }

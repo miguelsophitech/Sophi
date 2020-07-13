@@ -52,8 +52,10 @@ public class CapHorasController {
 	
 	@GetMapping(value="/cargarActividadSecundaria/{codRecurso}/{codProyecto}/{descPrimaria}")
 	public String cargarActividadSecundaria(@PathVariable Long codRecurso, @PathVariable Long codProyecto,@PathVariable String descPrimaria,  Model model){
-		model.addAttribute("actividadesPrimariasList", actividadService.findListaActividadesByRecursoProyectoPrimaria(codRecurso, codProyecto, descPrimaria));
+		System.out.println(codRecurso +" / "+ codProyecto + " / " + descPrimaria);
+		model.addAttribute("actividadesSecundariasList", actividadService.findListaActividadesByRecursoProyectoPrimaria(codRecurso, codProyecto, descPrimaria));
 		return "layout/capHora :: listActividadesSecundarias";
+		
 	}
 	
 	@GetMapping(value="/cargarDetActividad/{codActividad}/{fecCaptura}")

@@ -18,7 +18,7 @@ public interface IActividadDao extends CrudRepository<Actividad, Long>{
 	@Query("FROM Actividad A WHERE A.codRecurso = ?1 AND A.codProyecto = ?2")
 	List<Actividad> findListaActividadesByRecursoProyecto(Long codRecurso, Long codProyecto);
 	
-	@Query("FROM Actividad A WHERE A.codRecurso = ?1 AND A.codProyecto = ?2 AND A.descActividadPrimaria =  ?3 ")
+	@Query("FROM Actividad A WHERE A.codRecurso = ?1 AND A.codProyecto = ?2 AND A.descActividadPrimaria = ?3 ")
 	List<Actividad> findListaActividadesByRecursoProyectoPrimaria(Long codRecurso, Long codProyecto, String descPrimaria);
 
 }
