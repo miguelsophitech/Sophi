@@ -14,9 +14,9 @@
 	<name>Sophi</name>
 	<description>Sophi - Intranet Sophitec</description>
 
-	<properties>
-		<java.version>11</java.version>
-	</properties>
+<!-- 	<properties> -->
+<!-- 		<java.version>11</java.version> -->
+<!-- 	</properties> -->
 
 	<dependencies>
 		<dependency>
