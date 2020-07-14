@@ -207,7 +207,7 @@
                                     </tfoot>
                                     <tbody>
                                         <tr th:each="aprobacionhoras: ${aprobacionhoras}">
-                                            <td><input type="checkbox" name="check" onClick="checkbox();"/></td>
+                                            <td><input type="checkbox" name="check" th:value="${aprobacionhoras.getFecValidacion()}" onClick="checkbox();"/></td>
                                             <td th:text="${aprobacionhoras.fecRegistro}"></td>
                                             <!--<td th:text="${aprobacionhoras.codCliente}"></td>-->
                                             <td th:text="${aprobacionhoras.NombreRecurso}"></td>
