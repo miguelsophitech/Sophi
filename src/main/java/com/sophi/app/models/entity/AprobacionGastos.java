@@ -8,6 +8,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -54,11 +56,15 @@ public class AprobacionGastos implements Serializable {
     @Column(name = "cod_proyecto")
     private Long codProyecto;
 
-    @NotEmpty
-    @Column(name = "cod_recurso")
-    private Long codRecurso;
+//    @NotEmpty
+//    @Column(name = "cod_recurso")
+//    private Long codRecurso;
+    
+    @OneToOne
+    @JoinColumn(name = "cod_recurso")
+    private Recurso NombreRecurso;
 
-    @NotEmpty
+	@NotEmpty
     @Column(name = "cod_cliente")
     private Long codCliente;
 
@@ -126,13 +132,21 @@ public class AprobacionGastos implements Serializable {
         this.codProyecto = codProyecto;
     }
 
-    public Long getCodRecurso() {
-        return codRecurso;
-    }
+//    public Long getCodRecurso() {
+//        return codRecurso;
+//    }
+//
+//    public void setCodRecurso(Long codRecurso) {
+//        this.codRecurso = codRecurso;
+//    }
+    
+    public String getNombreRecurso() {
+		return NombreRecurso.getDescRecurso();
+	}
 
-    public void setCodRecurso(Long codRecurso) {
-        this.codRecurso = codRecurso;
-    }
+	public void setNombreRecurso(Recurso nombreRecurso) {
+		NombreRecurso = nombreRecurso;
+	}
 
     public Long getCodCliente() {
         return codCliente;

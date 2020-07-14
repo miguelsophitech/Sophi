@@ -183,6 +183,7 @@
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
+                            <form th:action="@{/aprobaciongastos}" th:Object="${aprobaciongastos}" method="POST">
                                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                     <thead>
                                         <tr>
@@ -206,23 +207,21 @@
                                     </tfoot>
                                     <tbody>
                                         <tr th:each="aprobaciongastos:${aprobaciongastos}">
-                                            <form th:action="@{/aprobaciongastos}" th:Object="${aprobaciongastos}" method="POST">
-                                                <td><input type="checkbox"></td>
+                                                <td><input type="checkbox" name="check"></td>
                                                 <td th:text="${aprobaciongastos.codTipoGasto}"></td>
                                                 <td th:text="${aprobaciongastos.fecRegistro}"></td>
-                                                <td th:text="${aprobaciongastos.codRecurso}"></td>
+                                                <td th:text="${aprobaciongastos.NombreRecurso}"></td>
                                                 <td th:text="${aprobaciongastos.descComentario}"></td>
                                                 <td th:text="${aprobaciongastos.impGasto}"></td>
-                                            </form>
                                         </tr>
                                     </tbody>
                                 </table>
+                               </form>
                             </div>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-sm-5 mb-3 mb-sm-0">
-                            <input type="submit" value="Aprobar Gastos" class="btn btn-primary"/>
                             <input type="submit" value="Guardar" class="btn btn-primary"/>
                             <a th:href="@{/}" class="btn btn-secondary" role="button">Cancelar</a>
                         </div>

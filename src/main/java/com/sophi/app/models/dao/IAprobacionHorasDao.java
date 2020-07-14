@@ -11,5 +11,5 @@ public interface IAprobacionHorasDao extends CrudRepository<AprobacionHoras, Lon
 
     @Query("FROM AprobacionHoras ap WHERE ap.codProyecto = ?1")
     List<AprobacionHoras> findAprobacionHorasBycodProyecto(Long codProyecto);
-
+    
 }
