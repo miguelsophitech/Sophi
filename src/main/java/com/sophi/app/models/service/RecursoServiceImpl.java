@@ -38,5 +38,10 @@ public class RecursoServiceImpl implements IRecursoService {
 		return recursoDao.findByNombreApellido(descRecurso, descApellidoPaterno);
 	}
 
+	@Override
+	public List<Recurso> listaRecursos() {
+		return (List<Recurso>) recursoDao.findAll();
+	}
+
 	
 }

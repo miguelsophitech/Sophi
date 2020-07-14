@@ -5,9 +5,11 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
+//import javax.persistence.GeneratedValue;
+//import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -22,14 +24,17 @@ public class AprobacionHoras implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "cod_actividad")
 	private Long codActividad;
 	
-	@NotEmpty
-	@Column(name = "cod_recurso")
-	private Long codRecurso;
+//	@NotEmpty
+//	@Column(name = "cod_recurso")
+//	private Long codRecurso;
 	
+	@OneToOne
+	@JoinColumn(name = "cod_recurso")
+	private Recurso NombreRecurso;
+
 	@NotEmpty
 	@Column(name = "desc_comentario_detalle")
 	private String descComentarioDetalle;
@@ -45,7 +50,7 @@ public class AprobacionHoras implements Serializable {
 	private Date fecFinActividad;
 	
 	@Column(name = "fec_registro")
-	@Temporal(TemporalType.TIMESTAMP)
+	@Temporal(TemporalType.DATE)
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date fecRegistro;
 	
@@ -88,12 +93,20 @@ public class AprobacionHoras implements Serializable {
 		this.codActividad = codActividad;
 	}
 
-	public Long getCodRecurso() {
-		return codRecurso;
+//	public Long getCodRecurso() {
+//		return codRecurso;
+//	}
+//
+//	public void setCodRecurso(Long codRecurso) {
+//		this.codRecurso = codRecurso;
+//	}
+	
+	public String getNombreRecurso() {
+		return NombreRecurso.getDescRecurso();
 	}
 
-	public void setCodRecurso(Long codRecurso) {
-		this.codRecurso = codRecurso;
+	public void setNombreRecurso(Recurso NombreRecurso) {
+		this.NombreRecurso = NombreRecurso;
 	}
 
 	public String getDescComentarioDetalle() {

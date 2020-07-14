@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html lang="es" xmlns:th="http://www.thymeleaf.org"  xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head th:replace="layout/layout::head"></head>
 
@@ -26,7 +26,7 @@
             <!-- Nav Item - Dashboard -->
             <li class="nav-item">
                 <a class="nav-link" th:href="@{/}">
-                    <i class="fas fa-fw <!--fa-tachometer-alt-->"></i>
+                    <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Agenda</span></a>
             </li>
 
@@ -59,7 +59,7 @@
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
                     aria-expanded="true" aria-controls="collapseUtilities">
                     <i class="fas fa-fw fa-wrench"></i>
-                    <span>Edici&oacute;n</span>
+                    <span>Edicion</span>
                 </a>
                 <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
                     data-parent="#accordionSidebar">
@@ -116,7 +116,7 @@
             <li class="nav-item active">
                 <a class="nav-link" href="#">
                     <i class="fas fa-fw fa-table"></i>
-                    <span>Lista de contactos</span></a>
+                    <span>Lista de capturas</span></a>
             </li>
 
             <!-- Divider -->
@@ -143,22 +143,34 @@
 
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-2 text-gray-800">Contactos</h1>
-                        <a th:href="@{/formContacto/}" class="btn btn-primary">
-                            <i class="fas fa-plus fa-sm text-white-50"></i> Agregar Contacto
-                        </a>
+                        <h1 class="h3 mb-2 text-gray-800">Aprobaci&oacute;n de horas</h1>
                     </div>
 
                     <!-- Filter -->
                     <div class="row">
+                        <!--<div class="input-group col-sm">
+                            <div class="input-group mb-4">
+                                <div class="input-group-prepend">
+                                    <label class="input-group-text" for="inputGroupSelectCliente">Colaborador</label>
+                                </div>
+                                <select name="recurso" class="custom-select" id="filterRecurso">
+                                    <option selected>Seleccione un recurso...</option>
+                                    <option th:each="recurso : ${recursos}" th:value="${recurso.codRecurso}" th:text="${recurso.descRecurso}"></option>
+                                </select>
+                            </div>
+                        </div>-->
                         <div class="input-group col-sm-4">
                             <div class="input-group mb-4">
                                 <div class="input-group-prepend">
-                                    <label class="input-group-text" for="filterCliente">Seleccione cliente</label>
+                                    <label class="input-group-text" for="inputGroupSelectCliente">Proyecto</label>
                                 </div>
-                                <select name="cliente" class="custom-select" id="filterCliente">
+                                <select class="custom-select" id="inputGroupSelectCliente">
                                     <option selected value="-1">Todos</option>
-                                    <option th:each="cliente:${clientes}" th:value="${cliente.codCliente}" th:text="${cliente.descCliente}"></option>
+                                    <option>Proyecto 1</option>
+                                    <option>Proyecto 2</option>
+                                    <option>Proyecto 3</option>
+                                    <option>Proyecto 4</option>
+                                    <option>Proyecto 5</option>
                                 </select>
                             </div>
                         </div>
@@ -167,84 +179,65 @@
                     <!-- DataTales Example -->
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary">Lista de contactos</h6>
+                            <h6 class="m-0 font-weight-bold text-primary">Detalle de horas de la semana 08/06/2020 al 12/06/2020</h6>
                         </div>
                         <div class="card-body" id="contenidoTabla">
                             <div class="table-responsive">
+                            <form th:action="@{/validacionHoras}" th:Object="${aprobacionhoras}" method="POST">
                                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                     <thead>
                                         <tr>
-                                            <th>Nombre</th>
-                                            <th>Puesto</th>
-                                            <th>Recursos a cargo</th>
-                                            <th>E-mail</th>
-                                            <th>Tel&eacute;fono Celular</th>
-                                            <th>Tel&eacute;fono Empresa</th>
-                                            <th>Extensi&oacute;n</th>
-                                            <th>Acciones</th>
+                                            <th>Check</th>
+                                            <th>Fecha</th>
+                                            <th>Colaborador</th>
+                                            <th>Tarea</th>
+                                            <th>Horas Capturadas</th>
+                                            <th>Horas Validadas</th>
                                         </tr>
                                     </thead>
                                     <tfoot>
-                                         <tr>
-                                            <th>Nombre</th>
-                                            <th>Puesto</th>
-                                            <th>Recursos a cargo</th>
-                                            <th>E-mail</th>
-                                            <th>Tel&eacute;fono Celular</th>
-                                            <th>Tel&eacute;fono Empresa</th>
-                                            <th>Extensi&oacute;n</th>
-                                            <th>Acciones</th>
+                                        <tr>
+                                            <th>Check</th>
+                                            <th>Fecha</th>
+                                            <th>Colaborador</th>
+                                            <th>Tarea</th>
+                                            <th>Horas Capturadas</th>
+                                            <th>Horas Validadas</th>
                                         </tr>
                                     </tfoot>
                                     <tbody>
-                                        <tr th:each="agenda: ${contactos}">
-                                            <td th:text="${agenda.descContacto}"></td>
-                                            <td th:text="${agenda.descPuesto}"></td>
-                                            <td th:text="${agenda.valRecursosACargo}"></td>
-                                            <td th:text="${agenda.descCorreoElectronico}"></td>
-                                            <td th:text="${agenda.descTelCelular}"></td>
-                                            <td th:text="${agenda.descTelEmpresa}"></td>
-                                            <td th:text="${agenda.descTelExt}"></td>
-                                            <td>
-                                                <a th:href="@{/dataContacto/} + ${agenda.codContacto}"
-                                                    class="btn btn-primary btn-circle btn-sm"><i
-                                                        class="far fa-eye"></i></a>
-                                                <a th:href="@{/formContacto/} + ${agenda.codContacto}"
-                                                    class="btn btn-primary btn-circle btn-sm"><i
-                                                        class="far fa-edit"></i></a>
-                                                <a th:onclick="eliminar([[${agenda.codContacto}]])" class="btn btn-primary btn-circle btn-sm"><i
-                                                        class="far fa-window-close"></i></a>
-                                            </td>
+                                        <tr th:each="aprobacionhoras: ${aprobacionhoras}">
+                                            <td><input type="checkbox" name="check" th:value="${aprobacionhoras.getFecValidacion()}" onClick="checkbox();"/></td>
+                                            <td th:text="${aprobacionhoras.fecRegistro}"></td>
+                                            <!--<td th:text="${aprobacionhoras.codCliente}"></td>-->
+                                            <td th:text="${aprobacionhoras.NombreRecurso}"></td>
+                                            <td th:text="${aprobacionhoras.descComentarioDetalle}"></td>
+                                            <td th:text="${aprobacionhoras.valDuracionReportada}"></td>
+                                            <td><input type="number" style="width : 60px; heigth : 60px" name="validar" th:value="${aprobacionhoras.getValDuracionValidada()}" readonly="readonly"/></td>
                                         </tr>
                                     </tbody>
                                 </table>
+                                </form>
                             </div>
                         </div>
                     </div>
-                    <input id="codigoContacto" type="hidden"></input>
-                     <!--Modal Eliminar -->
-                <div id="eliminarRegistro" class="modal fade" data-backdrop="static" data-keyboard="false"
-                    tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="staticBackdropLabel">Eliminar contacto</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                            <div class="modal-body">
-                                &iquest;Est&aacute; seguro que desea eliminar este contacto?
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                                <a class="btn btn-primary" onclick="eliminarRegistro();">Eliminar</a>
-                            </div>
+                    <div class="row">
+                        <div class="col-sm-5 mb-3 mb-sm-0">
+                            <input type="submit" value="Guardar" class="btn btn-primary"/>
+                            <a th:href="@{/}" class="btn btn-secondary" role="button">Cancelar</a>
+                        </div>
+                        <div class="col-sm-5 mb-3 mb-sm-0">
+                        </div>
+                        <div class="col-sm-2 mb-3 mb-sm-0">
                         </div>
                     </div>
-                </div>
                 </div>
                 <!-- /.container-fluid -->
+                <!-- Button trigger modal 
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#staticBackdrop">
+                    Launch static backdrop modal
+                </button>-->
+                
             </div>
             <!-- End of Main Content -->
 
@@ -283,10 +276,9 @@
 
     <!-- Page level custom scripts -->
     <script th:src="@{/js/demo/datatables-demo.js}"></script>
-<!--     <script src="https://code.jquery.com/jquery-3.5.1.js"></script> -->
-<!--     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script> -->
-    <script th:src="@{/js/eliminarContacto.js}"></script>
-    <script th:src="@{/js/mostrarContactosCliente.js}"></script>
+
+    <script th:src="@{/js/checkbox.js}"></script>
+    <script th:src="@{/js/mostrarHorasRecurso.js}"></script>
 
 </body>
 

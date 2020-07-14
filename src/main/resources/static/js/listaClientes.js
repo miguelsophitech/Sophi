@@ -17,7 +17,7 @@ function eliminar(id){
           })
         Swal.fire(
           '¡Registro eliminado!',
-          'El registro a sido eliminado.',
+          'El registro ha sido eliminado.',
           'success'
         )
       }

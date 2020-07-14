@@ -60,12 +60,12 @@
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseProyecto"
                     aria-expanded="true" aria-controls="collapseProyecto">
                     <i class="fas fa-fw fa-wrench"></i>
-                    <span>Edición</span>
+                    <span>Edici&oacute;n</span>
                 </a>
                 <div id="collapseProyecto" class="collapse" aria-labelledby="headingProyecto"
                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Edición:</h6>
+                        <h6 class="collapse-header">Edici&oacute;n:</h6>
                         <a class="collapse-item" href="#">Proyectos</a>
                         <a class="collapse-item" href="#">Tareas</a>
                     </div>
@@ -101,7 +101,7 @@
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
                     aria-expanded="true" aria-controls="collapseUtilities">
                     <i class="fas fa-fw fa-wrench"></i>
-                    <span>Edición</span>
+                    <span>Edici&oacute;n</span>
                 </a>
                 <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
                     data-parent="#accordionSidebar">
@@ -148,7 +148,7 @@
                 <div id="collapseRecursos" class="collapse" aria-labelledby="headingRecursos"
                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Edición:</h6>
+                        <h6 class="collapse-header">Edici&oacute;n:</h6>
                         <a class="collapse-item" href="#">Recurso interno</a>
                         <a class="collapse-item" href="#">Proveedor</a>
                     </div>
@@ -185,12 +185,12 @@
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseCaptura"
                     aria-expanded="true" aria-controls="collapseCaptura">
                     <i class="fas fa-fw fa-wrench"></i>
-                    <span>Edición</span>
+                    <span>Edici&oacute;n</span>
                 </a>
                 <div id="collapseCaptura" class="collapse" aria-labelledby="headingCaptura"
                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Edición:</h6>
+                        <h6 class="collapse-header">Edici&oacute;n:</h6>
                         <a class="collapse-item" href="#">Recurso interno</a>
                         <a class="collapse-item" href="#">Proveedor</a>
                     </div>
@@ -293,7 +293,7 @@
                                         </div>
                                         <div class="form-group mb-3 ml-3 mr-3">
                                             <label for="formGroupInputRFC">Fecha de actualizaci&oacute;n</label>
-                                            <input type="text" th:field="*{fecActualizacion}" class="form-control" th:errorClass="form-control alert-danger" placeholder="yyyy-MM-dd"/>
+                                            <input type="date" th:field="*{fecActualizacion}" class="form-control" th:errorClass="form-control alert-danger" placeholder="yyyy-MM-dd"/>
                                             <small class="form-text text-danger" th:if="${#fields.hasErrors('fecActualizacion')}" th:errors="*{fecActualizacion}"></small>
                                         </div>
                                         <div class="form-group mb-3 ml-3 mr-3">
@@ -308,11 +308,11 @@
                                         </div>
                                         <div class="form-group mb-3 ml-3 mr-3">
                                             <label for="formGroupInputNumEmp">Facturaci&oacute;n anual</label>
-                                            <input type="text" th:field="*{impFacturacionAnual}" class="form-control" th:errorClass="form-control alert-danger"/>
+                                            <input type="number" th:field="*{impFacturacionAnual}" class="form-control" th:errorClass="form-control alert-danger" placeholder="$"/>
                                             <small class="form-text text-danger" th:if="${#fields.hasErrors('impFacturacionAnual')}" th:errors="*{impFacturacionAnual}"></small>
                                         </div>
                                         <div class="form-group mb-3 ml-3 mr-3">
-                                            <label for="formGroupInputNumEmp">Rango de recursos</label>
+                                            <label for="formGroupInputNumEmp">Tama&ntilde;o de la empresa</label>
                                             <input type="text" th:field="*{descRangoRecursos}" class="form-control" th:errorClass="form-control alert-danger"/>
                                             <small class="form-text text-danger" th:if="${#fields.hasErrors('descRangoRecursos')}" th:errors="*{descRangoRecursos}"></small>
                                         </div>
