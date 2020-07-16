@@ -10,6 +10,7 @@ import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotEmpty;
 
 import org.springframework.format.annotation.DateTimeFormat;
@@ -26,6 +27,9 @@ public class CapHora implements Serializable{
 	@NotEmpty(message = "Este dato no debe estar vacío")
 	@Column(name = "desc_comentario_detalle")
 	private String descComentarioDetalle;
+	
+	@Transient
+	private String descActividadSecundaria;
 	
 	@Column(name = "fec_inicio_actividad")
 	@Temporal(TemporalType.DATE)
@@ -148,9 +152,15 @@ public class CapHora implements Serializable{
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
+	
+	public String getDescActividadSecundaria() {
+		return descActividadSecundaria;
+	}
 
-	
-	
+	public void setDescActividadSecundaria(String descActividadSecundaria) {
+		this.descActividadSecundaria = descActividadSecundaria;
+	}
+
 	public CapHora(CapHoraId id, @NotEmpty(message = "Este dato no debe estar vacío") String descComentarioDetalle,
 			Date fecInicioActividad, Date fecFinActividad, float valDuracionReportada, float valDuracionValidad,
 			Long codRecursoValidador, Long valNuevaActividad, Date fecValidacion, Date fecRegistro) {

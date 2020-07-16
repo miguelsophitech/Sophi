@@ -8,24 +8,40 @@ $(document).ready(function() {
 		limpiaActive();
 		formatoFechaLarga(sumarDias(fh, 1));
 		completaSemana(fh);
-//		cargaActividadDia();
+		cargaActividadDia();
 	});
 
 	$("#antDia").click(function() {
 		limpiaActive();
 		formatoFechaLarga(sumarDias(fh, -1));
 		completaSemana(fh);
-//		cargaActividadDia();
+		cargaActividadDia();
 	});
 
 	$("#selectProyecto").change(function() {
 		cargarActividadesPrimariasProyecto();
 	});
 	
+	$("a[id^='da']").click(function(){
+		limpiaActive();
+		$(this).addClass("active");
+		
+		cargaActividadDia();
+		var fech = $("#semanaDias .active span").text().split("-");
+		fh = new Date(+fech[2], fech[1]-1, +fech[0]);
+		formatoFechaLarga(fh);
+	});
+	
 
-//	cargarActividadesProyecto();
+	cargaActividadDia();
 
 });
+
+function cargaActividadDia(){
+	var fech = $("#semanaDias .active span").text();
+	var url="/cargarActividadCapturadas/1/"+fech;
+	$("#detalleHorasCapturadas").load(url);
+}
 
 function cargarActividadesPrimariasProyecto(){
 	var url="/cargarActividadPrimaria/1/"+$("#selectProyecto").val();
@@ -38,7 +54,6 @@ function filtraActPorFase(){
 
 function cargarActividadesSecundariasProyecto(){
 	var url="/cargarActividadSecundaria/1/"+$("#selectProyecto").val()+"/"+encodeURIComponent($("#selectActividadesPrimarias").val());
-	alert(url);
 	$("#resultListActividadesSecundarias").load(url);
 }
 
@@ -46,19 +61,16 @@ function cargarActividadesSecundariasProyecto(){
 function altaCapHoraActividad(){
 	var fech = $("#semanaDias .active span").text();
 	var url="/cargarDetActividad/"+$("#selectActividadesSecundarias").val()+"/"+fech;
-	alert(url);
 	$("#resultDetActividades").load(url);
 }
-
-
-
-
 
 function limpiaActive() {
 	for (var i = 0; i <= 6; i++) {
 		$("#da" + i).removeClass("active");
 	}
 }
+
+
 
 function formatoFechaLarga(fecha) {
 	var meses = new Array("Enero", "Febrero", "Marzo", "Abril", "Mayo",
@@ -107,29 +119,4 @@ function diasArriba(far) {
 }
 
 
-	
-//	$("#buscarActividad").autocomplete({
-//		source: function(request, response){
-//			$.ajax({
-//				url:"/cargarActividad/" + request.term,
-//				dataType:"json",
-//				data:{
-//					term:request.term
-//				},
-//				success: function(data){
-//					response($.map(data,function(item){
-//						return{
-//							value: item.codActividad,
-//							label: item.descActividadSecundaria
-//						}
-//					}));
-//				}
-			
-//			});
-//		},
-//		select: function(event, ui){
-//			$("#buscarActividad").val(ui,item.desActividadSecundaria);
-//			return false;
-//		}
-	
-//	});
+

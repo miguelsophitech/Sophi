@@ -72,11 +72,14 @@ public class CapHorasController {
 	}
 	
 	
-	@GetMapping(value="/cargarActividadCapturadas/{codActividad}/{fecCaptura}")
+	@GetMapping(value="/cargarActividadCapturadas/{codRecurso}/{fecCaptura}")
 	public String cargarActividadesCapturadas(@PathVariable Long codRecurso, @PathVariable @DateTimeFormat(pattern = "dd-MM-yyyy") Date fecCaptura, Model model){
 		
 		List<CapHora> listActHoraCapturadas = new ArrayList<CapHora>();
 		listActHoraCapturadas = capHoraService.findListCapHoraByFechaRecurso(fecCaptura, codRecurso);
+		for (CapHora capHora : listActHoraCapturadas) {
+			capHora.setDescActividadSecundaria(actividadService.findOne(capHora.getId().getCodActividad()).getDescActividadSecundaria());
+		}
 		model.addAttribute("listActHoraCapturadas", listActHoraCapturadas);
 		return "layout/capHora :: detActividadesCapturadas";
 	}
