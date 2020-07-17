@@ -1,0 +1,127 @@
+.tituloC {
+  color: #1c1c31;
+}
+
+.comentario{
+	font-size: 13px;
+}
+
+h1>span.tituloA {
+   color: #c02c57;
+}
+
+h1>span.tituloB {
+   font-size: 20px;
+}
+
+h1>span.tituloBN {
+   font-size: 20px;
+   font-weight: bold;
+}
+
+/*Archivos*/
+
+.files input {
+    outline: 2px dashed #c02c57;
+    outline-offset: -10px;
+    -webkit-transition: outline-offset .15s ease-in-out, background-color .15s linear;
+    transition: outline-offset .15s ease-in-out, background-color .15s linear;
+    padding: 120px 0px 85px 35%;
+    text-align: center !important;
+    margin: 0;
+    width: 100% !important;
+    opacity:0; 
+}
+.files input:focus{     outline: 2px dashed #c02c57;  outline-offset: -10px;
+    -webkit-transition: outline-offset .15s ease-in-out, background-color .15s linear;
+    transition: outline-offset .15s ease-in-out, background-color .15s linear; border:1px solid #92b0b3;
+ }
+.files{ position:relative}
+.files:after {  pointer-events: none;
+    position: absolute;
+    top: 60px;
+    left: 0;
+    width: 50px;
+    right: 0;
+    height: 56px;
+    content: "";
+    background-image: url(https://image.flaticon.com/icons/png/128/109/109612.png);
+    display: block;
+    margin: 0 auto;
+    background-size: 100%;
+    background-repeat: no-repeat;
+}
+.color input{ background-color:#c02c57;}
+.files:before {
+    position: absolute;
+    bottom: 10px;
+    left: 0;  pointer-events: none;
+    width: 100%;
+    right: 0;
+    height: 57px;
+    content: " Arrastra o selecciona la planeación";
+    display: block;
+    margin: 0 auto;
+    color: #c02c57;
+    font-weight: 600;
+    text-transform: capitalize;
+    text-align: center;
+}
+
+.fondoDragDrop{
+	background-color: #FFFFFF;
+	outline: 2px dashed #c02c57;
+}
+/*Lista*/
+.element ul li {
+  color: #66665D;
+  list-style-type: none;
+  padding: 20px;
+  cursor: pointer;
+  border-bottom: 1px solid #DBDBD3;
+  background-color: #DBDBD3;
+}
+
+.element ul li:last-child {
+  border-bottom: none;
+}
+
+.cabSelect{
+	background-color:#c02c57;
+	color:#FFFFFF;
+}
+
+.cabNormal{
+	background-color:#c02c57;
+	color:#FFFFFF;
+	opacity:0.6;
+}
+
+.proyectoGeneral{
+	font-weight: bold;
+	font-size: 20px;
+	border:none;
+}
+
+.centro{
+	 text-align: center;
+	 vertical-align:middle;
+}
+
+.recOK{
+	background-color:#B5E3A3;
+	color:#FFFFFF;
+	opacity:0.6;
+}
+
+.recMen{
+	background-color:#F9C2A3;
+	color:#FFFFFF;
+	opacity:0.6;
+}
+
+.recMas{
+	background-color:#F6A9AB;
+	color:#FFFFFF;
+	opacity:0.6;
+}
