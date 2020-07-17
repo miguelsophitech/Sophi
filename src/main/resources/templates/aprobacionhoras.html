@@ -140,12 +140,10 @@
 
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
-
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
                         <h1 class="h3 mb-2 text-gray-800">Aprobaci&oacute;n de horas</h1>
                     </div>
-
                     <!-- Filter -->
                     <div class="row">
                         <!--<div class="input-group col-sm">
@@ -179,52 +177,65 @@
                     <!-- DataTales Example -->
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary">Detalle de horas de la semana 08/06/2020 al 12/06/2020</h6>
+                            <h6 class="m-0 font-weight-bold text-primary">Detalle de horas</h6>
                         </div>
                         <div class="card-body" id="contenidoTabla">
                             <div class="table-responsive">
-                            <form th:action="@{/validacionHoras}" th:Object="${aprobacionhoras}" method="POST">
+                            <form th:action="@{/guardar}" th:object="${aprobacionhoras}" method="POST">
                                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                     <thead>
                                         <tr>
-                                            <th>Check</th>
+                                            <th></th>
                                             <th>Fecha</th>
                                             <th>Colaborador</th>
-                                            <th>Tarea</th>
+                                            <th>Comentario</th>
+                                            <th>Horas Planeadas</th>
                                             <th>Horas Capturadas</th>
                                             <th>Horas Validadas</th>
                                         </tr>
                                     </thead>
                                     <tfoot>
                                         <tr>
-                                            <th>Check</th>
+                                            <th></th>
                                             <th>Fecha</th>
                                             <th>Colaborador</th>
-                                            <th>Tarea</th>
+                                            <th>Comentario</th>
+                                            <th>Horas Planeadas</th>
                                             <th>Horas Capturadas</th>
                                             <th>Horas Validadas</th>
                                         </tr>
                                     </tfoot>
                                     <tbody>
                                         <tr th:each="aprobacionhoras: ${aprobacionhoras}">
-                                            <td><input type="checkbox" name="check" th:value="${aprobacionhoras.getFecValidacion()}" onClick="checkbox();"/></td>
+                                            <td><input type="checkbox" name="check" onClick="checkbox();"/></td>
                                             <td th:text="${aprobacionhoras.fecRegistro}"></td>
-                                            <!--<td th:text="${aprobacionhoras.codCliente}"></td>-->
-                                            <td th:text="${aprobacionhoras.NombreRecurso}"></td>
+                                            <td th:text="${aprobacionhoras.getRecurso().getDescRecurso()}"></td>
                                             <td th:text="${aprobacionhoras.descComentarioDetalle}"></td>
+                                            <td th:text="${aprobacionhoras.HorasPlaneadas}"></td>
                                             <td th:text="${aprobacionhoras.valDuracionReportada}"></td>
-                                            <td><input type="number" style="width : 60px; heigth : 60px" name="validar" th:value="${aprobacionhoras.getValDuracionValidada()}" readonly="readonly"/></td>
+                                            <td>
+                                            <input type="hidden" th:value="${aprobacionhoras.codActividad}">
+                                            <input type="text" style="width : 60px; heigth : 60px" name="validar" th:value="${aprobacionhoras.valDuracionValidada}" disabled/>
+                                            <input type="hidden" th:value="${aprobacionhoras.fecValidacion}">
+                                            </td>
                                         </tr>
-                                    </tbody>
+<!-- 											<tr th:each="aprobacioneshoras, itemStat : ${aprobacionhoras.aprobacionhoras}"> -->
+<!-- 												<td><input type="text" th:name="|aprobaciones[${itemStat.index}].codActividad|" th:value="${aprobacioneshoras.getCodActividad()}" /></td> -->
+<!-- 												<td><input type="text" th:name="|aprobaciones[${itemStat.index}].fecRegistro|" th:value="${aprobacioneshoras.getFecRegistro()}" /></td> -->
+<!-- 												<td><input type="text" th:name="|aprobaciones[${itemStat.index}].recurso.descRecurso|" th:value="${aprobacioneshoras.getRecurso().getDescRecurso()}" /></td> -->
+<!-- 												<td><input type="text" th:name="|aprobaciones[${itemStat.index}].descComentarioDetalle|" th:value="${aprobacioneshoras.getDescComentarioDetalle()}" /></td> -->
+<!-- 												<td><input type="text" th:name="|aprobaciones[${itemStat.index}].valDuracionValidad|" th:value="${aprobacioneshoras.getValDuracionValidada()}" /></td> -->
+<!-- 											</tr> -->
+										</tbody>
                                 </table>
+                                <input type="submit" value="Validar" class="btn btn-primary"/>
                                 </form>
                             </div>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-sm-5 mb-3 mb-sm-0">
-                            <input type="submit" value="Guardar" class="btn btn-primary"/>
-                            <a th:href="@{/}" class="btn btn-secondary" role="button">Cancelar</a>
+                            <a th:href="@{/}" class="btn btn-secondary" role="button">Regresar</a>
                         </div>
                         <div class="col-sm-5 mb-3 mb-sm-0">
                         </div>

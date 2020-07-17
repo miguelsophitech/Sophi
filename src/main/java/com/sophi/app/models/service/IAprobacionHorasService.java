@@ -14,4 +14,8 @@ public interface IAprobacionHorasService {
 	
 	public AprobacionHoras findOne(Long codActividad);
 
+	//public void save(AprobacionHoras aprobacionhoras);
+
+	public void saveAll(List<AprobacionHoras> aprobacionhoras);
+
 }
