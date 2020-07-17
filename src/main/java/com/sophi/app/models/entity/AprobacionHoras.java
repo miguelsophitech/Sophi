@@ -13,7 +13,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.validation.constraints.NotEmpty;
+//import javax.validation.constraints.NotEmpty;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -22,20 +22,22 @@ import org.springframework.format.annotation.DateTimeFormat;
 public class AprobacionHoras implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
-	
+
 	@Id
 	@Column(name = "cod_actividad")
 	private Long codActividad;
 	
-//	@NotEmpty
+	@OneToOne
+	@JoinColumn(name = "cod_actividad")
+	private Actividad HorasPlaneadas, ActividadPrimaria, ActividadSecundaria;
+	
 //	@Column(name = "cod_recurso")
 //	private Long codRecurso;
-	
+
 	@OneToOne
 	@JoinColumn(name = "cod_recurso")
-	private Recurso NombreRecurso;
+	private Recurso recurso;
 
-	@NotEmpty
 	@Column(name = "desc_comentario_detalle")
 	private String descComentarioDetalle;
 	
@@ -54,43 +56,68 @@ public class AprobacionHoras implements Serializable {
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date fecRegistro;
 	
-	@NotEmpty
 	@Column(name = "cod_proyecto")
 	private Long codProyecto;
 	
-	@NotEmpty
 	@Column(name = "val_duracion_reportada")
 	private Float valDuracionReportada;
 	
-	@NotEmpty
 	@Column(name = "val_duracion_validada")
 	private Float valDuracionValidada;
 	
-	@NotEmpty
 	@Column(name = "cod_recurso_validador")
 	private Long codRecursoValidador;
 	
 	@Column(name = "fec_validacion")
 	private Date fecValidacion;
 	
-	@NotEmpty
 	@Column(name = "cod_cliente")
 	private Long codCliente;
 	
-	@NotEmpty
 	@Column(name = "val_nueva_actividad")
 	private Long valNuevaActividad;
 	
-	@NotEmpty
 	@Column(name = "cod_estatus_proyecto")
 	private Long codEstatusProyecto;
 
+	public Recurso getRecurso() {
+		return recurso;
+	}
+
+	public void setRecurso(Recurso recurso) {
+		this.recurso = recurso;
+	}
+	
 	public Long getCodActividad() {
 		return codActividad;
 	}
 
 	public void setCodActividad(Long codActividad) {
 		this.codActividad = codActividad;
+	}
+	
+	public Float getHorasPlaneadas() {
+		return HorasPlaneadas.getValDuracionActividad();
+	}
+
+	public void setHorasPlaneadas(Actividad horasPlaneadas) {
+		HorasPlaneadas = horasPlaneadas;
+	}
+	
+	public String getActividadPrimaria() {
+		return ActividadPrimaria.getDescActividadPrimaria();
+	}
+
+	public void setActividadPrimaria(Actividad actividadPrimaria) {
+		ActividadPrimaria = actividadPrimaria;
+	}
+	
+	public String getActividadSecundaria() {
+		return ActividadSecundaria.getDescActividadSecundaria();
+	}
+
+	public void setActividadSecundaria(Actividad actividadSecundaria) {
+		ActividadSecundaria = actividadSecundaria;
 	}
 
 //	public Long getCodRecurso() {
@@ -101,14 +128,7 @@ public class AprobacionHoras implements Serializable {
 //		this.codRecurso = codRecurso;
 //	}
 	
-	public String getNombreRecurso() {
-		return NombreRecurso.getDescRecurso();
-	}
-
-	public void setNombreRecurso(Recurso NombreRecurso) {
-		this.NombreRecurso = NombreRecurso;
-	}
-
+	
 	public String getDescComentarioDetalle() {
 		return descComentarioDetalle;
 	}
