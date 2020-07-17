@@ -162,8 +162,13 @@ public class PreventaProyectoController {
 		dciid.setCodCliente(codCliente);
 		dciid.setCodDetalleInfraestructura(codDetalleInfra);
 		
-		//dci.setDetalleClienteInfraestructuraId(dciid);
 		
+		//dci.setDetalleClienteInfraestructuraId(dciid);
+		DetalleInfraestructura di = detalleInfraestructuraService.findOne(codDetalleInfra);
+		Cliente client= clienteService.findOne(codCliente);
+		dci.setId(dciid);
+		dci.setDetalleInfraestructura(di);
+		dci.setCliente(client);
 		dci.setDescVersion("");
 		dci.setFecRegistro(fechaHoy);
 		detalleClienteInfraestructuraService.save(dci);
@@ -173,9 +178,9 @@ public class PreventaProyectoController {
 		dpiid.setCodProyecto(codProyecto);
 		dpiid.setCodCliente(codCliente);
 		
-//		detalleProyectoInfraestructuraService.borrarByCodProyecto(codProyecto);
+		//detalleProyectoInfraestructuraService.borrarByCodProyecto(codProyecto);
 		dpi.setDetalleProyectoInfraestructuraId(dpiid);
-		dpi.setDescVersion("");
+		dpi.setDescVersion(dci.getDescVersion());
 		dpi.setFecRegistro(fechaHoy);
 		detalleProyectoInfraestructuraService.save(dpi);
 		Proyecto proyecto = proyectoService.findByProyectoIdCodProyectoAndProyectoIdCodEstatusProyectoAndProyectoIdCodCliente(codProyecto, codEstatusProyecto, codCliente);
@@ -386,7 +391,25 @@ public class PreventaProyectoController {
 	@RequestMapping(value = "/listaProyectosTodo", method = RequestMethod.GET)
 	public String listaProyectos(Model model) {
 		model.addAttribute("clientes", clienteService.findAll());
-		model.addAttribute("proyectos", proyectoService.findAll());
+		List<Proyecto> listaProyecto = proyectoService.findAll();
+		List<Proyecto> listaProyectoTodo = proyectoService.findAll();
+		Proyecto proyectoAux;
+		Long a=0L;
+		Long b=0L;
+		for(Proyecto p : listaProyecto) {
+			if(p.getProyectoId().getCodEstatusProyecto()==2) {
+				a++;
+				proyectoAux=proyectoService.findByProyectoIdCodProyectoAndProyectoIdCodEstatusProyectoAndProyectoIdCodCliente(p.getProyectoId().getCodProyecto(), 1L, p.getProyectoId().getCodCliente());
+				if(proyectoAux!=null) {
+					System.out.println("Estos proyecto "+proyectoAux.getProyectoId().getCodEstatusProyecto());
+					b++;
+					listaProyectoTodo.remove(proyectoAux);
+				}
+			}
+		}
+		System.out.println("Totalde proyecots "+a);
+		System.out.println("PRoyectos con preventa "+b);
+		model.addAttribute("proyectos", listaProyectoTodo);
 		//proyectoService.
 		return "preventaProyectoListaTodo";
 	}
@@ -506,6 +529,7 @@ public class PreventaProyectoController {
 		model.addAttribute("tecAcept", listaDISel);
 		model.addAttribute("textoTec", texto);
 		model.addAttribute("codCon", codCon);
+		model.addAttribute("contactoVista", agendaService.findOne(codCon));
 		model.addAttribute("recursos", recursoService.findAll());
 			
 		model.addAttribute("clasificacionesProyecto", clasificacionproyectoService.findAll());
@@ -620,6 +644,7 @@ public class PreventaProyectoController {
 			for(int indice = 0;indice<listaDPC.size();indice++){
 				codCon=listaDPC.get(indice).getDetalleProyectoContactoId().getCodContacto();
 			}
+			
 			modelM.put("proyecto", proyecto);
 			model.addAttribute("tecnologias", listaDI);
 			model.addAttribute("tecAcept", listaDISel);

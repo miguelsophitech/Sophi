@@ -443,7 +443,7 @@
                    </div>
                    <div class="col-sm-5 mb-6 mb-sm-0" id="complementoProyecto">
                       <br>
-                      <a class="btn btn-primary" href="#" role="button">Complemento de proyecto</a>
+                      <a class="btn btn-primary" data-toggle="modal" data-target="#modalComplemento" href="#" role="button">Complemento de proyecto</a>
                    </div>
                    <div class="col-sm-3 mb-6 mb-sm-0">
                       <br>
@@ -518,46 +518,32 @@
     </div>
   </div>
 
-  <!-- Modal Tecnologia -->
-  <div class="modal fade" id="modalTecnologia" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <!-- Modal Complemento -->
+  <div class="modal fade" id="modalComplemento" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Tecnología del proyecto</h5>
+          <h5 class="modal-title" id="exampleModalLabel">Datos complementarios</h5>
           <button class="close" type="button" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">×</span>
           </button>
         </div>
         <div class="modal-body">
-          Por favor, agrega las tecnologías del proyecto
-  <div class="row">
-        <div class="col-md-5">
-          <select name="from" id="undo_redo" class="form-control" size="13" multiple="multiple">
-            <option th:each="tecnologia : ${tecnologias}" th:value="${tecnologia.codDetalleInfraestructura}" th:text="${tecnologia.descDetalle}"/>
-          </select>
-        </div>
-        
-        <div class="col-md-2">
-          <button type="button" id="undo_redo_undo" class="btn btn-primary btn-block" >Deshacer</button>
-          <button type="button" id="undo_redo_rightAll" class="btn btn-primary btn-block" ><i class="fa fa-angle-double-right"></i></button>
-          <button type="button" id="undo_redo_rightSelected" class="btn btn-primary btn-block" ><i class="fa fa-angle-right"></i></button>
-          <button type="button" id="undo_redo_leftSelected" class="btn btn-primary btn-block" ><i class="fa fa-angle-left"></i></button>
-          <button type="button" id="undo_redo_leftAll" class="btn btn-primary btn-block" ><i class="fa fa-angle-double-left"></i></button>
-          <button type="button" id="undo_redo_redo" class="btn btn-primary btn-block">Rehacer</button>
-        </div>
-        
-        <div class="col-md-5">
-          <select name="to" id="undo_redo_to" class="form-control" size="13" multiple="multiple">
-          	<option th:each="a : ${tecAcept}" th:value="${a.codDetalleInfraestructura}" th:text="${a.descDetalle}"/>
-          </select>
-        </div>
-  </div>
-   <br>
-  <br>
+          Contacto
+          <ul>
+  			<li th:text="'Nombre: ' + ${contactoVista.descContacto}"></li>
+  			<li th:text="'Correo electrónico: ' + ${contactoVista.descCorreoElectronico}"></li>
+  			<li th:text="'Celular: ' + ${contactoVista.descTelCelular}"></li>
+  			<li th:text="'Teléfono empresa: ' + ${contactoVista.descTelEmpresa}"></li>
+  			<li th:text="'Cumpleaños: ' + ${contactoVista.fecNacimiento}"></li>
+		  </ul>
+          Tengnología
+          <ol>
+  			<li th:each="tec : ${tecAcept}" th:text="${tec.descDetalle}"></li>
+		  </ol>
         </div>
         <div class="modal-footer">
-          <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
-          <a class="btn btn-primary" data-dismiss="modal" id="guardarInfra" href="">Aceptar</a>
+          <a class="btn btn-primary" data-dismiss="modal" href="">Entendido</a>
         </div>
       </div>
     </div>

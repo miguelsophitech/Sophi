@@ -330,7 +330,7 @@
                       <label for="ecnologia">Tecnología</label>
                   </div>
                   <div class="col-sm-4">
-                    <input type="text" class="form-control" id="tecnologia" placeholder="Tecnología">
+                    <input type="text" th:value="${textoTec}" class="form-control" id="tecnologia" placeholder="Tecnología">
                   </div>
                   <div class="col-sm-4"> 
                      <a class="btn btn-primary" href="#" data-toggle="modal" data-target="#modalTecnologia" role="button"><i class="fas fa-plus-circle fa-sm text-white-50"></i></a>
@@ -428,7 +428,9 @@
         </div>
         
         <div class="col-md-5">
-          <select name="to" id="undo_redo_to" class="form-control" size="13" multiple="multiple"></select>
+          <select name="to" id="undo_redo_to" class="form-control" size="13" multiple="multiple">
+          	<option th:each="a : ${tecAcept}" th:value="${a.codDetalleInfraestructura}" th:text="${a.descDetalle}"/>
+          </select>
         </div>
   </div>
    <br>
