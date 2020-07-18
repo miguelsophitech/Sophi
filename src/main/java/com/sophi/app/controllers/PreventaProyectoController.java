@@ -394,23 +394,16 @@ public class PreventaProyectoController {
 		List<Proyecto> listaProyecto = proyectoService.findAll();
 		List<Proyecto> listaProyectoTodo = proyectoService.findAll();
 		Proyecto proyectoAux;
-		Long a=0L;
-		Long b=0L;
+
 		for(Proyecto p : listaProyecto) {
 			if(p.getProyectoId().getCodEstatusProyecto()==2) {
-				a++;
 				proyectoAux=proyectoService.findByProyectoIdCodProyectoAndProyectoIdCodEstatusProyectoAndProyectoIdCodCliente(p.getProyectoId().getCodProyecto(), 1L, p.getProyectoId().getCodCliente());
 				if(proyectoAux!=null) {
-					System.out.println("Estos proyecto "+proyectoAux.getProyectoId().getCodEstatusProyecto());
-					b++;
 					listaProyectoTodo.remove(proyectoAux);
 				}
 			}
 		}
-		System.out.println("Totalde proyecots "+a);
-		System.out.println("PRoyectos con preventa "+b);
 		model.addAttribute("proyectos", listaProyectoTodo);
-		//proyectoService.
 		return "preventaProyectoListaTodo";
 	}
 	
@@ -420,11 +413,26 @@ public class PreventaProyectoController {
 		model.addAttribute("clientes", clienteService.findAll());
 		String contenido="";
 		List<Proyecto> listaProyecto;
+		List<Proyecto> listaProyectoTodo;
 		
 		if(codCliente==-1) {
 			listaProyecto=proyectoService.findAll();
+			listaProyectoTodo=proyectoService.findAll();
+			
 		}else{
 			listaProyecto=proyectoService.findByProyectoIdCodCliente(codCliente);
+			listaProyectoTodo=proyectoService.findByProyectoIdCodCliente(codCliente);
+		}
+		
+		Proyecto proyectoAux;
+
+		for(Proyecto p : listaProyecto) {
+			if(p.getProyectoId().getCodEstatusProyecto()==2) {
+				proyectoAux=proyectoService.findByProyectoIdCodProyectoAndProyectoIdCodEstatusProyectoAndProyectoIdCodCliente(p.getProyectoId().getCodProyecto(), 1L, p.getProyectoId().getCodCliente());
+				if(proyectoAux!=null) {
+					listaProyectoTodo.remove(proyectoAux);
+				}
+			}
 		}
 		
 		contenido=contenido+"<div class=\"table-responsive\">"+
@@ -442,7 +450,7 @@ public class PreventaProyectoController {
         "<tbody>";
 		String estatusP="";
         
-		for(Proyecto p : listaProyecto) {
+		for(Proyecto p : listaProyectoTodo) {
 			if(p.getProyectoId().getCodEstatusProyecto()==1) {
 				estatusP="Preventa";
 			}else {
