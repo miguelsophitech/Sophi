@@ -20,7 +20,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-//import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -90,36 +91,36 @@ public class AprobacionHorasController {
 //		"<table class=\"table table-bordered\" id=\"dataTable\" width=\"100%\" cellspacing=\"0\">"+
 //		"<thead>"+
 //		"<tr>"+
-//		"<th>Check</th>"+
+//		"<th></th>"+
 //        "<th>Fecha</th>"+
-//        "<th>Proyecto</th>"+
 //        "<th>Colaborador</th>"+
-//        "<th>Tarea/Descripcion</th>"+
+//        "<th>Comentario</th>"+
+//        "<th>Horas Planeadas</th>"+
 //		"<th>Horas Capturadas</th>"+
 //		"<th>Horas Validadas</th>"+
 //        "</tr>"+
 //        "</thead>"+
 //        "<tfoot>"+
 //		"<tr>"+
-//		"<th>Check</th>"+
+//		"<th></th>"+
 //        "<th>Fecha</th>"+
-//        "<th>Proyecto</th>"+
 //        "<th>Colaborador</th>"+
-//        "<th>Tarea/Descripcion</th>"+
+//        "<th>Comentario</th>"+
+//        "<th>Horas Planeadas</th>"+
 //		"<th>Horas Capturadas</th>"+
 //		"<th>Horas Validadas</th>"+
 //        "</tr>"+
 //        "</tfoot>"+
 //		"<tbody>";
 //		
-//		for(AprobacionHoras aprobacionhoras:aprobacionhorasList){
+//		for(AprobacionHoras aprobacionhoras : aprobacionhorasList){
 //            String tablaAprobacionHoras = "";
-//            tablaAprobacionHoras = "<tr><td><input type=\"checkbox\" name=\"check\" onClick=\"checkbox();\"/></td>";
-//            tablaAprobacionHoras += "<td>"+aprobacionhoras.getFecRegistro()+"</td>";
-//            //tablaAprobacionHoras += "<td>"+aprobacionhoras.getCodCliente()+"</td>";
-//            tablaAprobacionHoras += "<td>"+aprobacionhoras.getNombreRecurso()+"</td>";
+//            tablaAprobacionHoras = "<td><input type=\"checkbox\" name=\"check\" onClick=\"checkbox();\"/></td>";
+//            tablaAprobacionHoras += "<td>"+aprobacionhoras.getRecurso().getDescRecurso()+"</td>";
 //            tablaAprobacionHoras += "<td>"+aprobacionhoras.getDescComentarioDetalle()+"</td>";
-//            tablaAprobacionHoras += "<td><input type=\"number\" name=\"validar\" th:value=\"${aprobacionhoras.getValDuracionValidada()}\" readonly=\"readonly\"/></td></tr>";
+//            tablaAprobacionHoras += "<td>"+aprobacionhoras.getActividad().getValDuracionActividad()+"</td>";
+//            tablaAprobacionHoras += "<td>"+aprobacionhoras.getValDuracionReportada()+"</td>";
+//            tablaAprobacionHoras += "<td>"+aprobacionhoras.getValDuracionValidada()+"</td>";
 //            contenido += tablaAprobacionHoras;
 //        }
 //		

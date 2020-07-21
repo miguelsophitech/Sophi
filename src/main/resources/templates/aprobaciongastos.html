@@ -164,13 +164,9 @@
                                 <div class="input-group-prepend">
                                     <label class="input-group-text" for="inputGroupSelectCliente">Proyecto</label>
                                 </div>
-                                <select class="custom-select" id="inputGroupSelectCliente">
-                                    <option selected>Seleccione...</option>
-                                    <option>Proyecto 1</option>
-                                    <option>Proyecto 2</option>
-                                    <option>Proyecto 3</option>
-                                    <option>Proyecto 4</option>
-                                    <option>Proyecto 5</option>
+                                <select name="Proyecto" class="custom-select" id="filterProyecto">
+                                    <option selected value="-1">Todos</option>
+                                    <option th:each="proyecto:${proyectos}" th:value="${proyecto.proyectoId}" th:text="${proyecto.descProyecto}"></option>
                                 </select>
                             </div>
                         </div>
@@ -179,7 +175,7 @@
                     <!-- DataTales Example -->
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary">Detalle de gastos de la semana 08/06/2020 al 12/06/2020</h6>
+                            <h6 class="m-0 font-weight-bold text-primary">Detalle de gastos de la semana</h6>
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
@@ -187,7 +183,7 @@
                                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                     <thead>
                                         <tr>
-                                            <th>Check</th>
+                                            <th></th>
                                             <th>Tipo de Gasto</th>
                                             <th>Fecha</th>
                                             <th>Colaborador</th>
@@ -197,7 +193,7 @@
                                     </thead>
                                     <tfoot>
                                         <tr>
-                                            <th>Check</th>
+                                            <th></th>
                                             <th>Tipo de Gasto</th>
                                             <th>Fecha</th>
                                             <th>Colaborador</th>
@@ -208,9 +204,9 @@
                                     <tbody>
                                         <tr th:each="aprobaciongastos:${aprobaciongastos}">
                                                 <td><input type="checkbox" name="check"></td>
-                                                <td th:text="${aprobaciongastos.codTipoGasto}"></td>
+                                                <td th:text="${aprobaciongastos.tipogasto.getDescTipoGasto()}"></td>
                                                 <td th:text="${aprobaciongastos.fecRegistro}"></td>
-                                                <td th:text="${aprobaciongastos.NombreRecurso}"></td>
+                                                <td th:text="${aprobaciongastos.recurso.getDescRecurso()}"></td>
                                                 <td th:text="${aprobaciongastos.descComentario}"></td>
                                                 <td th:text="${aprobaciongastos.impGasto}"></td>
                                         </tr>

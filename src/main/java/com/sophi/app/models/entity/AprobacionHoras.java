@@ -58,6 +58,10 @@ public class AprobacionHoras implements Serializable {
 	
 	@Column(name = "cod_proyecto")
 	private Long codProyecto;
+	
+//	@OneToOne
+//	@JoinColumn(name = "cod_proyecto")
+//	private Proyecto proyecto;
 
 	@Column(name = "val_duracion_reportada")
 	private Float valDuracionReportada;
@@ -96,6 +100,14 @@ public class AprobacionHoras implements Serializable {
 	public void setActividad(Actividad actividad) {
 		this.actividad = actividad;
 	}
+	
+//	public Proyecto getProyecto() {
+//		return proyecto;
+//	}
+//
+//	public void setProyecto(Proyecto proyecto) {
+//		this.proyecto = proyecto;
+//	}
 
 //	public Long getCodRecurso() {
 //		return codRecurso;

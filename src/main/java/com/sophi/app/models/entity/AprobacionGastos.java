@@ -5,8 +5,6 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
@@ -24,11 +22,14 @@ public class AprobacionGastos implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "cod_tipo_gasto")
     private Long codTipoGasto;
+    
+    @OneToOne
+    @JoinColumn(name = "cod_tipo_gasto")
+    private TipoGasto tipogasto;
 
-    @NotEmpty
+	@NotEmpty
     @Column(name = "desc_comentario")
     private String descComentario;
 
@@ -48,7 +49,7 @@ public class AprobacionGastos implements Serializable {
 
     @NotEmpty
     @Column(name = "fec_registro")
-    @Temporal(TemporalType.TIMESTAMP)
+    @Temporal(TemporalType.DATE)
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date fecRegistro;
 
@@ -62,7 +63,7 @@ public class AprobacionGastos implements Serializable {
     
     @OneToOne
     @JoinColumn(name = "cod_recurso")
-    private Recurso NombreRecurso;
+    private Recurso recurso;
 
 	@NotEmpty
     @Column(name = "cod_cliente")
@@ -83,6 +84,14 @@ public class AprobacionGastos implements Serializable {
     public void setCodTipoGasto(Long codTipoGasto) {
         this.codTipoGasto = codTipoGasto;
     }
+    
+    public TipoGasto getTipogasto() {
+		return tipogasto;
+	}
+
+	public void setTipogasto(TipoGasto tipogasto) {
+		this.tipogasto = tipogasto;
+	}
 
     public String getDescComentario() {
         return descComentario;
@@ -140,12 +149,12 @@ public class AprobacionGastos implements Serializable {
 //        this.codRecurso = codRecurso;
 //    }
     
-    public String getNombreRecurso() {
-		return NombreRecurso.getDescRecurso();
+    public Recurso getRecurso() {
+		return recurso;
 	}
 
-	public void setNombreRecurso(Recurso nombreRecurso) {
-		NombreRecurso = nombreRecurso;
+	public void setRecurso(Recurso recurso) {
+		this.recurso = recurso;
 	}
 
     public Long getCodCliente() {
