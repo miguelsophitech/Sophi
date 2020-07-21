@@ -29,7 +29,7 @@ public class AprobacionHoras implements Serializable {
 	
 	@OneToOne
 	@JoinColumn(name = "cod_actividad")
-	private Actividad HorasPlaneadas, ActividadPrimaria, ActividadSecundaria;
+	private Actividad actividad;
 	
 //	@Column(name = "cod_recurso")
 //	private Long codRecurso;
@@ -58,7 +58,7 @@ public class AprobacionHoras implements Serializable {
 	
 	@Column(name = "cod_proyecto")
 	private Long codProyecto;
-	
+
 	@Column(name = "val_duracion_reportada")
 	private Float valDuracionReportada;
 	
@@ -79,14 +79,7 @@ public class AprobacionHoras implements Serializable {
 	
 	@Column(name = "cod_estatus_proyecto")
 	private Long codEstatusProyecto;
-
-	public Recurso getRecurso() {
-		return recurso;
-	}
-
-	public void setRecurso(Recurso recurso) {
-		this.recurso = recurso;
-	}
+	
 	
 	public Long getCodActividad() {
 		return codActividad;
@@ -96,28 +89,12 @@ public class AprobacionHoras implements Serializable {
 		this.codActividad = codActividad;
 	}
 	
-	public Float getHorasPlaneadas() {
-		return HorasPlaneadas.getValDuracionActividad();
+	public Actividad getActividad() {
+		return actividad;
 	}
 
-	public void setHorasPlaneadas(Actividad horasPlaneadas) {
-		HorasPlaneadas = horasPlaneadas;
-	}
-	
-	public String getActividadPrimaria() {
-		return ActividadPrimaria.getDescActividadPrimaria();
-	}
-
-	public void setActividadPrimaria(Actividad actividadPrimaria) {
-		ActividadPrimaria = actividadPrimaria;
-	}
-	
-	public String getActividadSecundaria() {
-		return ActividadSecundaria.getDescActividadSecundaria();
-	}
-
-	public void setActividadSecundaria(Actividad actividadSecundaria) {
-		ActividadSecundaria = actividadSecundaria;
+	public void setActividad(Actividad actividad) {
+		this.actividad = actividad;
 	}
 
 //	public Long getCodRecurso() {
@@ -128,6 +105,13 @@ public class AprobacionHoras implements Serializable {
 //		this.codRecurso = codRecurso;
 //	}
 	
+	public Recurso getRecurso() {
+		return recurso;
+	}
+
+	public void setRecurso(Recurso recurso) {
+		this.recurso = recurso;
+	}	
 	
 	public String getDescComentarioDetalle() {
 		return descComentarioDetalle;

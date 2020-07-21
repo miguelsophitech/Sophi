@@ -144,6 +144,7 @@
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
                         <h1 class="h3 mb-2 text-gray-800">Aprobaci&oacute;n de horas</h1>
                     </div>
+                    <form th:action="@{/guardar}" th:object="${aprobacionhoraslista}" method="POST">
                     <!-- Filter -->
                     <div class="row">
                         <!--<div class="input-group col-sm">
@@ -162,13 +163,9 @@
                                 <div class="input-group-prepend">
                                     <label class="input-group-text" for="inputGroupSelectCliente">Proyecto</label>
                                 </div>
-                                <select class="custom-select" id="inputGroupSelectCliente">
+                                <select name="Proyecto" class="custom-select" id="filterProyecto">
                                     <option selected value="-1">Todos</option>
-                                    <option>Proyecto 1</option>
-                                    <option>Proyecto 2</option>
-                                    <option>Proyecto 3</option>
-                                    <option>Proyecto 4</option>
-                                    <option>Proyecto 5</option>
+                                    <option th:each="proyecto:${proyectos}" th:value="${proyecto.proyectoId}" th:text="${proyecto.descProyecto}"></option>
                                 </select>
                             </div>
                         </div>
@@ -181,7 +178,6 @@
                         </div>
                         <div class="card-body" id="contenidoTabla">
                             <div class="table-responsive">
-                            <form th:action="@{/guardar}" th:object="${aprobacionhoras}" method="POST">
                                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                     <thead>
                                         <tr>
@@ -206,35 +202,23 @@
                                         </tr>
                                     </tfoot>
                                     <tbody>
-                                        <tr th:each="aprobacionhoras: ${aprobacionhoras}">
-                                            <td><input type="checkbox" name="check" onClick="checkbox();"/></td>
-                                            <td th:text="${aprobacionhoras.fecRegistro}"></td>
-                                            <td th:text="${aprobacionhoras.getRecurso().getDescRecurso()}"></td>
-                                            <td th:text="${aprobacionhoras.descComentarioDetalle}"></td>
-                                            <td th:text="${aprobacionhoras.HorasPlaneadas}"></td>
-                                            <td th:text="${aprobacionhoras.valDuracionReportada}"></td>
-                                            <td>
-                                            <input type="hidden" th:value="${aprobacionhoras.codActividad}">
-                                            <input type="text" style="width : 60px; heigth : 60px" name="validar" th:value="${aprobacionhoras.valDuracionValidada}" disabled/>
-                                            <input type="hidden" th:value="${aprobacionhoras.fecValidacion}">
-                                            </td>
-                                        </tr>
-<!-- 											<tr th:each="aprobacioneshoras, itemStat : ${aprobacionhoras.aprobacionhoras}"> -->
-<!-- 												<td><input type="text" th:name="|aprobaciones[${itemStat.index}].codActividad|" th:value="${aprobacioneshoras.getCodActividad()}" /></td> -->
-<!-- 												<td><input type="text" th:name="|aprobaciones[${itemStat.index}].fecRegistro|" th:value="${aprobacioneshoras.getFecRegistro()}" /></td> -->
-<!-- 												<td><input type="text" th:name="|aprobaciones[${itemStat.index}].recurso.descRecurso|" th:value="${aprobacioneshoras.getRecurso().getDescRecurso()}" /></td> -->
-<!-- 												<td><input type="text" th:name="|aprobaciones[${itemStat.index}].descComentarioDetalle|" th:value="${aprobacioneshoras.getDescComentarioDetalle()}" /></td> -->
-<!-- 												<td><input type="text" th:name="|aprobaciones[${itemStat.index}].valDuracionValidad|" th:value="${aprobacioneshoras.getValDuracionValidada()}" /></td> -->
-<!-- 											</tr> -->
+										<tr th:each="aprobacionhorasunico, itemStat : ${aprobacionhoraslista.aprobacionhoras}">
+											<td><input type="checkbox" name="check" onClick="checkbox();"/></td>
+											<td><input type="text" th:name="|aprobacionhorasunico[${itemStat.index}].fecRegistro|" th:value="${aprobacionhorasunico.fecRegistro}" disabled/></td>
+											<td><input type="text" th:name="|aprobacionhorasunico[${itemStat.index}].recurso.descRecurso|" th:value="${aprobacionhorasunico.recurso.descRecurso}" disabled/></td>
+											<td><input type="text" th:name="|aprobacionhorasunico[${itemStat.index}].descComentarioDetalle|" th:value="${aprobacionhorasunico.descComentarioDetalle}" disabled/></td>
+											<td><input type="text" th:name="|aprobacionhorasunico[${itemStat.index}].actividad.valDuracionActividad|" th:value="${aprobacionhorasunico.actividad.valDuracionActividad}" disabled/></td>
+											<td><input type="text" th:name="|aprobacionhorasunico[${itemStat.index}].valDuracionReportada|" th:value="${aprobacionhorasunico.valDuracionReportada}" disabled/></td>
+											<td><input type="text" th:name="|aprobacionhorasunico[${itemStat.index}].valDuracionValidada|" th:value="${aprobacionhorasunico.valDuracionValidada}"/></td>
+										</tr>
 										</tbody>
                                 </table>
-                                <input type="submit" value="Validar" class="btn btn-primary"/>
-                                </form>
                             </div>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-sm-5 mb-3 mb-sm-0">
+                        	<input type="submit" value="Validar" class="btn btn-primary"/>
                             <a th:href="@{/}" class="btn btn-secondary" role="button">Regresar</a>
                         </div>
                         <div class="col-sm-5 mb-3 mb-sm-0">
