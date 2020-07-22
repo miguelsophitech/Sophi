@@ -1,16 +1,17 @@
 package com.sophi.app.models.entity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class AprobacionHorasDto {
 	private List<AprobacionHoras> aprobacionhoras;
 	
-	public AprobacionHorasDto(List<AprobacionHoras> aprobacionhoras2) {
-		
+	public AprobacionHorasDto(List<AprobacionHoras> aprobacionhoras) {
+		this.aprobacionhoras = aprobacionhoras;
 	}
 	
 	public AprobacionHorasDto() {
-		
+		this.aprobacionhoras = new ArrayList<>();
 	}
 
 	public void addAprobacionHoras(AprobacionHoras aprobacionhoras) {
