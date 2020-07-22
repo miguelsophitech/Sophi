@@ -3,10 +3,14 @@ package com.sophi.app.controllers;
 import java.util.ArrayList;
 import java.util.List;
 
+//import javax.validation.Valid;
+
 import com.sophi.app.models.entity.Recurso;
 import com.sophi.app.models.entity.AprobacionHoras;
 import com.sophi.app.models.entity.AprobacionHorasDto;
+import com.sophi.app.models.entity.Proyecto;
 import com.sophi.app.models.service.IAprobacionHorasService;
+import com.sophi.app.models.service.IProyectoService;
 import com.sophi.app.models.service.IRecursoService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +26,11 @@ import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
+<<<<<<< HEAD
 @SessionAttributes("aprobacionHorasForm")
+=======
+@SessionAttributes("aprobacionhoraslista")
+>>>>>>> 2ec6870fed18ccb3233a5161495163c341ea2091
 public class AprobacionHorasController {
 
     @Autowired
@@ -30,22 +38,36 @@ public class AprobacionHorasController {
 
     @Autowired
     private IRecursoService recursoService;
+    
+    @Autowired
+    private IProyectoService proyectoService;
 
     @RequestMapping(value = "/aprobacionhoras", method = RequestMethod.GET)
     public String AprobacionHoras(Model model){
-    	List<AprobacionHoras> aprobacionhoras = new ArrayList<>();
-    	aprobacionHorasService.findAll().iterator().forEachRemaining(aprobacionhoras::add);
+    	List<AprobacionHoras> aprobacioneshoras = new ArrayList<>();
         List<Recurso> listaRecursos = new ArrayList<Recurso>();
+        List<Proyecto> listaProyectos = new ArrayList<Proyecto>();
+        aprobacionHorasService.findAll().iterator().forEachRemaining(aprobacioneshoras::add);
         listaRecursos = recursoService.findAll();
+        listaProyectos = proyectoService.findAll();
+        AprobacionHorasDto aphdto = new AprobacionHorasDto();
+        aphdto.setAprobacionhoras(aprobacioneshoras);
         model.addAttribute("titulo", "Listado de horas capturadas");
+<<<<<<< HEAD
         AprobacionHorasDto aphr = new AprobacionHorasDto();
         aphr.setAprobacionhoras(aprobacionhoras);
         model.addAttribute("aprobacionHorasForm", aphr);
 //        model.addAttribute("aprobacionhoras", aprobacionHorasService.findAll());
+=======
+        //model.addAttribute("aprobacionhoras", aprobacionHorasService.findAll());
+        model.addAttribute("aprobacionhoraslista", aphdto);
+>>>>>>> 2ec6870fed18ccb3233a5161495163c341ea2091
         model.addAttribute("recursos", listaRecursos);
+        model.addAttribute("proyectos", listaProyectos);
         return "aprobacionhoras";
     }
     
+<<<<<<< HEAD
     @RequestMapping(value="/guardarAproHoras", method = RequestMethod.POST)
 	public String validarHoras(@ModelAttribute("aprobacionHorasForm") AprobacionHorasDto aprobacionHorasForm, BindingResult result, Model model,RedirectAttributes flash,SessionStatus status) {
     	System.out.println("Hola Mundo!");
@@ -53,32 +75,28 @@ public class AprobacionHorasController {
     	for(AprobacionHoras ah : aprobacionHorasForm.getAprobacionhoras()) {
     		System.out.println(ah.getValDuracionValidada());
     	}
+=======
+    @RequestMapping(value="/guardar", method = RequestMethod.POST)
+	public String validarHoras(@ModelAttribute("aprobacionhoraslista") AprobacionHorasDto aprobacionhoraslista, BindingResult result, Model model,RedirectAttributes flash,SessionStatus status) {
+>>>>>>> 2ec6870fed18ccb3233a5161495163c341ea2091
 
 		if(result.hasErrors()) {
 			model.addAttribute("titulo", "Listado Horas Capturadas");
 			List<Recurso> listaRecursos = new ArrayList<Recurso>();
 	        listaRecursos = recursoService.findAll();
 	        model.addAttribute("recursos", listaRecursos);
-			return "formContacto";
+			return "aprobacionhoras";
 		}
+<<<<<<< HEAD
 		aprobacionHorasService.saveAll(aprobacionHorasForm.getAprobacionhoras());
 		model.addAttribute("aprobacionhoras", aprobacionHorasService.findAll());
+=======
+		aprobacionHorasService.saveAll(aprobacionhoraslista.getAprobacionhoras());
+>>>>>>> 2ec6870fed18ccb3233a5161495163c341ea2091
 		status.setComplete();
 		flash.addFlashAttribute("success", "Horas Validadas");
 		return "redirect:/aprobacionhoras";
 	}
-    
-//    @RequestMapping(value = "/aprobacionhoras2", method = RequestMethod.GET)
-//    public String AprobacionHoras2(Model model){
-//    	List<AprobacionHoras> aprobacionhoras = new ArrayList<>();
-//        aprobacionHorasService.findAll().iterator().forEachRemaining(aprobacionhoras::add);
-//        List<Recurso> listaRecursos = new ArrayList<Recurso>();
-//        listaRecursos = recursoService.findAll();
-//        model.addAttribute("titulo", "Listado de horas capturadas");
-//        model.addAttribute("aprobacionhoras", new AprobacionHorasDto(aprobacionhoras)); 
-//        model.addAttribute("recursos", listaRecursos);
-//        return "aprobacionhoras";
-//    }
 
 //    @RequestMapping(value = "/cargaHoras", method = RequestMethod.GET)
 //	@ResponseBody
