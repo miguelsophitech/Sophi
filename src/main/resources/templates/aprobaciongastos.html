@@ -162,7 +162,7 @@
                         <div class="input-group col-sm-4">
                             <div class="input-group mb-4">
                                 <div class="input-group-prepend">
-                                    <label class="input-group-text" for="inputGroupSelectCliente">Proyecto</label>
+                                    <label class="input-group-text" for="inputGroupSelectProyecto">Proyecto</label>
                                 </div>
                                 <select class="custom-select" id="inputGroupSelectCliente">
                                     <option selected>Seleccione...</option>
@@ -212,7 +212,7 @@
                                                 <td th:text="${aprobaciongastos.fecRegistro}"></td>
                                                 <td th:text="${aprobaciongastos.NombreRecurso}"></td>
                                                 <td th:text="${aprobaciongastos.descComentario}"></td>
-                                                <td th:text="${aprobaciongastos.impGasto}"></td>
+                                                <td th:text="${aprobaciongastos.impGasto}">$</td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -222,8 +222,8 @@
                     </div>
                     <div class="row">
                         <div class="col-sm-5 mb-3 mb-sm-0">
-                            <input type="submit" value="Guardar" class="btn btn-primary"/>
-                            <a th:href="@{/}" class="btn btn-secondary" role="button">Cancelar</a>
+                            <input type="submit" value="Validar" class="btn btn-primary"/>
+                            <a th:href="@{/}" class="btn btn-secondary" role="button">Regresar</a>
                         </div>
                         <div class="col-sm-5 mb-3 mb-sm-0">
                         </div>
