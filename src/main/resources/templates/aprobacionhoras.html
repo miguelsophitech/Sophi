@@ -181,7 +181,7 @@
                         </div>
                         <div class="card-body" id="contenidoTabla">
                             <div class="table-responsive">
-                            <form th:action="@{/guardar}" th:object="${aprobacionhoras}" method="POST">
+                            <form th:action="@{/guardarAproHoras}" th:object="${aprobacionHorasForm}" method="POST">
                                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                     <thead>
                                         <tr>
@@ -194,30 +194,37 @@
                                             <th>Horas Validadas</th>
                                         </tr>
                                     </thead>
-                                    <tfoot>
-                                        <tr>
-                                            <th></th>
-                                            <th>Fecha</th>
-                                            <th>Colaborador</th>
-                                            <th>Comentario</th>
-                                            <th>Horas Planeadas</th>
-                                            <th>Horas Capturadas</th>
-                                            <th>Horas Validadas</th>
-                                        </tr>
-                                    </tfoot>
+<!--                                     <tfoot> -->
+<!--                                         <tr> -->
+<!--                                             <th></th> -->
+<!--                                             <th>Fecha</th> -->
+<!--                                             <th>Colaborador</th> -->
+<!--                                             <th>Comentario</th> -->
+<!--                                             <th>Horas Planeadas</th> -->
+<!--                                             <th>Horas Capturadas</th> -->
+<!--                                             <th>Horas Validadas</th> -->
+<!--                                         </tr> -->
+<!--                                     </tfoot> -->
                                     <tbody>
-                                        <tr th:each="aprobacionhoras: ${aprobacionhoras}">
-                                            <td><input type="checkbox" name="check" onClick="checkbox();"/></td>
-                                            <td th:text="${aprobacionhoras.fecRegistro}"></td>
-                                            <td th:text="${aprobacionhoras.getRecurso().getDescRecurso()}"></td>
-                                            <td th:text="${aprobacionhoras.descComentarioDetalle}"></td>
-                                            <td th:text="${aprobacionhoras.HorasPlaneadas}"></td>
-                                            <td th:text="${aprobacionhoras.valDuracionReportada}"></td>
-                                            <td>
-                                            <input type="hidden" th:value="${aprobacionhoras.codActividad}">
-                                            <input type="text" style="width : 60px; heigth : 60px" name="validar" th:value="${aprobacionhoras.valDuracionValidada}" disabled/>
-                                            <input type="hidden" th:value="${aprobacionhoras.fecValidacion}">
-                                            </td>
+                                    
+                                        <tr th:each="aprobaciones, itemStat : ${aprobacionHorasForm.aprobacionhoras}">
+                                        
+                                        <td><input type="hidden" th:name="|aprobaciones[${itemStat.index}].codActividad|" th:value="${aprobaciones.getCodActividad()}" /></td>
+												<td><input type="text" th:name="|aprobaciones[${itemStat.index}].fecRegistro|" th:value="${aprobaciones.getFecRegistro()}" /></td>
+												<td><input type="text" th:name="|aprobaciones[${itemStat.index}].recurso.descRecurso|" th:value="${aprobaciones.getRecurso().getDescRecurso()}" /></td>
+												<td><input type="text" th:name="|aprobaciones[${itemStat.index}].descComentarioDetalle|" th:value="${aprobaciones.getDescComentarioDetalle()}" /></td>
+												<td><input type="text" th:name="|aprobaciones[${itemStat.index}].valDuracionValidada|" th:value="${aprobaciones.getValDuracionValidada()}" /></td>
+<!--                                             <td><input type="checkbox" name="check" onClick="checkbox();"/></td> -->
+<!--                                             <td th:text="${aprobacionhorasUnico.fecRegistro}"></td> -->
+<!--                                             <td th:text="${aprobacionhorasUnico.getRecurso().getDescRecurso()}"></td> -->
+<!--                                             <td th:text="${aprobacionhorasUnico.descComentarioDetalle}"></td> -->
+<!--                                             <td th:text="${aprobacionhorasUnico.HorasPlaneadas}"></td> -->
+<!--                                             <td th:text="${aprobacionhorasUnico.valDuracionReportada}"></td> -->
+<!--                                             <td> -->
+<!--                                             <input type="hidden" th:value="${aprobacionhoras.codActividad}"> -->
+<!--                                             <input type="text" style="width : 60px; heigth : 60px" name="validar" th:value="${aprobacionhoras.valDuracionValidada}" disabled/> -->
+<!--                                             <input type="hidden" th:value="${aprobacionhoras.fecValidacion}"> -->
+<!--                                             </td> -->
                                         </tr>
 <!-- 											<tr th:each="aprobacioneshoras, itemStat : ${aprobacionhoras.aprobacionhoras}"> -->
 <!-- 												<td><input type="text" th:name="|aprobaciones[${itemStat.index}].codActividad|" th:value="${aprobacioneshoras.getCodActividad()}" /></td> -->
@@ -289,7 +296,7 @@
     <script th:src="@{/js/demo/datatables-demo.js}"></script>
 
     <script th:src="@{/js/checkbox.js}"></script>
-    <script th:src="@{/js/mostrarHorasRecurso.js}"></script>
+<!--     <script th:src="@{/js/mostrarHorasRecurso.js}"></script> -->
 
 </body>
 

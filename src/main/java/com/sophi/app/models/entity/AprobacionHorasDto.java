@@ -9,6 +9,10 @@ public class AprobacionHorasDto {
 		
 	}
 	
+	public AprobacionHorasDto() {
+		
+	}
+	
 	public void addAprobacionHoras(AprobacionHoras aprobacionhoras) {
 		this.aprobacionhoras.add(aprobacionhoras);
 	}

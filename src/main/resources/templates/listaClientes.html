@@ -7,7 +7,7 @@
   <!-- Page Wrapper -->
   <div id="wrapper">
 
-    <!-- Sidebar -->
+ <!-- Sidebar -->
     <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
       <!-- Sidebar - Brand -->
@@ -26,87 +26,98 @@
       <li class="nav-item">
         <a class="nav-link" th:href="@{/}">
           <i class="fas fa-fw fa-tachometer-alt"></i>
-          <span>Dashboard</span></a>
+          <span>Mi dashboard</span></a>
       </li>
+      
+      <!-- Divider -->
+      <hr class="sidebar-divider">
+
+      <!-- Heading Proyecto -->
+      <div class="sidebar-heading">
+        Clientes
+      </div>
+
+      <!-- Nav Item - Gastos y tiempo Collapse Menu -->
+      <li class="nav-item active">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseClientes" aria-expanded="true" aria-controls="collapseClientes">
+          <i class="fas fa-fw fa-address-book"></i>
+          <span>Gesti&oacute;n de clientes</span>
+        </a>
+        <div id="collapseClientes" class="collapse" aria-labelledby="menuClientes" data-parent="#accordionSidebar">
+          <div class="bg-white py-2 collapse-inner rounded">
+            <h6 class="collapse-header">Ver:</h6>
+            <a class="collapse-item active" th:href="@{/listaClientes}">Mis clientes</a>
+            <a class="collapse-item" th:href="@{/agenda}">Mis contactos</a>
+          </div>
+        </div>
+      </li>
+      
 
       <!-- Divider -->
       <hr class="sidebar-divider">
 
       <!-- Heading Proyecto -->
       <div class="sidebar-heading">
-        Proyecto
+        Proyectos
+      </div>
+      
+      
+	  <!-- Nav Item - Actividades Collapse Menu -->
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseProyectos" aria-expanded="true" aria-controls="collapseProyectos">
+          <i class="fas fa-fw fa-wrench"></i>
+          <span>Gesti&oacute;n de proyectos</span>
+        </a>
+        <div id="collapseProyectos" class="collapse" aria-labelledby="menuProyectos" data-parent="#accordionSidebar">
+          <div class="bg-white py-2 collapse-inner rounded">
+            <h6 class="collapse-header">Ver:</h6>
+            <a class="collapse-item" href="#">Mis proyectos</a>
+            <a class="collapse-item" href="#">Mis actividades</a>
+          </div>
+        </div>
+      </li>
+
+      <!-- Nav Item - Gastos y tiempo Collapse Menu -->
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseGastosTiempo" aria-expanded="true" aria-controls="collapseGastosTiempo">
+          <i class="fas fa-fw fa-calendar-alt"></i>
+          <span>Gastos y tiempo</span>
+        </a>
+        <div id="collapseGastosTiempo" class="collapse" aria-labelledby="menuGastosTiempo" data-parent="#accordionSidebar">
+          <div class="bg-white py-2 collapse-inner rounded">
+            <h6 class="collapse-header">Ver:</h6>
+            <a class="collapse-item" href="#">Mi captura de horas</a>
+            <a class="collapse-item" th:href="@{/aprobacionhoras}">Aprobaci&oacute;n de horas</a>
+            <a class="collapse-item" href="#">Mi captura de gastos</a>
+            <a class="collapse-item" th:href="@{/aprobaciongastos}">Aprobaci&oacute;n de gastos</a>
+          </div>
+        </div>
+      </li>
+
+ 
+      
+       <!-- Divider -->
+      <hr class="sidebar-divider">
+
+      <!-- Heading Proyecto -->
+      <div class="sidebar-heading">
+        Recursos
       </div>
 
       <!-- Nav Item - Gastos y tiempo Collapse Menu -->
       <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
-          <i class="fas fa-fw fa-cog"></i>
-          <span>Gastos y tiempo</span>
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseRecursos" aria-expanded="true" aria-controls="collapseRecursos">
+          <i class="fas fa-fw fa-id-card"></i>
+          <span>Gesti&oacute;n de recursos</span>
         </a>
-        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-          <div class="bg-white py-2 collapse-inner rounded">
-            <h6 class="collapse-header">Registrar:</h6>
-            <a class="collapse-item" href="#">Horas</a>
-            <a class="collapse-item" href="#">Gastos</a>
-          </div>
-        </div>
-      </li>
-
-      <!-- Nav Item - Actividades Collapse Menu -->
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities" aria-expanded="true" aria-controls="collapseUtilities">
-          <i class="fas fa-fw fa-wrench"></i>
-          <span>Actividades</span>
-        </a>
-        <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
+        <div id="collapseRecursos" class="collapse" aria-labelledby="menuRecursos" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
             <h6 class="collapse-header">Ver:</h6>
-            <a class="collapse-item" href="#">Mis actividades</a>
-            <a class="collapse-item" href="#">Mi forecast</a>
+            <a class="collapse-item" th:href="@{/listarRecursos}">Mis recursos</a>
+            <a class="collapse-item" href="#">Mi perfil</a>
           </div>
         </div>
       </li>
-
-      <!-- Divider -->
-      <hr class="sidebar-divider">
-
-     <!-- Heading Recursos humanos -->
-      <div class="sidebar-heading">
-        Recursos Humanos
-      </div>
-
-      <!-- Nav Item - Pages Collapse Menu -->
-      <li class="nav-item active">
-        <a class="nav-link" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="true" aria-controls="collapsePages">
-          <i class="fas fa-fw fa-folder"></i>
-          <span>Recursos</span>
-        </a>
-        <div id="collapsePages" class="collapse show" aria-labelledby="headingPages" data-parent="#accordionSidebar">
-          <div class="bg-white py-2 collapse-inner rounded">
-            <h6 class="collapse-header">Gestionar</h6>
-            <a class="collapse-item" th:href="@{/formRecurso}">Alta</a>
-            <a class="collapse-item active" href="#">Todos</a>
-            <div class="collapse-divider"></div>
-            <h6 class="collapse-header">Experiencia</h6>
-            <a class="collapse-item" href="#">Skills</a>
-            <a class="collapse-item" href="#">Capacitaci&oacute;n</a>
-          </div>
-        </div>
-      </li>
-
-      <!-- Nav Item - Charts -->
-      <!-- <li class="nav-item">
-        <a class="nav-link" href="charts.html">
-          <i class="fas fa-fw fa-chart-area"></i>
-          <span>Charts</span></a>
-      </li> -->
-
-      <!-- Nav Item - Tables -->
-     <!-- <li class="nav-item">
-        <a class="nav-link" href="tables.html">
-          <i class="fas fa-fw fa-table"></i>
-          <span>Tables</span></a>
-      </li> -->
 
       <!-- Divider -->
       <hr class="sidebar-divider d-none d-md-block">
@@ -131,61 +142,61 @@
         <div class="container-fluid">
 
           <!-- Page Heading -->
-          <!-- Page Heading -->
           <div class="d-sm-flex align-items-center justify-content-between mb-4">
-            <h1 class="h3 mb-2 text-gray-800" th:text="${titulo}"></h1>
+            <h1 class="h3 mb-2 text-gray-800">Mis clientes</h1>
             <a type="button" class="btn btn-primary" th:href="@{/formCliente}" >
               <i class="fas fa-plus fa-sm text-white-50"></i> Nuevo cliente
             </a>
           </div>
           
-          <p class="mb-4">DataTables is a third party plugin that is used to generate the demo table below. For more information about DataTables, please visit the <a target="_blank" href="https://datatables.net">official DataTables documentation</a>.</p>
+          <p class="mb-4">Encuentra aqu&iacute; el listado de todos tus clientes registrados en <b>Sophitech</b>, podr&aacute;s registrar un nuevo cliente y gestionar los datos existentes.</p>
 
           <!-- DataTales Example -->
           <div class="card shadow mb-4">
-            <div class="card-header py-3">
-              <h6 class="m-0 font-weight-bold text-primary">Listado de clientes</h6>
-            </div>
+<!--             <div class="card-header py-3"> -->
+<!--               <h6 class="m-0 font-weight-bold text-primary">Listado de clientes</h6> -->
+<!--             </div> -->
             <div class="card-body">
               <div class="table-responsive">
-                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <table class="table" id="dataTable" width="100%" cellspacing="0">
 	                 <thead>
 	                   <tr>
 	                      <th>Cliente</th>
-	                               <th>C&oacute;digo de cliente</th>
-	                               <th>Direcci&oacute;n fiscal</th>
-	                               <th>Grupo Empresarial</th>
-	                               <th>R.F.C.</th>
-	                               <th>Sector</th>
-	                               <th>Acciones</th>
+                          <th>C&oacute;digo de cliente</th>
+                          <th>Direcci&oacute;n fiscal</th>
+                          <th>Grupo Empresarial</th>
+                          <th>R.F.C.</th>
+                          <th>Sector</th>
+                          <th>Acciones</th>
 	                   </tr>
 	                 </thead>
-	                 <tfoot>
-	                   <tr>
-	                     <th>Cliente</th>
-	                              <th>C&oacute;digo de cliente</th>
-	                              <th>Direcci&oacute;n fiscal</th>
-	                              <th>Grupo Empresarial</th>
-	                              <th>R.F.C.</th>
-	                              <th>Sector</th>
-	                              <th>Acciones</th>
-	                   </tr>
-	                 </tfoot>
+<!-- 	                 <tfoot> -->
+<!-- 	                   <tr> -->
+<!-- 	                     <th>Cliente</th> -->
+<!-- 	                              <th>C&oacute;digo de cliente</th> -->
+<!-- 	                              <th>Direcci&oacute;n fiscal</th> -->
+<!-- 	                              <th>Grupo Empresarial</th> -->
+<!-- 	                              <th>R.F.C.</th> -->
+<!-- 	                              <th>Sector</th> -->
+<!-- 	                              <th>Acciones</th> -->
+<!-- 	                   </tr> -->
+<!-- 	                 </tfoot> -->
 	                 <tbody>
 	                 	<tr th:each="cliente: ${clientes}">
-	                                <td th:text="${cliente.descCliente}"></td>
-	                                <td th:text="${cliente.descCodigoCliente}"></td>
-	                                <td th:text="${cliente.descDireccionFiscal}"></td>
-	                                <td th:text="${cliente.descGrupoEmpresarial}"></td>
-	                                <td th:text="${cliente.descRFC}"></td>
-	                                <td th:text="${cliente.codSector}"></td>
-	                                <td><a th:href="@{/dataCliente/} + ${cliente.codCliente}" class="btn btn-primary btn-circle btn-sm"><i class="far fa-eye"></i></a>
-	                                    <a th:href="@{/formCliente/} + ${cliente.codCliente}" class="btn btn-primary btn-circle btn-sm"><i class="far fa-edit"></i></a>
+                            <td th:text="${cliente.descCliente}"></td>
+                            <td th:text="${cliente.descCodigoCliente}"></td>
+                            <td th:text="${cliente.descDireccionFiscal}"></td>
+                            <td th:text="${cliente.descGrupoEmpresarial}"></td>
+                            <td th:text="${cliente.descRFC}"></td>
+                            <td th:text="${cliente.sector.descSector}"></td>
+                            <td>
+                            	<a th:href="@{/dataCliente/} + ${cliente.codCliente}"  class="badge badge-info">Ver <i class="far fa-address-book"></i></a>
+	                            <a th:href="@{/formCliente/} + ${cliente.codCliente}" class="badge badge-success">Editar  <i class="far fa-edit"></i></a>
 	<!--                                         <a th:onclick="eliminar([[${cliente.codCliente}]])" -->
 	<!--                                             class="btn btn-primary btn-circle btn-sm"><i -->
 	<!--                                                 class="far fa-window-close"></i></a> -->
-	                                </td>
-	                            </tr>
+	                        </td>
+						</tr>
 	                 </tbody>
                 </table>
               </div>

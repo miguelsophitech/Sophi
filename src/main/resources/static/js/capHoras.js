@@ -30,12 +30,35 @@ $(document).ready(function() {
 		var fech = $("#semanaDias .active span").text().split("-");
 		fh = new Date(+fech[2], fech[1]-1, +fech[0]);
 		formatoFechaLarga(fh);
+		semanaInicioFin(fh);
 	});
 	
 
 	cargaActividadDia();
 
 });
+
+function semanaInicioFin(fecha){
+var curr = new Date(fecha); 
+var first = curr.getDate() - curr.getDay(); // First day is the day of the month - the day of the week 
+var last = first + 6; // last day is the first day + 6 
+
+var firstday = new Date(curr.setDate(first)).toUTCString(); 
+var lastday = new Date(curr.setDate(last)).toUTCString(); 
+
+console.log(firstday);
+console.log(lastday);
+
+$.ajax({
+    type: "GET",
+    url: "/horasTotalSemana",
+    data: { fechaInicioSemana: firstday, fechaFinSemana: lastday },
+	success: function(result){
+        $("#dt").html(result);
+    }
+});
+
+}
 
 function cargaActividadDia(){
 	var fech = $("#semanaDias .active span").text();

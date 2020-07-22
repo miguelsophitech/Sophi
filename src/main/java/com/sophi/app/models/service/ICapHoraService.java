@@ -18,4 +18,6 @@ public interface ICapHoraService {
 	
 	public List<CapHora> findListCapHoraByFechaRecurso(Date fecha, Long codRecurso);
 	
+	public Float findSumHorasReportadasSemana(Long codRecurso, Date fechaInicio, Date fechaFin);
+	
 }

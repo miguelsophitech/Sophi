@@ -8,6 +8,7 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -15,6 +16,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -99,6 +102,13 @@ public class CapHorasController {
 		status.setComplete();
 		flash.addFlashAttribute("success", mensajeFlash);
 		return "redirect:capHoras/"+capHora.getId().getCodRecurso();
+	}
+	
+	
+	@RequestMapping(value="/horasTotalSemana",produces = MediaType.APPLICATION_JSON_VALUE)
+	@ResponseBody
+	public Float horasTotalSemana(@RequestParam Date fechaInicioSemana, @RequestParam Date fechaFinSemana, Model model) {
+		return capHoraService.findSumHorasReportadasSemana((long) 1, fechaInicioSemana, fechaFinSemana);
 	}
 
 }

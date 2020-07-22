@@ -5,13 +5,17 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 
@@ -64,8 +68,14 @@ public class Agenda implements Serializable {
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date fecRegistro;
 	
+	@Transient
+	private String nombreCliente;
+	
 	@Column(name = "cod_cliente")
 	private Long codCliente;
+
+	@Transient
+	private String nombreCargo;
 	
 	@Column(name = "cod_cargo")
 	private Long codCargo;
@@ -175,4 +185,23 @@ public class Agenda implements Serializable {
 		return serialVersionUID;
 	}
 
+	public String getNombreCliente() {
+		return nombreCliente;
+	}
+
+	public void setNombreCliente(String nombreCliente) {
+		this.nombreCliente = nombreCliente;
+	}
+
+	public String getNombreCargo() {
+		return nombreCargo;
+	}
+
+	public void setNombreCargo(String nombreCargo) {
+		this.nombreCargo = nombreCargo;
+	}
+
+	
+
+	
 }

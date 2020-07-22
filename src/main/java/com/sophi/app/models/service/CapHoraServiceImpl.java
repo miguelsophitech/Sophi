@@ -42,9 +42,18 @@ public class CapHoraServiceImpl implements ICapHoraService {
 	}
 	
 	@Override
+	@Transactional(readOnly = true)
 	public List<CapHora> findListCapHoraByFechaRecurso(Date fecha, Long codRecurso) {
 		return capHoraDao.findListCapHoraByFechaRecurso(fecha, codRecurso);
 	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public Float findSumHorasReportadasSemana(Long codRecurso, Date fechaInicio, Date fechaFin) {
+		return capHoraDao.findSumHorasReportadasSemana(codRecurso, fechaInicio, fechaFin);
+	}
+	
+	
 
 
 }

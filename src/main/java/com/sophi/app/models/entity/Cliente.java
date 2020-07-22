@@ -6,10 +6,13 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -62,8 +65,12 @@ public class Cliente implements Serializable {
 	@Column(name = "desc_rfc")
 	private String descRFC;
 	
-	@Column(name = "cod_sector")
-	private Long codSector;
+//	@Column(name = "cod_sector")
+//	private Long codSector;
+	
+	@OneToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name="cod_sector")
+	private Sector sector;
 	
 	@Column(name = "fec_registro")
 	@Temporal(TemporalType.TIMESTAMP)
@@ -166,13 +173,13 @@ public class Cliente implements Serializable {
 		this.descRFC = descRFC;
 	}
 
-	public Long getCodSector() {
-		return codSector;
-	}
-
-	public void setCodSector(Long codSector) {
-		this.codSector = codSector;
-	}
+//	public Long getCodSector() {
+//		return codSector;
+//	}
+//
+//	public void setCodSector(Long codSector) {
+//		this.codSector = codSector;
+//	}
 
 	public static long getSerialversionuid() {
 		return serialVersionUID;
@@ -185,6 +192,15 @@ public class Cliente implements Serializable {
 	public void setClientesInfraestructura(List<DetalleClienteInfraestructura> clientesInfraestructura) {
 		this.clientesInfraestructura = clientesInfraestructura;
 	}
+
+	public Sector getSector() {
+		return sector;
+	}
+
+	public void setSector(Sector sector) {
+		this.sector = sector;
+	}
+	
 	
 	
 }

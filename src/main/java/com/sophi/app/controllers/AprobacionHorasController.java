@@ -22,7 +22,7 @@ import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
-@SessionAttributes("aprobacionhoras")
+@SessionAttributes("aprobacionHorasForm")
 public class AprobacionHorasController {
 
     @Autowired
@@ -38,17 +38,19 @@ public class AprobacionHorasController {
         List<Recurso> listaRecursos = new ArrayList<Recurso>();
         listaRecursos = recursoService.findAll();
         model.addAttribute("titulo", "Listado de horas capturadas");
-        model.addAttribute("aprobacionhoras", new AprobacionHorasDto(aprobacionhoras));
+        AprobacionHorasDto aphr = new AprobacionHorasDto();
+        aphr.setAprobacionhoras(aprobacionhoras);
+        model.addAttribute("aprobacionHorasForm", aphr);
 //        model.addAttribute("aprobacionhoras", aprobacionHorasService.findAll());
         model.addAttribute("recursos", listaRecursos);
         return "aprobacionhoras";
     }
     
-    @RequestMapping(value="/guardar", method = RequestMethod.POST)
-	public String validarHoras(@ModelAttribute AprobacionHorasDto aprobacionhoras, BindingResult result, Model model,RedirectAttributes flash,SessionStatus status) {
+    @RequestMapping(value="/guardarAproHoras", method = RequestMethod.POST)
+	public String validarHoras(@ModelAttribute("aprobacionHorasForm") AprobacionHorasDto aprobacionHorasForm, BindingResult result, Model model,RedirectAttributes flash,SessionStatus status) {
     	System.out.println("Hola Mundo!");
     	
-    	for(AprobacionHoras ah : aprobacionhoras.getAprobacionhoras()) {
+    	for(AprobacionHoras ah : aprobacionHorasForm.getAprobacionhoras()) {
     		System.out.println(ah.getValDuracionValidada());
     	}
 
@@ -59,7 +61,7 @@ public class AprobacionHorasController {
 	        model.addAttribute("recursos", listaRecursos);
 			return "formContacto";
 		}
-		aprobacionHorasService.saveAll(aprobacionhoras.getAprobacionhoras());
+		aprobacionHorasService.saveAll(aprobacionHorasForm.getAprobacionhoras());
 		model.addAttribute("aprobacionhoras", aprobacionHorasService.findAll());
 		status.setComplete();
 		flash.addFlashAttribute("success", "Horas Validadas");

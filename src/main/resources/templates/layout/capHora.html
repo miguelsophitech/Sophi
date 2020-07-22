@@ -50,13 +50,13 @@
 			<tbody>
 				<tr th:each="horaCapturada : ${listActHoraCapturadas}">
 					<td>
-						<span th:text="'Proyecto: ' + ${horaCapturada.Id.codProyecto}"></span>
-						<span th:text="' - ' + ${horaCapturada.descActividadSecundaria}"></span><br>
-						<span th:text="'Comentarios: ' +  ${horaCapturada.descComentarioDetalle}"></span><br>
-						<span th:text="'Horas registradas: ' + ${horaCapturada.valDuracionReportada}"></span><br>
+						<i class='fas fa-tasks'></i><b><span th:text="' ' + ${horaCapturada.Id.codProyecto}"></span>
+						<span th:text="' - ' + ${horaCapturada.descActividadSecundaria}"></span></b><br>
+						<i class='fas fa-highlighter'></i><span th:text="' ' + ${horaCapturada.descComentarioDetalle}"></span><br>
+						<i class='far fa-clock'></i><b><span th:text="' ' + ${horaCapturada.valDuracionReportada}"></span></b><br>
 					</td>
 				</tr>
-			</tbody>
+			</tbody> 
 		</table>
 		
 		<table class="table table-bordered" th:if="${#lists.isEmpty(listActHoraCapturadas)}">
