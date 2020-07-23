@@ -75,7 +75,7 @@ public class AprobacionHorasController {
 
     @RequestMapping(value = "/cargaHoras", method = RequestMethod.GET)
 	@ResponseBody
-	public String cargaContactos(@RequestParam("id") Long codProyecto, Model model) {
+	public String cargaHoras(@RequestParam("id") Long codProyecto, Model model) {
         List<AprobacionHoras> aprobacionhorasList = null;
         
         if(codProyecto == -1) {
