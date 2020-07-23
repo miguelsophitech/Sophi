@@ -32,11 +32,6 @@ public class AprobacionHorasServicelmpl implements IAprobacionHorasService {
 		return aprobacionhorasDao.findById(codActividad).orElse(null);
 	}
 
-//	@Override
-//	public void save(AprobacionHoras aprobacionhoras) {
-//		aprobacionhorasDao.save(aprobacionhoras);	
-//	}
-
 	@Override
 	public void saveAll(List<AprobacionHoras> aprobacionhoras) {
 		aprobacionhorasDao.saveAll(aprobacionhoras);		

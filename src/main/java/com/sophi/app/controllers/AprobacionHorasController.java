@@ -73,61 +73,61 @@ public class AprobacionHorasController {
 		return "redirect:/aprobacionhoras";
 	}
 
-//    @RequestMapping(value = "/cargaHoras", method = RequestMethod.GET)
-//	@ResponseBody
-//	public String cargaContactos(@RequestParam("id") Long codProyecto, Model model) {
-//        List<AprobacionHoras> aprobacionhorasList = null;
-//        
-//        if(codProyecto == -1) {
-//        	aprobacionHorasService.findAll();
-//        }
-//        
-//        else {
-//        	aprobacionHorasService.findAprobacionHorasBycodProyecto(codProyecto);
-//        }
-//        
-//		String contenido = "";
-//		contenido = contenido + "<div class=\"table-responsive\">"+
-//		"<table class=\"table table-bordered\" id=\"dataTable\" width=\"100%\" cellspacing=\"0\">"+
-//		"<thead>"+
-//		"<tr>"+
-//		"<th></th>"+
-//        "<th>Fecha</th>"+
-//        "<th>Colaborador</th>"+
-//        "<th>Comentario</th>"+
-//        "<th>Horas Planeadas</th>"+
-//		"<th>Horas Capturadas</th>"+
-//		"<th>Horas Validadas</th>"+
-//        "</tr>"+
-//        "</thead>"+
-//        "<tfoot>"+
-//		"<tr>"+
-//		"<th></th>"+
-//        "<th>Fecha</th>"+
-//        "<th>Colaborador</th>"+
-//        "<th>Comentario</th>"+
-//        "<th>Horas Planeadas</th>"+
-//		"<th>Horas Capturadas</th>"+
-//		"<th>Horas Validadas</th>"+
-//        "</tr>"+
-//        "</tfoot>"+
-//		"<tbody>";
-//		
-//		for(AprobacionHoras aprobacionhoras : aprobacionhorasList){
-//            String tablaAprobacionHoras = "";
-//            tablaAprobacionHoras = "<td><input type=\"checkbox\" name=\"check\" onClick=\"checkbox();\"/></td>";
-//            tablaAprobacionHoras += "<td>"+aprobacionhoras.getRecurso().getDescRecurso()+"</td>";
-//            tablaAprobacionHoras += "<td>"+aprobacionhoras.getDescComentarioDetalle()+"</td>";
-//            tablaAprobacionHoras += "<td>"+aprobacionhoras.getActividad().getValDuracionActividad()+"</td>";
-//            tablaAprobacionHoras += "<td>"+aprobacionhoras.getValDuracionReportada()+"</td>";
-//            tablaAprobacionHoras += "<td>"+aprobacionhoras.getValDuracionValidada()+"</td>";
-//            contenido += tablaAprobacionHoras;
-//        }
-//		
-//		contenido = contenido + "</tbody>"+
-//        "</table>"+
-//        "</div>";
-//		return contenido;
-//	}
+    @RequestMapping(value = "/cargaHoras", method = RequestMethod.GET)
+	@ResponseBody
+	public String cargaContactos(@RequestParam("id") Long codProyecto, Model model) {
+        List<AprobacionHoras> aprobacionhorasList = null;
+        
+        if(codProyecto == -1) {
+        	aprobacionHorasService.findAll();
+        }
+        
+        else {
+        	aprobacionHorasService.findAprobacionHorasBycodProyecto(codProyecto);
+        }
+        
+		String contenido = "";
+		contenido = contenido + "<div class=\"table-responsive\">"+
+		"<table class=\"table table-bordered\" id=\"dataTable\" width=\"100%\" cellspacing=\"0\">"+
+		"<thead>"+
+		"<tr>"+
+		"<th></th>"+
+        "<th>Fecha</th>"+
+        "<th>Colaborador</th>"+
+        "<th>Comentario</th>"+
+        "<th>Horas Planeadas</th>"+
+		"<th>Horas Capturadas</th>"+
+		"<th>Horas Validadas</th>"+
+        "</tr>"+
+        "</thead>"+
+        "<tfoot>"+
+		"<tr>"+
+		"<th></th>"+
+        "<th>Fecha</th>"+
+        "<th>Colaborador</th>"+
+        "<th>Comentario</th>"+
+        "<th>Horas Planeadas</th>"+
+		"<th>Horas Capturadas</th>"+
+		"<th>Horas Validadas</th>"+
+        "</tr>"+
+        "</tfoot>"+
+		"<tbody>";
+		
+		for(AprobacionHoras aprobacionhoras:aprobacionhorasList){
+            String tablaAprobacionHoras = "";
+            tablaAprobacionHoras = "<td><input type=\"checkbox\" name=\"check\" onClick=\"checkbox();\"/></td>";
+            //tablaAprobacionHoras += "<td>"+aprobacionhoras.getRecurso().getDescRecurso()+"</td>";
+            tablaAprobacionHoras += "<td>"+aprobacionhoras.getDescComentarioDetalle()+"</td>";
+            //tablaAprobacionHoras += "<td>"+aprobacionhoras.getActividad().getValDuracionActividad()+"</td>";
+            tablaAprobacionHoras += "<td>"+aprobacionhoras.getValDuracionReportada()+"</td>";
+            tablaAprobacionHoras += "<td>"+aprobacionhoras.getValDuracionValidada()+"</td>";
+            contenido += tablaAprobacionHoras;
+        }
+		
+		contenido = contenido + "</tbody>"+
+        "</table>"+
+        "</div>";
+		return contenido;
+	}
 
 }

@@ -165,7 +165,7 @@
                                 </div>
                                 <select name="Proyecto" class="custom-select" id="filterProyecto">
                                     <option selected value="-1">Todos</option>
-                                    <option th:each="proyecto:${proyectos}" th:value="${proyecto.proyectoId}" th:text="${proyecto.descProyecto}"></option>
+                                    <option th:each="proyecto:${proyectos}" th:value="${proyecto.proyectoId.codProyecto}" th:text="${proyecto.descProyecto}"></option>
                                 </select>
                             </div>
                         </div>
@@ -204,12 +204,12 @@
                                     <tbody>
 										<tr th:each="aprobacionhorasunico, itemStat : ${aprobacionhoraslista.aprobacionhoras}">
 											<td><input type="checkbox" name="check" onClick="checkbox();"/></td>
-											<td><input type="text" th:name="|aprobacionhorasunico[${itemStat.index}].fecRegistro|" th:value="${aprobacionhorasunico.fecRegistro}" disabled/></td>
-											<td><input type="text" th:name="|aprobacionhorasunico[${itemStat.index}].recurso.descRecurso|" th:value="${aprobacionhorasunico.recurso.descRecurso}" disabled/></td>
-											<td><input type="text" th:name="|aprobacionhorasunico[${itemStat.index}].descComentarioDetalle|" th:value="${aprobacionhorasunico.descComentarioDetalle}" disabled/></td>
-											<td><input type="text" th:name="|aprobacionhorasunico[${itemStat.index}].actividad.valDuracionActividad|" th:value="${aprobacionhorasunico.actividad.valDuracionActividad}" disabled/></td>
-											<td><input type="text" th:name="|aprobacionhorasunico[${itemStat.index}].valDuracionReportada|" th:value="${aprobacionhorasunico.valDuracionReportada}" disabled/></td>
-											<td><input type="text" th:name="|aprobacionhorasunico[${itemStat.index}].valDuracionValidada|" th:value="${aprobacionhorasunico.valDuracionValidada}"/></td>
+											<td><span th:text="${aprobacionhorasunico.fecRegistro}"></span></td>
+											<td><span th:text="${aprobacionhorasunico.recurso.descRecurso}"></span></td>
+											<td><span th:text="${aprobacionhorasunico.descComentarioDetalle}"></span></td>
+											<td><span th:text="${aprobacionhorasunico.actividad.valDuracionActividad}"></span></td>
+											<td><span th:text="${aprobacionhorasunico.valDuracionReportada}"></span></td>
+											<td><input type="text" th:name="validar" th:value="${aprobacionhorasunico.valDuracionValidada}" disabled/></td>
 										</tr>
 										</tbody>
                                 </table>
