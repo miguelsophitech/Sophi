@@ -115,16 +115,9 @@ public class AgendaController {
 		}
 		agenda.setNombreCliente(clienteService.findOne(agenda.getCodCliente()).getDescCliente());
 		agenda.setNombreCargo(cargoService.findOne(agenda.getCodCargo()).getDescCargo());
-		List<Cargo> cargoList = new ArrayList<Cargo>();
-		List<Cliente> clienteList = new ArrayList<Cliente>();
-		cargoList = cargoService.findAll();
-		clienteList = clienteService.findAll();
-		model.put("cargoList",cargoList);
-		model.put("clienteList",clienteList);
 		model.put("agenda", agenda);
 		model.put("textoTitulo","Información de tu contacto");
 		model.put("textoDescriptivo","Encuentra aquí la información completa de tu contacto.");
-		model.put("titulo", "Formulario contacto");
 		return "dataContacto";
 	}
 	
@@ -138,14 +131,14 @@ public class AgendaController {
 		clienteList = clienteService.findAll();
 		model.put("cargoList",cargoList);
 		model.put("clienteList",clienteList);
-		model.put("titulo", "Formulario contacto");
+		model.put("titulo", "Formulario de contactos");
 		return "formContacto";
 	}
 	
 	@RequestMapping(value="/formContacto", method = RequestMethod.POST)
 	public String guardarContacto(@Valid Agenda agenda, BindingResult result, Model model,RedirectAttributes flash,SessionStatus status) {
 		if(result.hasErrors()) {
-			model.addAttribute("titulo", "Formulario contacto");
+			model.addAttribute("titulo", "Formulario de contactos");
 			List<Cargo> cargoList = new ArrayList<Cargo>();
 			List<Cliente> clienteList = new ArrayList<Cliente>();
 			cargoList = cargoService.findAll();

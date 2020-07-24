@@ -170,17 +170,6 @@
                           <th>Acciones</th>
 	                   </tr>
 	                 </thead>
-<!-- 	                 <tfoot> -->
-<!-- 	                   <tr> -->
-<!-- 	                     <th>Cliente</th> -->
-<!-- 	                              <th>C&oacute;digo de cliente</th> -->
-<!-- 	                              <th>Direcci&oacute;n fiscal</th> -->
-<!-- 	                              <th>Grupo Empresarial</th> -->
-<!-- 	                              <th>R.F.C.</th> -->
-<!-- 	                              <th>Sector</th> -->
-<!-- 	                              <th>Acciones</th> -->
-<!-- 	                   </tr> -->
-<!-- 	                 </tfoot> -->
 	                 <tbody>
 	                 	<tr th:each="cliente: ${clientes}">
                             <td th:text="${cliente.descCliente}"></td>
@@ -190,12 +179,20 @@
                             <td th:text="${cliente.descRFC}"></td>
                             <td th:text="${cliente.sector.descSector}"></td>
                             <td>
-                            	<a th:href="@{/dataCliente/} + ${cliente.codCliente}"  class="badge badge-info">Ver <i class="far fa-address-book"></i></a>
-	                            <a th:href="@{/formCliente/} + ${cliente.codCliente}" class="badge badge-success">Editar  <i class="far fa-edit"></i></a>
+								<div class="btn-group btn-group-sm" role="group" aria-label="Basic example">
+									<a type="button" class="btn btn-info" th:href="@{/dataCliente/} + ${cliente.codCliente}" data-toggle="tooltip" title="Ver"><i class="far fa-address-book"></i></a>
+									<a type="button" class="btn btn-info" th:href="@{/formCliente/} + ${cliente.codCliente}" data-toggle="tooltip" title="Editar"><i class="far fa-edit"></i></a>
+								</div>
+							</td>
+                            
+                            
+<!--                             <td> -->
+<!--                             	<a th:href="@{/dataCliente/} + ${cliente.codCliente}"  class="badge badge-info">Ver <i class="far fa-address-book"></i></a> -->
+<!-- 	                            <a th:href="@{/formCliente/} + ${cliente.codCliente}" class="badge badge-success">Editar  <i class="far fa-edit"></i></a> -->
 	<!--                                         <a th:onclick="eliminar([[${cliente.codCliente}]])" -->
 	<!--                                             class="btn btn-primary btn-circle btn-sm"><i -->
 	<!--                                                 class="far fa-window-close"></i></a> -->
-	                        </td>
+<!-- 	                        </td> -->
 						</tr>
 	                 </tbody>
                 </table>

@@ -27,6 +27,7 @@ import com.sophi.app.models.entity.CapHora;
 import com.sophi.app.models.entity.CapHoraId;
 import com.sophi.app.models.service.IActividadService;
 import com.sophi.app.models.service.ICapHoraService;
+import com.sophi.app.models.service.IProyectoService;
 
 @Controller
 @SessionAttributes("capHora")

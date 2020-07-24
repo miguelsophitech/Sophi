@@ -26,11 +26,7 @@ import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
-<<<<<<< HEAD
-@SessionAttributes("aprobacionHorasForm")
-=======
 @SessionAttributes("aprobacionhoraslista")
->>>>>>> 2ec6870fed18ccb3233a5161495163c341ea2091
 public class AprobacionHorasController {
 
     @Autowired
@@ -53,32 +49,16 @@ public class AprobacionHorasController {
         AprobacionHorasDto aphdto = new AprobacionHorasDto();
         aphdto.setAprobacionhoras(aprobacioneshoras);
         model.addAttribute("titulo", "Listado de horas capturadas");
-<<<<<<< HEAD
-        AprobacionHorasDto aphr = new AprobacionHorasDto();
-        aphr.setAprobacionhoras(aprobacionhoras);
-        model.addAttribute("aprobacionHorasForm", aphr);
-//        model.addAttribute("aprobacionhoras", aprobacionHorasService.findAll());
-=======
-        //model.addAttribute("aprobacionhoras", aprobacionHorasService.findAll());
-        model.addAttribute("aprobacionhoraslista", aphdto);
->>>>>>> 2ec6870fed18ccb3233a5161495163c341ea2091
+        model.addAttribute("aprobacionHorasForm", aphdto);
+
         model.addAttribute("recursos", listaRecursos);
         model.addAttribute("proyectos", listaProyectos);
         return "aprobacionhoras";
     }
     
-<<<<<<< HEAD
     @RequestMapping(value="/guardarAproHoras", method = RequestMethod.POST)
 	public String validarHoras(@ModelAttribute("aprobacionHorasForm") AprobacionHorasDto aprobacionHorasForm, BindingResult result, Model model,RedirectAttributes flash,SessionStatus status) {
     	System.out.println("Hola Mundo!");
-    	
-    	for(AprobacionHoras ah : aprobacionHorasForm.getAprobacionhoras()) {
-    		System.out.println(ah.getValDuracionValidada());
-    	}
-=======
-    @RequestMapping(value="/guardar", method = RequestMethod.POST)
-	public String validarHoras(@ModelAttribute("aprobacionhoraslista") AprobacionHorasDto aprobacionhoraslista, BindingResult result, Model model,RedirectAttributes flash,SessionStatus status) {
->>>>>>> 2ec6870fed18ccb3233a5161495163c341ea2091
 
 		if(result.hasErrors()) {
 			model.addAttribute("titulo", "Listado Horas Capturadas");
@@ -87,12 +67,8 @@ public class AprobacionHorasController {
 	        model.addAttribute("recursos", listaRecursos);
 			return "aprobacionhoras";
 		}
-<<<<<<< HEAD
 		aprobacionHorasService.saveAll(aprobacionHorasForm.getAprobacionhoras());
 		model.addAttribute("aprobacionhoras", aprobacionHorasService.findAll());
-=======
-		aprobacionHorasService.saveAll(aprobacionhoraslista.getAprobacionhoras());
->>>>>>> 2ec6870fed18ccb3233a5161495163c341ea2091
 		status.setComplete();
 		flash.addFlashAttribute("success", "Horas Validadas");
 		return "redirect:/aprobacionhoras";

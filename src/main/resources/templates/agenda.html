@@ -72,7 +72,7 @@
         <div id="collapseProyectos" class="collapse" aria-labelledby="menuProyectos" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
             <h6 class="collapse-header">Ver:</h6>
-            <a class="collapse-item" href="#">Mis proyectos</a>
+            <a class="collapse-item" th:href="@{/listaProyectosTodo}">Mis proyectos</a>
             <a class="collapse-item" href="#">Mis actividades</a>
           </div>
         </div>
@@ -146,8 +146,8 @@
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
                         <h1 class="h3 mb-2 text-gray-800">Mis contactos</h1>
-                        <a th:href="@{/formContacto/}" class="btn btn-primary">
-                            <i class="fas fa-plus fa-sm text-white-50"></i> Agregar contacto
+                        <a th:href="@{/formContacto}" class="btn btn-primary">
+                            <i class="fas fa-plus fa-sm text-white-50"></i> Agregar un contacto
                         </a>
                     </div>
                     
@@ -180,7 +180,6 @@
                                         <tr>
                                             <th>Nombre</th>
                                             <th>Puesto</th>
-<!--                                             <th>Recursos a cargo</th> -->
                                             <th>E-mail</th>
                                             <th>Tel&eacute;fono Celular</th>
                                             <th>Tel&eacute;fono Empresa</th>
@@ -188,23 +187,10 @@
                                             <th>Acciones</th>
                                         </tr>
                                     </thead>
-<!--                                     <tfoot> -->
-<!--                                          <tr> -->
-<!--                                             <th>Nombre</th> -->
-<!--                                             <th>Puesto</th> -->
-<!--                                             <th>Recursos a cargo</th> -->
-<!--                                             <th>E-mail</th> -->
-<!--                                             <th>Tel&eacute;fono Celular</th> -->
-<!--                                             <th>Tel&eacute;fono Empresa</th> -->
-<!--                                             <th>Extensi&oacute;n</th> -->
-<!--                                             <th>Acciones</th> -->
-<!--                                         </tr> -->
-<!--                                     </tfoot> -->
                                     <tbody>
                                         <tr th:each="agenda: ${contactos}">
                                             <td th:text="${agenda.descContacto}"></td>
                                             <td th:text="${agenda.descPuesto}"></td>
-<!--                                             <td th:text="${agenda.valRecursosACargo}"></td> -->
                                             <td th:text="${agenda.descCorreoElectronico}"></td>
                                             <td th:text="${agenda.descTelCelular}"></td>
                                             <td th:text="${agenda.descTelEmpresa}"></td>

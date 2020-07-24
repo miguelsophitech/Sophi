@@ -39,7 +39,7 @@
       </div>
 
       <!-- Nav Item - Gastos y tiempo Collapse Menu -->
-      <li class="nav-item">
+      <li class="nav-item active">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseClientes" aria-expanded="true" aria-controls="collapseClientes">
           <i class="fas fa-fw fa-address-book"></i>
           <span>Gesti&oacute;n de clientes</span>
@@ -47,7 +47,7 @@
         <div id="collapseClientes" class="collapse" aria-labelledby="menuClientes" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
             <h6 class="collapse-header">Ver:</h6>
-            <a class="collapse-item" th:href="@{/listaClientes}">Mis clientes</a>
+            <a class="collapse-item active" th:href="@{/listaClientes}">Mis clientes</a>
             <a class="collapse-item" th:href="@{/agenda}">Mis contactos</a>
           </div>
         </div>
@@ -72,7 +72,7 @@
         <div id="collapseProyectos" class="collapse" aria-labelledby="menuProyectos" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
             <h6 class="collapse-header">Ver:</h6>
-            <a class="collapse-item" href="#">Mis proyectos</a>
+            <a class="collapse-item" th:href="@{/listaProyectosTodo}">Mis proyectos</a>
             <a class="collapse-item" href="#">Mis actividades</a>
           </div>
         </div>
@@ -106,7 +106,7 @@
       </div>
 
       <!-- Nav Item - Gastos y tiempo Collapse Menu -->
-      <li class="nav-item active">
+      <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseRecursos" aria-expanded="true" aria-controls="collapseRecursos">
           <i class="fas fa-fw fa-id-card"></i>
           <span>Gesti&oacute;n de recursos</span>
@@ -114,7 +114,7 @@
         <div id="collapseRecursos" class="collapse" aria-labelledby="menuRecursos" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
             <h6 class="collapse-header">Ver:</h6>
-            <a class="collapse-item active" th:href="@{/listarRecursos}">Mis recursos</a>
+            <a class="collapse-item" th:href="@{/listarRecursos}">Mis recursos</a>
             <a class="collapse-item" href="#">Mi perfil</a>
           </div>
         </div>
@@ -142,82 +142,90 @@
 
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
-                    <h1 class="h3 mb-4 mr-5 text-gray-800">Alta de datos del cliente</h1>
-                    <form th:action="@{/formCliente}" th:Object="${cliente}" method="POST">
-                    <!-- Content Container 1 -->
-                    <div class="container">                        
+
+					<!-- Page Heading -->
+					<h1 class="h3 mb-2 text-gray-800" th:text="${titulo}"></h1>
+					<p class="mb-4">Completa la informaci&oacute;n del nuevo cliente.</p>
+
+
+					<form th:action="@{/formCliente}" th:Object="${cliente}" method="POST">
                             <!-- Collapsable Card Datos personales -->
                             <div class="card shadow mb-4">
                                 <!-- Card Header - Accordion -->
-                                <a href="#collapseCardDatosPersonales" class="d-block card-header py-3"
+                                <a href="#collapseCardCliente" class="d-block card-header py-3"
                                     data-toggle="collapse" role="button" aria-expanded="true"
-                                    aria-controls="collapseCardDatosPersonales">
+                                    aria-controls="collapseCardCliente">
                                     <h6 class="m-0 font-weight-bold text-primary">Datos del cliente</h6>
                                 </a>
                                 <!-- Card Content - Collapse -->
-                                <div class="collapse show" id="collapseCardDatosPersonales">
+                                <div class="collapse show" id="collapseCardCliente">
                                     <div class="card-body">
                                         <div class="row">
-                                            <div class="form-group mb-3 ml-3 mr-3">
-                                                <label for="formGroupInputNombre">Nombre</label>
+                                            <div class="form-group col-12 col-md-4">
+                                                <label class="col-form-label">Nombre</label>
                                                 <input type="text" th:field="*{descCliente}" class="form-control" th:errorClass="form-control alert-danger" />
                                                 <small class="form-text text-danger" th:if="${#fields.hasErrors('descCliente')}" th:errors="*{descCliente}"></small>
+                                        	</div>
+	                                        <div class="form-group col-12 col-md-2">
+	                                            <label class="col-form-label">C&oacute;digo de cliente</label>
+	                                            <input type="text" th:field="*{descCodigoCliente}" class="form-control" th:errorClass="form-control alert-danger"/>
+	                                            <small class="form-text text-danger" th:if="${#fields.hasErrors('descCodigoCliente')}" th:errors="*{descCodigoCliente}"></small>
+	                                        </div>
+	                                        <div class="form-group col-12 col-md-4">
+	                                            <label class="col-form-label">Nombre anterior</label>
+	                                            <input type="text" th:field="*{descClienteAnterior}" class="form-control" th:errorClass="form-control alert-danger"/>
+	                                            <small class="form-text text-danger" th:if="${#fields.hasErrors('descClienteAnterior')}" th:errors="*{descClienteAnterior}"></small>
+	                                        </div>
+	                                        <div class="form-group col-12 col-md-2">
+	                                            <label class="col-form-label">Actualizaci&oacute;n</label>
+	                                            <input type="date" th:field="*{fecActualizacion}" class="form-control" th:errorClass="form-control alert-danger" placeholder="yyyy-MM-dd"/>
+	                                            <small class="form-text text-danger" th:if="${#fields.hasErrors('fecActualizacion')}" th:errors="*{fecActualizacion}"></small>
+	                                        </div>
                                         </div>
-                                        <div class="form-group mb-3 ml-3 mr-3">
-                                            <label for="formGroupInputDirecciÃ³n">C&oacute;digo de cliente</label>
-                                            <input type="text" th:field="*{descCodigoCliente}" class="form-control" th:errorClass="form-control alert-danger"/>
-                                            <small class="form-text text-danger" th:if="${#fields.hasErrors('descCodigoCliente')}" th:errors="*{descCodigoCliente}"></small>
-                                        </div>
-                                        <div class="form-group mb-3 ml-3 mr-3">
-                                            <label for="formGroupInputSector">Cliente anterior</label>
-                                            <input type="text" th:field="*{descClienteAnterior}" class="form-control" th:errorClass="form-control alert-danger"/>
-                                            <small class="form-text text-danger" th:if="${#fields.hasErrors('descClienteAnterior')}" th:errors="*{descClienteAnterior}"></small>
-                                        </div>
-                                        <div class="form-group mb-3 ml-3 mr-3">
-                                            <label for="formGroupInputRFC">Fecha de actualizaci&oacute;n</label>
-                                            <input type="date" th:field="*{fecActualizacion}" class="form-control" th:errorClass="form-control alert-danger" placeholder="yyyy-MM-dd"/>
-                                            <small class="form-text text-danger" th:if="${#fields.hasErrors('fecActualizacion')}" th:errors="*{fecActualizacion}"></small>
-                                        </div>
-                                        <div class="form-group mb-3 ml-3 mr-3">
-                                            <label for="formGroupInputFacAn">Direcci&oacute;n Fiscal</label>
-                                            <input type="text" th:field="*{descDireccionFiscal}" class="form-control" th:errorClass="form-control alert-danger"/>
-                                            <small class="form-text text-danger" th:if="${#fields.hasErrors('descDireccionFiscal')}" th:errors="*{descDireccionFiscal}"></small>
-                                        </div>
-                                        <div class="form-group mb-3 ml-3 mr-3">
-                                            <label for="formGroupInputNumEmp">Grupo Empresarial</label>
-                                            <input type="text" th:field="*{descGrupoEmpresarial}" class="form-control" th:errorClass="form-control alert-danger"/>
-                                            <small class="form-text text-danger" th:if="${#fields.hasErrors('descGrupoEmpresarial')}" th:errors="*{descGrupoEmpresarial}"></small>
-                                        </div>
-                                        <div class="form-group mb-3 ml-3 mr-3">
-                                            <label for="formGroupInputNumEmp">Facturaci&oacute;n anual</label>
-                                            <input type="number" th:field="*{impFacturacionAnual}" class="form-control" th:errorClass="form-control alert-danger" placeholder="$"/>
-                                            <small class="form-text text-danger" th:if="${#fields.hasErrors('impFacturacionAnual')}" th:errors="*{impFacturacionAnual}"></small>
-                                        </div>
-                                        <div class="form-group mb-3 ml-3 mr-3">
-                                            <label for="formGroupInputNumEmp">Tama&ntilde;o de la empresa</label>
-                                            <input type="text" th:field="*{descRangoRecursos}" class="form-control" th:errorClass="form-control alert-danger"/>
-                                            <small class="form-text text-danger" th:if="${#fields.hasErrors('descRangoRecursos')}" th:errors="*{descRangoRecursos}"></small>
-                                        </div>
-                                        <div class="form-group mb-3 ml-3 mr-3">
-                                            <label for="formGroupInputNumEmp">R.F.C.</label>
-                                            <input type="text" th:field="*{descRFC}" class="form-control" th:errorClass="form-control alert-danger"/>
-                                            <small class="form-text text-danger" th:if="${#fields.hasErrors('descRFC')}" th:errors="*{descRFC}"></small>
-                                        </div>
-                                        <div class="form-group mb-3 ml-3 mr-3">
-											<label class="col-form-label">Sector</label>
-												<div class="input-group">
+                                        <div class="row">
+                                        	<div class="form-group col-12 col-md-4">
+	                                            <label class="col-form-label">Grupo Empresarial</label>
+	                                            <input type="text" th:field="*{descGrupoEmpresarial}" class="form-control" th:errorClass="form-control alert-danger"/>
+	                                            <small class="form-text text-danger" th:if="${#fields.hasErrors('descGrupoEmpresarial')}" th:errors="*{descGrupoEmpresarial}"></small>
+	                                        </div>
+	                                        <div class="form-group col-12 col-md-8">
+	                                            <label class="col-form-label">Direcci&oacute;n Fiscal</label>
+	                                            <input type="text" th:field="*{descDireccionFiscal}" class="form-control" th:errorClass="form-control alert-danger"/>
+	                                            <small class="form-text text-danger" th:if="${#fields.hasErrors('descDireccionFiscal')}" th:errors="*{descDireccionFiscal}"></small>
+	                                        </div>
+	                                    </div>
+	                                    <div class="row">
+	                                        <div class="form-group col-12 col-md-2">
+	                                            <label class="col-form-label">Facturaci&oacute;n anual</label>
+	                                            <input type="number" th:field="*{impFacturacionAnual}" class="form-control" th:errorClass="form-control alert-danger" placeholder="$"/>
+	                                            <small class="form-text text-danger" th:if="${#fields.hasErrors('impFacturacionAnual')}" th:errors="*{impFacturacionAnual}"></small>
+	                                        </div>
+	                                        <div class="form-group col-12 col-md-3">
+	                                            <label class="col-form-label">Tama&ntilde;o de la empresa</label>
+	                                            <select th:field="*{descRangoRecursos}" class="custom-select">
+				      									<option value="Micro">Micro</option>
+				      									<option value="Pequeño">Peque&ntilde;o</option>
+				      									<option value="Mediano">Mediano</option>
+				      									<option value="Grande">Grande</option>
+				   									</select>
+	                                        </div>
+	                                        <div class="form-group col-12 col-md-3">
+	                                            <label class="col-form-label">R.F.C.</label>
+	                                            <input type="text" th:field="*{descRFC}" class="form-control" th:errorClass="form-control alert-danger"/>
+	                                            <small class="form-text text-danger" th:if="${#fields.hasErrors('descRFC')}" th:errors="*{descRFC}"></small>
+	                                        </div>
+	                                        <div class="form-group col-12 col-md-4">
+												<label class="col-form-label">Sector</label>
 													<select th:field="*{sector.codSector}" class="custom-select">
 				      									<option th:each="sectorLista : ${sectoresList}" 
 				      									th:value="${sectorLista.codSector}" th:text="${sectorLista.descSector}">
 				      									</option>
 				   									</select>
-				   								</div>
-										</div>
-                                    </div>
+											</div>
+                                    	</div>
                                 </div>
                             </div>
                         </div>
-                    </div>
 
                     <div class="row">
                         <div class="col-sm-6">
@@ -253,22 +261,22 @@
       <footer th:replace="layout/layout :: modalLogout"></footer>
       <!-- End ModalLogout -->
 
-    <!-- Bootstrap core JavaScript-->
-    <script th:src="vendor/jquery/jquery.min.js"></script>
-    <script th:src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+   <!-- Bootstrap core JavaScript-->
+  <script th:src="@{/vendor/jquery/jquery.min.js}"></script>
+  <script th:src="@{/vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>
 
-    <!-- Core plugin JavaScript-->
-    <script th:src="vendor/jquery-easing/jquery.easing.min.js"></script>
+  <!-- Core plugin JavaScript-->
+  <script th:src="@{/vendor/jquery-easing/jquery.easing.min.js}"></script>
 
-    <!-- Custom scripts for all pages-->
-    <script th:src="js/sb-admin-2.min.js"></script>
+  <!-- Custom scripts for all pages-->
+  <script th:src="@{/js/sb-admin-2.min.js}"></script>
 
-    <!-- Page level plugins -->
-    <script th:src="vendor/chart.js/Chart.min.js"></script>
+  <!-- Page level plugins -->
+  <script th:src="@{/vendor/datatables/jquery.dataTables.min.js}"></script>
+  <script th:src="@{/vendor/datatables/dataTables.bootstrap4.min.js}"></script>
 
-    <!-- Page level custom scripts -->
-    <script th:src="js/demo/chart-area-demo.js"></script>
-    <script th:src="js/demo/chart-pie-demo.js"></script>
+  <!-- Page level custom scripts -->
+  <script th:src="@{/js/demo/datatables-demo.js}"></script>
 
 </body>
 

@@ -144,84 +144,85 @@
         <div class="container-fluid">
 
           <!-- Page Heading -->
-          <h1 class="h3 mb-2 text-gray-800" th:text="${textoTitulo}"></h1>
-          <p class="mb-4" th:text="${textoDescriptivo}"></p>
+          <h1 class="h3 mb-2 text-gray-800" th:text="${titulo}"></h1>
+          <p class="mb-4">Completa la informaci&oacute;n del nuevo contacto.</p>
 
           <form th:action="@{/formContacto}" th:Object="${agenda}" method="POST">
-            <div class="container">
               <div class="card shadow mb-4">
                 <!-- Card Header - Accordion -->
-                <a href="#collapseCardExample" class="d-block card-header py-3" data-toggle="collapse" role="button"
-                  aria-expanded="true" aria-controls="collapseCardExample">
-                  <h6 class="m-0 font-weight-bold text-primary">Ingrese datos</h6>
+                <a href="#collapseCardContacto" class="d-block card-header py-3" data-toggle="collapse" role="button"
+                  aria-expanded="true" aria-controls="collapseCardContacto">
+                  <h6 class="m-0 font-weight-bold text-primary">Datos del contacto</h6>
                 </a>
                 <!-- Card Content - Collapse -->
-                <div class="collapse show" id="collapseCardExample">
+                <div class="collapse show" id="collapseCardContacto">
                   <div class="card-body">
-                    <div class="row">
-                      <div class="form-group col-12 col-md-3">
-                        <label class="col-form-label">Nombre</label>
-                        <input type="text" th:field="*{descContacto}" class="form-control"
-                          th:errorClass="form-control alert-danger" />
-                        <small class="form-text text-danger" th:if="${#fields.hasErrors('descContacto')}" th:errors="*{descContacto}"></small>
-                      </div>
+                  
+                  <div class="row">
+                  	<div class="form-group col-12 col-md-4">
+                        <label class="col-form-label">Cliente</label>
+                        <select th:field="*{codCliente}" class="custom-select">
+                          <option th:each="cliente:${clienteList}" th:value="${cliente.codCliente}" th:text="${cliente.descCliente}"></option>
+                        </select>
+					</div>
+                  </div>
+                  
+                  
+                  
+                  <div class="row">
+                    <div class="form-group col-12 col-md-4">
+                      <label class="col-form-label">Nombre</label>
+                      <input type="text" th:field="*{descContacto}" class="form-control" th:errorClass="'form-control alert-danger'" />
+                      <small class="form-text text-danger" th:if="${#fields.hasErrors('descContacto')}" th:errors="*{descContacto}"></small>
+                    </div>
+                     <div class="form-group col-12 col-md-3">
+                      <label class="col-form-label">Correo electronico</label>
+                      <input type="text" th:field="*{descCorreoElectronico}" class="form-control" th:errorClass="'form-control alert-danger'"/>
+                      <small class="form-text text-danger" th:if="${#fields.hasErrors('descCorreoElectronico')}" th:errors="*{descCorreoElectronico}"></small>
+                    </div>
+                     <div class="form-group col-12 col-md-3">
+                      <label class="col-form-label">Cargo</label>
+                      <select th:field="*{codCargo}" class="custom-select">
+                      <option th:each="cargo : ${cargoList}" th:value="${cargo.codCargo}" th:text="${cargo.descCargo}">
+                      </option>
+                      </select>
+                    </div>
+                     <div class="form-group col-12 col-md-2">
+                      <label class="col-form-label">Recursos a cargo</label>
+                      <input type="number" th:field="*{valRecursosACargo}" class="form-control"/>
+                    </div>
+                   </div>
+                   
+                   
+                   <div class="row">
                       <div class="form-group col-12 col-md-3">
                         <label class="col-form-label">Puesto</label>
-                        <input type="text" th:field="*{descPuesto}" class="form-control" th:errorClass="form-control alert-danger"/>
+                        <input type="text" th:field="*{descPuesto}" class="form-control" th:errorClass="'form-control alert-danger'"/>
                         <small class="form-text text-danger" th:if="${#fields.hasErrors('descPuesto')}" th:errors="*{descPuesto}"></small>
                       </div>
                       <div class="form-group col-12 col-md-3">
-                        <label class="col-form-label">Recursos a cargo</label>
-                        <input type="number" th:field="*{valRecursosACargo}" class="form-control"/>
-                      </div>
-                      <div class="form-group col-12 col-md-3">
-                        <label class="col-form-label">Correo electronico</label>
-                        <input type="text" th:field="*{descCorreoElectronico}" class="form-control" th:errorClass="form-control alert-danger"/>
-                        <small class="form-text text-danger" th:if="${#fields.hasErrors('descCorreoElectronico')}" th:errors="*{descCorreoElectronico}"></small>
-                      </div>
-                      <div class="form-group col-12 col-md-3">
-                        <label class="col-form-label">Fecha nacimiento</label>
-                        <input type="date" th:field="*{fecNacimiento}" class="form-control" th:errorClass="form-control alert-danger"/>
-                        <small class="form-text text-danger" th:if="${#fields.hasErrors('fecNacimiento')}" th:errors="*{fecNacimiento}"></small>
-                      </div>
-                      <div class="form-group col-12 col-md-3">
-                        <label class="col-form-label">Telefono celular</label>
-                        <input type="tel" th:field="*{descTelCelular}" class="form-control" th:errorClass="form-control alert-danger"/>
+                        <label class="col-form-label">Tel&eacute;fono celular</label>
+                        <input type="tel" th:field="*{descTelCelular}" class="form-control" th:errorClass="'form-control alert-danger'"/>
                         <small class="form-text text-danger" th:if="${#fields.hasErrors('descTelCelular')}" th:errors="*{descTelCelular}"></small>
                       </div>
-                      <div class="form-group col-12 col-md-3">
-                        <label class="col-form-label">Telefono empresa</label>
-                        <input type="tel" th:field="*{descTelEmpresa}" class="form-control" th:errorClass="form-control alert-danger"/>
-                        <small class="form-text text-danger" th:if="${#fields.hasErrors('descTelEmpresa')}" th:errors="*{descTelEmpresa}"></small>
+                      <div class="form-group col-8 col-md-3">
+                        <label class="col-form-label">Tel&eacute;fono empresa</label>
+                        <input type="tel" th:field="*{descTelEmpresa}" class="form-control"/>
                       </div>
-                      <div class="form-group col-12 col-md-3">
+                      <div class="form-group col-4 col-md-1">
                         <label class="col-form-label">Extension</label>
-                        <input type="text" th:field="*{descTelExt}" class="form-control" th:errorClass="form-control alert-danger"/>
-                        <small class="form-text text-danger" th:if="${#fields.hasErrors('descTelExt')}" th:errors="*{descTelExt}"></small>
+                        <input type="text" th:field="*{descTelExt}" class="form-control"/>
                       </div>
-                      <div class="form-group col-12 col-md-4">
-                        <label class="col-form-label">Cliente</label>
-                        <select th:field="*{codCliente}" class="custom-select">
-                          <option th:each="cliente:${clienteList}" th:value="${cliente.codCliente}" th:text="${cliente.descCliente}">
-                          </option>
-                        </select>
-                      </div>
-                      <div class="form-group col-6 col-md-2">
-                        <label class="col-form-label">Cargo</label>
-                        <select th:field="*{codCargo}" class="custom-select">
-                        <option th:each="cargo : ${cargoList}" th:value="${cargo.codCargo}" th:text="${cargo.descCargo}">
-                        </option>
-                        </select>
-<!--                           <select class="custom-select" id="inputGroupSelectCliente"> -->
-<!--                           <option selected>Seleccione...</option> -->
-<!--                           <option th:field="cargo:${cargos}" th:value="${cargo.codCargo}" th:text="${cargo.descCargo}"></option> -->
-<!--                         </select> -->
-                      </div>
+                       <div class="form-group col-12 col-md-2">
+                        <label class="col-form-label">Fecha de nacimiento</label>
+                        <input type="date" th:field="*{fecNacimiento}" class="form-control" th:errorClass="form-control alert-danger"/>
+                        <small class="form-text text-danger" th:if="${#fields.hasErrors('fecNacimiento')}" th:errors="*{fecNacimiento}"></small>
+				      </div>
                     </div>
+                    
                   </div>
                 </div>
               </div>
-            </div>
             <div class="row">
               <div class="col-sm-6">
                 <input type="submit" value="Guardar" class="btn btn-primary"/>

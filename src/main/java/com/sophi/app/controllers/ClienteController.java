@@ -53,9 +53,8 @@ public class ClienteController {
 			return "redirect:/listaClientes";
 		}
 		model.put("cliente", cliente);
-		List<Sector> sectores = sectorService.findAll();
-		model.put("sectoresList",sectores);
-		model.put("titulo", "Formulario cliente");
+		model.put("textoTitulo","Información de tu cliente");
+		model.put("textoDescriptivo","Encuentra aquí la información completa de tu cliente.");
 		return "dataCliente";
 	}
 	
@@ -65,7 +64,7 @@ public class ClienteController {
 		model.put("cliente", cliente);
 		List<Sector> sectores = sectorService.findAll();
 		model.put("sectoresList",sectores);
-		model.put("titulo", "Formulario cliente");
+		model.put("titulo", "Formulario de clientes");
 		return "formCliente";
 	}
 	

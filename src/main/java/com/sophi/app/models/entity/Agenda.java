@@ -5,12 +5,9 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
 import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -32,19 +29,19 @@ public class Agenda implements Serializable {
 	@Column(name = "cod_contacto")
 	private Long codContacto;
 	
-	@NotEmpty
+	@NotEmpty(message = "Este dato no debe estar vacío")
 	@Column(name = "desc_contacto")
 	private String descContacto;
 	
-	@NotEmpty
+	@NotEmpty(message = "Este dato no debe estar vacío")
 	@Column(name = "desc_puesto")
 	private String descPuesto;
 	
-	@NotEmpty
 	@Column(name = "val_recursos_a_cargo")
-	private String valRecursosACargo;
+	private Long valRecursosACargo;
 	
-	@Email
+	@NotEmpty(message = "Este dato no debe estar vacío")
+	@Email(message = "No es un email correcto")
 	@Column(name = "desc_correo_electronico")
 	private String descCorreoElectronico;
 	
@@ -53,6 +50,7 @@ public class Agenda implements Serializable {
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date fecNacimiento;
 	
+	@NotEmpty(message = "Este dato no debe estar vacío")
 	@Column(name = "desc_tel_celular")
 	private String descTelCelular;
 	
@@ -109,11 +107,11 @@ public class Agenda implements Serializable {
 		this.descPuesto = descPuesto;
 	}
 
-	public String getValRecursosACargo() {
+	public Long getValRecursosACargo() {
 		return valRecursosACargo;
 	}
 
-	public void setValRecursosACargo(String valRecursosACargo) {
+	public void setValRecursosACargo(Long valRecursosACargo) {
 		this.valRecursosACargo = valRecursosACargo;
 	}
 
