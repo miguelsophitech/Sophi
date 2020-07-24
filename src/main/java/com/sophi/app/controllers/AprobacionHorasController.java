@@ -73,7 +73,8 @@ public class AprobacionHorasController {
 		return "redirect:/aprobacionhoras";
 	}
 
-    @RequestMapping(value = "/cargaHoras", method = RequestMethod.GET)
+    @SuppressWarnings("null")
+	@RequestMapping(value = "/cargaHoras", method = RequestMethod.GET)
 	@ResponseBody
 	public String cargaHoras(@RequestParam("id") Long codProyecto, Model model) {
         List<AprobacionHoras> aprobacionhorasList = null;
