@@ -5,20 +5,23 @@ import java.util.Objects;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 
 @Embeddable
-public class CapHoraId implements Serializable {
+public class RecursoGastoId implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	
-	@Column(name = "cod_actividad")
-	private Long codActividad;
-	
-	@Column(name = "cod_recurso")
-	private Long codRecurso;
+	@OneToOne
+	@JoinColumn(name = "cod_tipo_gasto")
+	private TipoGasto tipoGasto;
 	
 	@Column(name = "cod_proyecto")
 	private Long codProyecto;
+	
+	@Column(name = "cod_recurso")
+	private Long codRecurso;
 	
 	@Column(name = "cod_cliente")
 	private Long codCliente;
@@ -26,50 +29,42 @@ public class CapHoraId implements Serializable {
 	@Column(name = "cod_estatus_proyecto")
 	private Long codEstatusProyecto;
 	
-	public CapHoraId() {
+	public RecursoGastoId() {
 		
 	}
 	
-	public CapHoraId(Long codActividad, Long codRecurso, Long codProyecto, Long codCliente, Long codEstatusProyecto) {
+	public RecursoGastoId(TipoGasto tipoGasto, Long codProyecto, Long codRecurso, Long codCliente, Long codEstatusProyecto) {
 		super();
-		this.codActividad = codActividad;
-		this.codRecurso = codRecurso;
+		this.tipoGasto = tipoGasto;
 		this.codProyecto = codProyecto;
+		this.codRecurso = codRecurso;
 		this.codCliente = codCliente;
 		this.codEstatusProyecto = codEstatusProyecto;
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(codActividad,codRecurso,codProyecto,codCliente,codEstatusProyecto);
+		return Objects.hash(tipoGasto,codProyecto,codRecurso,codCliente,codEstatusProyecto);
 	}
 
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        CapHoraId CapHoraId = (CapHoraId) o;
-        return codActividad.equals(CapHoraId.codActividad) &&
-        		codRecurso.equals(CapHoraId.codRecurso) &&
-        		codProyecto.equals(CapHoraId.codProyecto) &&
-        		codCliente.equals(CapHoraId.codCliente) &&
-        		codEstatusProyecto.equals(CapHoraId.codEstatusProyecto);
+        RecursoGastoId RecursoGastoId = (RecursoGastoId) o;
+        return tipoGasto.equals(RecursoGastoId.tipoGasto) &&
+        		codProyecto.equals(RecursoGastoId.codProyecto) &&
+        		codRecurso.equals(RecursoGastoId.codRecurso) &&
+        		codCliente.equals(RecursoGastoId.codCliente) &&
+        		codEstatusProyecto.equals(RecursoGastoId.codEstatusProyecto);
 	}
 
-	public Long getCodActividad() {
-		return codActividad;
+	public TipoGasto getTipoGasto() {
+		return tipoGasto;
 	}
 
-	public void setCodActividad(Long codActividad) {
-		this.codActividad = codActividad;
-	}
-
-	public Long getCodRecurso() {
-		return codRecurso;
-	}
-
-	public void setCodRecurso(Long codRecurso) {
-		this.codRecurso = codRecurso;
+	public void setTipoGasto(TipoGasto tipoGasto) {
+		this.tipoGasto = tipoGasto;
 	}
 
 	public Long getCodProyecto() {
@@ -78,6 +73,14 @@ public class CapHoraId implements Serializable {
 
 	public void setCodProyecto(Long codProyecto) {
 		this.codProyecto = codProyecto;
+	}
+
+	public Long getCodRecurso() {
+		return codRecurso;
+	}
+
+	public void setCodRecurso(Long codRecurso) {
+		this.codRecurso = codRecurso;
 	}
 
 	public Long getCodCliente() {
@@ -99,7 +102,5 @@ public class CapHoraId implements Serializable {
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
-	
-	
 
 }

@@ -7,6 +7,6 @@ import com.sophi.app.models.entity.ClasificacionProyecto;
 
 public interface IClasificacionProyectoDao  extends CrudRepository<ClasificacionProyecto, Long> {
 	
-
+	
 
 }
