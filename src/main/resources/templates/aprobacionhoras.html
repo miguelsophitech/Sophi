@@ -203,14 +203,13 @@
                                     </tfoot>
                                     <tbody>
 										<tr th:each="aprobacionhorasunico, itemStat : ${aprobacionhoraslista.aprobacionhoras}">
-											<td><input type="checkbox" name="check" onClick="checkbox();"/></td>
+											<td><input id="check" type="checkbox" th:name="|aprobacionhoras[${itemStat.index}].fecValidacion|" th:value="${aprobacionhorasunico.getFecValidacion()}" onClick="checkbox();"/></td>
 											<td><span th:text="${aprobacionhorasunico.fecRegistro}"></span></td>
 											<td><span th:text="${aprobacionhorasunico.recurso.descRecurso}"></span></td>
 											<td><span th:text="${aprobacionhorasunico.descComentarioDetalle}"></span></td>
 											<td><span th:text="${aprobacionhorasunico.actividad.valDuracionActividad}"></span></td>
 											<td><span th:text="${aprobacionhorasunico.valDuracionReportada}"></span></td>
 											<td><input id="validar" type="text" style="height:30px; width:40px;" th:name="|aprobacionhoras[${itemStat.index}].valDuracionValidada|" th:value="${aprobacionhorasunico.getValDuracionValidada()}" disabled/></td>
-<!-- 											<td><input type="hidden" th:name="|aprobacionhoras[${itemStat.index}].fecValidacion|" th:value="${aprobacionhorasunico.getFecValidacion()}"/></td> -->
 										</tr>
 										</tbody>
                                 </table>

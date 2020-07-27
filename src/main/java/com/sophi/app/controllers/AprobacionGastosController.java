@@ -3,6 +3,8 @@ package com.sophi.app.controllers;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.sophi.app.models.entity.AprobacionGastos;
+import com.sophi.app.models.entity.AprobacionGastosDto;
 import com.sophi.app.models.entity.Proyecto;
 import com.sophi.app.models.entity.Recurso;
 import com.sophi.app.models.service.IAprobacionGastosService;
@@ -12,12 +14,16 @@ import com.sophi.app.models.service.IRecursoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.support.SessionStatus;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
-@SessionAttributes("aprobaciongastos")
+@SessionAttributes("aprobaciongastoslista")
 public class AprobacionGastosController {
 
     @Autowired
@@ -29,72 +35,37 @@ public class AprobacionGastosController {
     @Autowired
     private IProyectoService proyectoService;
 
-    @RequestMapping(value = "aprobaciongastos", method = RequestMethod.GET)
+    @RequestMapping(value = "/aprobaciongastos", method = RequestMethod.GET)
     public String AprobacionGastos(Model model) {
+    	List<AprobacionGastos> aprobacionesgastos = new ArrayList<>();
     	List<Proyecto> listaProyectos = new ArrayList<Proyecto>();
         List<Recurso> listaRecursos = new ArrayList<Recurso>();
+        aprobaciongastosService.findAll().iterator().forEachRemaining(aprobacionesgastos::add);
         listaProyectos = proyectoService.findAll();
         listaRecursos = recursoService.findAll();
+        AprobacionGastosDto apgdto = new AprobacionGastosDto();
+        apgdto.setAprobaciongastos(aprobacionesgastos);
         model.addAttribute("titulo", "Listado de gastos capturados");
-        model.addAttribute("aprobaciongastos", aprobaciongastosService.findAll());
-        model.addAttribute("recursos", listaRecursos);
+        //model.addAttribute("aprobaciongastos", aprobaciongastosService.findAll());
+        model.addAttribute("aprobaciongastoslista",apgdto);
         model.addAttribute("proyectos", listaProyectos);
+        model.addAttribute("recursos", listaRecursos);
         return "aprobaciongastos";
     }
     
-//  @RequestMapping(value = "/cargaGastos", method = RequestMethod.GET)
-//	@ResponseBody
-//	public String cargaContactos(@RequestParam("id") Long codProyecto, Model model) {
-//      List<AprobacionGastos> aprobaciongastosList = null;
-//      
-//      if(codProyecto == -1) {
-//      	aprobacionGastosService.findAll();
-//      }
-//      
-//      else {
-//      	aprobacionGastosService.findAprobacionGastosBycodProyecto(codProyecto);
-//      }
-//      
-//		String contenido = "";
-//		contenido = contenido + "<div class=\"table-responsive\">"+
-//		"<table class=\"table table-bordered\" id=\"dataTable\" width=\"100%\" cellspacing=\"0\">"+
-//		"<thead>"+
-//		"<tr>"+
-//		"<th></th>"+
-//      "<th>Tipo Gastos</th>"+
-//      "<th>Fecha</th>"+
-//      "<th>Colaborador</th>"+
-//      "<th>Descripci&oacute;n</th>"+
-//		"<th>Importe</th>"+
-//      "</tr>"+
-//      "</thead>"+
-//      "<tfoot>"+
-//		"<tr>"+
-//		"<th></th>"+
-//  	"<th>Tipo Gastos</th>"+
-//  	"<th>Fecha</th>"+
-//  	"<th>Colaborador</th>"+
-//  	"<th>Descripci&oacute;n</th>"+
-//		"<th>Importe</th>"+
-//      "</tr>"+
-//      "</tfoot>"+
-//		"<tbody>";
-//		
-//		for(AprobacionGastos aprobaciongastos : aprobaciongastosList){
-//          String tablaAprobacionGastos = "";
-//          tablaAprobacionGastos = "<td><input type=\"checkbox\" name=\"check\" onClick=\"checkbox();\"/></td>";
-//          tablaAprobacionGastos += "<td>"+aprobaciongastos.tipogasto.getDescTipoGasto()+"</td>";
-//          tablaAprobacionGastos += "<td>"+aprobaciongastos.fecRegistro+"</td>";
-//          tablaAprobacionGastos += "<td>"+aprobaciongastos.recurso.getDescRecurso()+"</td>";
-//          tablaAprobacionGastos += "<td>"+aprobaciongastos.descComentario+"</td>";
-//          tablaAprobacionGastos += "<td>"+aprobaciongastos.impGasto+"</td>";
-//          contenido += tablaAprobacionGastos;
-//      }
-//		
-//		contenido = contenido + "</tbody>"+
-//      "</table>"+
-//      "</div>";
-//		return contenido;
-//	}
+//    @RequestMapping(value="/guardar", method = RequestMethod.POST)
+//    public String validarGastos(@ModelAttribute("aprobaciongastoslista") AprobacionGastosDto aprobaciongastoslista, BindingResult result, Model model,RedirectAttributes flash,SessionStatus status) {
+//    	if(result.hasErrors()) {
+//			model.addAttribute("titulo", "Listado Gastos Capturados");
+//			List<Recurso> listaRecursos = new ArrayList<Recurso>();
+//	        listaRecursos = recursoService.findAll();
+//	        model.addAttribute("recursos", listaRecursos);
+//			return "aprobaciongastos";
+//		}
+//		aprobaciongastosService.saveAll(aprobaciongastoslista.getAprobaciongastos());
+//		status.setComplete();
+//		flash.addFlashAttribute("success", "Gastos Validados");
+//		return "redirect:/aprobaciongastos";
+//    }
     
 }

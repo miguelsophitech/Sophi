@@ -20,5 +20,10 @@ public class AprobacionGastosServiceImpl implements IAprobacionGastosService {
 	public List<AprobacionGastos> findAll() {
 		return (List<AprobacionGastos>) aprobaciongastosDao.findAll();
 	}
+
+	@Override
+	public void saveAll(List<AprobacionGastos> aprobaciongastos) {
+		aprobaciongastosDao.saveAll(aprobaciongastos);
+	}
     
 }

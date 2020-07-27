@@ -1,8 +1,12 @@
 $(document).ready(function() {
 
-	$( "#filterRecurso" ).change(function() {
+	$( "#filterProyecto" ).change(function() {
             $.ajax({
-                url: "/recursos",
+                type: "GET",
+                url: "/cargaHoras",
+                data: {
+                    id: $( "#filterProyecto" ).val()
+                },
                 success: function(res){
                     //alert(res);
                     document.getElementById("contenidoTabla").innerHTML = "";

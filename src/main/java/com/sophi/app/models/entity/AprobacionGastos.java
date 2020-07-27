@@ -4,8 +4,8 @@ import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Column;
+import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -16,17 +16,16 @@ import javax.validation.constraints.NotEmpty;
 import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
-@Table(name = "RECURSOS_GASTOS")
+@Table(name = "RECURSOS_GASTO")
 public class AprobacionGastos implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @Id
-    @Column(name = "cod_tipo_gasto")
-    private Long codTipoGasto;
-    
-    @OneToOne
-    @JoinColumn(name = "cod_tipo_gasto")
+    @EmbeddedId
+	RecursoGastoId recursoGastoId;
+
+	@OneToOne
+    @JoinColumn(name = "cod_tipo_gasto", insertable = false, updatable = false)
     private TipoGasto tipogasto;
 
 	@NotEmpty
@@ -52,38 +51,35 @@ public class AprobacionGastos implements Serializable {
     @Temporal(TemporalType.DATE)
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date fecRegistro;
-
-    @NotEmpty
-    @Column(name = "cod_proyecto")
-    private Long codProyecto;
-
-//    @NotEmpty
-//    @Column(name = "cod_recurso")
-//    private Long codRecurso;
     
-    @OneToOne
-    @JoinColumn(name = "cod_recurso")
+    @Column(name = "fec_validacion")
+    @Temporal(TemporalType.DATE)
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Date fecValidacion;
+    
+    public Date getFecValidacion() {
+		return fecValidacion;
+	}
+
+	public void setFecValidacion(Date fecValidacion) {
+		this.fecValidacion = fecValidacion;
+	}
+
+	@OneToOne
+    @JoinColumn(name = "cod_recurso", insertable = false, updatable = false)
     private Recurso recurso;
-
-	@NotEmpty
-    @Column(name = "cod_cliente")
-    private Long codCliente;
-
-    @NotEmpty
-    @Column(name = "cod_estatus_proyecto")
-    private Long codEstatusProyecto;
 
     public static long getSerialversionuid() {
         return serialVersionUID;
     }
 
-    public Long getCodTipoGasto() {
-        return codTipoGasto;
-    }
+    public RecursoGastoId getRecursoGastoId() {
+		return recursoGastoId;
+	}
 
-    public void setCodTipoGasto(Long codTipoGasto) {
-        this.codTipoGasto = codTipoGasto;
-    }
+	public void setRecursoGastoId(RecursoGastoId recursoGastoId) {
+		this.recursoGastoId = recursoGastoId;
+	}
     
     public TipoGasto getTipogasto() {
 		return tipogasto;
@@ -132,22 +128,6 @@ public class AprobacionGastos implements Serializable {
     public void setFecRegistro(Date fecRegistro) {
         this.fecRegistro = fecRegistro;
     }
-
-    public Long getCodProyecto() {
-        return codProyecto;
-    }
-
-    public void setCodProyecto(Long codProyecto) {
-        this.codProyecto = codProyecto;
-    }
-
-//    public Long getCodRecurso() {
-//        return codRecurso;
-//    }
-//
-//    public void setCodRecurso(Long codRecurso) {
-//        this.codRecurso = codRecurso;
-//    }
     
     public Recurso getRecurso() {
 		return recurso;
@@ -156,21 +136,5 @@ public class AprobacionGastos implements Serializable {
 	public void setRecurso(Recurso recurso) {
 		this.recurso = recurso;
 	}
-
-    public Long getCodCliente() {
-        return codCliente;
-    }
-
-    public void setCodCliente(Long codCliente) {
-        this.codCliente = codCliente;
-    }
-
-    public Long getCodEstatusProyecto() {
-        return codEstatusProyecto;
-    }
-
-    public void setCodEstatusProyecto(Long codEstatusProyecto) {
-        this.codEstatusProyecto = codEstatusProyecto;
-    }
     
 }

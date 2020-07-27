@@ -8,6 +8,8 @@ public interface ITipoGastoService {
 	
 	public List<TipoGasto> findAll();
 	
-	public TipoGasto findOne(Long codTipoGasto);
-
+	public void save(TipoGasto tipoGasto);
+	
+	public TipoGasto findOne(Long tipoGasto);
+	
 }

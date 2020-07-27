@@ -1,4 +1,4 @@
-function checkbox() {
+function validacion(){
 	
 	var date = new Date();
 
@@ -18,22 +18,17 @@ function checkbox() {
 		console.log(`${year}-${month}-${day}`);
 	}
 	
-	var check = document.querySelectorAll("#check");
-	console.log(check.length);
+	var input = document.querySelectorAll("#check");
 	
-	var input = document.querySelectorAll("#validar");
-	console.log(input.length);
-	
-	for(var i=0 ; i<check.length ; i++){
-		if(check[i].checked){
-	        input[i].disabled = false;
-			check[i].value = fecha;
-	    }
-	
-	    else{
-	        input[i].disabled = true;
-			check[i].value = "";
-	    }
+	for(var i=0 ; i<document.getElementsByName("check").length ; i++){
+		if(input[i].checked){
+			input[i].value = fecha;
+		}
+		
+		else{
+			input[i].value = "";
+		}
 	}
+	
 	
 }
