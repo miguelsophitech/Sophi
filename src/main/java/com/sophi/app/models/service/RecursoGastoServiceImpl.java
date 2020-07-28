@@ -8,7 +8,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.sophi.app.models.dao.IRecursoGastoDao;
 import com.sophi.app.models.entity.RecursoGasto;
-import com.sophi.app.models.entity.RecursoGastoId;
 
 @Service
 public class RecursoGastoServiceImpl implements IRecursoGastoService {
@@ -30,7 +29,7 @@ public class RecursoGastoServiceImpl implements IRecursoGastoService {
 
 	@Override
 	@Transactional(readOnly = true)
-	public RecursoGasto findOne(RecursoGastoId recursoGastoId) {
+	public RecursoGasto findOne(Long recursoGastoId) {
 		return recursoGastoDao.findById(recursoGastoId).orElse(null);
 	}
 
@@ -42,8 +41,8 @@ public class RecursoGastoServiceImpl implements IRecursoGastoService {
 	
 	@Override
 	@Transactional(readOnly = true)
-	public List<RecursoGasto> findByRecursoGastoIdCodRecurso(Long codRecurso) {
-		return (List<RecursoGasto>) recursoGastoDao.findByRecursoGastoIdCodRecurso(codRecurso);
+	public List<RecursoGasto> findByCodRecurso(Long codRecurso) {
+		return (List<RecursoGasto>) recursoGastoDao.findByCodRecurso(codRecurso);
 	}
 	
 }

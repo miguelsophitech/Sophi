@@ -4,9 +4,13 @@ import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Column;
-import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -15,13 +19,31 @@ import javax.persistence.Transient;
 import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
-@Table(name = "RECURSOS_GASTOS")
+@Table(name = "RECURSOS_GASTO")
 public class RecursoGasto implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 	
-	@EmbeddedId
-	RecursoGastoId recursoGastoId;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "cod_recurso_gasto")
+	private Long codRecursoGasto;
+	
+	@OneToOne
+	@JoinColumn(name = "cod_tipo_gasto")
+	private TipoGasto tipoGasto;
+	
+	@Column(name = "cod_proyecto")
+	private Long codProyecto;
+	
+	@Column(name = "cod_recurso")
+	private Long codRecurso;
+	
+	@Column(name = "cod_cliente")
+	private Long codCliente;
+	
+	@Column(name = "cod_estatus_proyecto")
+	private Long codEstatusProyecto;
 	
 	@Column(name = "desc_comentario")
 	private String descComentario;
@@ -43,16 +65,16 @@ public class RecursoGasto implements Serializable{
 	@DateTimeFormat(pattern = "yyyy-MM-dd hh:mm:ss")
 	private Date fecRegistro;
 	
+	@Column(name = "cod_recurso_validador")
+	private Long codRecursoValidador;
+	
+	@Column(name = "fec_validacion")
+	@Temporal(TemporalType.DATE)
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	private Date fecValidacion;
+	
 	@Transient
 	private ProyectoRecurso proyectoRecurso;
-
-	public RecursoGastoId getRecursoGastoId() {
-		return recursoGastoId;
-	}
-
-	public void setRecursoGastoId(RecursoGastoId recursoGastoId) {
-		this.recursoGastoId = recursoGastoId;
-	}
 
 	public String getDescComentario() {
 		return descComentario;
@@ -97,19 +119,6 @@ public class RecursoGasto implements Serializable{
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
-	
-	public RecursoGasto(RecursoGastoId id, String descComentario,
-			Date fecGasto, float impGasto, byte[] comprobante,
-			Date fecRegistro) {
-		super();
-		recursoGastoId = id;
-		this.descComentario = descComentario;
-		this.fecGasto = fecGasto;
-		this.impGasto = impGasto;
-		this.comprobante = comprobante;
-		this.fecRegistro = fecRegistro;
-
-	}
 
 	public RecursoGasto() {
 		
@@ -121,6 +130,70 @@ public class RecursoGasto implements Serializable{
 
 	public void setProyectoRecurso(ProyectoRecurso proyectoRecurso) {
 		this.proyectoRecurso = proyectoRecurso;
+	}
+
+	public Long getCodRecursoGasto() {
+		return codRecursoGasto;
+	}
+
+	public void setCodRecursoGasto(Long codRecursoGasto) {
+		this.codRecursoGasto = codRecursoGasto;
+	}
+
+	public TipoGasto getTipoGasto() {
+		return tipoGasto;
+	}
+
+	public void setTipoGasto(TipoGasto tipoGasto) {
+		this.tipoGasto = tipoGasto;
+	}
+
+	public Long getCodProyecto() {
+		return codProyecto;
+	}
+
+	public void setCodProyecto(Long codProyecto) {
+		this.codProyecto = codProyecto;
+	}
+
+	public Long getCodRecurso() {
+		return codRecurso;
+	}
+
+	public void setCodRecurso(Long codRecurso) {
+		this.codRecurso = codRecurso;
+	}
+
+	public Long getCodCliente() {
+		return codCliente;
+	}
+
+	public void setCodCliente(Long codCliente) {
+		this.codCliente = codCliente;
+	}
+
+	public Long getCodEstatusProyecto() {
+		return codEstatusProyecto;
+	}
+
+	public void setCodEstatusProyecto(Long codEstatusProyecto) {
+		this.codEstatusProyecto = codEstatusProyecto;
+	}
+
+	public Long getCodRecursoValidador() {
+		return codRecursoValidador;
+	}
+
+	public void setCodRecursoValidador(Long codRecursoValidador) {
+		this.codRecursoValidador = codRecursoValidador;
+	}
+
+	public Date getFecValidacion() {
+		return fecValidacion;
+	}
+
+	public void setFecValidacion(Date fecValidacion) {
+		this.fecValidacion = fecValidacion;
 	}
 	
 }

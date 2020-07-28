@@ -9,21 +9,18 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
+import javax.swing.ImageIcon;
 import javax.validation.Valid;
 
-import com.sophi.app.models.entity.DetalleClienteAreaComercial;
-import com.sophi.app.models.entity.DetalleClienteAreaComercialId;
+
 import com.sophi.app.models.entity.Proyecto;
 import com.sophi.app.models.entity.ProyectoRecurso;
-import com.sophi.app.models.entity.Recurso;
 import com.sophi.app.models.entity.RecursoGasto;
-import com.sophi.app.models.entity.RecursoGastoId;
 import com.sophi.app.models.entity.TipoGasto;
 import com.sophi.app.models.service.IProyectoRecursoService;
 import com.sophi.app.models.service.IProyectoService;
 import com.sophi.app.models.service.IRecursoGastoService;
 import com.sophi.app.models.service.ITipoGastoService;
-import com.sophi.app.models.service.RecursoGastoServiceImpl;
 
 import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,8 +31,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
@@ -81,19 +80,38 @@ public class RecursoGastoController {
     
     //Guarda gasto
     @RequestMapping(value="/recursoGastoAlta", method = RequestMethod.POST)
-	public String recursoGastoAlta(Map<String, Object> modelM,@Valid RecursoGasto recursoGasto, BindingResult result, Model model,RedirectAttributes flash,SessionStatus status) {
-		Proyecto p = proyectoService.findByProyectoIdCodProyectoAndProyectoIdCodEstatusProyecto(recursoGasto.getRecursoGastoId().getCodProyecto(), 2L);
+	public String recursoGastoAlta(Map<String, Object> modelM,@Valid RecursoGasto recursoGasto, @RequestParam("compImg") MultipartFile compImg, BindingResult result, Model model,RedirectAttributes flash,SessionStatus status) {
+		Proyecto p = proyectoService.findByProyectoIdCodProyectoAndProyectoIdCodEstatusProyecto(recursoGasto.getCodProyecto(), 2L);
 		Date fechaHoy = new Date();
-		List<ProyectoRecurso> listaProRec = proyectoRecursoService.findByProyectoRecursoIdCodRecurso(recursoGasto.getRecursoGastoId().getCodRecurso());
+		List<ProyectoRecurso> listaProRec = proyectoRecursoService.findByProyectoRecursoIdCodRecurso(recursoGasto.getCodRecurso());
     	List<Proyecto> listaProyecto = new ArrayList<Proyecto>();
-    	
+    	TipoGasto tp = tipoGastoService.findOne(recursoGasto.getTipoGasto().getCodTipoGasto());
+    	recursoGasto.setTipoGasto(tp);
 		
 		
-		recursoGasto.getRecursoGastoId().setCodCliente(p.getProyectoId().getCodCliente());
-		recursoGasto.getRecursoGastoId().setCodEstatusProyecto(p.getProyectoId().getCodEstatusProyecto());
-		recursoGasto.getRecursoGastoId().setCodProyecto(p.getProyectoId().getCodProyecto());
+		recursoGasto.setCodCliente(p.getProyectoId().getCodCliente());
+		recursoGasto.setCodEstatusProyecto(p.getProyectoId().getCodEstatusProyecto());
+		recursoGasto.setCodProyecto(p.getProyectoId().getCodProyecto());
 		
 		recursoGasto.setFecRegistro(fechaHoy);
+		
+		if(recursoGasto.getComprobante()==null || recursoGasto.getComprobante().length==0) {
+			if(recursoGasto.getCodRecursoGasto()!=null) {
+				RecursoGasto rg = recursoGastoService.findOne(recursoGasto.getCodRecursoGasto());
+				if(rg!=null) {
+					recursoGasto.setComprobante(rg.getComprobante());
+				}
+			}
+		}
+		
+		if(!compImg.isEmpty()) {
+			try {
+				byte[] bytesImg = compImg.getBytes();
+				recursoGasto.setComprobante(bytesImg);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
     	
     	recursoGastoService.save(recursoGasto);
     	
@@ -105,13 +123,13 @@ public class RecursoGastoController {
     	model.addAttribute("tiposGastos", tipoGastoService.findAll());
     	model.addAttribute("proyectosAsignados", listaProyecto);
     	model.addAttribute("recursoGasto", recursoGasto);
-    	model.addAttribute("r", recursoGasto.getRecursoGastoId().getCodRecurso());
+    	model.addAttribute("r", recursoGasto.getCodRecurso());
     	
-    	List<RecursoGasto> listaRG = recursoGastoService.findByRecursoGastoIdCodRecurso(recursoGasto.getRecursoGastoId().getCodRecurso());
+    	List<RecursoGasto> listaRG = recursoGastoService.findByCodRecurso(recursoGasto.getCodRecurso());
     	
     	model.addAttribute("listaGastos", listaRG);
     	
-    	return "listarRecursoGastos";
+    	return "redirect:/listarRecursoGastos/"+recursoGasto.getCodRecurso();
 		
 	}
     
@@ -119,7 +137,7 @@ public class RecursoGastoController {
     @RequestMapping(value = "/listarRecursoGastos/{codRecurso}", method = RequestMethod.GET)
 	public String listaRecursoGastos(Model model,@PathVariable(value = "codRecurso") long codRecurso) {
     	
-    	List<RecursoGasto> listaRG = recursoGastoService.findByRecursoGastoIdCodRecurso(codRecurso);
+    	List<RecursoGasto> listaRG = recursoGastoService.findByCodRecurso(codRecurso);
     	
     	model.addAttribute("listaGastos", listaRG);
     	model.addAttribute("r", codRecurso);
@@ -128,21 +146,14 @@ public class RecursoGastoController {
 		
 	}
     
-    //Carga de pagina
-    @RequestMapping(value = "/editarRecursoGastos/{codTipoGasto}/{codProyecto}/{codRecurso}/{codCliente}/{codEstatusProyecto}", method = RequestMethod.GET)
-	public String edicionRecursoGasto(Model model,@PathVariable(value = "codTipoGasto") long codTipoGasto,@PathVariable(value = "codProyecto") long codProyecto,@PathVariable(value = "codRecurso") long codRecurso,@PathVariable(value = "codCliente") long codCliente,@PathVariable(value = "codEstatusProyecto") long codEstatusProyecto) {
+    //editar de pagina
+    @RequestMapping(value = "/editarRecursoGastos/{codRecursoGasto}/{codTipoGasto}/{codProyecto}/{codRecurso}/{codCliente}/{codEstatusProyecto}", method = RequestMethod.GET)
+	public String edicionRecursoGasto(Model model,@PathVariable(value = "codRecursoGasto") long codRecursoGasto, @PathVariable(value = "codTipoGasto") long codTipoGasto,@PathVariable(value = "codProyecto") long codProyecto,@PathVariable(value = "codRecurso") long codRecurso,@PathVariable(value = "codCliente") long codCliente,@PathVariable(value = "codEstatusProyecto") long codEstatusProyecto) {
     	
     	List<ProyectoRecurso> listaProRec = proyectoRecursoService.findByProyectoRecursoIdCodRecurso(codRecurso);
     	List<Proyecto> listaProyecto = new ArrayList<Proyecto>();
-    	RecursoGastoId rgId = new RecursoGastoId();
     	
-    	TipoGasto tg= tipoGastoService.findOne(codTipoGasto);
-    	rgId.setCodCliente(codCliente);
-    	rgId.setCodEstatusProyecto(codEstatusProyecto);
-    	rgId.setCodProyecto(codProyecto);
-    	rgId.setCodRecurso(codRecurso);
-    	rgId.setTipoGasto(tg);
-    	RecursoGasto recursoGasto = recursoGastoService.findOne(rgId);
+    	RecursoGasto recursoGasto = recursoGastoService.findOne(codRecursoGasto);
 		
     			
     	for(ProyectoRecurso proRec:listaProRec) {
@@ -156,29 +167,22 @@ public class RecursoGastoController {
     	model.addAttribute("recursoGasto", recursoGasto);
     	model.addAttribute("r", codRecurso);
     	
-    	List<RecursoGasto> listaRG = recursoGastoService.findByRecursoGastoIdCodRecurso(recursoGasto.getRecursoGastoId().getCodRecurso());
+    	List<RecursoGasto> listaRG = recursoGastoService.findByCodRecurso(recursoGasto.getCodRecurso());
     	
     	model.addAttribute("listaGastos", listaRG);
     	
-		return "listaRecursoGastos";
+		return "recursoGastoAlta";
 		
 	}
     
     //Ver de pagina
-    @RequestMapping(value = "/verRecursoGastos/{codTipoGasto}/{codProyecto}/{codRecurso}/{codCliente}/{codEstatusProyecto}", method = RequestMethod.GET)
-	public String verRecursoGasto(Model model,@PathVariable(value = "codTipoGasto") long codTipoGasto,@PathVariable(value = "codProyecto") long codProyecto,@PathVariable(value = "codRecurso") long codRecurso,@PathVariable(value = "codCliente") long codCliente,@PathVariable(value = "codEstatusProyecto") long codEstatusProyecto) {
+    @RequestMapping(value = "/verRecursoGastos/{codRecursoGasto}/{codTipoGasto}/{codProyecto}/{codRecurso}/{codCliente}/{codEstatusProyecto}", method = RequestMethod.GET)
+	public String verRecursoGasto(Model model,@PathVariable(value = "codRecursoGasto") long codRecursoGasto, @PathVariable(value = "codTipoGasto") long codTipoGasto,@PathVariable(value = "codProyecto") long codProyecto,@PathVariable(value = "codRecurso") long codRecurso,@PathVariable(value = "codCliente") long codCliente,@PathVariable(value = "codEstatusProyecto") long codEstatusProyecto) {
     	
     	List<ProyectoRecurso> listaProRec = proyectoRecursoService.findByProyectoRecursoIdCodRecurso(codRecurso);
     	List<Proyecto> listaProyecto = new ArrayList<Proyecto>();
-    	RecursoGastoId rgId = new RecursoGastoId();
-    	
-    	TipoGasto tg= tipoGastoService.findOne(codTipoGasto);
-    	rgId.setCodCliente(codCliente);
-    	rgId.setCodEstatusProyecto(codEstatusProyecto);
-    	rgId.setCodProyecto(codProyecto);
-    	rgId.setCodRecurso(codRecurso);
-    	rgId.setTipoGasto(tg);
-    	RecursoGasto recursoGasto = recursoGastoService.findOne(rgId);
+
+    	RecursoGasto recursoGasto = recursoGastoService.findOne(codRecursoGasto);
 		
     			
     	for(ProyectoRecurso proRec:listaProRec) {
@@ -197,22 +201,24 @@ public class RecursoGastoController {
 	}
     
     //imagen de gasto
-    @GetMapping(value = "/imagenGasto/{codTipoGasto}/{codProyecto}/{codRecurso}/{codCliente}/{codEstatusProyecto}")
-	public void verImagenGasto(@PathVariable(value = "codTipoGasto") long codTipoGasto,@PathVariable(value = "codProyecto") long codProyecto,@PathVariable(value = "codRecurso") long codRecurso,@PathVariable(value = "codCliente") long codCliente,@PathVariable(value = "codEstatusProyecto") long codEstatusProyecto,  HttpServletResponse response) throws IOException{
-		response.setContentType("image/jpeg");
-		RecursoGastoId rgId = new RecursoGastoId();
-		TipoGasto tg= tipoGastoService.findOne(codTipoGasto);
-    	rgId.setCodCliente(codCliente);
-    	rgId.setCodEstatusProyecto(codEstatusProyecto);
-    	rgId.setCodProyecto(codProyecto);
-    	rgId.setCodRecurso(codRecurso);
-    	rgId.setTipoGasto(tg);
-    	RecursoGasto recursoGasto = recursoGastoService.findOne(rgId);
-    	System.out.println("Recurso "+recursoGasto.getRecursoGastoId().getTipoGasto().getDescTipoGasto());
+    @GetMapping(value = "/imagenGasto/{codRecursoGasto}/{codTipoGasto}/{codProyecto}/{codRecurso}/{codCliente}/{codEstatusProyecto}")
+	public void verImagenGasto(@PathVariable(value = "codRecursoGasto") long codRecursoGasto,@PathVariable(value = "codTipoGasto") long codTipoGasto,@PathVariable(value = "codProyecto") long codProyecto,@PathVariable(value = "codRecurso") long codRecurso,@PathVariable(value = "codCliente") long codCliente,@PathVariable(value = "codEstatusProyecto") long codEstatusProyecto,  HttpServletResponse response) throws IOException{
+    	response.setContentType("image/jpeg");
+    	RecursoGasto recursoGasto = recursoGastoService.findOne(codRecursoGasto);
 		InputStream is = new ByteArrayInputStream(recursoGasto.getComprobante());
 		IOUtils.copy(is, response.getOutputStream());
 	}
     
+    //eliminar recursoGasto
+  //Carga de pagina
+   @RequestMapping(value = "/eliminarRecursoGastos/{codRecursoGasto}/{codTipoGasto}/{codProyecto}/{codRecurso}/{codCliente}/{codEstatusProyecto}", method = RequestMethod.GET)
+   public String eliminarRecursoGasto(Model model,@PathVariable(value = "codRecursoGasto") long codRecursoGasto, @PathVariable(value = "codTipoGasto") long codTipoGasto,@PathVariable(value = "codProyecto") long codProyecto,@PathVariable(value = "codRecurso") long codRecurso,@PathVariable(value = "codCliente") long codCliente,@PathVariable(value = "codEstatusProyecto") long codEstatusProyecto) {
+	   RecursoGasto rg = recursoGastoService.findOne(codRecursoGasto);
+	   recursoGastoService.delete(rg);
+    	
+	   return "redirect:/listarRecursoGastos/"+rg.getCodRecurso();
+		
+	}
     
     
 }
