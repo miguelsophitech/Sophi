@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
+import javax.swing.ImageIcon;
 import javax.validation.Valid;
 
 
@@ -30,8 +31,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
@@ -77,7 +80,7 @@ public class RecursoGastoController {
     
     //Guarda gasto
     @RequestMapping(value="/recursoGastoAlta", method = RequestMethod.POST)
-	public String recursoGastoAlta(Map<String, Object> modelM,@Valid RecursoGasto recursoGasto, BindingResult result, Model model,RedirectAttributes flash,SessionStatus status) {
+	public String recursoGastoAlta(Map<String, Object> modelM,@Valid RecursoGasto recursoGasto, @RequestParam("compImg") MultipartFile compImg, BindingResult result, Model model,RedirectAttributes flash,SessionStatus status) {
 		Proyecto p = proyectoService.findByProyectoIdCodProyectoAndProyectoIdCodEstatusProyecto(recursoGasto.getCodProyecto(), 2L);
 		Date fechaHoy = new Date();
 		List<ProyectoRecurso> listaProRec = proyectoRecursoService.findByProyectoRecursoIdCodRecurso(recursoGasto.getCodRecurso());
@@ -98,6 +101,15 @@ public class RecursoGastoController {
 				if(rg!=null) {
 					recursoGasto.setComprobante(rg.getComprobante());
 				}
+			}
+		}
+		
+		if(!compImg.isEmpty()) {
+			try {
+				byte[] bytesImg = compImg.getBytes();
+				recursoGasto.setComprobante(bytesImg);
+			} catch (IOException e) {
+				e.printStackTrace();
 			}
 		}
     	
@@ -191,9 +203,8 @@ public class RecursoGastoController {
     //imagen de gasto
     @GetMapping(value = "/imagenGasto/{codRecursoGasto}/{codTipoGasto}/{codProyecto}/{codRecurso}/{codCliente}/{codEstatusProyecto}")
 	public void verImagenGasto(@PathVariable(value = "codRecursoGasto") long codRecursoGasto,@PathVariable(value = "codTipoGasto") long codTipoGasto,@PathVariable(value = "codProyecto") long codProyecto,@PathVariable(value = "codRecurso") long codRecurso,@PathVariable(value = "codCliente") long codCliente,@PathVariable(value = "codEstatusProyecto") long codEstatusProyecto,  HttpServletResponse response) throws IOException{
-		response.setContentType("image/jpeg");
+    	response.setContentType("image/jpeg");
     	RecursoGasto recursoGasto = recursoGastoService.findOne(codRecursoGasto);
-    	System.out.println("Recurso "+recursoGasto.getTipoGasto().getDescTipoGasto());
 		InputStream is = new ByteArrayInputStream(recursoGasto.getComprobante());
 		IOUtils.copy(is, response.getOutputStream());
 	}

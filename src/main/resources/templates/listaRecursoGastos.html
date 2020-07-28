@@ -132,34 +132,25 @@
 
           <!-- Page Heading -->
           <h1 class="h3 mb-2 text-gray-800">Listado de Gastos</h1>
-          <p class="mb-4">DataTables is a third party plugin that is used to generate the demo table below. For more information about DataTables, please visit the <a target="_blank" href="https://datatables.net">official DataTables documentation</a>.</p>
+          <p class="mb-4">En este apartado encontrarás los gastos que has realizado.</p>
 
           <!-- DataTales Example -->
           <div class="card shadow mb-4">
-            <div class="card-header py-3">
-              <h6 class="m-0 font-weight-bold text-primary">Gastos</h6>
-            </div>
+<!--             <div class="card-header py-3"> -->
+<!--               <h6 class="m-0 font-weight-bold text-primary">Gastos</h6> -->
+<!--             </div> -->
             <div class="card-body">
               <div class="table-responsive">
-                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <table class="table" id="dataTable" width="100%" cellspacing="0">
                   <thead>
                     <tr>
                       <th>Comentario</th>
                       <th>Fecha</th>
                       <th>Tipo de gasto</th>
-                      <th>$</th>
+                      <th>Monto</th>
                       <th>Opciones</th>
                     </tr>
                   </thead>
-                  <tfoot>
-                    <tr>
-                      <th>Comentario</th>
-                      <th>Fecha</th>
-                      <th>Tipo de gasto</th>
-                      <th>$</th>
-                      <th>Opciones</th>
-                    </tr>
-                  </tfoot>
                   <tbody>
 					<tr th:each="gasto: ${listaGastos}">
 						<td th:text="${gasto.descComentario}"></td>

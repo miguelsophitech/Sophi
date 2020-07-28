@@ -116,7 +116,7 @@
           </div>
 
             <!--form-->
-              <form class="user" th:action="@{/recursoGastoAlta}" th:Object="${recursoGasto}" method="post">
+              <form class="user" th:action="@{/recursoGastoAlta}" th:Object="${recursoGasto}" method="post" enctype="multipart/form-data">
               
                 <input type="hidden" th:value="${r}" name="codRecurso">
                 
@@ -162,7 +162,8 @@
                             <span class="input-group-text" id="inputGroupFileAddon01">Comprobante</span>
                         </div>
                         <div class="custom-file">
-                            <input type="file" th:field="*{comprobante}" class="custom-file-input" id="file" aria-describedby="inputGroupFileAddon01">
+                            <input th:if="*{comprobante} != null" type="file" name="compImg" class="custom-file-input" id="file" aria-describedby="inputGroupFileAddon01">
+                            <input th:if="*{comprobante} == null" type="file" name="compImg" class="custom-file-input" id="file" aria-describedby="inputGroupFileAddon01" required>
                             <label class="custom-file-label" for="inputGroupFile01"></label>
                         </div>
                     </div>
@@ -170,7 +171,7 @@
                   <div class="col-sm-4 mb-3 mb-sm-0">
                   	<label for="">Imagen</label>
                     <div id="preview">
-                    	<img th:if="*{comprobante} != null" class="img-thumbnail rounded" style="max-height: 200px;" th:src="@{'/imagenGasto/' + ${recursoGasto.tipoGasto.codTipoGasto} + '/' + ${recursoGasto.codProyecto} + '/' + ${recursoGasto.codRecurso} +  '/' + ${recursoGasto.codCliente} +  '/' + ${recursoGasto.codEstatusProyecto}}">
+                    	<img th:if="*{comprobante} != null" class="img-thumbnail rounded" style="max-height: 200px;" th:src="@{'/imagenGasto/' + ${recursoGasto.codRecursoGasto} + '/' + ${recursoGasto.tipoGasto.codTipoGasto} + '/' + ${recursoGasto.codProyecto} + '/' + ${recursoGasto.codRecurso} +  '/' + ${recursoGasto.codCliente} +  '/' + ${recursoGasto.codEstatusProyecto}}">
                     </div>
                   </div>
                 </div>
