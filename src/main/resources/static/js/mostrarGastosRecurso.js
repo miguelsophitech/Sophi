@@ -1,11 +1,11 @@
 $(document).ready(function() {
 
-	$( "#filterProyecto" ).change(function() {
+	$("#filterProyecto").change(function() {
             $.ajax({
                 type: "GET",
                 url: "/cargaGastos",
                 data: {
-                    id: $( "#filterProyecto" ).val()
+                    id: $("#filterProyecto").val()
                 },
                 success: function(res){
                     //alert(res);

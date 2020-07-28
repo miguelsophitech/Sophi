@@ -149,21 +149,10 @@
                     <input id="codRecVal" type="hidden" th:value="${r}">
                     <!-- Filter -->
                     <div class="row">
-                        <!--<div class="input-group col-sm">
-                            <div class="input-group mb-4">
-                                <div class="input-group-prepend">
-                                    <label class="input-group-text" for="inputGroupSelectCliente">Colaborador</label>
-                                </div>
-                                <select name="recurso" class="custom-select" id="inputGroupSelectCliente">
-                                    <option selected>Seleccione un recurso...</option>
-                                    <option th:each="recurso : ${recursos}" th:value="${recurso.codRecurso}" th:text="${recurso.descRecurso}"></option>
-                                </select>
-                            </div>
-                        </div>-->
                         <div class="input-group col-sm-4">
                             <div class="input-group mb-4">
                                 <div class="input-group-prepend">
-                                    <label class="input-group-text" for="inputGroupSelectCliente">Proyecto</label>
+                                    <label class="input-group-text" for="inputGroupSelectProyecto">Proyecto</label>
                                 </div>
                                 <select name="Proyecto" class="custom-select" id="filterProyecto">
                                     <option selected value="-1">Todos</option>
@@ -178,7 +167,7 @@
                         <div class="card-header py-3">
                             <h6 class="m-0 font-weight-bold text-primary">Detalle de gastos de la semana</h6>
                         </div>
-                        <div class="card-body">
+                        <div class="card-body" id="contenidoTabla">
                             <div class="table-responsive">
                                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                     <thead>

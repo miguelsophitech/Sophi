@@ -24,14 +24,16 @@ function checkbox() {
 	var input = document.querySelectorAll("#validar");
 	console.log(input.length);
 	
-	var RecVal = document.querySelectorAll("#codRecVal");
+	var RecVal = document.getElementById("codRecVal").value;
 	var target = document.querySelectorAll("#RecVal");
+	console.log(RecVal);
 	
 	for(var i=0 ; i<check.length ; i++){
+		console.log(RecVal);
 		if(check[i].checked){
 	        input[i].disabled = false;
 			check[i].value = fecha;
-			target[i].value = RecVal[i].value;
+			target[i].value = RecVal;
 	    }
 	
 	    else{
@@ -39,6 +41,8 @@ function checkbox() {
 			check[i].value = "";
 			target[i].value = "";
 	    }
+		
+		console.log(target[i]);
 	}
 	
 }

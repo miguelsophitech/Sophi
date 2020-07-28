@@ -63,7 +63,7 @@ public class AprobacionHoras implements Serializable {
 	private Long codRecursoValidador;
 	
 	@Column(name = "fec_validacion")
-	@Temporal(TemporalType.TIMESTAMP)
+	@Temporal(TemporalType.DATE)
 	@DateTimeFormat(pattern = "yyyy-MM-dd") 
 	private Date fecValidacion;
 	

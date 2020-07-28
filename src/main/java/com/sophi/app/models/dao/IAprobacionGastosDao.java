@@ -9,7 +9,7 @@ import org.springframework.data.repository.CrudRepository;
 
 public interface IAprobacionGastosDao extends CrudRepository<AprobacionGastos, Long> {
     
-//	@Query("FROM AprobacionGastos Ap WHERE Ap.codProyecto = ?1")
-//    List<AprobacionGastos> findAprobacionGastosBycodProyecto(Long codProyecto);
+	@Query("FROM AprobacionGastos Ap WHERE Ap.codProyecto = ?1")
+    List<AprobacionGastos> findAprobacionGastosBycodProyecto(Long codProyecto);
 	
 }

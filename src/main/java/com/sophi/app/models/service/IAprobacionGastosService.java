@@ -9,5 +9,7 @@ public interface IAprobacionGastosService {
     public List<AprobacionGastos> findAll();
 
 	public void saveAll(List<AprobacionGastos> aprobaciongastos);
+
+	public List<AprobacionGastos> findAprobacionGastosBycodProyecto(Long codProyecto);
     
 }
