@@ -53,9 +53,6 @@ var last = first + 6; // last day is the first day + 6
 var firstday = new Date(curr.setDate(first)).toUTCString(); 
 var lastday = new Date(curr.setDate(last)).toUTCString(); 
 
-console.log(firstday);
-console.log(lastday);
-
 $.ajax({
     type: "GET",
     url: "/horasTotalSemana",
@@ -91,6 +88,12 @@ function cargarActividadesSecundariasProyecto(){
 function altaCapHoraActividad(){
 	var fech = $("#semanaDias .active span").text();
 	var url="/cargarDetActividad/"+$("#selectActividadesSecundarias").val()+"/"+fech;
+	$("#resultDetActividades").load(url);
+}
+
+function altaCapHoraActividadNoPlan(){
+	var fech = $("#semanaDias .active span").text();
+	var url="/cargarDetActividadNoPlan/"+$("#selectActividadesSecundarias").val()+"/"+fech+"/"+$("#valCodRecurso").val();
 	$("#resultDetActividades").load(url);
 }
 

@@ -1,9 +1,11 @@
+
 <!DOCTYPE html>
 <html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head th:replace="layout/layout::head"></head>
 
 <body id="page-top">
+<input id="authGetName" type="hidden" th:value="${#authentication.getName()}"></input>
 <input id="valCodRecurso" type="hidden" th:value="${codRecurso}"></input>
 
   <!-- Page Wrapper -->
@@ -264,7 +266,6 @@
 <!--    	</form> --> 
 		</div>
        <div class="modal-footer">
-       		<a href="#">Capturar horas fuera de plan</a>
     		<button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
           	<button onclick="document.getElementById('capHorasForm').submit();" type="submit" class="btn btn-primary">Aceptar</button>
   		</div>
@@ -273,8 +274,6 @@
       </div>
     </div>
   </div>
-  
-  
 
 	 <!-- ModalLogout -->
       <footer th:replace="layout/layout :: modalLogout"></footer>
@@ -300,8 +299,10 @@
   <!-- Page level custom scripts -->
   <script th:src="@{/js/demo/datatables-demo.js}"></script>
   
-  <!-- Page level custom scripts -->
+  <!-- Captura de horas scripts -->
   <script th:src="@{/js/capHoras.js}"></script>
+  
+  <script th:src="@{/js/datosRecursoSesion.js}"></script>
 
 </body>
 

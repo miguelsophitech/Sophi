@@ -13,6 +13,17 @@
 			</select>
 		</div>
 	</div>
+	
+	<div th:fragment="listActividadesPrimariasNoPlan">
+		<label class="col-form-label">Fase</label>
+		<div class="input-group">
+			<select  class="custom-select" id="selectActividadesPrimarias" onclick="filtraActPorFase();">
+				<option th:each="entry : ${actividadesPrimariasNoPlan}" 
+					th:value="${entry.key}" th:text="${entry.value}">
+				</option>
+			</select>
+		</div>
+	</div>
 
 	
 	<div th:fragment="listActividadesSecundarias">
@@ -25,6 +36,18 @@
 			</select>
 		</div>
 	</div>
+	
+	<div th:fragment="listActividadesSecundariasNoPlan">
+		<label class="col-form-label">Actividades</label>
+		<div class="input-group">
+			<select  class="custom-select" id="selectActividadesSecundarias" onclick="altaCapHoraActividadNoPlan();">
+				<option th:each="entry : ${actividadesSecundariasNoPlan}" 
+					th:value="${entry.key}" th:text="${entry.value}">
+				</option>
+			</select>
+		</div>
+	</div>
+	
 
 	<div th:fragment="detActividades">
 		<form id="capHorasForm" th:action="@{/formCapHoraActividad}"

@@ -9,7 +9,6 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
-import javax.swing.ImageIcon;
 import javax.validation.Valid;
 
 
@@ -20,6 +19,7 @@ import com.sophi.app.models.entity.TipoGasto;
 import com.sophi.app.models.service.IProyectoRecursoService;
 import com.sophi.app.models.service.IProyectoService;
 import com.sophi.app.models.service.IRecursoGastoService;
+import com.sophi.app.models.service.IRecursoService;
 import com.sophi.app.models.service.ITipoGastoService;
 
 import org.apache.tomcat.util.http.fileupload.IOUtils;
@@ -52,12 +52,15 @@ public class RecursoGastoController {
     
     @Autowired
     private IRecursoGastoService recursoGastoService;
+    
+    @Autowired
+    private IRecursoService recursoService;
 
 
     //Carga de pagina
-    @RequestMapping(value = "/recursoGastoAlta/{codRecurso}", method = RequestMethod.GET)
-	public String recursosGastosA(Model model,@PathVariable(value = "codRecurso") long codRecurso) {
-		
+    @RequestMapping(value = "/recursoGastoAlta/{email}", method = RequestMethod.GET)
+	public String recursosGastosA(Model model,@PathVariable(value = "email") String email) {
+    	Long codRecurso = recursoService.findByDescCorreoElectronico(email).getCodRecurso();
     	List<ProyectoRecurso> listaProRec = proyectoRecursoService.findByProyectoRecursoIdCodRecurso(codRecurso);
     	List<Proyecto> listaProyecto = new ArrayList<Proyecto>();
     	RecursoGasto recursoGasto = new RecursoGasto();
@@ -129,14 +132,14 @@ public class RecursoGastoController {
     	
     	model.addAttribute("listaGastos", listaRG);
     	
-    	return "redirect:/listarRecursoGastos/"+recursoGasto.getCodRecurso();
+    	return "redirect:/misGastos/"+recursoService.findOne(recursoGasto.getCodRecurso()).getDescCorreoElectronico();
 		
 	}
     
     //lista de gastos recurso
-    @RequestMapping(value = "/listarRecursoGastos/{codRecurso}", method = RequestMethod.GET)
-	public String listaRecursoGastos(Model model,@PathVariable(value = "codRecurso") long codRecurso) {
-    	
+    @RequestMapping(value = "/misGastos/{email}", method = RequestMethod.GET)
+	public String listaRecursoGastos(Model model,@PathVariable(value = "email") String email) {
+    	Long codRecurso = recursoService.findByDescCorreoElectronico(email).getCodRecurso();
     	List<RecursoGasto> listaRG = recursoGastoService.findByCodRecurso(codRecurso);
     	
     	model.addAttribute("listaGastos", listaRG);
@@ -216,7 +219,7 @@ public class RecursoGastoController {
 	   RecursoGasto rg = recursoGastoService.findOne(codRecursoGasto);
 	   recursoGastoService.delete(rg);
     	
-	   return "redirect:/listarRecursoGastos/"+rg.getCodRecurso();
+	   return "redirect:/misGastos/"+recursoService.findOne(rg.getCodRecurso()).getDescCorreoElectronico();
 		
 	}
     
