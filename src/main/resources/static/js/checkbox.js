@@ -24,15 +24,20 @@ function checkbox() {
 	var input = document.querySelectorAll("#validar");
 	console.log(input.length);
 	
+	var RecVal = document.querySelectorAll("#codRecVal");
+	var target = document.querySelectorAll("#RecVal");
+	
 	for(var i=0 ; i<check.length ; i++){
 		if(check[i].checked){
 	        input[i].disabled = false;
 			check[i].value = fecha;
+			target[i].value = RecVal[i].value;
 	    }
 	
 	    else{
 	        input[i].disabled = true;
 			check[i].value = "";
+			target[i].value = "";
 	    }
 	}
 	

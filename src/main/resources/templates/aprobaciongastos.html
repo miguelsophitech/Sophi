@@ -145,7 +145,8 @@
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
                         <h1 class="h3 mb-2 text-gray-800">Aprobaci&oacute;n de gastos</h1>
                     </div>
-
+                    <form th:action="@{/validar}" th:Object="${aprobaciongastoslista}" method="POST">
+                    <input id="codRecVal" type="hidden" th:value="${r}">
                     <!-- Filter -->
                     <div class="row">
                         <!--<div class="input-group col-sm">
@@ -179,7 +180,6 @@
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
-                            <form th:action="@{/guardar}" th:Object="${aprobaciongastoslista}" method="POST">
                                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                     <thead>
                                         <tr>
@@ -189,6 +189,7 @@
                                             <th>Colaborador</th>
                                             <th>Descripci&oacute;n</th>
                                             <th>Importe</th>
+                                            <th></th>
                                         </tr>
                                     </thead>
                                     <tfoot>
@@ -199,33 +200,35 @@
                                             <th>Colaborador</th>
                                             <th>Descripci&oacute;n</th>
                                             <th>Importe</th>
+                                            <th></th>
                                         </tr>
                                     </tfoot>
                                     <tbody>
-                                        <tr th:each="aprobaciongastosunico, item : ${aprobaciongastoslista.aprobaciongastos}">
+                                        <tr th:each="aprobaciongastosunico, item : ${aprobaciongastoslista.aprobaciongastos}" th:if="${aprobaciongastosunico.getFecValidacion() == null AND aprobaciongastosunico.getCodRecursoValidador() == null}">
                                         	<td><input id="check" type="checkbox" th:name="|aprobaciongastos[${item.index}].fecValidacion|" th:value="${aprobaciongastosunico.getFecValidacion()}" onclick="validacion();"></td>
                                             <td><span th:text="${aprobaciongastosunico.tipogasto.descTipoGasto}"></span></td>
                                             <td><span th:text="${aprobaciongastosunico.fecRegistro}"></span></td>
                                             <td><span th:text="${aprobaciongastosunico.recurso.descRecurso}"></span></td>
                                             <td><span th:text="${aprobaciongastosunico.descComentario}"></span></td>
                                             <td>$<span th:text="${aprobaciongastosunico.impGasto}"></span></td>
+                                            <td><input id="RecVal" type="hidden" th:name="|aprobaciongastos[${item.index}].codRecursoValidador|" th:value="${aprobaciongastosunico.getCodRecursoValidador()}"></td>
                                         </tr>
                                     </tbody>
                                 </table>
-                               </form>
                             </div>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-sm-5 mb-3 mb-sm-0">
                             <input type="submit" value="Validar" class="btn btn-primary"/>
-                            <a th:href="@{/}" class="btn btn-secondary" role="button">Cancelar</a>
+                            <a th:href="@{/}" class="btn btn-secondary" role="button">Regresar</a>
                         </div>
                         <div class="col-sm-5 mb-3 mb-sm-0">
                         </div>
                         <div class="col-sm-2 mb-3 mb-sm-0">
                         </div>
                     </div>
+                    </form>
                 </div>
                 <!-- /.container-fluid -->
                 <!-- Button trigger modal 
@@ -272,6 +275,7 @@
     <script th:src="@{/js/demo/datatables-demo.js}"></script>
     
     <script th:src="@{/js/validaciongastos.js}"></script>
+    <script th:src="@{/js/mostrarGastosRecurso.js}"></script>
 
 </body>
 

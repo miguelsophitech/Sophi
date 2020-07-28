@@ -18,6 +18,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -38,9 +39,11 @@ public class AprobacionHorasController {
     
     @Autowired
     private IProyectoService proyectoService;
+    
+    public Long CodRecurso;
 
-    @RequestMapping(value = "/aprobacionhoras", method = RequestMethod.GET)
-    public String AprobacionHoras(Model model){
+    @RequestMapping(value = "/aprobacionhoras/{codRecurso}", method = RequestMethod.GET)
+    public String AprobacionHoras(Model model, @PathVariable(value = "codRecurso") long codRecurso){
     	List<AprobacionHoras> aprobacioneshoras = new ArrayList<>();
         List<Recurso> listaRecursos = new ArrayList<Recurso>();
         List<Proyecto> listaProyectos = new ArrayList<Proyecto>();
@@ -54,6 +57,8 @@ public class AprobacionHorasController {
         model.addAttribute("aprobacionhoraslista", aphdto);
         model.addAttribute("recursos", listaRecursos);
         model.addAttribute("proyectos", listaProyectos);
+        model.addAttribute("r", codRecurso);
+        CodRecurso = codRecurso;
         return "aprobacionhoras";
     }
     
@@ -65,12 +70,13 @@ public class AprobacionHorasController {
 			List<Recurso> listaRecursos = new ArrayList<Recurso>();
 	        listaRecursos = recursoService.findAll();
 	        model.addAttribute("recursos", listaRecursos);
+	        model.addAttribute("r", CodRecurso);
 			return "aprobacionhoras";
 		}
 		aprobacionHorasService.saveAll(aprobacionhoraslista.getAprobacionhoras());
 		status.setComplete();
 		flash.addFlashAttribute("success", "Horas Validadas");
-		return "redirect:/aprobacionhoras";
+		return "redirect:/aprobacionhoras/"+CodRecurso;
 	}
 
     @SuppressWarnings("null")

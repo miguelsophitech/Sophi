@@ -164,12 +164,12 @@
 					<tr th:each="gasto: ${listaGastos}">
 						<td th:text="${gasto.descComentario}"></td>
 						<td th:text="${gasto.fecGasto}"></td>
-						<td th:text="${gasto.recursoGastoId.tipoGasto.descTipoGasto}"></td>
+						<td th:text="${gasto.tipoGasto.descTipoGasto}"></td>
 						<td th:text="${gasto.impGasto}"></td>
 						<td>
-							<a th:href="@{/editarRecursoGastos/} + ${gasto.recursoGastoId.tipoGasto.codTipoGasto} + '/' + ${gasto.recursoGastoId.codProyecto} + '/'+ ${gasto.recursoGastoId.codRecurso} + '/' + ${gasto.recursoGastoId.codCliente} + '/' + ${gasto.recursoGastoId.codEstatusProyecto}" class="btn btn-primary btn-circle btn-sm"><i class="far fa-edit"></i></a>
-                    		<a th:href="@{/verRecursoGastos/} + ${gasto.recursoGastoId.tipoGasto.codTipoGasto} + '/' + ${gasto.recursoGastoId.codProyecto} + '/'+ ${gasto.recursoGastoId.codRecurso} + '/' + ${gasto.recursoGastoId.codCliente} + '/' + ${gasto.recursoGastoId.codEstatusProyecto}" class="btn btn-primary btn-circle btn-sm"><i class="far fa-id-card"></i></a>
-                    		<a th:href="@{/eliminarRecursoGastos/} + ${gasto.recursoGastoId.tipoGasto.codTipoGasto} + '/' + ${gasto.recursoGastoId.codProyecto} + '/'+ ${gasto.recursoGastoId.codRecurso} + '/' + ${gasto.recursoGastoId.codCliente} + '/' + ${gasto.recursoGastoId.codEstatusProyecto}" class="btn btn-primary btn-circle btn-sm"><i class="fas fa-trash"></i></a>
+							<a th:href="@{/editarRecursoGastos/} + ${gasto.tipoGasto.codTipoGasto} + '/' + ${gasto.codProyecto} + '/'+ ${gasto.codRecurso} + '/' + ${gasto.codCliente} + '/' + ${gasto.codEstatusProyecto}" class="btn btn-primary btn-circle btn-sm"><i class="far fa-edit"></i></a>
+                    		<a th:href="@{/verRecursoGastos/} + ${gasto.tipoGasto.codTipoGasto} + '/' + ${gasto.codProyecto} + '/'+ ${gasto.codRecurso} + '/' + ${gasto.codCliente} + '/' + ${gasto.codEstatusProyecto}" class="btn btn-primary btn-circle btn-sm"><i class="far fa-id-card"></i></a>
+                    		<a th:href="@{/eliminarRecursoGastos/} + ${gasto.tipoGasto.codTipoGasto} + '/' + ${gasto.codProyecto} + '/'+ ${gasto.codRecurso} + '/' + ${gasto.codCliente} + '/' + ${gasto.codEstatusProyecto}" class="btn btn-primary btn-circle btn-sm"><i class="fas fa-trash"></i></a>
 						</td>
 					</tr>
                   </tbody>

@@ -145,6 +145,7 @@
                         <h1 class="h3 mb-2 text-gray-800">Aprobaci&oacute;n de horas</h1>
                     </div>
                     <form th:action="@{/guardar}" th:object="${aprobacionhoraslista}" method="POST">
+                    <input type="hidden" th:value="${r}" name="codRecurso">
                     <!-- Filter -->
                     <div class="row">
                         <!--<div class="input-group col-sm">
@@ -188,6 +189,7 @@
                                             <th>Horas Planeadas</th>
                                             <th>Horas Capturadas</th>
                                             <th>Horas Validadas</th>
+                                            <th></th>
                                         </tr>
                                     </thead>
                                     <tfoot>
@@ -199,10 +201,11 @@
                                             <th>Horas Planeadas</th>
                                             <th>Horas Capturadas</th>
                                             <th>Horas Validadas</th>
+                                            <th></th>
                                         </tr>
                                     </tfoot>
                                     <tbody>
-										<tr th:each="aprobacionhorasunico, itemStat : ${aprobacionhoraslista.aprobacionhoras}">
+										<tr th:each="aprobacionhorasunico, itemStat : ${aprobacionhoraslista.aprobacionhoras}" th:if="${aprobacionhorasunico.getFecValidacion() == null}">
 											<td><input id="check" type="checkbox" th:name="|aprobacionhoras[${itemStat.index}].fecValidacion|" th:value="${aprobacionhorasunico.getFecValidacion()}" onClick="checkbox();"/></td>
 											<td><span th:text="${aprobacionhorasunico.fecRegistro}"></span></td>
 											<td><span th:text="${aprobacionhorasunico.recurso.descRecurso}"></span></td>
@@ -210,6 +213,7 @@
 											<td><span th:text="${aprobacionhorasunico.actividad.valDuracionActividad}"></span></td>
 											<td><span th:text="${aprobacionhorasunico.valDuracionReportada}"></span></td>
 											<td><input id="validar" type="text" style="height:30px; width:40px;" th:name="|aprobacionhoras[${itemStat.index}].valDuracionValidada|" th:value="${aprobacionhorasunico.getValDuracionValidada()}" disabled/></td>
+											<td><input id="RecVal" type="hidden" th:name="|aprobacionhoras[${itemStat.index}].codRecursoValidador|" th:value="${aprobacionhorasunico.getCodRecursoValidador()}"></td>
 										</tr>
 										</tbody>
                                 </table>

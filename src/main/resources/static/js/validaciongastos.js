@@ -19,16 +19,30 @@ function validacion(){
 	}
 	
 	var input = document.querySelectorAll("#check");
+	var RecVal = document.querySelectorAll("#codRecVal");
+	var target = document.querySelectorAll("#RecVal");
 	
-	for(var i=0 ; i<document.getElementsByName("check").length ; i++){
+	for(var i=0 ; i<input.length ; i++){
 		if(input[i].checked){
 			input[i].value = fecha;
+			target[i].value = RecVal[i].value;
 		}
 		
 		else{
 			input[i].value = "";
+			target[i].value = "";
 		}
 	}
 	
-	
 }
+
+//function pasarid() {
+//	$.ajax({
+//		type: "POST",
+//		url:"/validar/"+$("#codRecVal").val(),
+//		success: function(res){
+//			console.log(res);
+//			location.reload();
+//		}
+//	})
+//}
