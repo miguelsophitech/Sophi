@@ -144,21 +144,10 @@
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
                         <h1 class="h3 mb-2 text-gray-800">Aprobaci&oacute;n de horas</h1>
                     </div>
-                    <form action="#" th:action="@{/guardar}" th:object="${aprobacionhoraslista}" method="POST">
-                    <fieldset>
+                    <form th:action="@{/guardar}" th:object="${aprobacionhoraslista}" method="POST">
+                    <input id="codRecVal" type="hidden" th:value="${r}" name="codRecurso">
                     <!-- Filter -->
                     <div class="row">
-                        <!--<div class="input-group col-sm">
-                            <div class="input-group mb-4">
-                                <div class="input-group-prepend">
-                                    <label class="input-group-text" for="inputGroupSelectCliente">Colaborador</label>
-                                </div>
-                                <select name="recurso" class="custom-select" id="filterRecurso">
-                                    <option selected>Seleccione un recurso...</option>
-                                    <option th:each="recurso : ${recursos}" th:value="${recurso.codRecurso}" th:text="${recurso.descRecurso}"></option>
-                                </select>
-                            </div>
-                        </div>-->
                         <div class="input-group col-sm-4">
                             <div class="input-group mb-4">
                                 <div class="input-group-prepend">
@@ -166,7 +155,7 @@
                                 </div>
                                 <select name="Proyecto" class="custom-select" id="filterProyecto">
                                     <option selected value="-1">Todos</option>
-                                    <option th:each="proyecto:${proyectos}" th:value="${proyecto.proyectoId}" th:text="${proyecto.descProyecto}"></option>
+                                    <option th:each="proyecto:${proyectos}" th:value="${proyecto.proyectoId.codProyecto}" th:text="${proyecto.descProyecto}"></option>
                                 </select>
                             </div>
                         </div>
@@ -189,6 +178,7 @@
                                             <th>Horas Planeadas</th>
                                             <th>Horas Capturadas</th>
                                             <th>Horas Validadas</th>
+                                            <th></th>
                                         </tr>
                                     </thead>
                                     <tfoot>
@@ -200,19 +190,21 @@
                                             <th>Horas Planeadas</th>
                                             <th>Horas Capturadas</th>
                                             <th>Horas Validadas</th>
+                                            <th></th>
                                         </tr>
                                     </tfoot>
                                     <tbody>
-										<tr th:each="aprobacionhorasunico, itemStat : ${aprobacionhoraslista.aprobacionhoras}">
-											<td><input type="checkbox" name="check" onClick="checkbox();"/></td>
+										<tr th:each="aprobacionhorasunico, itemStat : ${aprobacionhoraslista.aprobacionhoras}" th:if="${aprobacionhorasunico.getFecValidacion() == null AND aprobacionhorasunico.getCodRecursoValidador() == null}">
+											<td><input id="check" type="checkbox" th:name="|aprobacionhoras[${itemStat.index}].fecValidacion|" th:value="${aprobacionhorasunico.getFecValidacion()}" onClick="checkbox();"/></td>
 											<td><span th:text="${aprobacionhorasunico.fecRegistro}"></span></td>
 											<td><span th:text="${aprobacionhorasunico.recurso.descRecurso}"></span></td>
 											<td><span th:text="${aprobacionhorasunico.descComentarioDetalle}"></span></td>
 											<td><span th:text="${aprobacionhorasunico.actividad.valDuracionActividad}"></span></td>
 											<td><span th:text="${aprobacionhorasunico.valDuracionReportada}"></span></td>
-											<td><input type="text" th:name="validar" th:value="${aprobacionhorasunico.valDuracionValidada}" disabled/></td>
+											<td><input id="validar" type="text" style="height:30px; width:40px;" th:name="|aprobacionhoras[${itemStat.index}].valDuracionValidada|" th:value="${aprobacionhorasunico.getValDuracionValidada()}" disabled/></td>
+											<td><input id="RecVal" type="hidden" th:name="|aprobacionhoras[${itemStat.index}].codRecursoValidador|" th:value="${aprobacionhorasunico.getCodRecursoValidador()}"></td>
 										</tr>
-									</tbody>
+										</tbody>
                                 </table>
                             </div>
                         </div>
@@ -227,7 +219,6 @@
                         <div class="col-sm-2 mb-3 mb-sm-0">
                         </div>
                     </div>
-                    </fieldset>
                     </form>
                 </div>
                 <!-- /.container-fluid -->
