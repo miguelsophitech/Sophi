@@ -140,6 +140,7 @@
         <!-- Begin Page Content -->
         <div class="container-fluid">
 
+
 		     <!-- Page Heading -->
           <div class="d-sm-flex align-items-center justify-content-between mb-4">
             <h1 class="h3 mb-2 text-gray-800">Mis gastos</h1>
@@ -149,6 +150,9 @@
           </div>
           
           <p class="mb-4">En este apartado encontrar&aacute;s los gastos que has realizado.</p>
+          <!-- Page Heading -->
+          <h1 class="h3 mb-2 text-gray-800">Listado de Gastos</h1>
+
 
           <!-- DataTales Example -->
           <div class="card shadow mb-4">
@@ -158,15 +162,43 @@
             <div class="card-body">
               <div class="table-responsive" style="font-size: 12px;">
                 <table class="table" id="dataTable" width="100%" cellspacing="0">
+=======
+          <p class="mb-4">DataTables is a third party plugin that is used to generate the demo table below. For more information about DataTables, please visit the <a target="_blank" href="https://datatables.net">official DataTables documentation</a>.</p>
+
+          <!-- DataTales Example -->
+          <div class="card shadow mb-4">
+            <div class="card-header py-3">
+              <h6 class="m-0 font-weight-bold text-primary">Gastos</h6>
+            </div>
+            <div class="card-body">
+              <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+>>>>>>> Código-Dave
                   <thead>
                     <tr>
                       <th>Comentario</th>
                       <th>Fecha</th>
                       <th>Tipo de gasto</th>
+<<<<<<< HEAD
                       <th>Monto</th>
                       <th>Opciones</th>
                     </tr>
                   </thead>
+=======
+                      <th>$</th>
+                      <th>Opciones</th>
+                    </tr>
+                  </thead>
+                  <tfoot>
+                    <tr>
+                      <th>Comentario</th>
+                      <th>Fecha</th>
+                      <th>Tipo de gasto</th>
+                      <th>$</th>
+                      <th>Opciones</th>
+                    </tr>
+                  </tfoot>
+>>>>>>> Código-Dave
                   <tbody>
 					<tr th:each="gasto: ${listaGastos}">
 						<td th:text="${gasto.descComentario}"></td>
@@ -174,9 +206,15 @@
 						<td th:text="${gasto.tipoGasto.descTipoGasto}"></td>
 						<td th:text="${gasto.impGasto}"></td>
 						<td>
+<<<<<<< HEAD
 							<a th:unless="${gasto.codRecursoValidador != null}" th:href="@{/editarRecursoGastos/} + ${gasto.codRecursoGasto} + '/'+ ${gasto.tipoGasto.codTipoGasto} + '/' + ${gasto.codProyecto} + '/'+ ${gasto.codRecurso} + '/' + ${gasto.codCliente} + '/' + ${gasto.codEstatusProyecto}" class="btn btn-primary btn-circle btn-sm"><i class="far fa-edit"></i></a>
                     		<a th:href="@{/verRecursoGastos/} + ${gasto.codRecursoGasto} + '/'+ ${gasto.tipoGasto.codTipoGasto} + '/' + ${gasto.codProyecto} + '/'+ ${gasto.codRecurso} + '/' + ${gasto.codCliente} + '/' + ${gasto.codEstatusProyecto}" class="btn btn-primary btn-circle btn-sm"><i class="far fa-id-card"></i></a>
                     		<a th:unless="${gasto.codRecursoValidador != null}" th:href="@{/eliminarRecursoGastos/} + ${gasto.codRecursoGasto} + '/' + ${gasto.tipoGasto.codTipoGasto} + '/' + ${gasto.codProyecto} + '/'+ ${gasto.codRecurso} + '/' + ${gasto.codCliente} + '/' + ${gasto.codEstatusProyecto}" class="btn btn-primary btn-circle btn-sm"><i class="fas fa-trash"></i></a>
+=======
+							<a th:href="@{/editarRecursoGastos/} + ${gasto.tipoGasto.codTipoGasto} + '/' + ${gasto.codProyecto} + '/'+ ${gasto.codRecurso} + '/' + ${gasto.codCliente} + '/' + ${gasto.codEstatusProyecto}" class="btn btn-primary btn-circle btn-sm"><i class="far fa-edit"></i></a>
+                    		<a th:href="@{/verRecursoGastos/} + ${gasto.tipoGasto.codTipoGasto} + '/' + ${gasto.codProyecto} + '/'+ ${gasto.codRecurso} + '/' + ${gasto.codCliente} + '/' + ${gasto.codEstatusProyecto}" class="btn btn-primary btn-circle btn-sm"><i class="far fa-id-card"></i></a>
+                    		<a th:href="@{/eliminarRecursoGastos/} + ${gasto.tipoGasto.codTipoGasto} + '/' + ${gasto.codProyecto} + '/'+ ${gasto.codRecurso} + '/' + ${gasto.codCliente} + '/' + ${gasto.codEstatusProyecto}" class="btn btn-primary btn-circle btn-sm"><i class="fas fa-trash"></i></a>
+>>>>>>> Código-Dave
 						</td>
 					</tr>
                   </tbody>

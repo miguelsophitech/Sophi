@@ -22,8 +22,8 @@ public class AprobacionHorasServicelmpl implements IAprobacionHorasService {
 	}
 
 	@Override
-	public List<AprobacionHoras> findAprobacionHorasByProyecto(Long codProyecto) {
-		return aprobacionhorasDao.findAprobacionHorasByProyecto(codProyecto);
+	public List<AprobacionHoras> findAprobacionHorasBycodProyecto(Long codProyecto) {
+		return aprobacionhorasDao.findAprobacionHorasBycodProyecto(codProyecto);
 	}
 	
 	@Override
@@ -34,12 +34,7 @@ public class AprobacionHorasServicelmpl implements IAprobacionHorasService {
 
 	@Override
 	public void saveAll(List<AprobacionHoras> aprobacionhoras) {
-		aprobacionhorasDao.saveAll(aprobacionhoras);	
-	}
-
-	@Override
-	public void save(AprobacionHoras aprobacionhoras) {
-		aprobacionhorasDao.save(aprobacionhoras);
+		aprobacionhorasDao.saveAll(aprobacionhoras);		
 	}
 
 }

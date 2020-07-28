@@ -4,16 +4,14 @@ import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Column;
+import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
-//import javax.persistence.GeneratedValue;
-//import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-//import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotEmpty;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -23,20 +21,19 @@ public class AprobacionHoras implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 
-	@Id
-	@Column(name = "cod_actividad")
-	private Long codActividad;
-	
-	@OneToOne
-	@JoinColumn(name = "cod_actividad")
-	private Actividad actividad;
-	
-//	@Column(name = "cod_recurso")
-//	private Long codRecurso;
+	@EmbeddedId
+	private CapHoraId Id;
 
 	@OneToOne
-	@JoinColumn(name = "cod_recurso")
+	@JoinColumn(name = "cod_actividad", insertable = false, updatable = false)
+	private Actividad actividad;
+
+	@OneToOne
+	@JoinColumn(name = "cod_recurso", insertable = false, updatable = false)
 	private Recurso recurso;
+	
+	@Column(name = "cod_proyecto", insertable = false, updatable = false)
+	private Long codProyecto;
 
 	@Column(name = "desc_comentario_detalle")
 	private String descComentarioDetalle;
@@ -55,9 +52,6 @@ public class AprobacionHoras implements Serializable {
 	@Temporal(TemporalType.DATE)
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date fecRegistro;
-	
-	@Column(name = "cod_proyecto")
-	private Long codProyecto;
 
 	@Column(name = "val_duracion_reportada")
 	private Float valDuracionReportada;
@@ -69,24 +63,19 @@ public class AprobacionHoras implements Serializable {
 	private Long codRecursoValidador;
 	
 	@Column(name = "fec_validacion")
+	@Temporal(TemporalType.DATE)
+	@DateTimeFormat(pattern = "yyyy-MM-dd") 
 	private Date fecValidacion;
-	
-	@Column(name = "cod_cliente")
-	private Long codCliente;
 	
 	@Column(name = "val_nueva_actividad")
 	private Long valNuevaActividad;
 	
-	@Column(name = "cod_estatus_proyecto")
-	private Long codEstatusProyecto;
-	
-	
-	public Long getCodActividad() {
-		return codActividad;
+	public CapHoraId getId() {
+		return Id;
 	}
 
-	public void setCodActividad(Long codActividad) {
-		this.codActividad = codActividad;
+	public void setId(CapHoraId id) {
+		this.Id = id;
 	}
 	
 	public Actividad getActividad() {
@@ -96,14 +85,6 @@ public class AprobacionHoras implements Serializable {
 	public void setActividad(Actividad actividad) {
 		this.actividad = actividad;
 	}
-
-//	public Long getCodRecurso() {
-//		return codRecurso;
-//	}
-//
-//	public void setCodRecurso(Long codRecurso) {
-//		this.codRecurso = codRecurso;
-//	}
 	
 	public Recurso getRecurso() {
 		return recurso;
@@ -111,7 +92,7 @@ public class AprobacionHoras implements Serializable {
 
 	public void setRecurso(Recurso recurso) {
 		this.recurso = recurso;
-	}	
+	}
 	
 	public String getDescComentarioDetalle() {
 		return descComentarioDetalle;
@@ -143,14 +124,6 @@ public class AprobacionHoras implements Serializable {
 
 	public void setFecRegistro(Date fecRegistro) {
 		this.fecRegistro = fecRegistro;
-	}
-
-	public Long getCodProyecto() {
-		return codProyecto;
-	}
-
-	public void setCodProyecto(Long codProyecto) {
-		this.codProyecto = codProyecto;
 	}
 
 	public Float getValDuracionReportada() {
@@ -185,13 +158,7 @@ public class AprobacionHoras implements Serializable {
 		this.fecValidacion = fecValidacion;
 	}
 
-	public Long getCodCliente() {
-		return codCliente;
-	}
-
-	public void setCodCliente(Long codCliente) {
-		this.codCliente = codCliente;
-	}
+	
 
 	public Long getValNuevaActividad() {
 		return valNuevaActividad;
@@ -201,16 +168,28 @@ public class AprobacionHoras implements Serializable {
 		this.valNuevaActividad = valNuevaActividad;
 	}
 
-	public Long getCodEstatusProyecto() {
-		return codEstatusProyecto;
-	}
-
-	public void setCodEstatusProyecto(Long codEstatusProyecto) {
-		this.codEstatusProyecto = codEstatusProyecto;
-	}
-
 	public static long getSerialversionuid() {
 		return serialVersionUID;
+	}
+	
+	public AprobacionHoras(CapHoraId id, @NotEmpty(message = "Este dato no debe estar vacío") String descComentarioDetalle,
+			Date fecInicioActividad, Date fecFinActividad, float valDuracionReportada, float valDuracionValidada,
+			Long codRecursoValidador, Long valNuevaActividad, Date fecValidacion, Date fecRegistro) {
+		super();
+		Id = id;
+		this.descComentarioDetalle = descComentarioDetalle;
+		this.fecInicioActividad = fecInicioActividad;
+		this.fecFinActividad = fecFinActividad;
+		this.valDuracionReportada = valDuracionReportada;
+		this.valDuracionValidada = valDuracionValidada;
+		this.codRecursoValidador = codRecursoValidador;
+		this.valNuevaActividad = valNuevaActividad;
+		this.fecValidacion = fecValidacion;
+		this.fecRegistro = fecRegistro;
+	}
+
+	public AprobacionHoras() {
+		
 	}
 
 }

@@ -3,7 +3,7 @@ $(document).ready(function() {
 	$("#filterProyecto").change(function() {
             $.ajax({
                 type: "GET",
-                url: "/cargaHoras",
+                url: "/cargaGastos",
                 data: {
                     id: $("#filterProyecto").val()
                 },

@@ -12,5 +12,4 @@ public interface ITipoGastoService {
 	
 	public TipoGasto findOne(Long tipoGasto);
 	
-
 }
