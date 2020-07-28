@@ -10,6 +10,6 @@ import com.sophi.app.models.entity.AprobacionHoras;
 public interface IAprobacionHorasDao extends CrudRepository<AprobacionHoras, Long> {
 
     @Query("FROM AprobacionHoras ap WHERE ap.codProyecto = ?1")
-    List<AprobacionHoras> findAprobacionHorasBycodProyecto(Long codProyecto);
+    List<AprobacionHoras> findAprobacionHorasByProyecto(Long codProyecto);
     
 }

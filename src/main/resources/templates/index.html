@@ -4,7 +4,7 @@
 <head th:replace="layout/layout::head"></head>
 
 <body id="page-top">
-
+  <input id="authGetName" type="hidden" th:value="${#authentication.getName()}"></input>
   <!-- Page Wrapper -->
   <div id="wrapper">
 
@@ -73,7 +73,7 @@
           <div class="bg-white py-2 collapse-inner rounded">
             <h6 class="collapse-header">Ver:</h6>
             <a class="collapse-item"  th:href="@{/listaProyectosTodo}">Mis proyectos</a>
-            <a class="collapse-item" href="#">Mis actividades</a>
+            <a class="collapse-item" th:href="@{/misActividades/} + ${#authentication.getName()}">Mis actividades</a>
           </div>
         </div>
       </li>
@@ -87,7 +87,7 @@
         <div id="collapseGastosTiempo" class="collapse" aria-labelledby="menuGastosTiempo" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
             <h6 class="collapse-header">Ver:</h6>
-            <a class="collapse-item" href="#">Mi captura de horas</a>
+            <a class="collapse-item" th:href="@{/capHoras/} + ${#authentication.getName()}">Mi captura de horas</a>
             <a class="collapse-item" th:href="@{/aprobacionhoras}">Aprobaci&oacute;n de horas</a>
             <a class="collapse-item" href="#">Mi captura de gastos</a>
             <a class="collapse-item" th:href="@{/aprobaciongastos}">Aprobaci&oacute;n de gastos</a>
@@ -115,84 +115,9 @@
           <div class="bg-white py-2 collapse-inner rounded">
             <h6 class="collapse-header">Ver:</h6>
             <a class="collapse-item" th:href="@{/listarRecursos}">Mis recursos</a>
-            <a class="collapse-item" href="#">Mi perfil</a>
           </div>
         </div>
       </li>
-
-<!--       Divider -->
-<!--       <hr class="sidebar-divider"> -->
-
-<!--      Heading Recursos humanos -->
-<!--       <div class="sidebar-heading"> -->
-<!--         Recursos -->
-<!--       </div> -->
-
-<!--       Nav Item - Pages Collapse Menu -->
-<!--       <li class="nav-item"> -->
-<!--         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="true" aria-controls="collapsePages"> -->
-<!--           <i class="fas fa-fw fa-folder"></i> -->
-<!--           <span>Recursos</span> -->
-<!--         </a> -->
-<!--         <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar"> -->
-<!--           <div class="bg-white py-2 collapse-inner rounded"> -->
-<!--             <h6 class="collapse-header">Gestionar</h6> -->
-<!--             <a class="collapse-item" th:href="@{/formRecurso}">Alta</a> -->
-<!--             <a class="collapse-item" th:href="@{/listarRecursos}">Todos</a> -->
-<!--             <div class="collapse-divider"></div> -->
-<!--             <h6 class="collapse-header">Experiencia</h6> -->
-<!--             <a class="collapse-item" href="#">Skills</a> -->
-<!--             <a class="collapse-item" href="#">Capacitaci&oacute;n</a> -->
-<!--           </div> -->
-<!--         </div> -->
-
-<!--         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseAgenda" aria-expanded="true" aria-controls="collapsePages"> -->
-<!--           <i class="fas fa-fw fa-folder"></i> -->
-<!--           <span>Agenda</span> -->
-<!--         </a> -->
-<!--         <div id="collapseAgenda" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar"> -->
-<!--           <div class="bg-white py-2 collapse-inner rounded"> -->
-<!--             <h6 class="collapse-header">Gestionar</h6> -->
-<!--             <a class="collapse-item" th:href="@{/formContacto}">Alta</a> -->
-<!--             <a class="collapse-item" th:href="@{/agenda}">Agenda</a> -->
-<!--           </div> -->
-<!--         </div> -->
-        
-<!--         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseClientes" aria-expanded="true" aria-controls="collapsePages"> -->
-<!--           <i class="fas fa-fw fa-folder"></i> -->
-<!--           <span>Clientes</span> -->
-<!--         </a> -->
-<!--         <div id="collapseClientes" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar"> -->
-<!--           <div class="bg-white py-2 collapse-inner rounded"> -->
-<!--             <h6 class="collapse-header">Gestionar</h6> -->
-<!--             <a class="collapse-item" th:href="@{/formCliente}">Alta</a> -->
-<!--             <a class="collapse-item" th:href="@{/listaClientes}">Listado</a> -->
-<!--           </div> -->
-<!--         </div> -->
-        
-<!--        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseHoras" aria-expanded="true" aria-controls="collapsePages"> -->
-<!--           <i class="fas fa-fw fa-folder"></i> -->
-<!--           <span>Captura de Horas</span> -->
-<!--         </a> -->
-<!--         <div id="collapseHoras" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar"> -->
-<!--           <div class="bg-white py-2 collapse-inner rounded"> -->
-<!--             <h6 class="collapse-header">Gestionar</h6> -->
-<!--             <a class="collapse-item" th:href="@{/aprobacionhoras}">Aprobación de horas</a> -->
-<!--           </div> -->
-<!--         </div> -->
-        
-<!--         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseGastos" aria-expanded="true" aria-controls="collapsePages"> -->
-<!--         <i class="fas fa-fw fa-folder"></i> -->
-<!--         <span>Captura de Gastos</span> -->
-<!--       </a> -->
-<!--       <div id="collapseGastos" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar"> -->
-<!--         <div class="bg-white py-2 collapse-inner rounded"> -->
-<!--           <h6 class="collapse-header">Gestionar</h6> -->
-<!--           <a class="collapse-item" th:href="@{/aprobaciongastos}">Aprobación de gastos</a> -->
-<!--         </div> -->
-<!--       </div> -->
-<!--       </li> -->
-
 
       <!-- Divider -->
       <hr class="sidebar-divider d-none d-md-block">
@@ -211,7 +136,11 @@
       <!-- Main Content -->
       <div id="content">
 
-       <header th:replace="layout/layout :: header"></header>
+<!-- 		<div id="encabezado"> -->
+<!-- 		 encabezado con datos de recurso en sesion -->
+<!-- 		</div> -->
+		
+		<header th:replace="layout/layout :: header"></header>
 
         <!-- Begin Page Content -->
         <div class="container-fluid">
@@ -219,7 +148,7 @@
           <!-- Page Heading -->
           <div class="d-sm-flex align-items-center justify-content-between mb-4">
             <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
-            <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>
+<!--             <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-download fa-sm text-white-50"></i> Generate Report</a> -->
           </div>
 
           <!-- Content Row -->
@@ -393,14 +322,8 @@
 
   <!-- Custom scripts for all pages-->
   <script th:src="@{/js/sb-admin-2.min.js}"></script>
-
-  <!-- Page level plugins -->
-  <script th:src="@{/vendor/chart.js/Chart.min.js}"></script>
-
-  <!-- Page level custom scripts -->
-  <script th:src="@{/js/demo/chart-area-demo.js}"></script>
-  <script th:src="@{/js/demo/chart-pie-demo.js}"></script>
   
+  <script th:src="@{/js/datosRecursoSesion.js}"></script>
 
 </body>
 

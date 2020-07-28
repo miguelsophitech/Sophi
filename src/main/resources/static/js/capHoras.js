@@ -3,12 +3,14 @@ $(document).ready(function() {
 	var fh = new Date();
 	formatoFechaLarga(fh);
 	completaSemana(fh);
+	semanaInicioFin(fh);
 
 	$("#sigDia").click(function() {
 		limpiaActive();
 		formatoFechaLarga(sumarDias(fh, 1));
 		completaSemana(fh);
 		cargaActividadDia();
+		semanaInicioFin(fh);
 	});
 
 	$("#antDia").click(function() {
@@ -16,9 +18,10 @@ $(document).ready(function() {
 		formatoFechaLarga(sumarDias(fh, -1));
 		completaSemana(fh);
 		cargaActividadDia();
+		semanaInicioFin(fh);
 	});
-
-	$("#selectProyecto").change(function() {
+	
+	$("#selectProyecto").click(function() {
 		cargarActividadesPrimariasProyecto();
 	});
 	
@@ -35,6 +38,10 @@ $(document).ready(function() {
 	
 
 	cargaActividadDia();
+	
+//	cargarActividadesPrimariasProyecto();
+//	filtraActPorFase();
+//	altaCapHoraActividad();
 
 });
 
@@ -52,7 +59,7 @@ console.log(lastday);
 $.ajax({
     type: "GET",
     url: "/horasTotalSemana",
-    data: { fechaInicioSemana: firstday, fechaFinSemana: lastday },
+    data: {codRecurso: $("#valCodRecurso").val() , fechaInicioSemana: firstday, fechaFinSemana: lastday },
 	success: function(result){
         $("#dt").html(result);
     }
@@ -62,12 +69,12 @@ $.ajax({
 
 function cargaActividadDia(){
 	var fech = $("#semanaDias .active span").text();
-	var url="/cargarActividadCapturadas/1/"+fech;
+	var url="/cargarActividadCapturadas/"+$("#valCodRecurso").val()+"/"+fech;
 	$("#detalleHorasCapturadas").load(url);
 }
 
 function cargarActividadesPrimariasProyecto(){
-	var url="/cargarActividadPrimaria/1/"+$("#selectProyecto").val();
+	var url="/cargarActividadPrimaria/"+$("#valCodRecurso").val()+"/"+$("#selectProyecto").val();
 	$("#resultListActividadesPrimarias").load(url);
 }
 
@@ -76,7 +83,7 @@ function filtraActPorFase(){
 }
 
 function cargarActividadesSecundariasProyecto(){
-	var url="/cargarActividadSecundaria/1/"+$("#selectProyecto").val()+"/"+encodeURIComponent($("#selectActividadesPrimarias").val());
+	var url="/cargarActividadSecundaria/"+$("#valCodRecurso").val()+"/"+$("#selectProyecto").val()+"/"+encodeURIComponent($("#selectActividadesPrimarias").val());
 	$("#resultListActividadesSecundarias").load(url);
 }
 

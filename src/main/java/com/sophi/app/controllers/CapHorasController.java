@@ -2,7 +2,9 @@ package com.sophi.app.controllers;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.validation.Valid;
 
@@ -28,6 +30,7 @@ import com.sophi.app.models.entity.CapHoraId;
 import com.sophi.app.models.service.IActividadService;
 import com.sophi.app.models.service.ICapHoraService;
 import com.sophi.app.models.service.IProyectoService;
+import com.sophi.app.models.service.IRecursoService;
 
 @Controller
 @SessionAttributes("capHora")
@@ -37,14 +40,26 @@ public class CapHorasController {
 	private IActividadService actividadService;
 	
 	@Autowired
+	private IRecursoService recursoService;
+	
+	@Autowired
 	private ICapHoraService capHoraService;
 	
-	@GetMapping("/capHoras/{id}")
-	public String capHoras(@PathVariable(value="id") Long codRecurso, Model model) {
+	@Autowired
+	private IProyectoService proyectoService;
+	
+	@GetMapping("/capHoras/{email}")
+	public String capHoras(@PathVariable(value="email") String email, Model model) {
+		Long codRecurso = recursoService.findByDescCorreoElectronico(email).getCodRecurso();
 		model.addAttribute("titulo", "Captura de horas");
-		List<Long> proyectoList = new ArrayList<Long>();
-		proyectoList = actividadService.findListaProyectoByRecurso(codRecurso);
+		List<Long> proyectoListId = new ArrayList<Long>();
+		HashMap<Long, String> proyectoList = new HashMap<Long, String>(); 
+		proyectoListId = actividadService.findListaProyectoByRecurso(codRecurso);
+		for (Long id : proyectoListId) {
+			proyectoList.put(id, proyectoService.findByProyectoIdCodProyectoAndProyectoIdCodEstatusProyecto(id, 2L).getDescProyecto());
+		}
 		model.addAttribute("proyectoList", proyectoList);
+		model.addAttribute("codRecurso", codRecurso);
 		return "formCapHoras";
 	}
 	
@@ -83,6 +98,7 @@ public class CapHorasController {
 		listActHoraCapturadas = capHoraService.findListCapHoraByFechaRecurso(fecCaptura, codRecurso);
 		for (CapHora capHora : listActHoraCapturadas) {
 			capHora.setDescActividadSecundaria(actividadService.findOne(capHora.getId().getCodActividad()).getDescActividadSecundaria());
+			capHora.setDescProyecto(proyectoService.findByProyectoIdCodProyectoAndProyectoIdCodEstatusProyecto(capHora.getId().getCodProyecto(), 2L).getDescProyecto());
 		}
 		model.addAttribute("listActHoraCapturadas", listActHoraCapturadas);
 		return "layout/capHora :: detActividadesCapturadas";
@@ -102,14 +118,15 @@ public class CapHorasController {
 		capHoraService.save(capHora);
 		status.setComplete();
 		flash.addFlashAttribute("success", mensajeFlash);
-		return "redirect:capHoras/"+capHora.getId().getCodRecurso();
+		return "redirect:capHoras/"+recursoService.findOne(capHora.getId().getCodRecurso()).getDescCorreoElectronico();
 	}
 	
 	
 	@RequestMapping(value="/horasTotalSemana",produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
-	public Float horasTotalSemana(@RequestParam Date fechaInicioSemana, @RequestParam Date fechaFinSemana, Model model) {
-		return capHoraService.findSumHorasReportadasSemana((long) 1, fechaInicioSemana, fechaFinSemana);
+	public Float horasTotalSemana(@RequestParam Long codRecurso, @RequestParam Date fechaInicioSemana, @RequestParam Date fechaFinSemana, Model model) {
+		System.out.println(codRecurso + " " + fechaInicioSemana + " "+ fechaFinSemana);
+		return capHoraService.findSumHorasReportadasSemana(codRecurso, fechaInicioSemana, fechaFinSemana);
 	}
 
 }

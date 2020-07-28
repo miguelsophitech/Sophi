@@ -4,7 +4,7 @@
 <head th:replace="layout/layout::head"></head>
 
 <body id="page-top">
-
+	<input id="authGetName" type="hidden" th:value="${#authentication.getName()}"></input>
     <!-- Page Wrapper -->
     <div id="wrapper">
 
@@ -115,7 +115,6 @@
           <div class="bg-white py-2 collapse-inner rounded">
             <h6 class="collapse-header">Ver:</h6>
             <a class="collapse-item" th:href="@{/listarRecursos}">Mis recursos</a>
-            <a class="collapse-item" href="#">Mi perfil</a>
           </div>
         </div>
       </li>
@@ -194,21 +193,16 @@
       <!-- End ModalLogout -->
 
     <!-- Bootstrap core JavaScript-->
-    <script src="vendor/jquery/jquery.min.js"></script>
-    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script th:src="@{/vendor/jquery/jquery.min.js}"></script>
+    <script th:src="@{/vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>
 
     <!-- Core plugin JavaScript-->
-    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+    <script th:src="@{/vendor/jquery-easing/jquery.easing.min.js}"></script>
 
     <!-- Custom scripts for all pages-->
-    <script src="js/sb-admin-2.min.js"></script>
+    <script th:src="@{/js/sb-admin-2.min.js}"></script>
 
-    <!-- Page level plugins -->
-    <script src="vendor/chart.js/Chart.min.js"></script>
-
-    <!-- Page level custom scripts -->
-    <script src="js/demo/chart-area-demo.js"></script>
-    <script src="js/demo/chart-pie-demo.js"></script>
+	<script th:src="@{/js/datosRecursoSesion.js}"></script>
 
 </body>
 

@@ -3,7 +3,7 @@
 <head th:replace="layout/layout::head"></head>
 
 <body id="page-top">
-
+  <input id="authGetName" type="hidden" th:value="${#authentication.getName()}"></input>
   <!-- Page Wrapper -->
   <div id="wrapper">
 
@@ -136,9 +136,10 @@
       <!-- Main Content -->
       <div id="content">
 
-        <header th:replace="layout/layout :: header"></header>
-        
-
+<!-- 		<div id="encabezado"> -->
+		<!-- 		encabezado con datos de recurso en sesion -->
+<!-- 		</div> -->
+		<header th:replace="layout/layout :: header"></header>
 
         <!-- Begin Page Content -->
         <div class="container-fluid">
@@ -239,6 +240,7 @@
   <!-- Page level custom scripts -->
   <script th:src="@{/js/demo/datatables-demo.js}"></script>
   
+  <script th:src="@{/js/datosRecursoSesion.js}"></script>
 
 </body>
 

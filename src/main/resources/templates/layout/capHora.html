@@ -6,7 +6,7 @@
 	<div th:fragment="listActividadesPrimarias">
 		<label class="col-form-label">Fase</label>
 		<div class="input-group">
-			<select  class="custom-select" id="selectActividadesPrimarias" onchange="filtraActPorFase();">
+			<select  class="custom-select" id="selectActividadesPrimarias" onclick="filtraActPorFase();">
 				<option th:each="actividadPrimaria : ${actividadesPrimariasList}" 
 					th:value="${actividadPrimaria}" th:text="${actividadPrimaria}">
 				</option>
@@ -18,7 +18,7 @@
 	<div th:fragment="listActividadesSecundarias">
 		<label class="col-form-label">Actividades</label>
 		<div class="input-group">
-			<select  class="custom-select" id="selectActividadesSecundarias" onchange="altaCapHoraActividad();">
+			<select  class="custom-select" id="selectActividadesSecundarias" onclick="altaCapHoraActividad();">
 				<option th:each="actividad : ${actividadesSecundariasList}" 
 					th:value="${actividad.codActividad}" th:text="${actividad.descActividadSecundaria} + ' (' + ${actividad.valDuracionActividad} + ' hrs)'">
 				</option>
@@ -50,7 +50,7 @@
 			<tbody>
 				<tr th:each="horaCapturada : ${listActHoraCapturadas}">
 					<td>
-						<i class='fas fa-tasks'></i><b><span th:text="' ' + ${horaCapturada.Id.codProyecto}"></span>
+						<i class='fas fa-tasks'></i><b><span th:text="' ' + ${horaCapturada.descProyecto}"></span>
 						<span th:text="' - ' + ${horaCapturada.descActividadSecundaria}"></span></b><br>
 						<i class='fas fa-highlighter'></i><span th:text="' ' + ${horaCapturada.descComentarioDetalle}"></span><br>
 						<i class='far fa-clock'></i><b><span th:text="' ' + ${horaCapturada.valDuracionReportada}"></span></b><br>
