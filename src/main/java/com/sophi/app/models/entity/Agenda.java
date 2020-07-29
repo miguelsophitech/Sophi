@@ -15,6 +15,7 @@ import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Pattern;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -51,13 +52,16 @@ public class Agenda implements Serializable {
 	private Date fecNacimiento;
 	
 	@NotEmpty(message = "Este dato no debe estar vacío")
+	@Pattern(regexp = "(\\+52|55)?[ -]*(55)[ -]*([0-9][ -]*){8}")
 	@Column(name = "desc_tel_celular")
 	private String descTelCelular;
 	
+	@NotEmpty(message = "Este dato no debe estar vacío")
 	@Column(name = "desc_tel_empresa")
+	@Pattern(regexp = "(\\55)?[ -]*(55)[ -]*([0-9][ -]*){8}")
 	private String descTelEmpresa;
 	
-	
+	@Pattern(regexp = "([0-9]){3}")
 	@Column(name = "desc_tel_ext")
 	private String descTelExt;
 	
