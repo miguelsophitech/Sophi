@@ -6,7 +6,7 @@ $(document).ready(function() {
 		var cliente=$("#cliente").val();
 		//alert("cliente "+cliente);
 		$.ajax({ 
-					url: "/cargaProyectos/"+cliente,
+					url: "/cargaProyectosTodo/"+cliente,
         			success: function(res){
         				//alert(res);
         				
@@ -21,7 +21,7 @@ $(document).ready(function() {
 
 function cargaTodos() {
   $.ajax({ 
-					url: "/cargaProyectos/-1",
+					url: "/cargaProyectosTodo/-1",
         			success: function(res){
         				//alert(res);
         				

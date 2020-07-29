@@ -14,7 +14,8 @@ public interface IRecursoService {
 	
 	public Recurso findOne(Long codRecurso);
 	
-	//manual	
 	public List<Recurso> findByNombreApellido(String descRecurso, String descApellidoPaterno);
+	
+	public Recurso findByDescCorreoElectronico(String correoElectronico);
 
 }

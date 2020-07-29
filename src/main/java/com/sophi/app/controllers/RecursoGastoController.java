@@ -19,6 +19,7 @@ import com.sophi.app.models.entity.TipoGasto;
 import com.sophi.app.models.service.IProyectoRecursoService;
 import com.sophi.app.models.service.IProyectoService;
 import com.sophi.app.models.service.IRecursoGastoService;
+import com.sophi.app.models.service.IRecursoService;
 import com.sophi.app.models.service.ITipoGastoService;
 
 import org.apache.tomcat.util.http.fileupload.IOUtils;
@@ -30,8 +31,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
@@ -49,12 +52,15 @@ public class RecursoGastoController {
     
     @Autowired
     private IRecursoGastoService recursoGastoService;
+    
+    @Autowired
+    private IRecursoService recursoService;
 
 
     //Carga de pagina
-    @RequestMapping(value = "/recursoGastoAlta/{codRecurso}", method = RequestMethod.GET)
-	public String recursosGastosA(Model model,@PathVariable(value = "codRecurso") long codRecurso) {
-		
+    @RequestMapping(value = "/recursoGastoAlta/{email}", method = RequestMethod.GET)
+	public String recursosGastosA(Model model,@PathVariable(value = "email") String email) {
+    	Long codRecurso = recursoService.findByDescCorreoElectronico(email).getCodRecurso();
     	List<ProyectoRecurso> listaProRec = proyectoRecursoService.findByProyectoRecursoIdCodRecurso(codRecurso);
     	List<Proyecto> listaProyecto = new ArrayList<Proyecto>();
     	RecursoGasto recursoGasto = new RecursoGasto();
@@ -77,7 +83,7 @@ public class RecursoGastoController {
     
     //Guarda gasto
     @RequestMapping(value="/recursoGastoAlta", method = RequestMethod.POST)
-	public String recursoGastoAlta(Map<String, Object> modelM,@Valid RecursoGasto recursoGasto, BindingResult result, Model model,RedirectAttributes flash,SessionStatus status) {
+	public String recursoGastoAlta(Map<String, Object> modelM,@Valid RecursoGasto recursoGasto, @RequestParam("compImg") MultipartFile compImg, BindingResult result, Model model,RedirectAttributes flash,SessionStatus status) {
 		Proyecto p = proyectoService.findByProyectoIdCodProyectoAndProyectoIdCodEstatusProyecto(recursoGasto.getCodProyecto(), 2L);
 		Date fechaHoy = new Date();
 		List<ProyectoRecurso> listaProRec = proyectoRecursoService.findByProyectoRecursoIdCodRecurso(recursoGasto.getCodRecurso());
@@ -100,6 +106,15 @@ public class RecursoGastoController {
 				}
 			}
 		}
+		
+		if(!compImg.isEmpty()) {
+			try {
+				byte[] bytesImg = compImg.getBytes();
+				recursoGasto.setComprobante(bytesImg);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
     	
     	recursoGastoService.save(recursoGasto);
     	
@@ -117,14 +132,14 @@ public class RecursoGastoController {
     	
     	model.addAttribute("listaGastos", listaRG);
     	
-    	return "redirect:/listarRecursoGastos/"+recursoGasto.getCodRecurso();
+    	return "redirect:/misGastos/"+recursoService.findOne(recursoGasto.getCodRecurso()).getDescCorreoElectronico();
 		
 	}
     
     //lista de gastos recurso
-    @RequestMapping(value = "/listarRecursoGastos/{codRecurso}", method = RequestMethod.GET)
-	public String listaRecursoGastos(Model model,@PathVariable(value = "codRecurso") long codRecurso) {
-    	
+    @RequestMapping(value = "/misGastos/{email}", method = RequestMethod.GET)
+	public String listaRecursoGastos(Model model,@PathVariable(value = "email") String email) {
+    	Long codRecurso = recursoService.findByDescCorreoElectronico(email).getCodRecurso();
     	List<RecursoGasto> listaRG = recursoGastoService.findByCodRecurso(codRecurso);
     	
     	model.addAttribute("listaGastos", listaRG);
@@ -191,9 +206,8 @@ public class RecursoGastoController {
     //imagen de gasto
     @GetMapping(value = "/imagenGasto/{codRecursoGasto}/{codTipoGasto}/{codProyecto}/{codRecurso}/{codCliente}/{codEstatusProyecto}")
 	public void verImagenGasto(@PathVariable(value = "codRecursoGasto") long codRecursoGasto,@PathVariable(value = "codTipoGasto") long codTipoGasto,@PathVariable(value = "codProyecto") long codProyecto,@PathVariable(value = "codRecurso") long codRecurso,@PathVariable(value = "codCliente") long codCliente,@PathVariable(value = "codEstatusProyecto") long codEstatusProyecto,  HttpServletResponse response) throws IOException{
-		response.setContentType("image/jpeg");
+    	response.setContentType("image/jpeg");
     	RecursoGasto recursoGasto = recursoGastoService.findOne(codRecursoGasto);
-    	System.out.println("Recurso "+recursoGasto.getTipoGasto().getDescTipoGasto());
 		InputStream is = new ByteArrayInputStream(recursoGasto.getComprobante());
 		IOUtils.copy(is, response.getOutputStream());
 	}
@@ -205,7 +219,7 @@ public class RecursoGastoController {
 	   RecursoGasto rg = recursoGastoService.findOne(codRecursoGasto);
 	   recursoGastoService.delete(rg);
     	
-	   return "redirect:/listarRecursoGastos/"+rg.getCodRecurso();
+	   return "redirect:/misGastos/"+recursoService.findOne(rg.getCodRecurso()).getDescCorreoElectronico();
 		
 	}
     

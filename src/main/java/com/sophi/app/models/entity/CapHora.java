@@ -31,6 +31,9 @@ public class CapHora implements Serializable{
 	@Transient
 	private String descActividadSecundaria;
 	
+	@Transient
+	private String descProyecto;
+	
 	@Column(name = "fec_inicio_actividad")
 	@Temporal(TemporalType.DATE)
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
@@ -159,6 +162,14 @@ public class CapHora implements Serializable{
 
 	public void setDescActividadSecundaria(String descActividadSecundaria) {
 		this.descActividadSecundaria = descActividadSecundaria;
+	}
+	
+	public String getDescProyecto() {
+		return descProyecto;
+	}
+
+	public void setDescProyecto(String descProyecto) {
+		this.descProyecto = descProyecto;
 	}
 
 	public CapHora(CapHoraId id, @NotEmpty(message = "Este dato no debe estar vacío") String descComentarioDetalle,

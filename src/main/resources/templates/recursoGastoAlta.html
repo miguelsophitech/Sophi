@@ -23,7 +23,7 @@
 </head>
 
 <body id="page-top">
-
+<input id="authGetName" type="hidden" th:value="${#authentication.getName()}"></input>
   <!-- Page Wrapper -->
   <div id="wrapper">
 
@@ -31,66 +31,115 @@
     <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
       <!-- Sidebar - Brand -->
-      <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+      <a class="sidebar-brand d-flex align-items-center justify-content-center" th:href="@{/}">
         <div class="sidebar-brand-icon">
           <!--<i class="fas fa-laugh-wink"></i>  rotate-n-15-->
-          <img src="img/logo-img.png" alt="">
+          <img th:src="@{/img/logo-img.png}" alt="">
         </div> 
-        <div class="sidebar-brand-text mx-3"><img src="img/logo-texto.png" alt=""></div>
+        <div class="sidebar-brand-text mx-3"><img th:src="@{/img/logo-texto.png}"alt=""></div>
       </a>
 
       <!-- Divider -->
       <hr class="sidebar-divider my-0">
 
       <!-- Nav Item - Dashboard -->
-      <li class="nav-item active">
-        <a class="nav-link" href="index.html">
+      <li class="nav-item">
+        <a class="nav-link" th:href="@{/}">
           <i class="fas fa-fw fa-tachometer-alt"></i>
-          <span>Dashboard</span></a>
+          <span>Mi dashboard</span></a>
       </li>
-
+      
       <!-- Divider -->
       <hr class="sidebar-divider">
 
-      <!-- Heading -->
+      <!-- Heading Proyecto -->
       <div class="sidebar-heading">
-        Proyecto
+        Clientes
       </div>
 
-      <!-- Nav Item - Pages Collapse Menu -->
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
-          <i class="fas fa-fw fa-cog"></i>
-          <span>Gastos y tiempo</span>
+      <!-- Nav Item - Gastos y tiempo Collapse Menu -->
+      <li class="nav-item ">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseClientes" aria-expanded="true" aria-controls="collapseClientes">
+          <i class="fas fa-fw fa-address-book"></i>
+          <span>Gesti&oacute;n de clientes</span>
         </a>
-        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+        <div id="collapseClientes" class="collapse" aria-labelledby="menuClientes" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
-            <h6 class="collapse-header">Registrar:</h6>
-            <a class="collapse-item" href="buttons.html">Horas</a>
-            <a class="collapse-item" href="cards.html">Gastos</a>
+            <h6 class="collapse-header">Ver:</h6>
+            <a class="collapse-item" th:href="@{/listaClientes}">Mis clientes</a>
+            <a class="collapse-item" th:href="@{/agenda}">Mis contactos</a>
+          </div>
+        </div>
+      </li>
+      
+
+      <!-- Divider -->
+      <hr class="sidebar-divider">
+
+      <!-- Heading Proyecto -->
+      <div class="sidebar-heading">
+        Proyectos
+      </div>
+      
+      
+	  <!-- Nav Item - Actividades Collapse Menu -->
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseProyectos" aria-expanded="true" aria-controls="collapseProyectos">
+          <i class="fas fa-fw fa-wrench"></i>
+          <span>Gesti&oacute;n de proyectos</span>
+        </a>
+        <div id="collapseProyectos" class="collapse" aria-labelledby="menuProyectos" data-parent="#accordionSidebar">
+          <div class="bg-white py-2 collapse-inner rounded">
+            <h6 class="collapse-header">Ver:</h6>
+            <a class="collapse-item"  th:href="@{/listaProyectosTodo}">Mis proyectos</a>
+            <a class="collapse-item" th:href="@{/misActividades/} + ${#authentication.getName()}">Mis actividades</a>
           </div>
         </div>
       </li>
 
-      <!-- Nav Item - Utilities Collapse Menu -->
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities" aria-expanded="true" aria-controls="collapseUtilities">
-          <i class="fas fa-fw fa-wrench"></i>
-          <span>Actividades</span>
+      <!-- Nav Item - Gastos y tiempo Collapse Menu -->
+      <li class="nav-item active">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseGastosTiempo" aria-expanded="true" aria-controls="collapseGastosTiempo">
+          <i class="fas fa-fw fa-calendar-alt"></i>
+          <span>Gastos y tiempo</span>
         </a>
-        <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
+        <div id="collapseGastosTiempo" class="collapse" aria-labelledby="menuGastosTiempo" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
-            <h6 class="collapse-header">Custom Utilities:</h6>
-            <a class="collapse-item" href="utilities-color.html">Colors</a>
-            <a class="collapse-item" href="utilities-border.html">Borders</a>
-            <a class="collapse-item" href="utilities-animation.html">Animations</a>
-            <a class="collapse-item" href="utilities-other.html">Other</a>
+            <h6 class="collapse-header">Ver:</h6>
+            <a class="collapse-item" th:href="@{/capHoras/} + ${#authentication.getName()}">Mi captura de horas</a>
+            <a class="collapse-item " th:href="@{/aprobacionhoras/}+${#authentication.getName()}">Aprobaci&oacute;n de horas</a>
+            <a class="collapse-item active" th:href="@{/misGastos/} + ${#authentication.getName()}">Mi captura de gastos</a>
+            <a class="collapse-item" th:href="@{/aprobaciongastos/}+ ${#authentication.getName()}">Aprobaci&oacute;n de gastos</a>
+          </div>
+        </div>
+      </li>
+
+ 
+      
+       <!-- Divider -->
+      <hr class="sidebar-divider">
+
+      <!-- Heading Proyecto -->
+      <div class="sidebar-heading">
+        Recursos
+      </div>
+
+      <!-- Nav Item - Gastos y tiempo Collapse Menu -->
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseRecursos" aria-expanded="true" aria-controls="collapseRecursos">
+          <i class="fas fa-fw fa-id-card"></i>
+          <span>Gesti&oacute;n de recursos</span>
+        </a>
+        <div id="collapseRecursos" class="collapse" aria-labelledby="menuRecursos" data-parent="#accordionSidebar">
+          <div class="bg-white py-2 collapse-inner rounded">
+            <h6 class="collapse-header">Ver:</h6>
+            <a class="collapse-item" th:href="@{/listarRecursos}">Mis recursos</a>
           </div>
         </div>
       </li>
 
       <!-- Divider -->
-      <hr class="sidebar-divider">
+      <hr class="sidebar-divider d-none d-md-block">
 
       <!-- Sidebar Toggler (Sidebar) -->
       <div class="text-center d-none d-md-inline">
@@ -99,6 +148,7 @@
 
     </ul>
     <!-- End of Sidebar -->
+
 
     <!-- Content Wrapper -->
     <div id="content-wrapper" class="d-flex flex-column">
@@ -116,7 +166,7 @@
           </div>
 
             <!--form-->
-              <form class="user" th:action="@{/recursoGastoAlta}" th:Object="${recursoGasto}" method="post">
+              <form class="user" th:action="@{/recursoGastoAlta}" th:Object="${recursoGasto}" method="post" enctype="multipart/form-data">
               
                 <input type="hidden" th:value="${r}" name="codRecurso">
                 
@@ -162,7 +212,8 @@
                             <span class="input-group-text" id="inputGroupFileAddon01">Comprobante</span>
                         </div>
                         <div class="custom-file">
-                            <input type="file" th:field="*{comprobante}" class="custom-file-input" id="file" aria-describedby="inputGroupFileAddon01">
+                            <input th:if="*{comprobante} != null" type="file" name="compImg" class="custom-file-input" id="file" aria-describedby="inputGroupFileAddon01">
+                            <input th:if="*{comprobante} == null" type="file" name="compImg" class="custom-file-input" id="file" aria-describedby="inputGroupFileAddon01" required>
                             <label class="custom-file-label" for="inputGroupFile01"></label>
                         </div>
                     </div>
@@ -170,7 +221,7 @@
                   <div class="col-sm-4 mb-3 mb-sm-0">
                   	<label for="">Imagen</label>
                     <div id="preview">
-                    	<img th:if="*{comprobante} != null" class="img-thumbnail rounded" style="max-height: 200px;" th:src="@{'/imagenGasto/' + ${recursoGasto.tipoGasto.codTipoGasto} + '/' + ${recursoGasto.codProyecto} + '/' + ${recursoGasto.codRecurso} +  '/' + ${recursoGasto.codCliente} +  '/' + ${recursoGasto.codEstatusProyecto}}">
+                    	<img th:if="*{comprobante} != null" class="img-thumbnail rounded" style="max-height: 200px;" th:src="@{'/imagenGasto/' + ${recursoGasto.codRecursoGasto} + '/' + ${recursoGasto.tipoGasto.codTipoGasto} + '/' + ${recursoGasto.codProyecto} + '/' + ${recursoGasto.codRecurso} +  '/' + ${recursoGasto.codCliente} +  '/' + ${recursoGasto.codEstatusProyecto}}">
                     </div>
                   </div>
                 </div>
@@ -234,7 +285,10 @@
   <script th:src="@{/js/demo/chart-area-demo.js}"></script>
   <script th:src="@{/js/demo/chart-pie-demo.js}"></script>
   <script th:src="@{/js/recursoGastoAlta.js}"></script>
+  
+  <script th:src="@{/js/datosRecursoSesion.js}"></script>
 
 </body>
 
 </html>
+

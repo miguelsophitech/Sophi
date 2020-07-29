@@ -34,13 +34,21 @@ public class RecursoServiceImpl implements IRecursoService {
 	}
 
 	@Override
+	@Transactional(readOnly = true)
 	public List<Recurso> findByNombreApellido(String descRecurso, String descApellidoPaterno) {
 		return recursoDao.findByNombreApellido(descRecurso, descApellidoPaterno);
 	}
 
 	@Override
+	@Transactional(readOnly = true)
 	public List<Recurso> listaRecursos() {
 		return (List<Recurso>) recursoDao.findAll();
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public Recurso findByDescCorreoElectronico(String correoElectronico) {
+		return recursoDao.findByDescCorreoElectronico(correoElectronico);
 	}
 
 	

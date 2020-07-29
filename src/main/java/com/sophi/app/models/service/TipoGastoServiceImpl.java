@@ -8,7 +8,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.sophi.app.models.dao.ITipoGastoDao;
 import com.sophi.app.models.entity.TipoGasto;
-
 @Service
 public class TipoGastoServiceImpl implements ITipoGastoService {
 
@@ -22,14 +21,15 @@ public class TipoGastoServiceImpl implements ITipoGastoService {
 	}
 
 	@Override
-	@Transactional(readOnly = true)
-	public TipoGasto findOne(Long codTipoGasto) {
-		return tipoGastoDao.findById(codTipoGasto).orElse(null);
+	@Transactional
+	public void save(TipoGasto tipoGasto) {
+		tipoGastoDao.save(tipoGasto);
 	}
 
 	@Override
-	public void save(TipoGasto tipoGasto) {
-		tipoGastoDao.save(tipoGasto);		
+	@Transactional(readOnly = true)
+	public TipoGasto findOne(Long tipoGasto) {
+		return tipoGastoDao.findById(tipoGasto).orElse(null);
 	}
 
 }

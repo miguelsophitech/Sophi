@@ -42,8 +42,9 @@ public class AprobacionHorasController {
     
     public Long CodRecurso;
 
-    @RequestMapping(value = "/aprobacionhoras/{codRecurso}", method = RequestMethod.GET)
-    public String AprobacionHoras(Model model, @PathVariable(value = "codRecurso") long codRecurso){
+    @RequestMapping(value = "/aprobacionhoras/{email}", method = RequestMethod.GET)
+    public String AprobacionHoras(Model model, @PathVariable(value = "email") String email){
+    	Long codRecurso = recursoService.findByDescCorreoElectronico(email).getCodRecurso();
     	List<AprobacionHoras> aprobacioneshoras = new ArrayList<>();
         List<Recurso> listaRecursos = new ArrayList<Recurso>();
         List<Proyecto> listaProyecto = proyectoService.findAll();
@@ -64,7 +65,6 @@ public class AprobacionHorasController {
         AprobacionHorasDto aphdto = new AprobacionHorasDto();
         aphdto.setAprobacionhoras(aprobacioneshoras);
         model.addAttribute("titulo", "Listado de horas capturadas");
-        //model.addAttribute("aprobacionhoras", aprobacionHorasService.findAll());
         model.addAttribute("aprobacionhoraslista", aphdto);
         model.addAttribute("recursos", listaRecursos);
         model.addAttribute("proyectos", listaProyectoTodo);
@@ -73,6 +73,7 @@ public class AprobacionHorasController {
         return "aprobacionhoras";
     }
     
+
     @RequestMapping(value="/guardar", method = RequestMethod.POST)
 	public String validarHoras(@ModelAttribute("aprobacionhoraslista") AprobacionHorasDto aprobacionhoraslista, BindingResult result, Model model,RedirectAttributes flash,SessionStatus status) {
 
@@ -84,10 +85,11 @@ public class AprobacionHorasController {
 	        model.addAttribute("r", CodRecurso);
 			return "aprobacionhoras";
 		}
+
 		aprobacionHorasService.saveAll(aprobacionhoraslista.getAprobacionhoras());
 		status.setComplete();
 		flash.addFlashAttribute("success", "Horas Validadas");
-		return "redirect:/aprobacionhoras/"+CodRecurso;
+		return "redirect:/aprobacionhoras/"+recursoService.findOne(CodRecurso).getDescCorreoElectronico();
 	}
 
 	@RequestMapping(value = "/cargaHoras", method = RequestMethod.GET)

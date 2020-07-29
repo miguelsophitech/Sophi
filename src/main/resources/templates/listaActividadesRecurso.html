@@ -7,7 +7,7 @@
   <!-- Page Wrapper -->
   <div id="wrapper">
 
-    <!-- Sidebar -->
+ <!-- Sidebar -->
     <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
       <!-- Sidebar - Brand -->
@@ -16,7 +16,7 @@
           <!--<i class="fas fa-laugh-wink"></i>  rotate-n-15-->
           <img th:src="@{/img/logo-img.png}" alt="">
         </div> 
-        <div class="sidebar-brand-text mx-3"><img th:src="@{/img/logo-texto.png}"alt=""></div>
+        <div class="sidebar-brand-text mx-3"><img th:src="@{/img/logo-texto.png}" alt=""></div>
       </a>
 
       <!-- Divider -->
@@ -38,7 +38,7 @@
       </div>
 
       <!-- Nav Item - Gastos y tiempo Collapse Menu -->
-      <li class="nav-item ">
+      <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseClientes" aria-expanded="true" aria-controls="collapseClientes">
           <i class="fas fa-fw fa-address-book"></i>
           <span>Gesti&oacute;n de clientes</span>
@@ -63,7 +63,7 @@
       
       
 	  <!-- Nav Item - Actividades Collapse Menu -->
-      <li class="nav-item">
+      <li class="nav-item active">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseProyectos" aria-expanded="true" aria-controls="collapseProyectos">
           <i class="fas fa-fw fa-wrench"></i>
           <span>Gesti&oacute;n de proyectos</span>
@@ -71,8 +71,8 @@
         <div id="collapseProyectos" class="collapse" aria-labelledby="menuProyectos" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
             <h6 class="collapse-header">Ver:</h6>
-            <a class="collapse-item"  th:href="@{/listaProyectosTodo}">Mis proyectos</a>
-            <a class="collapse-item" th:href="@{/misActividades/} + ${#authentication.getName()}">Mis actividades</a>
+            <a class="collapse-item" href="#">Mis proyectos</a>
+            <a class="collapse-item active" href="#">Mis actividades</a>
           </div>
         </div>
       </li>
@@ -86,10 +86,10 @@
         <div id="collapseGastosTiempo" class="collapse" aria-labelledby="menuGastosTiempo" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
             <h6 class="collapse-header">Ver:</h6>
-            <a class="collapse-item" th:href="@{/capHoras/} + ${#authentication.getName()}">Mi captura de horas</a>
-            <a class="collapse-item" th:href="@{/aprobacionhoras/}+${#authentication.getName()}">Aprobaci&oacute;n de horas</a>
-            <a class="collapse-item" th:href="@{/misGastos/} + ${#authentication.getName()}">Mi captura de gastos</a>
-            <a class="collapse-item" th:href="@{/aprobaciongastos/}+ ${#authentication.getName()}">Aprobaci&oacute;n de gastos</a>
+            <a class="collapse-item" href="#">Mi captura de horas</a>
+            <a class="collapse-item" th:href="@{/aprobacionhoras}">Aprobaci&oacute;n de horas</a>
+            <a class="collapse-item" href="#">Mi captura de gastos</a>
+            <a class="collapse-item" th:href="@{/aprobaciongastos}">Aprobaci&oacute;n de gastos</a>
           </div>
         </div>
       </li>
@@ -105,7 +105,7 @@
       </div>
 
       <!-- Nav Item - Gastos y tiempo Collapse Menu -->
-      <li class="nav-item active">
+      <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseRecursos" aria-expanded="true" aria-controls="collapseRecursos">
           <i class="fas fa-fw fa-id-card"></i>
           <span>Gesti&oacute;n de recursos</span>
@@ -113,7 +113,7 @@
         <div id="collapseRecursos" class="collapse" aria-labelledby="menuRecursos" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
             <h6 class="collapse-header">Ver:</h6>
-            <a class="collapse-item active" th:href="@{/listarRecursos}">Mis recursos</a>
+            <a class="collapse-item" th:href="@{/listarRecursos}">Mis recursos</a>
           </div>
         </div>
       </li>
@@ -135,69 +135,43 @@
       <!-- Main Content -->
       <div id="content">
 
-<!-- 		<div id="encabezado"> -->
-		<!-- 		encabezado con datos de recurso en sesion -->
-<!-- 		</div> -->
-		<header th:replace="layout/layout :: header"></header>
+        <header th:replace="layout/layout :: header"></header>
 
         <!-- Begin Page Content -->
         <div class="container-fluid">
 
           <!-- Page Heading -->
-          
           <div class="d-sm-flex align-items-center justify-content-between mb-4">
-            <h1 class="h3 mb-2 text-gray-800">Mis recursos</h1>
-            <a type="button" class="btn btn-primary" th:href="@{/formRecurso/}" >
-              <i class="fas fa-plus fa-sm text-white-50"></i> Registrar nuevo recurso 
-            </a>
+            <h1 class="h3 mb-2 text-gray-800">Mis actividades</h1>
           </div>
-           <p class="mb-4">Encuentra aqu&iacute; el listado de todos tus recursos registrados en <b>Sophitech</b>, podr&aacute;s registrar un nuevo recurso y gestionar los datos existentes.</p>
-	      
-<!--           <a th:href="@{'/'}" th:text="'&laquo; volver'"></a> -->
+          
+          <p class="mb-4">Encuentra aqu&iacute; el listado de todas tus actividades registradas en proyectos <b>Sophitech</b></p>
+
           <!-- DataTales Example -->
           <div class="card shadow mb-4">
-<!--             <div class="card-header py-3"> -->
-<!--               <h6 class="m-0 font-weight-bold text-primary">Recursos</h6> -->
-<!--             </div> -->
             <div class="card-body">
               <div class="table-responsive">
-                <table class="table" id="dataTable" width="100%" cellspacing="0">
-                  <thead>
-                    <tr>
-                      <th></th>
-                      <th>Nombre</th>
-                      <th>Ap Paterno</th>
-                      <th>Ap Materno</th>
-                      <th>Correo Electr&oacute;nico</th>
-                      <th>Tel&eacute;fono</th>
-                      <th>Opciones</th>
-                    </tr>
-                  </thead>
-<!--                   <tfoot> -->
-<!--                     <tr> -->
-<!--                       <th></th> -->
-<!--                       <th>Nombre</th> -->
-<!--                       <th>Ap Paterno</th> -->
-<!--                       <th>Ap Materno</th> -->
-<!--                       <th>Correo Electr&oacute;nico</th> -->
-<!--                       <th>Tel&eacute;fono</th> -->
-<!--                       <th>Opciones</th> -->
-<!--                     </tr> -->
-<!--                   </tfoot> -->
-                  <tbody>
-					<tr th:each="recurso: ${recursos}">
-						<td class="text-center"><img th:if="${recurso.foto} != null" th:src="@{'/fotoRecursoPerfil/' + ${recurso.codRecurso}}" alt="${recurso.descRecurso}" style="max-height: 20px;"></td>
-						<td th:text="${recurso.descRecurso}"></td>
-						<td th:text="${recurso.descApellidoPaterno}"></td>
-						<td th:text="${recurso.descApellidoMaterno}"></td>
-						<td th:text="${recurso.descCorreoElectronico}"></td>
-						<td th:text="${recurso.descTelCelular}"></td>
- 						<td> 
-							<a th:href="@{/verRecurso/} + ${recurso.codRecurso}" class="badge badge-info">Ver  <i class="far fa-address-card"></i></a>
-							<a th:href="@{/formRecurso/} + ${recurso.codRecurso}" class="badge badge-success">Editar  <i class="far fa-edit"></i></a>	 
-						</td>
-					</tr>
-                  </tbody>
+                <table class="table" id="dataTable" width="100%" cellspacing="0" style="font-size: 12px;">
+	                 <thead>
+	                   <tr>
+	                   	  <th>Proyecto</th>
+	                      <th>Fase</th>
+                          <th>Actividad</th>
+                          <th>Inicio</th>
+                          <th>Fin</th>
+                          <th>Duraci&oacute;n</th>
+	                   </tr>
+	                 </thead>
+	                 <tbody>
+	                 	<tr th:each="act: ${listaActividades}">
+	                 		<td th:text="${act.nombreProyecto}"></td>
+                            <td th:text="${act.descActividadPrimaria}"></td>
+                            <td th:text="${act.descActividadSecundaria}"></td>
+                            <td th:text="${act.fecInicioActividad}"></td>
+                            <td th:text="${act.fecFinActividad}"></td>
+                            <td th:text="${act.valDuracionActividad}"></td>
+						</tr>
+	                 </tbody>
                 </table>
               </div>
             </div>
@@ -227,7 +201,7 @@
 	  <!-- ModalLogout -->
       <footer th:replace="layout/layout :: modalLogout"></footer>
       <!-- End ModalLogout -->
-
+      
   <!-- Bootstrap core JavaScript-->
   <script th:src="@{/vendor/jquery/jquery.min.js}"></script>
   <script th:src="@{/vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>

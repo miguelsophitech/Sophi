@@ -65,12 +65,11 @@ public class AgendaController {
 
 		String contenido = "";
 		contenido = contenido + "<div class=\"table-responsive\">"+
-		"<table class=\"table table-bordered\" id=\"dataTable\" width=\"100%\" cellspacing=\"0\">"+
+		"<table class=\"table table-hover\" id=\"dataTable\" width=\"100%\" cellspacing=\"0\">"+
 		"<thead>"+
 		"<tr>"+
 		"<th>Nombre</th>"+
         "<th>Puesto</th>"+
-        "<th>Recursos a cargo</th>"+
         "<th>E-mail</th>"+
         "<th>Tel&eacute;fono Celular</th>"+
 		"<th>Tel&eacute;fono Empresa</th>"+
@@ -78,32 +77,20 @@ public class AgendaController {
 		"<th>Acciones</th>"+
         "</tr>"+
 		"</thead>"+
-		"<tfoot>"+
-		"<tr>"+
-		"<th>Nombre</th>"+
-        "<th>Puesto</th>"+
-        "<th>Recursos a cargo</th>"+
-        "<th>E-mail</th>"+
-        "<th>Tel&eacute;fono Celular</th>"+
-		"<th>Tel&eacute;fono Empresa</th>"+
-		"<th>Extensi&oacute;n</th>"+
-		"<th>Acciones</th>"+
-        "</tr>"+
-        "</tfoot>"+
 		"<tbody>";
 		
 		for(Agenda agenda:agendaList) {
 			String tablaContactos = "";
 			tablaContactos = "<tr><td>"+agenda.getDescContacto()+"</td>";
 			tablaContactos += "<td>"+agenda.getDescPuesto()+"</td>";
-			tablaContactos += "<td>"+agenda.getValRecursosACargo()+"</td>";
 			tablaContactos += "<td>"+agenda.getDescCorreoElectronico()+"</td>";
 			tablaContactos += "<td>"+agenda.getDescTelCelular()+"</td>";
 			tablaContactos += "<td>"+agenda.getDescTelEmpresa()+"</td>";
 			tablaContactos += "<td>"+agenda.getDescTelExt()+"</td>";
-			tablaContactos += "<td><a href=\"/dataContacto/"+agenda.getCodContacto()+"\" class=\"btn btn-primary btn-circle btn-sm\"><i class=\"far fa-eye\"></i></a>";
-			tablaContactos += "<a href=\"/formContacto/"+agenda.getCodContacto()+"\" class=\"btn btn-primary btn-circle btn-sm\"><i class=\"far fa-edit\"></i></a>";
-			tablaContactos += "<a onclick=\"eliminar("+agenda.getCodContacto()+");\" class=\"btn btn-primary btn-circle btn-sm\"><i class=\"far fa-window-close\"></i></a></td></tr>";
+			tablaContactos += "<td><div class=\"btn-group btn-group-sm\" role=\"group\">";
+			tablaContactos += "<a type=\"button\" class=\"btn btn-info\" href=\"/dataContacto/"+agenda.getCodContacto()+"\" data-toggle=\"tooltip\" title=\"Ver\"><i class=\"far fa-address-book\"></i></a>";
+			tablaContactos += "<a type=\"button\" class=\"btn btn-info\" href=\"/formContacto/"+agenda.getCodContacto()+"\" data-toggle=\"tooltip\" title=\"Editar\"><i class=\"far fa-edit\"></i></a>";
+			tablaContactos += "<button type=\"button\" class=\"btn btn-danger\" onclick=\"eliminar("+agenda.getCodContacto()+");\" data-toggle=\"tooltip\" title=\"Borrar\"><i class=\"far fa-trash-alt\"></i></button></div></td></tr>";
 			contenido += tablaContactos;
 		}
 		
@@ -126,14 +113,11 @@ public class AgendaController {
 			flash.addFlashAttribute("error", "El codigo del contacto no debe ser cero!");
 			return "redirect:/agenda";
 		}
-		List<Cargo> cargoList = new ArrayList<Cargo>();
-		List<Cliente> clienteList = new ArrayList<Cliente>();
-		cargoList = cargoService.findAll();
-		clienteList = clienteService.findAll();
-		model.put("cargoList",cargoList);
-		model.put("clienteList",clienteList);
+		agenda.setNombreCliente(clienteService.findOne(agenda.getCodCliente()).getDescCliente());
+		agenda.setNombreCargo(cargoService.findOne(agenda.getCodCargo()).getDescCargo());
 		model.put("agenda", agenda);
-		model.put("titulo", "Formulario contacto");
+		model.put("textoTitulo","Información de tu contacto");
+		model.put("textoDescriptivo","Encuentra aquí la información completa de tu contacto.");
 		return "dataContacto";
 	}
 	
@@ -147,14 +131,14 @@ public class AgendaController {
 		clienteList = clienteService.findAll();
 		model.put("cargoList",cargoList);
 		model.put("clienteList",clienteList);
-		model.put("titulo", "Formulario contacto");
+		model.put("titulo", "Formulario de contactos");
 		return "formContacto";
 	}
 	
 	@RequestMapping(value="/formContacto", method = RequestMethod.POST)
 	public String guardarContacto(@Valid Agenda agenda, BindingResult result, Model model,RedirectAttributes flash,SessionStatus status) {
 		if(result.hasErrors()) {
-			model.addAttribute("titulo", "Formulario contacto");
+			model.addAttribute("titulo", "Formulario de contactos");
 			List<Cargo> cargoList = new ArrayList<Cargo>();
 			List<Cliente> clienteList = new ArrayList<Cliente>();
 			cargoList = cargoService.findAll();

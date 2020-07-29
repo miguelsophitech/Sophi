@@ -298,7 +298,7 @@ public class PreventaProyectoController {
         "<th>Fecha de inicio</th>"+
         "<th>Preventa o proyecto</th>"+
         "<th>Presupuesto</th>"+
-        "<th>Detalle</th>"+
+        "<th>Acciones</th>"+
         "</tr>"+
         "</thead>"+
         "<tbody>";
@@ -319,7 +319,7 @@ public class PreventaProyectoController {
 			        "<td>"+fechaI+"</td>"+
 			        "<td>"+estatusP+"</td>"+
 			        "<td>"+p.getImpPresupuesto()+"</td>"+
-			        "<td><a href=\"/preventaProyectoConsulta/"+p.getProyectoId().getCodProyecto()+"/"+p.getProyectoId().getCodEstatusProyecto()+"/"+p.getProyectoId().getCodCliente()+"\">Detalle</a></td>"+
+			        "<td><a href=\"/preventaProyectoConsulta/"+p.getProyectoId().getCodProyecto()+"/"+p.getProyectoId().getCodEstatusProyecto()+"/"+p.getProyectoId().getCodCliente()+"\">Ver detalle</a></td>"+
 					"</tr>";
 		}
 		
@@ -394,23 +394,16 @@ public class PreventaProyectoController {
 		List<Proyecto> listaProyecto = proyectoService.findAll();
 		List<Proyecto> listaProyectoTodo = proyectoService.findAll();
 		Proyecto proyectoAux;
-		Long a=0L;
-		Long b=0L;
+
 		for(Proyecto p : listaProyecto) {
 			if(p.getProyectoId().getCodEstatusProyecto()==2) {
-				a++;
 				proyectoAux=proyectoService.findByProyectoIdCodProyectoAndProyectoIdCodEstatusProyectoAndProyectoIdCodCliente(p.getProyectoId().getCodProyecto(), 1L, p.getProyectoId().getCodCliente());
 				if(proyectoAux!=null) {
-					System.out.println("Estos proyecto "+proyectoAux.getProyectoId().getCodEstatusProyecto());
-					b++;
 					listaProyectoTodo.remove(proyectoAux);
 				}
 			}
 		}
-		System.out.println("Totalde proyecots "+a);
-		System.out.println("PRoyectos con preventa "+b);
 		model.addAttribute("proyectos", listaProyectoTodo);
-		//proyectoService.
 		return "preventaProyectoListaTodo";
 	}
 	
@@ -420,15 +413,30 @@ public class PreventaProyectoController {
 		model.addAttribute("clientes", clienteService.findAll());
 		String contenido="";
 		List<Proyecto> listaProyecto;
+		List<Proyecto> listaProyectoTodo;
 		
 		if(codCliente==-1) {
 			listaProyecto=proyectoService.findAll();
+			listaProyectoTodo=proyectoService.findAll();
+			
 		}else{
 			listaProyecto=proyectoService.findByProyectoIdCodCliente(codCliente);
+			listaProyectoTodo=proyectoService.findByProyectoIdCodCliente(codCliente);
+		}
+		
+		Proyecto proyectoAux;
+
+		for(Proyecto p : listaProyecto) {
+			if(p.getProyectoId().getCodEstatusProyecto()==2) {
+				proyectoAux=proyectoService.findByProyectoIdCodProyectoAndProyectoIdCodEstatusProyectoAndProyectoIdCodCliente(p.getProyectoId().getCodProyecto(), 1L, p.getProyectoId().getCodCliente());
+				if(proyectoAux!=null) {
+					listaProyectoTodo.remove(proyectoAux);
+				}
+			}
 		}
 		
 		contenido=contenido+"<div class=\"table-responsive\">"+
-        "<table class=\"table table-bordered\" id=\"dataTable\" width=\"100%\" cellspacing=\"0\">"+
+        "<table class=\"table\" id=\"dataTable\" width=\"100%\" cellspacing=\"0\">"+
         "<thead>"+
         "<tr>"+
         "<th>Código de proyecto</th>"+
@@ -436,13 +444,13 @@ public class PreventaProyectoController {
         "<th>Fecha de inicio</th>"+
         "<th>Preventa o proyecto</th>"+
         "<th>Presupuesto</th>"+
-        "<th>Detalle</th>"+
+        "<th>Acciones</th>"+
         "</tr>"+
         "</thead>"+
         "<tbody>";
 		String estatusP="";
         
-		for(Proyecto p : listaProyecto) {
+		for(Proyecto p : listaProyectoTodo) {
 			if(p.getProyectoId().getCodEstatusProyecto()==1) {
 				estatusP="Preventa";
 			}else {
@@ -454,7 +462,7 @@ public class PreventaProyectoController {
 			        "<td>"+p.getFecIncioProyecto()+"</td>"+
 			        "<td>"+estatusP+"</td>"+
 			        "<td>"+p.getImpPresupuesto()+"</td>"+
-			        "<td><a href=\"/preventaProyectoConsulta/"+p.getProyectoId().getCodProyecto()+"/"+p.getProyectoId().getCodEstatusProyecto()+"/"+p.getProyectoId().getCodCliente()+"\">Detalle</a></td>"+
+			        "<td><a href=\"/preventaProyectoConsulta/"+p.getProyectoId().getCodProyecto()+"/"+p.getProyectoId().getCodEstatusProyecto()+"/"+p.getProyectoId().getCodCliente()+"\">Ver detalle</a></td>"+
 					"</tr>";
 		}
 		
@@ -616,7 +624,19 @@ public class PreventaProyectoController {
 		
 		//redirijo dependiendo
 		if(proyecto.getProyectoId().getCodEstatusProyecto()==1) {
-			model.addAttribute("proyectos", proyectoService.findAll());
+			List<Proyecto> listaProyecto = proyectoService.findAll();
+			List<Proyecto> listaProyectoTodo = proyectoService.findAll();
+			Proyecto proyectoAux;
+
+			for(Proyecto p : listaProyecto) {
+				if(p.getProyectoId().getCodEstatusProyecto()==2) {
+					proyectoAux=proyectoService.findByProyectoIdCodProyectoAndProyectoIdCodEstatusProyectoAndProyectoIdCodCliente(p.getProyectoId().getCodProyecto(), 1L, p.getProyectoId().getCodCliente());
+					if(proyectoAux!=null) {
+						listaProyectoTodo.remove(proyectoAux);
+					}
+				}
+			}
+			model.addAttribute("proyectos", listaProyectoTodo);
 			return "preventaProyectoListaTodo";
 		}else {
 			model.addAttribute("contactos", agendaService.findContactosBycodCliente(proyecto.getProyectoId().getCodCliente()));

@@ -9,6 +9,7 @@ import com.sophi.app.models.entity.Recurso;
 
 public interface IRecursoDao extends CrudRepository<Recurso, Long>{
 
+	Recurso findByDescCorreoElectronico(String correoElectronico);
 
 	@Query("FROM Recurso R WHERE LOWER(R.descRecurso) LIKE LOWER(concat(?1, '%')) AND LOWER(R.descApellidoPaterno) LIKE LOWER(concat(?2, '%'))")
 	List<Recurso> findByNombreApellido(String descRecurso, String descApellidoPaterno);

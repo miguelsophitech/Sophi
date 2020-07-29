@@ -24,5 +24,6 @@ public interface IActividadService {
 	
 	public List<Actividad> findListaActividadesByRecursoProyectoPrimaria(Long codRecurso, Long codProyecto, String descPrimaria);
 	
+	public List<Actividad> findByCodRecurso(Long codRecurso);
 	
 }

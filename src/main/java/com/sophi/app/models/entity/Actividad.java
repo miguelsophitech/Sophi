@@ -12,6 +12,7 @@ import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -74,7 +75,8 @@ public class Actividad   implements Serializable {
 	@Column(name = "cod_cliente")
 	private Long codCliente;
 	
-
+	@Transient
+	private String nombreProyecto;
 	
 	@PrePersist
 	public void prePersist() {
@@ -201,8 +203,12 @@ public class Actividad   implements Serializable {
 		this.codCliente = codCliente;
 	}
 
-	public static long getSerialversionuid() {
-		return serialVersionUID;
+	public String getNombreProyecto() {
+		return nombreProyecto;
+	}
+
+	public void setNombreProyecto(String nombreProyecto) {
+		this.nombreProyecto = nombreProyecto;
 	}
 
 	public Actividad() {

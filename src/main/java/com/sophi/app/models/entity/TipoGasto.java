@@ -5,27 +5,36 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.NotEmpty;
+
+import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 @Table(name = "CAT_TIPO_GASTOS")
 public class TipoGasto implements Serializable {
-	
-	private static final long serialVersionUID = 1L;
-	
-	@Id
-	@Column(name = "cod_tipo_gasto")
-	private Long codTipoGasto;
-	
-	@Column(name = "desc_tipo_gasto")
-	private String descTipoGasto;
-	
-	@Column(name = "fec_registro")
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date fecRegistro;
+
+    private static final long serialVersionUID = 1L;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "cod_tipo_gasto")
+    private Long codTipoGasto;
+
+    @NotEmpty
+    @Column(name = "desc_tipo_gasto")
+    private String descTipoGasto;
+
+    @NotEmpty
+    @Column(name = "fec_registro")
+    @Temporal(TemporalType.TIMESTAMP)
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Date fecRegistro;
 
 	public Long getCodTipoGasto() {
 		return codTipoGasto;
@@ -54,5 +63,5 @@ public class TipoGasto implements Serializable {
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
-
+    
 }

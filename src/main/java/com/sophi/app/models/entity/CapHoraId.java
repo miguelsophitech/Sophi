@@ -49,7 +49,7 @@ public class CapHoraId implements Serializable {
 		if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         CapHoraId CapHoraId = (CapHoraId) o;
-        return codCliente.equals(CapHoraId.codCliente) &&
+        return codActividad.equals(CapHoraId.codActividad) &&
         		codRecurso.equals(CapHoraId.codRecurso) &&
         		codProyecto.equals(CapHoraId.codProyecto) &&
         		codCliente.equals(CapHoraId.codCliente) &&
