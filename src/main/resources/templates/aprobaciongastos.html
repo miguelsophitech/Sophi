@@ -4,131 +4,131 @@
 <head th:replace="layout/layout::head"></head>
 
 <body id="page-top">
-
+<input id="authGetName" type="hidden" th:value="${#authentication.getName()}"></input>
     <!-- Page Wrapper -->
     <div id="wrapper">
 
-        <!-- Sidebar -->
-        <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+    <!-- Sidebar -->
+    <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
-            <!-- Sidebar - Brand -->
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" th:href="@{/}">
-                <div class="sidebar-brand-icon">
-                    <!--<i class="fas fa-laugh-wink"></i>  rotate-n-15-->
-                    <img th:src="@{/img/logo-img.png}" alt="">
-                </div>
-                <div class="sidebar-brand-text mx-3"><img th:src="@{/img/logo-texto.png}" alt=""></div>
-            </a>
+      <!-- Sidebar - Brand -->
+      <a class="sidebar-brand d-flex align-items-center justify-content-center" th:href="@{/}">
+        <div class="sidebar-brand-icon">
+          <!--<i class="fas fa-laugh-wink"></i>  rotate-n-15-->
+          <img th:src="@{/img/logo-img.png}" alt="">
+        </div> 
+        <div class="sidebar-brand-text mx-3"><img th:src="@{/img/logo-texto.png}"alt=""></div>
+      </a>
 
-            <!-- Divider -->
-            <hr class="sidebar-divider my-0">
+      <!-- Divider -->
+      <hr class="sidebar-divider my-0">
 
-            <!-- Nav Item - Dashboard -->
-            <li class="nav-item">
-                <a class="nav-link" th:href="@{/}">
-                    <i class="fas fa-fw fa-tachometer-alt"></i>
-                    <span>Agenda</span></a>
-            </li>
-
-            <!-- Divider -->
-            <hr class="sidebar-divider">
-
-            <!-- Heading -->
-            <div class="sidebar-heading">
-                Contactos
-            </div>
-
-            <!-- Nav Item - Pages Collapse Menu -->
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
-                    aria-expanded="true" aria-controls="collapseTwo">
-                    <i class="fas fa-fw fa-cog"></i>
-                    <span>Alta</span>
-                </a>
-                <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Custom Components:</h6>
-                        <a class="collapse-item" href="buttons.html">Buttons</a>
-                        <a class="collapse-item" href="cards.html">Cards</a>
-                    </div>
-                </div>
-            </li>
-
-            <!-- Nav Item - Utilities Collapse Menu -->
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
-                    aria-expanded="true" aria-controls="collapseUtilities">
-                    <i class="fas fa-fw fa-wrench"></i>
-                    <span>Edicion</span>
-                </a>
-                <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
-                    data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Custom Utilities:</h6>
-                        <a class="collapse-item" href="#"></a>
-                        <a class="collapse-item" href="#">Colors</a>
-                    </div>
-                </div>
-            </li>
-
-            <!-- Divider -->
-            <hr class="sidebar-divider">
-
-            <!-- Nav Item - Pages Collapse Menu 
+      <!-- Nav Item - Dashboard -->
       <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="true" aria-controls="collapsePages">
-          <i class="fas fa-fw fa-folder"></i>
-          <span>Pages</span>
+        <a class="nav-link" th:href="@{/}">
+          <i class="fas fa-fw fa-tachometer-alt"></i>
+          <span>Mi dashboard</span></a>
+      </li>
+      
+      <!-- Divider -->
+      <hr class="sidebar-divider">
+
+      <!-- Heading Proyecto -->
+      <div class="sidebar-heading">
+        Clientes
+      </div>
+
+      <!-- Nav Item - Gastos y tiempo Collapse Menu -->
+      <li class="nav-item ">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseClientes" aria-expanded="true" aria-controls="collapseClientes">
+          <i class="fas fa-fw fa-address-book"></i>
+          <span>Gesti&oacute;n de clientes</span>
         </a>
-        <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+        <div id="collapseClientes" class="collapse" aria-labelledby="menuClientes" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
-            <h6 class="collapse-header">Pantallas login:</h6>
-            <a class="collapse-item" href="login.html">Login</a>
-            <a class="collapse-item" href="register.html">Registrar</a>
-            <a class="collapse-item" href="forgot-password.html">Olvidaste tu contraseña</a>
-            <div class="collapse-divider"></div>
-            <h6 class="collapse-header">Otras páginas:</h6>
-            <a class="collapse-item" href="404.html">404 Page</a>
-            <a class="collapse-item" href="blank.html">Blank Page</a>
+            <h6 class="collapse-header">Ver:</h6>
+            <a class="collapse-item" th:href="@{/listaClientes}">Mis clientes</a>
+            <a class="collapse-item" th:href="@{/agenda}">Mis contactos</a>
           </div>
         </div>
-      </li>-->
+      </li>
+      
 
-            <!-- Nav Item - Menu Collapse Menu -->
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseMenu"
-                    aria-expanded="true" aria-controls="collapsePages">
-                    <i class="fas fa-fw fa-folder"></i>
-                    <span>Men&uacute;</span>
-                </a>
-                <div id="collapseMenu" class="collapse" aria-labelledby="headingMenu" data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Men&uacute;:</h6>
-                        <a class="collapse-item" href="#">Proyectos</a>
-                        <a class="collapse-item" href="#">Clientes</a>
-                        <a class="collapse-item" href="#">Recursos</a>
-                        <a class="collapse-item" href="#">Captura</a>
-                    </div>
-                </div>
-            </li>
+      <!-- Divider -->
+      <hr class="sidebar-divider">
 
-            <!-- Nav Item - Lista Recursos -->
-            <li class="nav-item active">
-                <a class="nav-link" href="#">
-                    <i class="fas fa-fw fa-table"></i>
-                    <span>Lista de gastos</span></a>
-            </li>
+      <!-- Heading Proyecto -->
+      <div class="sidebar-heading">
+        Proyectos
+      </div>
+      
+      
+	  <!-- Nav Item - Actividades Collapse Menu -->
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseProyectos" aria-expanded="true" aria-controls="collapseProyectos">
+          <i class="fas fa-fw fa-wrench"></i>
+          <span>Gesti&oacute;n de proyectos</span>
+        </a>
+        <div id="collapseProyectos" class="collapse" aria-labelledby="menuProyectos" data-parent="#accordionSidebar">
+          <div class="bg-white py-2 collapse-inner rounded">
+            <h6 class="collapse-header">Ver:</h6>
+            <a class="collapse-item"  th:href="@{/listaProyectosTodo}">Mis proyectos</a>
+            <a class="collapse-item" th:href="@{/misActividades/} + ${#authentication.getName()}">Mis actividades</a>
+          </div>
+        </div>
+      </li>
 
-            <!-- Divider -->
-            <hr class="sidebar-divider d-none d-md-block">
+      <!-- Nav Item - Gastos y tiempo Collapse Menu -->
+      <li class="nav-item active">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseGastosTiempo" aria-expanded="true" aria-controls="collapseGastosTiempo">
+          <i class="fas fa-fw fa-calendar-alt"></i>
+          <span>Gastos y tiempo</span>
+        </a>
+        <div id="collapseGastosTiempo" class="collapse" aria-labelledby="menuGastosTiempo" data-parent="#accordionSidebar">
+          <div class="bg-white py-2 collapse-inner rounded">
+            <h6 class="collapse-header">Ver:</h6>
+            <a class="collapse-item" th:href="@{/capHoras/} + ${#authentication.getName()}">Mi captura de horas</a>
+            <a class="collapse-item" th:href="@{/aprobacionhoras/}+${#authentication.getName()}">Aprobaci&oacute;n de horas</a>
+            <a class="collapse-item" th:href="@{/misGastos/} + ${#authentication.getName()}">Mi captura de gastos</a>
+            <a class="collapse-item active" th:href="@{/aprobaciongastos/}+ ${#authentication.getName()}">Aprobaci&oacute;n de gastos</a>
+          </div>
+        </div>
+      </li>
 
-            <!-- Sidebar Toggler (Sidebar) -->
-            <div class="text-center d-none d-md-inline">
-                <button class="rounded-circle border-0" id="sidebarToggle"></button>
-            </div>
+ 
+      
+       <!-- Divider -->
+      <hr class="sidebar-divider">
 
-        </ul>
-        <!-- End of Sidebar -->
+      <!-- Heading Proyecto -->
+      <div class="sidebar-heading">
+        Recursos
+      </div>
+
+      <!-- Nav Item - Gastos y tiempo Collapse Menu -->
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseRecursos" aria-expanded="true" aria-controls="collapseRecursos">
+          <i class="fas fa-fw fa-id-card"></i>
+          <span>Gesti&oacute;n de recursos</span>
+        </a>
+        <div id="collapseRecursos" class="collapse" aria-labelledby="menuRecursos" data-parent="#accordionSidebar">
+          <div class="bg-white py-2 collapse-inner rounded">
+            <h6 class="collapse-header">Ver:</h6>
+            <a class="collapse-item" th:href="@{/listarRecursos}">Mis recursos</a>
+          </div>
+        </div>
+      </li>
+
+      <!-- Divider -->
+      <hr class="sidebar-divider d-none d-md-block">
+
+      <!-- Sidebar Toggler (Sidebar) -->
+      <div class="text-center d-none d-md-inline">
+        <button class="rounded-circle border-0" id="sidebarToggle"></button>
+      </div>
+
+    </ul>
+    <!-- End of Sidebar -->
 
         <!-- Content Wrapper -->
         <div id="content-wrapper" class="d-flex flex-column">
@@ -265,6 +265,8 @@
     
     <script th:src="@{/js/validaciongastos.js}"></script>
     <script th:src="@{/js/mostrarGastosRecurso.js}"></script>
+    
+    <script th:src="@{/js/datosRecursoSesion.js}"></script>  
 
 </body>
 

@@ -20,7 +20,7 @@
           <!--<i class="fas fa-laugh-wink"></i>  rotate-n-15-->
           <img th:src="@{/img/logo-img.png}" alt="">
         </div> 
-        <div class="sidebar-brand-text mx-3"><img th:src="@{/img/logo-texto.png}" alt=""></div>
+        <div class="sidebar-brand-text mx-3"><img th:src="@{/img/logo-texto.png}"alt=""></div>
       </a>
 
       <!-- Divider -->
@@ -42,7 +42,7 @@
       </div>
 
       <!-- Nav Item - Gastos y tiempo Collapse Menu -->
-      <li class="nav-item">
+      <li class="nav-item ">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseClientes" aria-expanded="true" aria-controls="collapseClientes">
           <i class="fas fa-fw fa-address-book"></i>
           <span>Gesti&oacute;n de clientes</span>
@@ -75,8 +75,8 @@
         <div id="collapseProyectos" class="collapse" aria-labelledby="menuProyectos" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
             <h6 class="collapse-header">Ver:</h6>
-            <a class="collapse-item" href="#">Mis proyectos</a>
-            <a class="collapse-item" href="#">Mis actividades</a>
+            <a class="collapse-item"  th:href="@{/listaProyectosTodo}">Mis proyectos</a>
+            <a class="collapse-item" th:href="@{/misActividades/} + ${#authentication.getName()}">Mis actividades</a>
           </div>
         </div>
       </li>
@@ -90,10 +90,10 @@
         <div id="collapseGastosTiempo" class="collapse" aria-labelledby="menuGastosTiempo" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
             <h6 class="collapse-header">Ver:</h6>
-            <a class="collapse-item active" href="#">Mi captura de horas</a>
-            <a class="collapse-item" th:href="@{/aprobacionhoras}">Aprobaci&oacute;n de horas</a>
-            <a class="collapse-item" href="#">Mi captura de gastos</a>
-            <a class="collapse-item" th:href="@{/aprobaciongastos}">Aprobaci&oacute;n de gastos</a>
+            <a class="collapse-item active" th:href="@{/capHoras/} + ${#authentication.getName()}">Mi captura de horas</a>
+            <a class="collapse-item" th:href="@{/aprobacionhoras/}+${#authentication.getName()}">Aprobaci&oacute;n de horas</a>
+            <a class="collapse-item" th:href="@{/misGastos/} + ${#authentication.getName()}">Mi captura de gastos</a>
+            <a class="collapse-item" th:href="@{/aprobaciongastos/}+ ${#authentication.getName()}">Aprobaci&oacute;n de gastos</a>
           </div>
         </div>
       </li>

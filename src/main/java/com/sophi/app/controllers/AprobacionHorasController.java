@@ -42,8 +42,9 @@ public class AprobacionHorasController {
     
     public Long CodRecurso;
 
-    @RequestMapping(value = "/aprobacionhoras/{codRecurso}", method = RequestMethod.GET)
-    public String AprobacionHoras(Model model, @PathVariable(value = "codRecurso") long codRecurso){
+    @RequestMapping(value = "/aprobacionhoras/{email}", method = RequestMethod.GET)
+    public String AprobacionHoras(Model model, @PathVariable(value = "email") String email){
+    	Long codRecurso = recursoService.findByDescCorreoElectronico(email).getCodRecurso();
     	List<AprobacionHoras> aprobacioneshoras = new ArrayList<>();
         List<Recurso> listaRecursos = new ArrayList<Recurso>();
         List<Proyecto> listaProyecto = proyectoService.findAll();
@@ -88,7 +89,7 @@ public class AprobacionHorasController {
 		aprobacionHorasService.saveAll(aprobacionhoraslista.getAprobacionhoras());
 		status.setComplete();
 		flash.addFlashAttribute("success", "Horas Validadas");
-		return "redirect:/aprobacionhoras/"+CodRecurso;
+		return "redirect:/aprobacionhoras/"+recursoService.findOne(CodRecurso).getDescCorreoElectronico();
 	}
 
 	@RequestMapping(value = "/cargaHoras", method = RequestMethod.GET)

@@ -39,9 +39,11 @@ public class AprobacionGastosController {
     private IProyectoService proyectoService;
     
     public Long CodRecurso;
+    
 
-    @RequestMapping(value = "/aprobaciongastos/{codRecurso}", method = RequestMethod.GET)
-    public String AprobacionGastos(Model model, @PathVariable(value = "codRecurso") long codRecurso) {
+    @RequestMapping(value = "/aprobaciongastos/{email}", method = RequestMethod.GET)
+    public String AprobacionGastos(Model model, @PathVariable(value = "email") String email) {
+    	 Long codRecurso = recursoService.findByDescCorreoElectronico(email).getCodRecurso();
     	List<AprobacionGastos> aprobacionesgastos = new ArrayList<>();
         List<Recurso> listaRecursos = new ArrayList<Recurso>();
         
@@ -85,7 +87,7 @@ public class AprobacionGastosController {
 		aprobaciongastosService.saveAll(aprobaciongastoslista.getAprobaciongastos());
 		status.setComplete();
 		flash.addFlashAttribute("success", "Gastos Validados");
-		return "redirect:/aprobaciongastos/"+CodRecurso;
+		return "redirect:/aprobaciongastos/"+recursoService.findOne(CodRecurso).getDescCorreoElectronico();
     }
     
     @RequestMapping(value = "/cargaGastos", method = RequestMethod.GET)
