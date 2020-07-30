@@ -162,6 +162,7 @@
 										<label for="file">Selecciona tu plan en archivo .CSV</label> <input type="file"
 											name="archivoCsvPlan" class="form-control-file" id="archivoCsvPlan" accept=".csv">
 									</div>
+									<input name="codProyecto" type="hidden" th:value="${codProyecto}"></input>
 									<button type="submit" class="btn btn-primary">Aceptar y continuar</button>
 									<a class="btn btn-secondary" th:href="@{/listarRecursos}">Cancelar</a>
 								</form>

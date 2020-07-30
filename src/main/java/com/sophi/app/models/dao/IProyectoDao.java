@@ -9,14 +9,14 @@ import com.sophi.app.models.entity.Proyecto;
 
 public interface IProyectoDao extends CrudRepository<Proyecto, Long> {
 
-	Proyecto findByDescProyectoAndProyectoIdCodClienteAndProyectoIdCodEstatusProyectoAndFecRegistro(String descProyecto, Long codCliente, Long codEstatusProyecto, Date fecRegistro);
+	Proyecto findByDescProyectoAndCodClienteAndCodEstatusProyectoAndFecRegistro(String descProyecto, Long codCliente, Long codEstatusProyecto, Date fecRegistro);
 	
-	List<Proyecto> findByProyectoIdCodCliente(Long codCliente);
+	List<Proyecto> findByCodCliente(Long codCliente);
 	
-	Proyecto findByProyectoIdCodProyecto(Long codProyecto);
+	Proyecto findByCodProyecto(Long codProyecto);
 	
-	Proyecto findByProyectoIdCodProyectoAndProyectoIdCodEstatusProyecto(Long codProyecto, Long codEstatusProyecto);
+	Proyecto findByCodProyectoAndCodEstatusProyecto(Long codProyecto, Long codEstatusProyecto);
 	
-	Proyecto findByProyectoIdCodProyectoAndProyectoIdCodEstatusProyectoAndProyectoIdCodCliente(Long codProyecto, Long codEstatusProyecto, Long codCliente);
+	Proyecto findByCodProyectoAndCodEstatusProyectoAndCodCliente(Long codProyecto, Long codEstatusProyecto, Long codCliente);
 
 }

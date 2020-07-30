@@ -67,8 +67,8 @@ public class RecursoGastoController {
 		
     			
     	for(ProyectoRecurso proRec:listaProRec) {
-    		proyectoService.findByProyectoIdCodProyectoAndProyectoIdCodEstatusProyectoAndProyectoIdCodCliente(proRec.getProyectoRecursoId().getCodProyecto(), proRec.getProyectoRecursoId().getCodEstatusProyecto(), proRec.getProyectoRecursoId().getCodCliente());
-    		listaProyecto.add(proyectoService.findByProyectoIdCodProyectoAndProyectoIdCodEstatusProyectoAndProyectoIdCodCliente(proRec.getProyectoRecursoId().getCodProyecto(), proRec.getProyectoRecursoId().getCodEstatusProyecto(), proRec.getProyectoRecursoId().getCodCliente()));
+    		proyectoService.findByCodProyectoAndCodEstatusProyectoAndCodCliente(proRec.getProyectoRecursoId().getCodProyecto(), proRec.getProyectoRecursoId().getCodEstatusProyecto(), proRec.getProyectoRecursoId().getCodCliente());
+    		listaProyecto.add(proyectoService.findByCodProyectoAndCodEstatusProyectoAndCodCliente(proRec.getProyectoRecursoId().getCodProyecto(), proRec.getProyectoRecursoId().getCodEstatusProyecto(), proRec.getProyectoRecursoId().getCodCliente()));
     	}
     	
     	System.out.println("CodRecurso "+codRecurso);
@@ -84,7 +84,7 @@ public class RecursoGastoController {
     //Guarda gasto
     @RequestMapping(value="/recursoGastoAlta", method = RequestMethod.POST)
 	public String recursoGastoAlta(Map<String, Object> modelM,@Valid RecursoGasto recursoGasto, @RequestParam("compImg") MultipartFile compImg, BindingResult result, Model model,RedirectAttributes flash,SessionStatus status) {
-		Proyecto p = proyectoService.findByProyectoIdCodProyectoAndProyectoIdCodEstatusProyecto(recursoGasto.getCodProyecto(), 2L);
+		Proyecto p = proyectoService.findByCodProyectoAndCodEstatusProyecto(recursoGasto.getCodProyecto(), 2L);
 		Date fechaHoy = new Date();
 		List<ProyectoRecurso> listaProRec = proyectoRecursoService.findByProyectoRecursoIdCodRecurso(recursoGasto.getCodRecurso());
     	List<Proyecto> listaProyecto = new ArrayList<Proyecto>();
@@ -92,9 +92,9 @@ public class RecursoGastoController {
     	recursoGasto.setTipoGasto(tp);
 		
 		
-		recursoGasto.setCodCliente(p.getProyectoId().getCodCliente());
-		recursoGasto.setCodEstatusProyecto(p.getProyectoId().getCodEstatusProyecto());
-		recursoGasto.setCodProyecto(p.getProyectoId().getCodProyecto());
+		recursoGasto.setCodCliente(p.getCodCliente());
+		recursoGasto.setCodEstatusProyecto(p.getCodEstatusProyecto());
+		recursoGasto.setCodProyecto(p.getCodProyecto());
 		
 		recursoGasto.setFecRegistro(fechaHoy);
 		
@@ -119,8 +119,8 @@ public class RecursoGastoController {
     	recursoGastoService.save(recursoGasto);
     	
     	for(ProyectoRecurso proRec:listaProRec) {
-    		proyectoService.findByProyectoIdCodProyectoAndProyectoIdCodEstatusProyectoAndProyectoIdCodCliente(proRec.getProyectoRecursoId().getCodProyecto(), proRec.getProyectoRecursoId().getCodEstatusProyecto(), proRec.getProyectoRecursoId().getCodCliente());
-    		listaProyecto.add(proyectoService.findByProyectoIdCodProyectoAndProyectoIdCodEstatusProyectoAndProyectoIdCodCliente(proRec.getProyectoRecursoId().getCodProyecto(), proRec.getProyectoRecursoId().getCodEstatusProyecto(), proRec.getProyectoRecursoId().getCodCliente()));
+    		proyectoService.findByCodProyectoAndCodEstatusProyectoAndCodCliente(proRec.getProyectoRecursoId().getCodProyecto(), proRec.getProyectoRecursoId().getCodEstatusProyecto(), proRec.getProyectoRecursoId().getCodCliente());
+    		listaProyecto.add(proyectoService.findByCodProyectoAndCodEstatusProyectoAndCodCliente(proRec.getProyectoRecursoId().getCodProyecto(), proRec.getProyectoRecursoId().getCodEstatusProyecto(), proRec.getProyectoRecursoId().getCodCliente()));
     	}
     	
     	model.addAttribute("tiposGastos", tipoGastoService.findAll());
@@ -160,8 +160,8 @@ public class RecursoGastoController {
 		
     			
     	for(ProyectoRecurso proRec:listaProRec) {
-    		proyectoService.findByProyectoIdCodProyectoAndProyectoIdCodEstatusProyectoAndProyectoIdCodCliente(proRec.getProyectoRecursoId().getCodProyecto(), proRec.getProyectoRecursoId().getCodEstatusProyecto(), proRec.getProyectoRecursoId().getCodCliente());
-    		listaProyecto.add(proyectoService.findByProyectoIdCodProyectoAndProyectoIdCodEstatusProyectoAndProyectoIdCodCliente(proRec.getProyectoRecursoId().getCodProyecto(), proRec.getProyectoRecursoId().getCodEstatusProyecto(), proRec.getProyectoRecursoId().getCodCliente()));
+    		proyectoService.findByCodProyectoAndCodEstatusProyectoAndCodCliente(proRec.getProyectoRecursoId().getCodProyecto(), proRec.getProyectoRecursoId().getCodEstatusProyecto(), proRec.getProyectoRecursoId().getCodCliente());
+    		listaProyecto.add(proyectoService.findByCodProyectoAndCodEstatusProyectoAndCodCliente(proRec.getProyectoRecursoId().getCodProyecto(), proRec.getProyectoRecursoId().getCodEstatusProyecto(), proRec.getProyectoRecursoId().getCodCliente()));
     	}
     	
     	System.out.println("CodRecurso "+codRecurso);
@@ -189,8 +189,8 @@ public class RecursoGastoController {
 		
     			
     	for(ProyectoRecurso proRec:listaProRec) {
-    		proyectoService.findByProyectoIdCodProyectoAndProyectoIdCodEstatusProyectoAndProyectoIdCodCliente(proRec.getProyectoRecursoId().getCodProyecto(), proRec.getProyectoRecursoId().getCodEstatusProyecto(), proRec.getProyectoRecursoId().getCodCliente());
-    		listaProyecto.add(proyectoService.findByProyectoIdCodProyectoAndProyectoIdCodEstatusProyectoAndProyectoIdCodCliente(proRec.getProyectoRecursoId().getCodProyecto(), proRec.getProyectoRecursoId().getCodEstatusProyecto(), proRec.getProyectoRecursoId().getCodCliente()));
+    		proyectoService.findByCodProyectoAndCodEstatusProyectoAndCodCliente(proRec.getProyectoRecursoId().getCodProyecto(), proRec.getProyectoRecursoId().getCodEstatusProyecto(), proRec.getProyectoRecursoId().getCodCliente());
+    		listaProyecto.add(proyectoService.findByCodProyectoAndCodEstatusProyectoAndCodCliente(proRec.getProyectoRecursoId().getCodProyecto(), proRec.getProyectoRecursoId().getCodEstatusProyecto(), proRec.getProyectoRecursoId().getCodCliente()));
     	}
     	
     	System.out.println("CodRecurso "+codRecurso);

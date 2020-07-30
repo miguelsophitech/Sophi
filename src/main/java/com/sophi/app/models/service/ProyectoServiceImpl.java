@@ -36,32 +36,32 @@ public class ProyectoServiceImpl implements IProyectoService {
 	
 	@Override
 	@Transactional(readOnly = true)
-	public Proyecto findByDescProyectoAndProyectoIdCodClienteAndProyectoIdCodEstatusProyectoAndFecRegistro(String descProyecto, Long codCliente, Long codEstatusProyecto, Date fecRegistro) {
-		return (Proyecto) proyectoDao.findByDescProyectoAndProyectoIdCodClienteAndProyectoIdCodEstatusProyectoAndFecRegistro(descProyecto, codCliente, codEstatusProyecto, fecRegistro);
+	public Proyecto findByDescProyectoAndCodClienteAndCodEstatusProyectoAndFecRegistro(String descProyecto, Long codCliente, Long codEstatusProyecto, Date fecRegistro) {
+		return (Proyecto) proyectoDao.findByDescProyectoAndCodClienteAndCodEstatusProyectoAndFecRegistro(descProyecto, codCliente, codEstatusProyecto, fecRegistro);
 	}
 	
 	@Override
 	@Transactional(readOnly = true)
-	public List<Proyecto> findByProyectoIdCodCliente(Long codCliente) {
-		return (List<Proyecto>) proyectoDao.findByProyectoIdCodCliente(codCliente);
+	public List<Proyecto> findByCodCliente(Long codCliente) {
+		return (List<Proyecto>) proyectoDao.findByCodCliente(codCliente);
 	}
 	
 	@Override
 	@Transactional(readOnly = true)
-	public Proyecto findByProyectoIdCodProyecto(Long codProyecto) {
-		return proyectoDao.findByProyectoIdCodProyecto(codProyecto);
+	public Proyecto findByCodProyecto(Long codProyecto) {
+		return proyectoDao.findByCodProyecto(codProyecto);
 	}
 	
 	@Override
 	@Transactional(readOnly = true)
-	public Proyecto findByProyectoIdCodProyectoAndProyectoIdCodEstatusProyecto(Long codProyecto, Long codEstatusProyecto) {
-		return proyectoDao.findByProyectoIdCodProyectoAndProyectoIdCodEstatusProyecto(codProyecto, codEstatusProyecto);
+	public Proyecto findByCodProyectoAndCodEstatusProyecto(Long codProyecto, Long codEstatusProyecto) {
+		return proyectoDao.findByCodProyectoAndCodEstatusProyecto(codProyecto, codEstatusProyecto);
 	}
 	
 	@Override
 	@Transactional(readOnly = true)
-	public Proyecto findByProyectoIdCodProyectoAndProyectoIdCodEstatusProyectoAndProyectoIdCodCliente(Long codProyecto, Long codEstatusProyecto, Long codCliente) {
-		return proyectoDao.findByProyectoIdCodProyectoAndProyectoIdCodEstatusProyectoAndProyectoIdCodCliente(codProyecto, codEstatusProyecto, codCliente);
+	public Proyecto findByCodProyectoAndCodEstatusProyectoAndCodCliente(Long codProyecto, Long codEstatusProyecto, Long codCliente) {
+		return proyectoDao.findByCodProyectoAndCodEstatusProyectoAndCodCliente(codProyecto, codEstatusProyecto, codCliente);
 	}
 
 }
