@@ -14,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
@@ -23,9 +24,12 @@ import com.opencsv.bean.CsvToBeanBuilder;
 import com.sophi.app.models.entity.Actividad;
 import com.sophi.app.models.entity.ActividadDto;
 import com.sophi.app.models.entity.ActividadPlan;
+import com.sophi.app.models.entity.Proyecto;
 import com.sophi.app.models.entity.Recurso;
 import com.sophi.app.models.service.IActividadService;
+import com.sophi.app.models.service.IProyectoService;
 import com.sophi.app.models.service.IRecursoService;
+import com.sophi.app.models.service.ProyectoServiceImpl;
 
 @Controller
 public class PlaneacionController {
@@ -36,8 +40,12 @@ public class PlaneacionController {
 	@Autowired
 	private IRecursoService recursoService;
 	
-	@GetMapping("/planeacionProyecto")
-	public String planeacionProyecto() {
+	@Autowired
+	private IProyectoService proyectoService;
+	
+	@GetMapping("/planeacionProyecto/{codProyecto}")
+	public String planeacionProyecto(@PathVariable Long codProyecto, Model model) {
+		model.addAttribute("codProyecto", codProyecto);
 		return "formActividadesPlan";
 	}
 	
@@ -52,13 +60,15 @@ public class PlaneacionController {
 	}
 	
 	@PostMapping("/subirPlan")
-	public String subirPlanCSV(@RequestParam("archivoCsvPlan") MultipartFile archivoCsvPlan, Model model) {
+	public String subirPlanCSV(@RequestParam("archivoCsvPlan") MultipartFile archivoCsvPlan,@RequestParam("codProyecto") Long codProyecto, Model model) {
 		if (archivoCsvPlan.isEmpty()) {
-            model.addAttribute("message", "Please select a CSV file to upload.");
+            model.addAttribute("message", "Selecciona un archivo .CSV para subir");
             model.addAttribute("status", false);
         } else {
         	
             try (Reader reader = new BufferedReader(new InputStreamReader(archivoCsvPlan.getInputStream()))) {
+            	
+            	Proyecto proy =  proyectoService.findByProyectoIdCodProyectoAndProyectoIdCodEstatusProyecto(codProyecto, 2L);
 
 				CsvToBean<ActividadPlan> csvToBean = new CsvToBeanBuilder<ActividadPlan>(reader)
 						.withType(ActividadPlan.class)
@@ -116,9 +126,9 @@ public class PlaneacionController {
 	    	                	actividad.setDescActividadPrimaria(actividadPrimaria);
 	    	                	actividad.setDescActividadSecundaria(actividadSecundaria);
 	    	                	actividad.setValNumActividad((long) i);
-	    	                	actividad.setCodCliente(2L);
-	    	                	actividad.setCodEstatusProyecto(1L);
-	    	                	actividad.setCodProyecto(85L);
+	    	                	actividad.setCodCliente(proy.getProyectoId().getCodCliente());
+	    	                	actividad.setCodEstatusProyecto(proy.getProyectoId().getCodEstatusProyecto());
+	    	                	actividad.setCodProyecto(proy.getProyectoId().getCodProyecto());
 	    	                	actividad.setValDuracionActividad(Float.parseFloat(actividadesPlanStg.get(i).getEsfuerzo().replaceAll("hora","").replaceAll("s",""))/listaRecursos.length);
 	    	                	actividad.setValNuevaActividad(0L);
 	    	                	actividad.setFecInicioActividad(format.parse(actividadesPlanStg.get(i).getInicio().substring(0, 10)));

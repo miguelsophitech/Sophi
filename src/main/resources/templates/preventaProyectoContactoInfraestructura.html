@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
@@ -365,7 +366,7 @@
                  <p class="tituloC">Información complementaria.</p>
                 <div class="form-group row">
                   <div class="col-sm-4 mb-3 mb-sm-0">
-                      <a class="btn btn-primary" th:href="@{/planeacionProyecto}" role="button">Cargar planificación</a>
+                      <a class="btn btn-primary" th:href="@{/planeacionProyecto/} + ${proyecto.proyectoId.codProyecto}" role="button">Cargar planificación</a>
                   </div>
                   <div class="col-sm-4">
                     
