@@ -1,25 +1,38 @@
 function fecregact(){
-	var fec_registro = document.getElementById("fecreg").value;
-	var fec_actualizacion = document.getElementById("fecact").value;
+	var date = new Date();
+
+	var day = date.getDate();
+	var month = date.getMonth() + 1;
+	var year = date.getFullYear();
 	
-	console.log(fec_registro);
-	console.log(fec_actualizacion);
+	var fecha = new Object();
 	
-	if(fec_registro == null && fec_actualizacion == null){
-		document.getElementById("fecreg").style.display = "block";
-		document.getElementById("fecact").style.display = "none";
-		document.getElementById("Nombre_ant").value = "";
+	if(month < 10){
+		fecha = year.toString().concat("-0", month.toString(), "-", day.toString());
+		console.log(fecha);
+		console.log(`${year}-0${month}-${day}`);
+	}else{
+		fecha = year.toString().concat("-", month.toString(), "-", day.toString());
+		console.log(fecha);
+		console.log(`${year}-${month}-${day}`);
 	}
 	
-	if(fec_registro != null && fec_actualizacion == null){
-		document.getElementById("fecreg").style.display = "none";
-		document.getElementById("fecact").style.display = "block";
+	console.log(document.getElementById("fecreg").value);
+	console.log(document.getElementById("fecact").value);
+	
+	if(document.getElementById("fecreg").value == null && document.getElementById("fecact").value == null){
+		document.getElementById("fecreg").value = fecha;
+		document.getElementById("fecact").value = null;
+		document.getElementById("Nombre_ant").disabled = true;
+	}
+	
+	if(document.getElementById("fecreg").value != null && document.getElementById("fecact").value == null){
+		document.getElementById("fecact").value = fecha;
 		document.getElementById("Nombre_ant").value = document.getElementById("Nombre").value;
 	}
 	
-	if(fec_registro != null && fec_actualizacion != null){
-		document.getElementById("fecreg").style.display = "none";
-		document.getElementById("fecact").style.display = "block";
+	if(document.getElementById("fecreg").value != null && document.getElementById("fecact").value != null){
+		document.getElementById("fecact").value = fecha;
 		document.getElementById("Nombre_ant").value = document.getElementById("Nombre").value;
 	}
 }

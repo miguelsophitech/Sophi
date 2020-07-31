@@ -155,7 +155,7 @@
                                 </div>
                                 <select name="Proyecto" class="custom-select" id="filterProyecto">
                                     <option selected value="-1">Todos</option>
-                                    <option th:each="proyecto:${proyectos}" th:value="${proyecto.proyectoId.codProyecto}" th:text="${proyecto.descProyecto}"></option>
+                                    <option th:each="proyecto:${proyectos}" th:value="${proyecto.codProyecto}" th:text="${proyecto.descProyecto}"></option>
                                 </select>
                             </div>
                         </div>
@@ -178,7 +178,6 @@
                                             <th>Horas Planeadas</th>
                                             <th>Horas Capturadas</th>
                                             <th>Horas Validadas</th>
-                                            <th></th>
                                         </tr>
                                     </thead>
                                     <tfoot>
@@ -190,7 +189,6 @@
                                             <th>Horas Planeadas</th>
                                             <th>Horas Capturadas</th>
                                             <th>Horas Validadas</th>
-                                            <th></th>
                                         </tr>
                                     </tfoot>
                                     <tbody>
@@ -201,8 +199,9 @@
 											<td><span th:text="${aprobacionhorasunico.descComentarioDetalle}"></span></td>
 											<td><span th:text="${aprobacionhorasunico.actividad.valDuracionActividad}"></span></td>
 											<td><span th:text="${aprobacionhorasunico.valDuracionReportada}"></span></td>
-											<td><input id="validar" type="text" style="height:30px; width:40px;" th:name="|aprobacionhoras[${itemStat.index}].valDuracionValidada|" th:value="${aprobacionhorasunico.getValDuracionValidada()}" disabled/></td>
-											<td><input id="RecVal" type="hidden" th:name="|aprobacionhoras[${itemStat.index}].codRecursoValidador|" th:value="${aprobacionhorasunico.getCodRecursoValidador()}"></td>
+											<td><input id="validar" type="text" style="height:30px; width:40px;" th:name="|aprobacionhoras[${itemStat.index}].valDuracionValidada|" th:value="${aprobacionhorasunico.getValDuracionValidada()}" disabled/>
+											<input id="RecVal" type="hidden" th:name="|aprobacionhoras[${itemStat.index}].codRecursoValidador|" th:value="${aprobacionhorasunico.getCodRecursoValidador()}">
+											<input class="codProyecto" type="hidden" th:value="${aprobacionhorasunico.Id.codProyecto}"/></td>
 										</tr>
 										</tbody>
                                 </table>
@@ -211,7 +210,7 @@
                     </div>
                     <div class="row">
                         <div class="col-sm-5 mb-3 mb-sm-0">
-                        	<input type="submit" value="Validar" class="btn btn-primary"/>
+                        	<input type="submit" value="Aprobar" class="btn btn-primary"/>
                             <a th:href="@{/}" class="btn btn-secondary" role="button">Regresar</a>
                         </div>
                         <div class="col-sm-5 mb-3 mb-sm-0">
@@ -269,7 +268,7 @@
     <script th:src="@{/js/checkbox.js}"></script>
     <script th:src="@{/js/mostrarHorasRecurso.js}"></script>
     
-      <script th:src="@{/js/datosRecursoSesion.js}"></script>
+    <script th:src="@{/js/datosRecursoSesion.js}"></script>
 
 </body>
 

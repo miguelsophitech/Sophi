@@ -29,7 +29,6 @@ import com.sophi.app.models.entity.Recurso;
 import com.sophi.app.models.service.IActividadService;
 import com.sophi.app.models.service.IProyectoService;
 import com.sophi.app.models.service.IRecursoService;
-import com.sophi.app.models.service.ProyectoServiceImpl;
 
 @Controller
 public class PlaneacionController {
@@ -68,7 +67,7 @@ public class PlaneacionController {
         	
             try (Reader reader = new BufferedReader(new InputStreamReader(archivoCsvPlan.getInputStream()))) {
             	
-            	Proyecto proy =  proyectoService.findByProyectoIdCodProyectoAndProyectoIdCodEstatusProyecto(codProyecto, 2L);
+            	Proyecto proy =  proyectoService.findByCodProyectoAndCodEstatusProyecto(codProyecto, 2L);
 
 				CsvToBean<ActividadPlan> csvToBean = new CsvToBeanBuilder<ActividadPlan>(reader)
 						.withType(ActividadPlan.class)
@@ -126,9 +125,9 @@ public class PlaneacionController {
 	    	                	actividad.setDescActividadPrimaria(actividadPrimaria);
 	    	                	actividad.setDescActividadSecundaria(actividadSecundaria);
 	    	                	actividad.setValNumActividad((long) i);
-	    	                	actividad.setCodCliente(proy.getProyectoId().getCodCliente());
-	    	                	actividad.setCodEstatusProyecto(proy.getProyectoId().getCodEstatusProyecto());
-	    	                	actividad.setCodProyecto(proy.getProyectoId().getCodProyecto());
+	    	                	actividad.setCodCliente(proy.getCodCliente());
+	    	                	actividad.setCodEstatusProyecto(proy.getCodEstatusProyecto());
+	    	                	actividad.setCodProyecto(proy.getCodProyecto());
 	    	                	actividad.setValDuracionActividad(Float.parseFloat(actividadesPlanStg.get(i).getEsfuerzo().replaceAll("hora","").replaceAll("s",""))/listaRecursos.length);
 	    	                	actividad.setValNuevaActividad(0L);
 	    	                	actividad.setFecInicioActividad(format.parse(actividadesPlanStg.get(i).getInicio().substring(0, 10)));
