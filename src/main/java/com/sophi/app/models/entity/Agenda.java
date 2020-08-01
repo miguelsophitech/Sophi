@@ -49,9 +49,9 @@ public class Agenda implements Serializable {
 	private String descCorreoElectronico;
 	
 	@Column(name = "fec_nacimiento")
-	@Temporal(TemporalType.DATE)
-	@DateTimeFormat(pattern = "yyyy-MM-dd")
-	private Date fecNacimiento;
+	//@Temporal(TemporalType.DATE)
+	//@DateTimeFormat(pattern = "yyyy-MM-dd")
+	private String fecNacimiento;
 	
 	@NotEmpty(message = "Este dato no debe estar vacío")
 	@Pattern(regexp = "(\\d{10})$", message="Ingresa un teléfono válido")
@@ -126,11 +126,11 @@ public class Agenda implements Serializable {
 		this.descCorreoElectronico = descCorreoElectronico;
 	}
 
-	public Date getFecNacimiento() {
+	public String getFecNacimiento() {
 		return fecNacimiento;
 	}
 
-	public void setFecNacimiento(Date fecNacimiento) {
+	public void setFecNacimiento(String fecNacimiento) {
 		this.fecNacimiento = fecNacimiento;
 	}
 

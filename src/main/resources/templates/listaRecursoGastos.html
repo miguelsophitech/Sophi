@@ -164,6 +164,7 @@
 
                   <thead>
                     <tr>
+                      <th>Estatus</th>
                       <th>Comentario</th>
                       <th>Fecha</th>
                       <th>Tipo de gasto</th>
@@ -173,10 +174,12 @@
                   </thead>
                   <tbody>
 					<tr th:each="gasto: ${listaGastos}">
+						<td th:if="${gasto.codRecursoValidador != null}" th:text="'Aprobado'"></td>
+						<td th:unless="${gasto.codRecursoValidador != null}" th:text="'Pendiente'"></td>
 						<td th:text="${gasto.descComentario}"></td>
 						<td th:text="${gasto.fecGasto}"></td>
 						<td th:text="${gasto.tipoGasto.descTipoGasto}"></td>
-						<td th:text="${gasto.impGasto}"></td>
+						<td th:text="'$' + ${gasto.impGasto}"></td>
 						<td>
 
 							<a th:unless="${gasto.codRecursoValidador != null}" th:href="@{/editarRecursoGastos/} + ${gasto.codRecursoGasto} + '/'+ ${gasto.tipoGasto.codTipoGasto} + '/' + ${gasto.codProyecto} + '/'+ ${gasto.codRecurso} + '/' + ${gasto.codCliente} + '/' + ${gasto.codEstatusProyecto}" class="btn btn-primary btn-circle btn-sm"><i class="far fa-edit"></i></a>

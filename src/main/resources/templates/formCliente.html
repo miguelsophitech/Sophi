@@ -162,12 +162,12 @@
                                         <div class="row">
                                             <div class="form-group col-12 col-md-4">
                                                 <label class="col-form-label">Nombre</label>
-                                                <input id="Nombre" type="text" th:field="*{descCliente}" class="form-control" th:errorClass="form-control alert-danger" onkeyup="codigo_cliente();"/>
+                                                <input id="Nombre" type="text" th:field="*{descCliente}" class="form-control" th:errorClass="form-control alert-danger" onkeyup="codigo_cliente();" oninvalid="setCustomValidity('Campo inv&aacute;lido')" onchange="try{setCustomValidity('')}catch(e){}" required/>
                                                 <small class="form-text text-danger" th:if="${#fields.hasErrors('descCliente')}" th:errors="*{descCliente}"></small>
                                         	</div>
 	                                        <div class="form-group col-12 col-md-2">
 	                                            <label class="col-form-label">C&oacute;digo de cliente</label>
-	                                            <input id="codigocliente" type="number" th:field="*{descCodigoCliente}" class="form-control" th:errorClass="form-control alert-danger"/>
+	                                            <input id="codigocliente" type="text" th:field="*{descCodigoCliente}" class="form-control" th:errorClass="form-control alert-danger"/>
 	                                            <small class="form-text text-danger" th:if="${#fields.hasErrors('descCodigoCliente')}" th:errors="*{descCodigoCliente}"></small>
 	                                        </div>
 	                                        <div class="form-group col-12 col-md-4">
@@ -179,7 +179,7 @@
                                         <div class="row">
                                         	<div class="form-group col-12 col-md-4">
 	                                            <label class="col-form-label">Grupo Empresarial</label>
-	                                            <input type="text" th:field="*{descGrupoEmpresarial}" class="form-control" th:errorClass="form-control alert-danger"/>
+	                                            <input id="gpo_empresarial" type="text" th:field="*{descGrupoEmpresarial}" class="form-control" th:errorClass="form-control alert-danger"/>
 	                                            <small class="form-text text-danger" th:if="${#fields.hasErrors('descGrupoEmpresarial')}" th:errors="*{descGrupoEmpresarial}"></small>
 	                                        </div>
 	                                        <div class="form-group col-12 col-md-8">
@@ -191,7 +191,7 @@
 	                                    <div class="row">
 	                                        <div class="form-group col-12 col-md-2">
 	                                            <label class="col-form-label">Facturaci&oacute;n anual</label>
-	                                            <input type="text" th:field="*{impFacturacionAnual}" min=0 class="form-control" th:errorClass="form-control alert-danger" placeholder="$"/>
+	                                            <input step="any" type="number" th:field="*{impFacturacionAnual}" min=0.0 class="form-control" th:errorClass="form-control alert-danger" placeholder="$" oninvalid="setCustomValidity('Campo inv&aacute;lido')" onchange="try{setCustomValidity('')}catch(e){}"/>
 	                                            <small class="form-text text-danger" th:if="${#fields.hasErrors('impFacturacionAnual')}" th:errors="*{impFacturacionAnual}"></small>
 	                                        </div>
 	                                        <div class="form-group col-12 col-md-3">
@@ -205,7 +205,7 @@
 	                                        </div>
 	                                        <div class="form-group col-12 col-md-3">
 	                                            <label class="col-form-label">R.F.C.</label>
-	                                            <input type="text" th:field="*{descRFC}" class="form-control" th:errorClass="form-control alert-danger"/>
+	                                            <input type="text" th:field="*{descRFC}" class="form-control" th:errorClass="form-control alert-danger" oninvalid="setCustomValidity('Campo inv&aacute;lido')" onchange="try{setCustomValidity('')}catch(e){}"/>
 	                                            <small class="form-text text-danger" th:if="${#fields.hasErrors('descRFC')}" th:errors="*{descRFC}"></small>
 	                                        </div>
 	                                        <div class="form-group col-12 col-md-4">

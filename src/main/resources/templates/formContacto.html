@@ -189,6 +189,7 @@
                      <div class="form-group col-12 col-md-2">
                       <label class="col-form-label">Recursos a cargo</label>
                       <input type="number" th:field="*{valRecursosACargo}" min=0 class="form-control"/>
+                      <small class="form-text text-danger" th:if="${#fields.hasErrors('valRecursosACargo')}" th:errors="*{valRecursosACargo}"></small>
                     </div>
                    </div>
                    

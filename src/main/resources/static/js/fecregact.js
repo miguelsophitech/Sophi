@@ -23,33 +23,34 @@ function fecregact(){
 	if(document.getElementById("fecreg").value == null && document.getElementById("fecact").value == null){
 		document.getElementById("fecreg").value = fecha;
 		document.getElementById("fecact").value = null;
-		document.getElementById("Nombre_ant").disabled = true;
 	}
 	
 	if(document.getElementById("fecreg").value != null && document.getElementById("fecact").value == null){
 		document.getElementById("fecact").value = fecha;
-		document.getElementById("Nombre_ant").value = document.getElementById("Nombre").value;
 	}
 	
 	if(document.getElementById("fecreg").value != null && document.getElementById("fecact").value != null){
 		document.getElementById("fecact").value = fecha;
-		document.getElementById("Nombre_ant").value = document.getElementById("Nombre").value;
 	}
 }
 
 function codigo_cliente(){
 	var codigo_cliente = document.querySelectorAll("codigocliente");
+	var grupo_empresarial = document.querySelectorAll("gpo_empresarial")
 	var nombre_cliente = document.getElementById("Nombre").value;
+	
 	codigo_cliente.value = new Date().getFullYear();
 	
-	resultado = nombre_cliente.concat(codigo_cliente.value);
+	var resultado_codigo_cliente = nombre_cliente.concat(codigo_cliente.value);
 	
 	if(nombre_cliente != ""){
-		document.getElementById("codigocliente").value = resultado;
+		document.getElementById("codigocliente").value = resultado_codigo_cliente;
+		document.getElementById("gpo_empresarial").value = nombre_cliente;
 	}
 	
 	else{
 		document.getElementById("codigocliente").value = "";
+		document.getElementById("gpo_empresarial").value = "";
 	}
 	
 	console.log(resultado);

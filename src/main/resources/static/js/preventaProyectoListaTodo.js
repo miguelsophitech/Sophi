@@ -2,8 +2,8 @@ $(document).ready(function() {
 
 	//cargaTodos();
 
-	$( "#cliente" ).change(function() {
-		var cliente=$("#cliente").val();
+	$( "#filterCliente" ).change(function() {
+		var cliente=$("#filterCliente").val();
 		//alert("cliente "+cliente);
 		$.ajax({ 
 					url: "/cargaProyectosTodo/"+cliente,

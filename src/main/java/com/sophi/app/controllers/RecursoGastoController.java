@@ -60,6 +60,7 @@ public class RecursoGastoController {
     //Carga de pagina
     @RequestMapping(value = "/recursoGastoAlta/{email}", method = RequestMethod.GET)
 	public String recursosGastosA(Model model,@PathVariable(value = "email") String email) {
+    	model.addAttribute("titulo", "Gastos");
     	Long codRecurso = recursoService.findByDescCorreoElectronico(email).getCodRecurso();
     	List<ProyectoRecurso> listaProRec = proyectoRecursoService.findByProyectoRecursoIdCodRecurso(codRecurso);
     	List<Proyecto> listaProyecto = new ArrayList<Proyecto>();
@@ -84,7 +85,8 @@ public class RecursoGastoController {
     //Guarda gasto
     @RequestMapping(value="/recursoGastoAlta", method = RequestMethod.POST)
 	public String recursoGastoAlta(Map<String, Object> modelM,@Valid RecursoGasto recursoGasto, @RequestParam("compImg") MultipartFile compImg, BindingResult result, Model model,RedirectAttributes flash,SessionStatus status) {
-		Proyecto p = proyectoService.findByCodProyectoAndCodEstatusProyecto(recursoGasto.getCodProyecto(), 2L);
+    	model.addAttribute("titulo", "Gastos");
+    	Proyecto p = proyectoService.findByCodProyecto(recursoGasto.getCodProyecto());
 		Date fechaHoy = new Date();
 		List<ProyectoRecurso> listaProRec = proyectoRecursoService.findByProyectoRecursoIdCodRecurso(recursoGasto.getCodRecurso());
     	List<Proyecto> listaProyecto = new ArrayList<Proyecto>();
@@ -139,6 +141,7 @@ public class RecursoGastoController {
     //lista de gastos recurso
     @RequestMapping(value = "/misGastos/{email}", method = RequestMethod.GET)
 	public String listaRecursoGastos(Model model,@PathVariable(value = "email") String email) {
+    	model.addAttribute("titulo", "Gastos");
     	Long codRecurso = recursoService.findByDescCorreoElectronico(email).getCodRecurso();
     	List<RecursoGasto> listaRG = recursoGastoService.findByCodRecurso(codRecurso);
     	
@@ -152,7 +155,7 @@ public class RecursoGastoController {
     //editar de pagina
     @RequestMapping(value = "/editarRecursoGastos/{codRecursoGasto}/{codTipoGasto}/{codProyecto}/{codRecurso}/{codCliente}/{codEstatusProyecto}", method = RequestMethod.GET)
 	public String edicionRecursoGasto(Model model,@PathVariable(value = "codRecursoGasto") long codRecursoGasto, @PathVariable(value = "codTipoGasto") long codTipoGasto,@PathVariable(value = "codProyecto") long codProyecto,@PathVariable(value = "codRecurso") long codRecurso,@PathVariable(value = "codCliente") long codCliente,@PathVariable(value = "codEstatusProyecto") long codEstatusProyecto) {
-    	
+    	model.addAttribute("titulo", "Gastos");
     	List<ProyectoRecurso> listaProRec = proyectoRecursoService.findByProyectoRecursoIdCodRecurso(codRecurso);
     	List<Proyecto> listaProyecto = new ArrayList<Proyecto>();
     	
@@ -181,7 +184,7 @@ public class RecursoGastoController {
     //Ver de pagina
     @RequestMapping(value = "/verRecursoGastos/{codRecursoGasto}/{codTipoGasto}/{codProyecto}/{codRecurso}/{codCliente}/{codEstatusProyecto}", method = RequestMethod.GET)
 	public String verRecursoGasto(Model model,@PathVariable(value = "codRecursoGasto") long codRecursoGasto, @PathVariable(value = "codTipoGasto") long codTipoGasto,@PathVariable(value = "codProyecto") long codProyecto,@PathVariable(value = "codRecurso") long codRecurso,@PathVariable(value = "codCliente") long codCliente,@PathVariable(value = "codEstatusProyecto") long codEstatusProyecto) {
-    	
+    	model.addAttribute("titulo", "Gastos");
     	List<ProyectoRecurso> listaProRec = proyectoRecursoService.findByProyectoRecursoIdCodRecurso(codRecurso);
     	List<Proyecto> listaProyecto = new ArrayList<Proyecto>();
 
@@ -218,7 +221,7 @@ public class RecursoGastoController {
    public String eliminarRecursoGasto(Model model,@PathVariable(value = "codRecursoGasto") long codRecursoGasto, @PathVariable(value = "codTipoGasto") long codTipoGasto,@PathVariable(value = "codProyecto") long codProyecto,@PathVariable(value = "codRecurso") long codRecurso,@PathVariable(value = "codCliente") long codCliente,@PathVariable(value = "codEstatusProyecto") long codEstatusProyecto) {
 	   RecursoGasto rg = recursoGastoService.findOne(codRecursoGasto);
 	   recursoGastoService.delete(rg);
-    	
+	   model.addAttribute("titulo", "Gastos");
 	   return "redirect:/misGastos/"+recursoService.findOne(rg.getCodRecurso()).getDescCorreoElectronico();
 		
 	}

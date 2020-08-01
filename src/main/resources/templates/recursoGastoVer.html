@@ -174,7 +174,7 @@
                   <div class="col-sm-4 mb-3 mb-sm-0">
                     <label for="nombreProyecto">Proyecto</label>
                     <select class="form-control " th:field="*{codProyecto}" id="proyecto" disabled>
-                        <option th:each="proyectoAsignado : ${proyectosAsignados}" th:value="${proyectoAsignado.proyectoId.codProyecto}" th:text="${proyectoAsignado.descProyecto}" th:selected="false"/>
+                        <option th:each="proyectoAsignado : ${proyectosAsignados}" th:value="${proyectoAsignado.codProyecto}" th:text="${proyectoAsignado.descProyecto}" th:selected="false"/>
                       </select>
                   </div>
                   <div class="col-sm-4">
@@ -192,7 +192,7 @@
 					 <input type="date" th:field="*{fecGasto}" class="form-control" id="fechaGasto" disabled>
                   </div>
                   <div class="col-sm-4">
-                    <label for="presupuesto">Cantidad</label>
+                    <label for="presupuesto">Importe</label>
                     <input type="number" th:field="*{impGasto}" class="form-control" id="Cantidad" placeholder="Cantidad" disabled>
                   </div>
                   <div class="col-sm-4">
