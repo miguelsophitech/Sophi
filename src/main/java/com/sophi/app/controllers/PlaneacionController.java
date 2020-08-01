@@ -29,6 +29,7 @@ import com.sophi.app.models.entity.Recurso;
 import com.sophi.app.models.service.IActividadService;
 import com.sophi.app.models.service.IProyectoService;
 import com.sophi.app.models.service.IRecursoService;
+import com.sophi.app.models.service.ProyectoServiceImpl;
 
 @Controller
 public class PlaneacionController {
