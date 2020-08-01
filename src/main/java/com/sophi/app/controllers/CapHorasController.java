@@ -56,7 +56,7 @@ public class CapHorasController {
 		HashMap<Long, String> proyectoList = new HashMap<Long, String>(); 
 		proyectoListId = actividadService.findListaProyectoByRecurso(codRecurso);
 		for (Long id : proyectoListId) {
-			proyectoList.put(id, proyectoService.findByProyectoIdCodProyectoAndProyectoIdCodEstatusProyecto(id, 2L).getDescProyecto());
+			proyectoList.put(id, proyectoService.findByCodProyectoAndCodEstatusProyecto(id, 2L).getDescProyecto());
 		}
 		proyectoList.put(1L,"Sophitech");
 		model.addAttribute("proyectoList", proyectoList);
@@ -145,7 +145,7 @@ public class CapHorasController {
 			if(capHora.getId().getCodProyecto().equals(1L)) {
 				capHora.setDescProyecto("Sophitech");
 			} else {
-				capHora.setDescProyecto(proyectoService.findByProyectoIdCodProyectoAndProyectoIdCodEstatusProyecto(capHora.getId().getCodProyecto(), 2L).getDescProyecto());
+				capHora.setDescProyecto(proyectoService.findByCodProyectoAndCodEstatusProyecto(capHora.getId().getCodProyecto(), 2L).getDescProyecto());
 			}
 			
 			if(capHora.getId().getCodActividad()<0) {

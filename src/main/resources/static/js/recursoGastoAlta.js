@@ -21,5 +21,30 @@ document.getElementById("file").onchange = function(e) {
   };
 }
 
+verificarFecha();
+
 });
+
+function verificarFecha(){
+
+	var e = new Date();
+	var dia;
+	var mes;
+	e.setMonth(e.getMonth() - 1);
+	
+	if((e.getMonth()+1)<10){
+		mes="0"+(e.getMonth()+1);
+	}else{
+		mes=(e.getMonth()+1);
+	}
+	
+	if(e.getDate()<10){
+		dia="0"+e.getDate();
+	}else{
+		dia=e.getDate();
+	}
+	
+	document.getElementById('fechaGasto').setAttribute("min", e.getFullYear()+"-"+mes+"-"+dia);
+	
+}
 

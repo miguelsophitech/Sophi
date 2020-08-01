@@ -156,7 +156,7 @@
                                 </div>
                                 <select name="Proyecto" class="custom-select" id="filterProyecto">
                                     <option selected value="-1">Todos</option>
-                                    <option th:each="proyecto:${proyectos}" th:value="${proyecto.proyectoId.codProyecto}" th:text="${proyecto.descProyecto}"></option>
+                                    <option th:each="proyecto:${proyectos}" th:value="${proyecto.codProyecto}" th:text="${proyecto.descProyecto}"></option>
                                 </select>
                             </div>
                         </div>
@@ -178,7 +178,6 @@
                                             <th>Colaborador</th>
                                             <th>Descripci&oacute;n</th>
                                             <th>Importe</th>
-                                            <th></th>
                                         </tr>
                                     </thead>
                                     <tfoot>
@@ -189,18 +188,18 @@
                                             <th>Colaborador</th>
                                             <th>Descripci&oacute;n</th>
                                             <th>Importe</th>
-                                            <th></th>
                                         </tr>
                                     </tfoot>
                                     <tbody>
                                         <tr th:each="aprobaciongastosunico, item : ${aprobaciongastoslista.aprobaciongastos}" th:if="${aprobaciongastosunico.getFecValidacion() == null AND aprobaciongastosunico.getCodRecursoValidador() == null}">
-                                        	<td><input id="check" type="checkbox" th:name="|aprobaciongastos[${item.index}].fecValidacion|" th:value="${aprobaciongastosunico.getFecValidacion()}" onclick="validacion();"></td>
+                                        	<td><input id="check" type="checkbox" th:name="|aprobaciongastos[${item.index}].fecValidacion|" th:value="${aprobaciongastosunico.getFecValidacion()}" onclick="validacion();">
+                                        	<input id="RecVal" type="hidden" th:name="|aprobaciongastos[${item.index}].codRecursoValidador|" th:value="${aprobaciongastosunico.getCodRecursoValidador()}">
+                                        	<input class="codProyecto" type="hidden" th:value="${aprobaciongastosunico.codProyecto}"/></td>
                                             <td><span th:text="${aprobaciongastosunico.tipogasto.descTipoGasto}"></span></td>
                                             <td><span th:text="${aprobaciongastosunico.fecRegistro}"></span></td>
                                             <td><span th:text="${aprobaciongastosunico.recurso.descRecurso}"></span></td>
                                             <td><span th:text="${aprobaciongastosunico.descComentario}"></span></td>
                                             <td>$<span th:text="${aprobaciongastosunico.impGasto}"></span></td>
-                                            <td><input id="RecVal" type="hidden" th:name="|aprobaciongastos[${item.index}].codRecursoValidador|" th:value="${aprobaciongastosunico.getCodRecursoValidador()}"></td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -209,7 +208,7 @@
                     </div>
                     <div class="row">
                         <div class="col-sm-5 mb-3 mb-sm-0">
-                            <input type="submit" value="Validar" class="btn btn-primary"/>
+                            <input type="submit" value="Aprobar" class="btn btn-primary"/>
                             <a th:href="@{/}" class="btn btn-secondary" role="button">Regresar</a>
                         </div>
                         <div class="col-sm-5 mb-3 mb-sm-0">

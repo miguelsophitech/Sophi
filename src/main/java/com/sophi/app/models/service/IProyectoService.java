@@ -13,14 +13,14 @@ public interface IProyectoService {
 	
 	public Proyecto findOne(Long codProyecto);
 	
-	public Proyecto findByDescProyectoAndProyectoIdCodClienteAndProyectoIdCodEstatusProyectoAndFecRegistro(String descProyecto, Long codCliente, Long codEstatusProyecto, Date fecRegistro);
+	public Proyecto findByDescProyectoAndCodClienteAndCodEstatusProyectoAndFecRegistro(String descProyecto, Long codCliente, Long codEstatusProyecto, Date fecRegistro);
 	
-	public List<Proyecto> findByProyectoIdCodCliente(Long codCliente);
+	public List<Proyecto> findByCodCliente(Long codCliente);
 	
-	public Proyecto findByProyectoIdCodProyecto(Long codProyecto);
+	public Proyecto findByCodProyecto(Long codProyecto);
 	
-	public Proyecto findByProyectoIdCodProyectoAndProyectoIdCodEstatusProyecto(Long codProyecto, Long codEstatusProyecto);
+	public Proyecto findByCodProyectoAndCodEstatusProyecto(Long codProyecto, Long codEstatusProyecto);
 	
-	public Proyecto findByProyectoIdCodProyectoAndProyectoIdCodEstatusProyectoAndProyectoIdCodCliente(Long codProyecto, Long codEstatusProyecto, Long codCliente);
+	public Proyecto findByCodProyectoAndCodEstatusProyectoAndCodCliente(Long codProyecto, Long codEstatusProyecto, Long codCliente);
 
 }

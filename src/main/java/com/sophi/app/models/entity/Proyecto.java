@@ -4,8 +4,10 @@ import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Column;
-import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -19,8 +21,16 @@ public class Proyecto implements Serializable  {
 
 	private static final long serialVersionUID = 1L;
 
-	@EmbeddedId
-    private ProyectoId proyectoId;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "cod_proyecto")
+	private Long codProyecto;
+	
+	@Column(name = "cod_cliente")
+	private Long codCliente;
+	
+	@Column(name = "cod_estatus_proyecto")
+	private Long codEstatusProyecto;
 	
 	@NotEmpty
 	@Column(name = "desc_proyecto")
@@ -77,13 +87,28 @@ public class Proyecto implements Serializable  {
 	@Column(name = "cod_tipo_facturacion")
 	private Long codTipoFacturacion;
 
-
-	public ProyectoId getProyectoId() {
-		return proyectoId;
+	public Long getCodProyecto() {
+		return codProyecto;
 	}
 
-	public void setProyectoId(ProyectoId proyectoId) {
-		this.proyectoId = proyectoId;
+	public void setCodProyecto(Long codProyecto) {
+		this.codProyecto = codProyecto;
+	}
+
+	public Long getCodCliente() {
+		return codCliente;
+	}
+
+	public void setCodCliente(Long codCliente) {
+		this.codCliente = codCliente;
+	}
+
+	public Long getCodEstatusProyecto() {
+		return codEstatusProyecto;
+	}
+
+	public void setCodEstatusProyecto(Long codEstatusProyecto) {
+		this.codEstatusProyecto = codEstatusProyecto;
 	}
 
 	public String getDescProyecto() {

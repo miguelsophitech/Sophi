@@ -99,6 +99,7 @@ public class PreventaProyectoController {
 	
 	@RequestMapping(value = "/preventaProyecto", method = RequestMethod.GET)
 	public String listarRecursos(Map<String, Object> modelP, Model model) {
+		model.addAttribute("titulo", "Proyecto");
 		Proyecto proyecto = new Proyecto();
 		modelP.put("proyecto", proyecto);
 		model.addAttribute("clientes", clienteService.findAll());
@@ -112,6 +113,7 @@ public class PreventaProyectoController {
 	
 	@RequestMapping(value="/preventaProyectoComplemento", method = RequestMethod.POST)
 	public String guardarRecurso(Map<String, Object> modelM,@Valid Proyecto proyecto, BindingResult result, Model model,RedirectAttributes flash,SessionStatus status) {
+		model.addAttribute("titulo", "Proyecto");
 		model.addAttribute("clientes", clienteService.findAll());
 		model.addAttribute("areasComerciales", areaComercialService.findAll());
 		model.addAttribute("tiposProyecto", tipoProyectoService.findAll());
@@ -128,7 +130,7 @@ public class PreventaProyectoController {
 		DetalleClienteAreaComercialId dcacId = new DetalleClienteAreaComercialId();
 		DetalleClienteAreaComercial dcac = new DetalleClienteAreaComercial();
 		dcacId.setCodAreaComercia(proyecto.getCodAreaComercial());
-		dcacId.setCodCliente(proyecto.getProyectoId().getCodCliente());
+		dcacId.setCodCliente(proyecto.getCodCliente());
 		
 		dcac.setDetalleClienteAreaComercialId(dcacId);
 		dcac.setFecRegistro(fechaHoy);
@@ -136,10 +138,10 @@ public class PreventaProyectoController {
 		detalleClienteAreaComercialService.save(dcac);
 		proyectoService.save(proyecto);
 		
-		System.out.println("Proyeto buscado "+proyecto.getDescProyecto()+" "+proyecto.getProyectoId().getCodCliente()+" "+proyecto.getProyectoId().getCodEstatusProyecto()+" "+ proyecto.getFecRegistro());
+		System.out.println("Proyeto buscado "+proyecto.getDescProyecto()+" "+proyecto.getCodCliente()+" "+proyecto.getCodEstatusProyecto()+" "+ proyecto.getFecRegistro());
 		//obtengo el proyecto guardado
-		Proyecto proyectoN = proyectoService.findByDescProyectoAndProyectoIdCodClienteAndProyectoIdCodEstatusProyectoAndFecRegistro(proyecto.getDescProyecto(), proyecto.getProyectoId().getCodCliente(), proyecto.getProyectoId().getCodEstatusProyecto(), proyecto.getFecRegistro());
-		model.addAttribute("contactos", agendaService.findContactosBycodCliente(proyecto.getProyectoId().getCodCliente()));
+		Proyecto proyectoN = proyectoService.findByDescProyectoAndCodClienteAndCodEstatusProyectoAndFecRegistro(proyecto.getDescProyecto(), proyecto.getCodCliente(), proyecto.getCodEstatusProyecto(), proyecto.getFecRegistro());
+		model.addAttribute("contactos", agendaService.findContactosBycodCliente(proyecto.getCodCliente()));
 		model.addAttribute("tecnologias", detalleInfraestructuraService.findAll());
 //		DetalleInfraestructura di= detalleInfraestructuraService.findAll().get(0);
 //		System.out.println("Primero "+);
@@ -183,7 +185,7 @@ public class PreventaProyectoController {
 		dpi.setDescVersion(dci.getDescVersion());
 		dpi.setFecRegistro(fechaHoy);
 		detalleProyectoInfraestructuraService.save(dpi);
-		Proyecto proyecto = proyectoService.findByProyectoIdCodProyectoAndProyectoIdCodEstatusProyectoAndProyectoIdCodCliente(codProyecto, codEstatusProyecto, codCliente);
+		Proyecto proyecto = proyectoService.findByCodProyectoAndCodEstatusProyectoAndCodCliente(codProyecto, codEstatusProyecto, codCliente);
 		modelM.put("proyecto", proyecto);
 		
 		return "preventaProyectoContactoInfraestructura";
@@ -197,67 +199,66 @@ public class PreventaProyectoController {
 		detalleProyectoInfraestructuraService.borrarByCodProyecto(codProyecto);
 		
 		System.out.println("codProyecto "+codProyecto);
-		Proyecto proyecto = proyectoService.findByProyectoIdCodProyectoAndProyectoIdCodEstatusProyectoAndProyectoIdCodCliente(codProyecto, codEstatusProyecto, codCliente);
+		Proyecto proyecto = proyectoService.findByCodProyectoAndCodEstatusProyectoAndCodCliente(codProyecto, codEstatusProyecto, codCliente);
 		modelM.put("proyecto", proyecto);
 		return "preventaProyectoContactoInfraestructura";
     }
 	
 	@RequestMapping(value = "/guardarComplemento/{codProyecto}/{codContacto}/{codClasificacionProyecto}/{codEstatusProyecto}/{codCliente}")
 	@ResponseBody
-	public String guardarComplemento(Map<String, Object> modelM, Model model, @PathVariable(value = "codProyecto") long codProyecto, @PathVariable(value = "codContacto") long cod_contacto, @PathVariable(value = "codClasificacionProyecto") long codClasificacionProyecto, @PathVariable(value = "codEstatusProyecto") long codEstatusProyecto, @PathVariable(value = "codCliente") long codCliente) {
+	public String guardarComplemento(Map<String, Object> modelM, Model model, @PathVariable(value = "codProyecto") long codProyecto, @PathVariable(value = "codContacto") long cod_contacto, @PathVariable(value = "codClasificacionProyecto") long codClasificacionProyecto, @PathVariable(value = "codEstatusProyecto") long codEstatusProyecto, @PathVariable(value = "codCliente") long codCliente,RedirectAttributes flash) {
 		DetalleProyectoContactoId dpcid = new DetalleProyectoContactoId();
 		DetalleProyectoContacto dpc = new DetalleProyectoContacto();
 		Date fechaHoy = new Date();
-		Proyecto proyecto = proyectoService.findByProyectoIdCodProyectoAndProyectoIdCodEstatusProyectoAndProyectoIdCodCliente(codProyecto, codEstatusProyecto, codCliente);
+		Proyecto proyecto = proyectoService.findByCodProyectoAndCodEstatusProyectoAndCodCliente(codProyecto, codEstatusProyecto, codCliente);
 		
 		detalleProyectoContactoService.borrarByCodProyecto(codProyecto);
 		//Guarda contacto
-		dpcid.setCodCliente(proyecto.getProyectoId().getCodCliente());
+		dpcid.setCodCliente(proyecto.getCodCliente());
 		dpcid.setCodContacto(cod_contacto);
-		dpcid.setCodEstatusProyecto(proyecto.getProyectoId().getCodEstatusProyecto());
-		dpcid.setCodProyecto(proyecto.getProyectoId().getCodProyecto());
+		dpcid.setCodEstatusProyecto(proyecto.getCodEstatusProyecto());
+		dpcid.setCodProyecto(proyecto.getCodProyecto());
 		
 		dpc.setValResponsableCliente(cod_contacto);
 		dpc.setDetalleProyectoContactoId(dpcid);
 		dpc.setFecRegistro(fechaHoy);
 		
-		detalleProyectoContactoService.save(dpc);
-
-		proyectoService.save(proyecto);
-		modelM.put("proyecto", proyecto);
-		model.addAttribute("clientes", clienteService.findAll());
-		model.addAttribute("contactos", agendaService.findContactosBycodCliente(proyecto.getProyectoId().getCodCliente()));
-		model.addAttribute("areasComerciales", areaComercialService.findAll());
-		model.addAttribute("tiposProyecto", tipoProyectoService.findAll());
-		model.addAttribute("tiposFacturacion", tipoFacturacionService.findAll());
-		model.addAttribute("clasificacionesProyecto", clasificacionproyectoService.findAll());
-		
+		if(cod_contacto==-1) {
+			System.out.println("Sin contacto");
+			//flash.addFlashAttribute("success", "Complemento guardado con éxito sin contacto");
+		}else {
+			System.out.println("Con contacto");
+			//flash.addFlashAttribute("success", "Complemento guardado con éxito con contacto");
+			detalleProyectoContactoService.save(dpc);
+			proyectoService.save(proyecto);
+		}
+		flash.addFlashAttribute("success", "Complemento guardado con exito");
 		System.out.println("Enviar a consulta");		
-		return "redirect:/preventaProyectoConsulta/"+codProyecto+"/"+proyecto.getProyectoId().getCodEstatusProyecto()+"/"+proyecto.getProyectoId().getCodCliente();
+		return "redirect:/preventaProyectoConsulta/"+codProyecto+"/"+proyecto.getCodEstatusProyecto()+"/"+proyecto.getCodCliente();
     }
 	
 	@RequestMapping(value = "/eliminarContacto/{codProyecto}/{codEstatusProyecto}/{codCliente}")
     public String eliminarContacto(Map<String, Object> modelM, Model model, @PathVariable(value = "codProyecto") long codProyecto, @PathVariable(value = "codEstatusProyecto") long codEstatusProyecto, @PathVariable(value = "codCliente") long codCliente) {
+		model.addAttribute("titulo", "Proyecto");
 		detalleProyectoContactoService.borrarByCodProyecto(codProyecto);
-//		System.out.println("Contacto codProyecto "+codProyecto);
-		Proyecto proyecto = proyectoService.findByProyectoIdCodProyectoAndProyectoIdCodEstatusProyectoAndProyectoIdCodCliente(codProyecto, codEstatusProyecto, codCliente);
+		Proyecto proyecto = proyectoService.findByCodProyectoAndCodEstatusProyectoAndCodCliente(codProyecto, codEstatusProyecto, codCliente);
 		modelM.put("proyecto", proyecto);
-//		System.out.println("Elimina contacto  ");
 		return "preventaProyectoConsulta";
     }
 	
 	@RequestMapping(value = "/guardarContactoProyecto/{codProyecto}/{codContacto}/{codEstatusProyecto}/{codCliente}")
     public String guardarContactoProyecto(Map<String, Object> modelM, Model model, @PathVariable(value = "codProyecto") long codProyecto, @PathVariable(value = "codContacto") long cod_contacto, @PathVariable(value = "codEstatusProyecto") long codEstatusProyecto, @PathVariable(value = "codCliente") long codCliente) {
+		model.addAttribute("titulo", "Proyecto");
 		DetalleProyectoContactoId dpcid = new DetalleProyectoContactoId();
 		DetalleProyectoContacto dpc = new DetalleProyectoContacto();
 		Date fechaHoy = new Date();
-		Proyecto proyecto = proyectoService.findByProyectoIdCodProyectoAndProyectoIdCodEstatusProyectoAndProyectoIdCodCliente(codProyecto, codEstatusProyecto, codCliente);
+		Proyecto proyecto = proyectoService.findByCodProyectoAndCodEstatusProyectoAndCodCliente(codProyecto, codEstatusProyecto, codCliente);
 //		System.out.println("Agregar contacto");
 		//Guarda contacto
 		dpcid.setCodCliente(codCliente);
 		dpcid.setCodContacto(cod_contacto);
-		dpcid.setCodEstatusProyecto(proyecto.getProyectoId().getCodEstatusProyecto());
-		dpcid.setCodProyecto(proyecto.getProyectoId().getCodProyecto());
+		dpcid.setCodEstatusProyecto(proyecto.getCodEstatusProyecto());
+		dpcid.setCodProyecto(proyecto.getCodProyecto());
 //		System.out.println("Agregar contacto SET ");
 		dpc.setValResponsableCliente(cod_contacto);
 		dpc.setDetalleProyectoContactoId(dpcid);
@@ -270,6 +271,7 @@ public class PreventaProyectoController {
 	
 	@RequestMapping(value = "/listaProyectos", method = RequestMethod.GET)
 	public String listarRecursos(Model model) {
+		model.addAttribute("titulo", "Proyecto");
 		model.addAttribute("clientes", clienteService.findAll());
 		model.addAttribute("proyectos", proyectoService.findAll());
 		//proyectoService.
@@ -286,7 +288,7 @@ public class PreventaProyectoController {
 		if(codCliente==-1) {
 			listaProyecto=proyectoService.findAll();
 		}else{
-			listaProyecto=proyectoService.findByProyectoIdCodCliente(codCliente);
+			listaProyecto=proyectoService.findByCodCliente(codCliente);
 		}
 		
 		contenido=contenido+"<div class=\"table-responsive\">"+
@@ -306,7 +308,7 @@ public class PreventaProyectoController {
 		String fechaI="";
         
 		for(Proyecto p : listaProyecto) {
-			if(p.getProyectoId().getCodEstatusProyecto()==1) {
+			if(p.getCodEstatusProyecto()==1) {
 				estatusP="Preventa";
 				fechaI="N/A";
 			}else {
@@ -319,7 +321,7 @@ public class PreventaProyectoController {
 			        "<td>"+fechaI+"</td>"+
 			        "<td>"+estatusP+"</td>"+
 			        "<td>"+p.getImpPresupuesto()+"</td>"+
-			        "<td><a href=\"/preventaProyectoConsulta/"+p.getProyectoId().getCodProyecto()+"/"+p.getProyectoId().getCodEstatusProyecto()+"/"+p.getProyectoId().getCodCliente()+"\">Ver detalle</a></td>"+
+			        "<td><a href=\"/preventaProyectoConsulta/"+p.getCodProyecto()+"/"+p.getCodEstatusProyecto()+"/"+p.getCodCliente()+"\">Ver detalle</a></td>"+
 					"</tr>";
 		}
 		
@@ -331,6 +333,7 @@ public class PreventaProyectoController {
 	
 	@RequestMapping(value="/preventaProyectoUpdate", method = RequestMethod.POST)
 	public String preventaProyectoUpdate(Map<String, Object> modelM,@Valid Proyecto proyecto, BindingResult result, Model model,RedirectAttributes flash,SessionStatus status) {
+		model.addAttribute("titulo", "Proyecto");
 		model.addAttribute("clientes", clienteService.findAll());
 		model.addAttribute("areasComerciales", areaComercialService.findAll());
 		model.addAttribute("tiposProyecto", tipoProyectoService.findAll());
@@ -377,6 +380,7 @@ public class PreventaProyectoController {
 	//Comienza de nuevo
 	@RequestMapping(value = "/preventaProyectoAlta", method = RequestMethod.GET)
 	public String preventaProyectoAlta(Map<String, Object> modelP, Model model) {
+		model.addAttribute("titulo", "Proyecto");
 		Proyecto proyecto = new Proyecto();
 		modelP.put("proyecto", proyecto);
 		model.addAttribute("clientes", clienteService.findAll());
@@ -390,19 +394,9 @@ public class PreventaProyectoController {
 	
 	@RequestMapping(value = "/listaProyectosTodo", method = RequestMethod.GET)
 	public String listaProyectos(Model model) {
+		model.addAttribute("titulo", "Proyecto");
 		model.addAttribute("clientes", clienteService.findAll());
-		List<Proyecto> listaProyecto = proyectoService.findAll();
 		List<Proyecto> listaProyectoTodo = proyectoService.findAll();
-		Proyecto proyectoAux;
-
-		for(Proyecto p : listaProyecto) {
-			if(p.getProyectoId().getCodEstatusProyecto()==2) {
-				proyectoAux=proyectoService.findByProyectoIdCodProyectoAndProyectoIdCodEstatusProyectoAndProyectoIdCodCliente(p.getProyectoId().getCodProyecto(), 1L, p.getProyectoId().getCodCliente());
-				if(proyectoAux!=null) {
-					listaProyectoTodo.remove(proyectoAux);
-				}
-			}
-		}
 		model.addAttribute("proyectos", listaProyectoTodo);
 		return "preventaProyectoListaTodo";
 	}
@@ -412,27 +406,13 @@ public class PreventaProyectoController {
 	public String cargaProyectosTodo(Model model, @PathVariable(value = "codCliente") long codCliente) {
 		model.addAttribute("clientes", clienteService.findAll());
 		String contenido="";
-		List<Proyecto> listaProyecto;
 		List<Proyecto> listaProyectoTodo;
 		
 		if(codCliente==-1) {
-			listaProyecto=proyectoService.findAll();
 			listaProyectoTodo=proyectoService.findAll();
 			
 		}else{
-			listaProyecto=proyectoService.findByProyectoIdCodCliente(codCliente);
-			listaProyectoTodo=proyectoService.findByProyectoIdCodCliente(codCliente);
-		}
-		
-		Proyecto proyectoAux;
-
-		for(Proyecto p : listaProyecto) {
-			if(p.getProyectoId().getCodEstatusProyecto()==2) {
-				proyectoAux=proyectoService.findByProyectoIdCodProyectoAndProyectoIdCodEstatusProyectoAndProyectoIdCodCliente(p.getProyectoId().getCodProyecto(), 1L, p.getProyectoId().getCodCliente());
-				if(proyectoAux!=null) {
-					listaProyectoTodo.remove(proyectoAux);
-				}
-			}
+			listaProyectoTodo=proyectoService.findByCodCliente(codCliente);
 		}
 		
 		contenido=contenido+"<div class=\"table-responsive\">"+
@@ -449,20 +429,34 @@ public class PreventaProyectoController {
         "</thead>"+
         "<tbody>";
 		String estatusP="";
+		String fecha="";
+		String presupuesto="";
         
 		for(Proyecto p : listaProyectoTodo) {
-			if(p.getProyectoId().getCodEstatusProyecto()==1) {
+			if(p.getCodEstatusProyecto()==1) {
 				estatusP="Preventa";
 			}else {
 				estatusP="Proyecto";
 			}
+			
+			if(p.getFecIncioProyecto()==null) {
+				fecha="NA";
+			}else {
+				fecha=p.getFecIncioProyecto()+"";
+			}
+			
+			if(p.getImpPresupuesto()==null) {
+				presupuesto="NA";
+			}else {
+				presupuesto=p.getImpPresupuesto()+"";
+			}
 			contenido=contenido+"<tr>"+
 			        "<td>"+p.getDescCodigoProyecto()+"</td>"+
 			        "<td>"+p.getDescProyecto()+"</td>"+
-			        "<td>"+p.getFecIncioProyecto()+"</td>"+
+			        "<td>"+fecha+"</td>"+
 			        "<td>"+estatusP+"</td>"+
-			        "<td>"+p.getImpPresupuesto()+"</td>"+
-			        "<td><a href=\"/preventaProyectoConsulta/"+p.getProyectoId().getCodProyecto()+"/"+p.getProyectoId().getCodEstatusProyecto()+"/"+p.getProyectoId().getCodCliente()+"\">Ver detalle</a></td>"+
+			        "<td>"+presupuesto+"</td>"+
+			        "<td><a href=\"/preventaProyectoConsulta/"+p.getCodProyecto()+"/"+p.getCodEstatusProyecto()+"/"+p.getCodCliente()+"\">Ver detalle</a></td>"+
 					"</tr>";
 		}
 		
@@ -474,7 +468,8 @@ public class PreventaProyectoController {
 	
 	@RequestMapping(value = "/preventaProyectoConsulta/{codProyecto}/{codEstatusProyecto}/{codCliente}", method = RequestMethod.GET)
     public String preventaProyectoConsulta (Map<String, Object> modelM, Model model,@PathVariable(value = "codProyecto") long codProyecto, @PathVariable(value = "codEstatusProyecto") long codEstatusProyecto, @PathVariable(value = "codCliente") long codCliente) {
-		Proyecto proyecto = proyectoService.findByProyectoIdCodProyectoAndProyectoIdCodEstatusProyectoAndProyectoIdCodCliente(codProyecto, codEstatusProyecto, codCliente);
+		model.addAttribute("titulo", "Proyecto");
+		Proyecto proyecto = proyectoService.findByCodProyectoAndCodEstatusProyectoAndCodCliente(codProyecto, codEstatusProyecto, codCliente);
 		List<DetalleInfraestructura> listaDI= detalleInfraestructuraService.findAll();
 		List<DetalleProyectoInfraestructura> listaDPI=detalleProyectoInfraestructuraService.findByDetalleProyectoInfraestructuraIdCodProyectoAndDetalleProyectoInfraestructuraIdCodEstatusProyectoAndDetalleProyectoInfraestructuraIdCodCliente(codProyecto, codEstatusProyecto, codCliente);
 		List<DetalleInfraestructura> listaDISel= new ArrayList<DetalleInfraestructura>();
@@ -526,9 +521,12 @@ public class PreventaProyectoController {
 				listaClienteAux.add(listaCliente.get(indice));
 			}
 		}
+		
+		Cliente cp = clienteService.findOne(proyecto.getCodCliente());
 		modelM.put("proyecto", proyecto);
+		model.addAttribute("clienteProyecto", cp);
 		model.addAttribute("clientes", listaClienteAux);
-		model.addAttribute("contactos", agendaService.findContactosBycodCliente(proyecto.getProyectoId().getCodCliente()));
+		model.addAttribute("contactos", agendaService.findContactosBycodCliente(proyecto.getCodCliente()));
 		
 		model.addAttribute("areasComerciales", areaComercialService.findAll());
 		model.addAttribute("tiposProyecto", tipoProyectoService.findAll());
@@ -539,6 +537,7 @@ public class PreventaProyectoController {
 		model.addAttribute("codCon", codCon);
 		model.addAttribute("contactoVista", agendaService.findOne(codCon));
 		model.addAttribute("recursos", recursoService.findAll());
+		model.addAttribute("tecTam", listaDISel.size());
 			
 		model.addAttribute("clasificacionesProyecto", clasificacionproyectoService.findAll());
 		return "preventaProyectoConsulta";
@@ -551,9 +550,11 @@ public class PreventaProyectoController {
 		model.addAttribute("tiposProyecto", tipoProyectoService.findAll());
 		model.addAttribute("tiposFacturacion", tipoFacturacionService.findAll());
 		model.addAttribute("clasificacionesProyecto", clasificacionproyectoService.findAll());
+		model.addAttribute("titulo", "Proyecto");
 		
 		if(result.hasErrors()) {
-			return "preventaProyectoAlta";
+			flash.addFlashAttribute("error", "Error al guardar proyecto");
+			return "redirect:/preventaProyectoAlta";
 		}
 		
 		Date fechaHoy = new Date(); 
@@ -563,7 +564,7 @@ public class PreventaProyectoController {
 		DetalleClienteAreaComercialId dcacId = new DetalleClienteAreaComercialId();
 		DetalleClienteAreaComercial dcac = new DetalleClienteAreaComercial();
 		dcacId.setCodAreaComercia(proyecto.getCodAreaComercial());
-		dcacId.setCodCliente(proyecto.getProyectoId().getCodCliente());
+		dcacId.setCodCliente(proyecto.getCodCliente());
 		
 		dcac.setDetalleClienteAreaComercialId(dcacId);
 		dcac.setFecRegistro(fechaHoy);
@@ -571,18 +572,18 @@ public class PreventaProyectoController {
 		detalleClienteAreaComercialService.save(dcac);
 		proyectoService.save(proyecto);
 		
-		System.out.println("Proyeto buscado "+proyecto.getDescProyecto()+" "+proyecto.getProyectoId().getCodCliente()+" "+proyecto.getProyectoId().getCodEstatusProyecto()+" "+ proyecto.getFecRegistro());
+		System.out.println("Proyeto buscado "+proyecto.getDescProyecto()+" "+proyecto.getCodCliente()+" "+proyecto.getCodEstatusProyecto()+" "+ proyecto.getFecRegistro());
 		//obtengo el proyecto guardado
-		Proyecto proyectoN = proyectoService.findByDescProyectoAndProyectoIdCodClienteAndProyectoIdCodEstatusProyectoAndFecRegistro(proyecto.getDescProyecto(), proyecto.getProyectoId().getCodCliente(), proyecto.getProyectoId().getCodEstatusProyecto(), proyecto.getFecRegistro());
-		model.addAttribute("contactos", agendaService.findContactosBycodCliente(proyecto.getProyectoId().getCodCliente()));
+		Proyecto proyectoN = proyectoService.findByDescProyectoAndCodClienteAndCodEstatusProyectoAndFecRegistro(proyecto.getDescProyecto(), proyecto.getCodCliente(), proyecto.getCodEstatusProyecto(), proyecto.getFecRegistro());
+		model.addAttribute("contactos", agendaService.findContactosBycodCliente(proyecto.getCodCliente()));
 		model.addAttribute("tecnologias", detalleInfraestructuraService.findAll());
 
 		modelM.put("proyecto", proyectoN);
-		flash.addFlashAttribute("success", "Preventa/Proyecto guardado con exito");
 		
-		if(proyectoN.getProyectoId().getCodEstatusProyecto()==1) {
+		if(proyectoN.getCodEstatusProyecto()==1) {
+			flash.addFlashAttribute("success", "Preventa/Proyecto guardado con exito");
 			model.addAttribute("proyectos", proyectoService.findAll());
-			return "preventaProyectoListaTodo";
+			return "redirect:/listaProyectosTodo";
 		}else {
 			return "preventaProyectoContactoInfraestructura";
 		}
@@ -597,11 +598,16 @@ public class PreventaProyectoController {
 		model.addAttribute("tiposFacturacion", tipoFacturacionService.findAll());
 		model.addAttribute("clasificacionesProyecto", clasificacionproyectoService.findAll());
 		model.addAttribute("proyectos", proyectoService.findAll());
+		model.addAttribute("titulo", "Proyecto");
+		Long clienteProyecto = proyectoService.findByCodProyecto(proyecto.getCodProyecto()).getCodCliente();
+		proyecto.setCodCliente(clienteProyecto);
+		
 		if(result.hasErrors()) {
+			flash.addFlashAttribute("error", "Error al guardar preventa/proyecto");
 			return "preventaProyectoConsulta";
 		}
 		
-		System.out.println("codAreaComercial "+proyecto.getCodAreaComercial()+" codCliente "+(proyecto.getProyectoId().getCodCliente()));
+		System.out.println("codAreaComercial "+proyecto.getCodAreaComercial()+" codCliente "+(proyecto.getCodCliente()));
 		
 		//agrego el area comercial al cliente
 		Date fechaHoy = new Date(); 
@@ -609,69 +615,68 @@ public class PreventaProyectoController {
 		DetalleClienteAreaComercialId dcacId = new DetalleClienteAreaComercialId();
 		DetalleClienteAreaComercial dcac = new DetalleClienteAreaComercial();
 		dcacId.setCodAreaComercia(proyecto.getCodAreaComercial());
-		dcacId.setCodCliente(proyecto.getProyectoId().getCodCliente());
+		dcacId.setCodCliente(proyecto.getCodCliente());
 		
 		dcac.setDetalleClienteAreaComercialId(dcacId);
 		dcac.setFecRegistro(fechaHoy);
 				
 		detalleClienteAreaComercialService.save(dcac);
-		System.out.println("codAreaComercial "+proyecto.getCodAreaComercial()+" codCliente "+(proyecto.getProyectoId().getCodCliente()));
+		System.out.println("codAreaComercial "+proyecto.getCodAreaComercial()+" codCliente "+(proyecto.getCodCliente()));
 		
 		
 		//guardo proyecto
 		proyectoService.save(proyecto);
+		
+		System.out.println("guarda proyecto "+proyecto.getCodProyecto()+" "+proyecto.getDescProyecto() +" cliente "+proyecto.getCodCliente()+" codStatus "+proyecto.getCodEstatusProyecto());
 		flash.addFlashAttribute("success", "Recurso guardado con exito");
 		
 		//redirijo dependiendo
-		if(proyecto.getProyectoId().getCodEstatusProyecto()==1) {
-			List<Proyecto> listaProyecto = proyectoService.findAll();
+		if(proyecto.getCodEstatusProyecto()==1) {
 			List<Proyecto> listaProyectoTodo = proyectoService.findAll();
-			Proyecto proyectoAux;
-
-			for(Proyecto p : listaProyecto) {
-				if(p.getProyectoId().getCodEstatusProyecto()==2) {
-					proyectoAux=proyectoService.findByProyectoIdCodProyectoAndProyectoIdCodEstatusProyectoAndProyectoIdCodCliente(p.getProyectoId().getCodProyecto(), 1L, p.getProyectoId().getCodCliente());
-					if(proyectoAux!=null) {
-						listaProyectoTodo.remove(proyectoAux);
-					}
-				}
-			}
+			flash.addFlashAttribute("success", "Preventa/Proyecto actualizado con exito");
 			model.addAttribute("proyectos", listaProyectoTodo);
-			return "preventaProyectoListaTodo";
+			return "redirect:/listaProyectosTodo";
 		}else {
-			model.addAttribute("contactos", agendaService.findContactosBycodCliente(proyecto.getProyectoId().getCodCliente()));
-			List<DetalleInfraestructura> listaDI= detalleInfraestructuraService.findAll();
-			List<DetalleProyectoInfraestructura> listaDPI=detalleProyectoInfraestructuraService.findByDetalleProyectoInfraestructuraIdCodProyectoAndDetalleProyectoInfraestructuraIdCodEstatusProyectoAndDetalleProyectoInfraestructuraIdCodCliente(proyecto.getProyectoId().getCodProyecto(), proyecto.getProyectoId().getCodEstatusProyecto(), proyecto.getProyectoId().getCodCliente());
-			List<DetalleInfraestructura> listaDISel= new ArrayList<DetalleInfraestructura>();
-			for(int indice = 0;indice<listaDI.size();indice++){
-
-			    for(int indice2 = 0;indice2<listaDPI.size();indice2++){
-
-			    	if(listaDI.get(indice).getCodDetalleInfraestructura()==listaDPI.get(indice2).getDetalleProyectoInfraestructuraId().getCodDetalleInfraestructura()) {
-
-			    		listaDISel.add(listaDI.get(indice));
-			    		listaDI.remove(listaDI.get(indice));
-			    	}
-			    }
-			}
-			
-			String texto="";
-			for(int indice = 0;indice<listaDISel.size();indice++){
-				texto=texto+listaDISel.get(indice).getDescDetalle()+", ";
-			}
-			List<DetalleProyectoContacto> listaDPC=detalleProyectoContactoService.findByDetalleProyectoContactoIdCodProyectoAndDetalleProyectoContactoIdCodEstatusProyectoAndDetalleProyectoContactoIdCodCliente(proyecto.getProyectoId().getCodProyecto(), proyecto.getProyectoId().getCodEstatusProyecto(), proyecto.getProyectoId().getCodCliente());
-			Long codCon=0L;
-			for(int indice = 0;indice<listaDPC.size();indice++){
-				codCon=listaDPC.get(indice).getDetalleProyectoContactoId().getCodContacto();
-			}
-			
-			modelM.put("proyecto", proyecto);
-			model.addAttribute("tecnologias", listaDI);
-			model.addAttribute("tecAcept", listaDISel);
-			model.addAttribute("textoTec", texto);
-			model.addAttribute("codCon", codCon);
-			return "preventaProyectoContactoInfraestructura";
+			flash.addFlashAttribute("success", "Proyecto actualizado con exito");
+			return "redirect:/preventaProyectoContactoInfraestructura/"+proyecto.getCodProyecto();
 		}
+	}
+	
+	@RequestMapping(value = "/preventaProyectoContactoInfraestructura/{codProyecto}", method = RequestMethod.GET)
+	public String preventaProyectoContactoInfraEstrcutoraResp(Model model, @PathVariable(value = "codProyecto") long codProyecto) {
+		Proyecto proyecto = proyectoService.findByCodProyecto(codProyecto);
+		List<DetalleInfraestructura> listaDI= detalleInfraestructuraService.findAll();
+		List<DetalleProyectoInfraestructura> listaDPI=detalleProyectoInfraestructuraService.findByDetalleProyectoInfraestructuraIdCodProyectoAndDetalleProyectoInfraestructuraIdCodEstatusProyectoAndDetalleProyectoInfraestructuraIdCodCliente(proyecto.getCodProyecto(), proyecto.getCodEstatusProyecto(), proyecto.getCodCliente());
+		List<DetalleInfraestructura> listaDISel= new ArrayList<DetalleInfraestructura>();
+		for(int indice = 0;indice<listaDI.size();indice++){
+
+		    for(int indice2 = 0;indice2<listaDPI.size();indice2++){
+
+		    	if(listaDI.get(indice).getCodDetalleInfraestructura()==listaDPI.get(indice2).getDetalleProyectoInfraestructuraId().getCodDetalleInfraestructura()) {
+
+		    		listaDISel.add(listaDI.get(indice));
+		    		listaDI.remove(listaDI.get(indice));
+		    	}
+		    }
+		}
+		
+		String texto="";
+		for(int indice = 0;indice<listaDISel.size();indice++){
+			texto=texto+listaDISel.get(indice).getDescDetalle()+", ";
+		}
+		List<DetalleProyectoContacto> listaDPC=detalleProyectoContactoService.findByDetalleProyectoContactoIdCodProyectoAndDetalleProyectoContactoIdCodEstatusProyectoAndDetalleProyectoContactoIdCodCliente(proyecto.getCodProyecto(), proyecto.getCodEstatusProyecto(), proyecto.getCodCliente());
+		Long codCon=0L;
+		for(int indice = 0;indice<listaDPC.size();indice++){
+			codCon=listaDPC.get(indice).getDetalleProyectoContactoId().getCodContacto();
+		}
+		model.addAttribute("titulo", "Proyecto");
+		model.addAttribute("proyecto", proyecto);
+		model.addAttribute("tecnologias", listaDI);
+		model.addAttribute("tecAcept", listaDISel);
+		model.addAttribute("textoTec", texto);
+		model.addAttribute("codCon", codCon);
+		model.addAttribute("contactos", agendaService.findContactosBycodCliente(proyecto.getCodCliente()));
+		return "preventaProyectoContactoInfraestructura";
 	}
 	
 	@RequestMapping(value="/preventaProyectoContactoInfraestructura", method = RequestMethod.POST)
@@ -692,7 +697,7 @@ public class PreventaProyectoController {
 		DetalleClienteAreaComercialId dcacId = new DetalleClienteAreaComercialId();
 		DetalleClienteAreaComercial dcac = new DetalleClienteAreaComercial();
 		dcacId.setCodAreaComercia(proyecto.getCodAreaComercial());
-		dcacId.setCodCliente(proyecto.getProyectoId().getCodCliente());
+		dcacId.setCodCliente(proyecto.getCodCliente());
 		
 		dcac.setDetalleClienteAreaComercialId(dcacId);
 		dcac.setFecRegistro(fechaHoy);
@@ -700,13 +705,13 @@ public class PreventaProyectoController {
 		detalleClienteAreaComercialService.save(dcac);
 		proyectoService.save(proyecto);
 		
-		System.out.println("Proyeto buscado "+proyecto.getDescProyecto()+" "+proyecto.getProyectoId().getCodCliente()+" "+proyecto.getProyectoId().getCodEstatusProyecto()+" "+ proyecto.getFecRegistro());
+		System.out.println("Proyeto buscado "+proyecto.getDescProyecto()+" "+proyecto.getCodCliente()+" "+proyecto.getCodEstatusProyecto()+" "+ proyecto.getFecRegistro());
 		//obtengo el proyecto guardado
-		Proyecto proyectoN = proyectoService.findByDescProyectoAndProyectoIdCodClienteAndProyectoIdCodEstatusProyectoAndFecRegistro(proyecto.getDescProyecto(), proyecto.getProyectoId().getCodCliente(), proyecto.getProyectoId().getCodEstatusProyecto(), proyecto.getFecRegistro());
-		model.addAttribute("contactos", agendaService.findContactosBycodCliente(proyecto.getProyectoId().getCodCliente()));
+		Proyecto proyectoN = proyectoService.findByDescProyectoAndCodClienteAndCodEstatusProyectoAndFecRegistro(proyecto.getDescProyecto(), proyecto.getCodCliente(), proyecto.getCodEstatusProyecto(), proyecto.getFecRegistro());
+		model.addAttribute("contactos", agendaService.findContactosBycodCliente(proyecto.getCodCliente()));
 		model.addAttribute("tecnologias", detalleInfraestructuraService.findAll());
 
-		List<DetalleProyectoContacto> listaDPC=detalleProyectoContactoService.findByDetalleProyectoContactoIdCodProyectoAndDetalleProyectoContactoIdCodEstatusProyectoAndDetalleProyectoContactoIdCodCliente(proyecto.getProyectoId().getCodProyecto(), proyecto.getProyectoId().getCodEstatusProyecto(), proyecto.getProyectoId().getCodCliente());
+		List<DetalleProyectoContacto> listaDPC=detalleProyectoContactoService.findByDetalleProyectoContactoIdCodProyectoAndDetalleProyectoContactoIdCodEstatusProyectoAndDetalleProyectoContactoIdCodCliente(proyecto.getCodProyecto(), proyecto.getCodEstatusProyecto(), proyecto.getCodCliente());
 		//		System.out.println("tam "+listaDPC.size());
 		Long codCon=0L;
 		for(int indice = 0;indice<listaDPC.size();indice++){
@@ -714,6 +719,7 @@ public class PreventaProyectoController {
 			codCon=listaDPC.get(indice).getDetalleProyectoContactoId().getCodContacto();
 		}
 		
+		model.addAttribute("titulo", "Proyecto");
 		modelM.put("proyecto", proyectoN);
 		model.addAttribute("codCon", codCon);
 		flash.addFlashAttribute("success", "Recurso guardado con exito");

@@ -2,7 +2,6 @@ $(document).ready(function() {
 
 	$('#undo_redo').multiselect();
 	
-	
 	var checkBox = document.getElementById("proyecto");
 	
 	if (checkBox.checked == false){
@@ -27,28 +26,28 @@ $(document).ready(function() {
 		$('#ff').show('500');
 		//$('#complementoProyecto').show('500');
 		$('#codEstatusProyecto').val(2);
+		$('#btnEnviar').val("Guardar y continuar");
  	});
   
 	$( "#cancelarProyecto" ).click(function() {
 		$( "#preventa" ).prop( "checked", true );
 	});
+	
+	$("#fechaInicio").change(function(){
+		  var fehchaMin = $("#fechaInicio").val();
+		  document.getElementById('fechaFin').setAttribute("min", fehchaMin);
+	});
+	
   
 	$("#nombreProyecto").keydown(function(event){
-		var codigo = $("#cliente").val();
+		var codigo = $("#valCliente").val();
 		codigo = codigo +"-"+$("#areaComercial").val();
 		codigo= codigo + "-" +$("#nombreProyecto").val().substring(-1,3);
 		$("#codigoProyecto").val(codigo);
 	}); 
 	
-	$( "#cliente" ).click(function() {
-		var codigo = $("#cliente").val();
-		codigo = codigo +"-"+$("#areaComercial").val();
-		codigo= codigo + "-" +$("#nombreProyecto").val().substring(-1,3);
-		$("#codigoProyecto").val(codigo);
-	});
-	
 	$( "#areaComercial" ).click(function() {
-		var codigo = $("#cliente").val();
+		var codigo = $("#valCliente").val();
 		codigo = codigo +"-"+$("#areaComercial").val();
 		codigo= codigo + "-" +$("#nombreProyecto").val().substring(-1,3);
 		$("#codigoProyecto").val(codigo);

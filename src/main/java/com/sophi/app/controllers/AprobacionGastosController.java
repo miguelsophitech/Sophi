@@ -52,8 +52,8 @@ public class AprobacionGastosController {
 		Proyecto proyectoAux;
         
         for(Proyecto p : listaProyecto) {
-			if(p.getProyectoId().getCodEstatusProyecto()==2) {
-				proyectoAux=proyectoService.findByProyectoIdCodProyectoAndProyectoIdCodEstatusProyectoAndProyectoIdCodCliente(p.getProyectoId().getCodProyecto(), 1L, p.getProyectoId().getCodCliente());
+			if(p.getCodEstatusProyecto()==2) {
+				proyectoAux=proyectoService.findByCodProyectoAndCodEstatusProyectoAndCodCliente(p.getCodProyecto(), 1L, p.getCodCliente());
 				if(proyectoAux!=null) {
 					listaProyectoTodo.remove(proyectoAux);
 				}
@@ -89,71 +89,5 @@ public class AprobacionGastosController {
 		flash.addFlashAttribute("success", "Gastos Validados");
 		return "redirect:/aprobaciongastos/"+recursoService.findOne(CodRecurso).getDescCorreoElectronico();
     }
-    
-    @RequestMapping(value = "/cargaGastos", method = RequestMethod.GET)
-	@ResponseBody
-	public String cargaHoras(@RequestParam("id") Long codProyecto, Model model) {
-        List<AprobacionGastos> aprobaciongastosList;
-        
-        if(codProyecto == -1) {
-        	aprobaciongastosList = aprobaciongastosService.findAll();
-        }
-        
-        else {
-        	aprobaciongastosList = aprobaciongastosService.findAprobacionGastosBycodProyecto(codProyecto);
-        }
-        
-		String contenido = "";
-		contenido = contenido + "<div class=\"table-responsive\">"+
-		"<table class=\"table table-bordered\" id=\"dataTable\" width=\"100%\" cellspacing=\"0\">"+
-		"<thead>"+
-		"<tr>"+
-		"<th></th>"+
-        "<th>Fecha</th>"+
-        "<th>Colaborador</th>"+
-        "<th>Comentario</th>"+
-        "<th>Horas Planeadas</th>"+
-		"<th>Horas Capturadas</th>"+
-		"<th>Horas Validadas</th>"+
-		"<th></th>"+
-        "</tr>"+
-        "</thead>"+
-        "<tfoot>"+
-		"<tr>"+
-		"<th></th>"+
-        "<th>Fecha</th>"+
-        "<th>Colaborador</th>"+
-        "<th>Comentario</th>"+
-        "<th>Horas Planeadas</th>"+
-		"<th>Horas Capturadas</th>"+
-		"<th>Horas Validadas</th>"+
-		"<th></th>"+
-        "</tr>"+
-        "</tfoot>"+
-		"<tbody>";
-		
-		int cont = 0;
-		String tablaAprobacionGastos = "";
-		
-		for(AprobacionGastos aprobaciongastos : aprobaciongastosList){
-            if(aprobaciongastos.getFecValidacion() == null && aprobaciongastos.getCodRecursoValidador() == null) {
-            	tablaAprobacionGastos += "<tr>\r\n";
-                tablaAprobacionGastos += "<td><input id=\"check\" type=\"checkbox\" name=\"aprobaciongastos["+cont+"].fecValidacion\" value="+aprobaciongastos.getFecValidacion()+" onclick=\"validacion();\"></td>";
-                tablaAprobacionGastos += "<td><span>"+aprobaciongastos.getTipogasto().getDescTipoGasto()+"</span></td>";
-                tablaAprobacionGastos += "<td><span>"+aprobaciongastos.getFecRegistro()+"</span></td>";
-                tablaAprobacionGastos += "<td><span>"+aprobaciongastos.getRecurso().getDescRecurso()+"</span></td>";
-                tablaAprobacionGastos += "<td><span>"+aprobaciongastos.getDescComentario()+"</span></td>";
-                tablaAprobacionGastos += "<td>$<span>"+aprobaciongastos.getImpGasto()+"</span></td>";
-                tablaAprobacionGastos += "<td><input id=\"RecVal\" type=\"hidden\" name=\"aprobaciongastos["+cont+"].codRecursoValidador\" value="+aprobaciongastos.getCodRecursoValidador()+"></td>";
-                tablaAprobacionGastos += "</tr>";
-            }
-            cont++;
-        }
-		contenido += tablaAprobacionGastos;
-		contenido = contenido + "</tbody>"+
-        "</table>"+
-        "</div>";
-		return contenido;
-	}
     
 }

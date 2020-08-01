@@ -65,27 +65,23 @@ $(document).ready(function() {
         	}
     	})
 	});
-	
 
 });
 
-function guardaC() {
-  var codCliente=$('#codCliente').val();
+function guardarCom() {
+		var codCliente=$('#codCliente').val();
 		var codPRoyecto=$('#codProyecto').val();
 		var codEstatusProyecto=$('#codEstatusProyecto').val();
 		var codContacto=$('#contacto').val();
 		var codClasificacionProyecto=1;
-		//alert(codCliente+" "+codPRoyecto+" "+codEstatusProyecto+" "+codContacto+" "+codClasificacionProyecto);
 		
 		$.ajax({ 
 			url: "/guardarComplemento/" + codPRoyecto+"/"+codContacto+"/"+codClasificacionProyecto+"/"+codEstatusProyecto+"/"+codCliente,
         	success: function(resE){
-        		console.log(resE);
-        		//alert(resE);
         		location.href = '/preventaProyectoConsulta/'+codPRoyecto+'/'+codEstatusProyecto+"/"+codCliente;
         	}
-    	})
- }
+    	});
+}
 
 var _gaq = _gaq || [];
   _gaq.push(['_setAccount', 'UA-36251023-1']);

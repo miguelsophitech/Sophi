@@ -70,6 +70,14 @@ public class ClienteController {
 	
 	@RequestMapping(value="/formCliente", method = RequestMethod.POST)
 	public String guardarCliente(@Valid Cliente cliente, BindingResult result, Model model,RedirectAttributes flash,SessionStatus status) {
+		if(cliente.getCodCliente() != null) {
+			String nombre_anterior = clienteService.findOne(cliente.getCodCliente()).getDescCliente();
+			
+			if(!nombre_anterior.equals(cliente.getDescCliente())) {
+				cliente.setDescClienteAnterior(nombre_anterior);
+			}
+		}
+		
 		if(result.hasErrors()) {
 			model.addAttribute("titulo", "Formulario cliente");
 			List<Sector> sectores = sectorService.findAll();
@@ -85,6 +93,7 @@ public class ClienteController {
 	@RequestMapping(value = "/formCliente/{id}")
 	public String editarCliente(@PathVariable(value = "id") Long codCliente, Map<String, Object> model, RedirectAttributes flash) {
 		Cliente cliente = null;
+		
 		if (codCliente > 0) {
 			cliente = clienteService.findOne(codCliente);
 			if(cliente == null) {

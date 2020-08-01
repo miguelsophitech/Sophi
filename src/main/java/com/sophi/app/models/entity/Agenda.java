@@ -14,12 +14,14 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 import javax.validation.constraints.Email;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Pattern;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
-@Table(name = "CONTACTOS")
+@Table(name = "CONTACTO")
 public class Agenda implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
@@ -37,6 +39,7 @@ public class Agenda implements Serializable {
 	@Column(name = "desc_puesto")
 	private String descPuesto;
 	
+	@Min(value = 0, message = "Debes ingresar un número positivo")
 	@Column(name = "val_recursos_a_cargo")
 	private Long valRecursosACargo;
 	
@@ -46,17 +49,17 @@ public class Agenda implements Serializable {
 	private String descCorreoElectronico;
 	
 	@Column(name = "fec_nacimiento")
-	@Temporal(TemporalType.DATE)
-	@DateTimeFormat(pattern = "yyyy-MM-dd")
-	private Date fecNacimiento;
+	//@Temporal(TemporalType.DATE)
+	//@DateTimeFormat(pattern = "yyyy-MM-dd")
+	private String fecNacimiento;
 	
 	@NotEmpty(message = "Este dato no debe estar vacío")
+	@Pattern(regexp = "(\\d{10})$", message="Ingresa un teléfono válido")
 	@Column(name = "desc_tel_celular")
 	private String descTelCelular;
 	
 	@Column(name = "desc_tel_empresa")
 	private String descTelEmpresa;
-	
 	
 	@Column(name = "desc_tel_ext")
 	private String descTelExt;
@@ -123,11 +126,11 @@ public class Agenda implements Serializable {
 		this.descCorreoElectronico = descCorreoElectronico;
 	}
 
-	public Date getFecNacimiento() {
+	public String getFecNacimiento() {
 		return fecNacimiento;
 	}
 
-	public void setFecNacimiento(Date fecNacimiento) {
+	public void setFecNacimiento(String fecNacimiento) {
 		this.fecNacimiento = fecNacimiento;
 	}
 

@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 import com.sophi.app.models.entity.Actividad;
 import com.sophi.app.models.service.IActividadService;
-import com.sophi.app.models.service.ICapHoraService;
 import com.sophi.app.models.service.IProyectoService;
 import com.sophi.app.models.service.IRecursoService;
 
@@ -37,7 +36,7 @@ public class ActividadesRecursoController {
 		
 		HashMap<Long, String> proyectoList = new HashMap<Long, String>(); 
 		for (Long id : actividadService.findListaProyectoByRecurso(codRecurso)) {
-			proyectoList.put(id, proyectoService.findByProyectoIdCodProyectoAndProyectoIdCodEstatusProyecto(id, 2L).getDescProyecto());
+			proyectoList.put(id, proyectoService.findByCodProyectoAndCodEstatusProyecto(id, 2L).getDescProyecto());
 		}
 		
 		for (Actividad actividad : listaActividades) {
