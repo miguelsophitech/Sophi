@@ -15,6 +15,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -134,7 +135,6 @@ public class Recurso implements Serializable  {
 	@Column(name = "desc_activo")
 	private Long descActivo;
 	
-	
 	@Temporal(TemporalType.DATE)
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	@Column(name = "fec_salida_empresa")
@@ -146,14 +146,30 @@ public class Recurso implements Serializable  {
 	@Column(name = "cod_puesto")
 	private Long codPuesto;
 	
+	@OneToOne
+	@JoinColumn(name = "cod_puesto", insertable = false, updatable = false)
+	private Puesto puesto;
+	
 	@Column(name = "cod_jornada")
 	private Long codJornada;
+	
+	@OneToOne
+	@JoinColumn(name = "cod_jornada", insertable = false, updatable = false)
+	private Jornada jornada;
 	
 	@Column(name = "cod_tipo_recurso")
 	private Long codTipoRecurso;
 	
+	@OneToOne
+	@JoinColumn(name = "cod_tipo_recurso", insertable = false, updatable = false)
+	private TipoRecurso tiporecurso;
+	
 	@Column(name = "cod_proveedor")
 	private Long codProveedor;
+	
+	@OneToOne
+	@JoinColumn(name = "cod_proveedor", insertable = false, updatable = false)
+	private Proveedor proveedor;
 	
 	@Column(name = "val_costo_minimo")
 	private Float valCostoMinimo;
@@ -640,7 +656,37 @@ public class Recurso implements Serializable  {
 	public void setFotoCv(byte[] fotoCv) {
 		this.fotoCv = fotoCv;
 	}
-	
-	
+
+	public Puesto getPuesto() {
+		return puesto;
+	}
+
+	public void setPuesto(Puesto puesto) {
+		this.puesto = puesto;
+	}
+
+	public Jornada getJornada() {
+		return jornada;
+	}
+
+	public void setJornada(Jornada jornada) {
+		this.jornada = jornada;
+	}
+
+	public TipoRecurso getTiporecurso() {
+		return tiporecurso;
+	}
+
+	public void setTiporecurso(TipoRecurso tiporecurso) {
+		this.tiporecurso = tiporecurso;
+	}
+
+	public Proveedor getProveedor() {
+		return proveedor;
+	}
+
+	public void setProveedor(Proveedor proveedor) {
+		this.proveedor = proveedor;
+	}
 
 }
