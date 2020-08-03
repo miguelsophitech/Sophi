@@ -142,22 +142,58 @@
         <div class="container-fluid">
 
           <!-- Page Heading -->
-          <h1 class="h3 mb-2 text-gray-800">Detalle del recurso</h1>
+          <h1 class="h3 mb-2 text-gray-800">Informaci&oacute;n del recurso</h1>
           <p class="mb-4">Secci&oacute;n para consultar los datos del recurso.</p>
+          <a th:href="@{'/listarRecursos'}" th:text="'&laquo; volver'"></a>
 			
-			<div class="card bg-light">
-				<div class="card-header" th:text="${titulo}"></div>
-				<div class="card-body">
-<!-- 					<img th:if="${#strings.length(recurso.foto) > 0}" class="img-thumbnail rounded" style="max-width: 200px;" th:src="@{'/fotoRecursoPerfil/' + ${recurso.codRecurso}}" alt="${recurso.descRecurso}"> -->
-					<img th:if="${recurso.foto} != null" class="img-thumbnail rounded" style="max-height: 150px;" th:src="@{'/fotoRecursoPerfil/' + ${recurso.codRecurso}}" alt="${recurso.descRecurso}">
-<!-- 					<img th:if="${recurso.fotoCv} != null" class="img-thumbnail rounded" style="max-width: 200px;" th:src="@{'/fotoRecursoCv/' + ${recurso.codRecurso}}" alt="${recurso.descRecurso}"> -->
-					<h5>Datos generales</h5>
-					<ul class="list-group">
-						<li class="list-group-item" th:text="'Nombre completo: ' + ' ' +${recurso.descRecurso} + ' ' + ${recurso.descApellidoPaterno} + ' ' + ${recurso.descApellidoMaterno}"></li>
+			<div class="card shadow mb-4">
+			<div class="collapse show" id="collapseCardExample">
+			<div class="card-body">
+				<div class="row">
+			      <div class="col-md-6">
+			         <ul class="list-group list-group-flush">
+						<li class="list-group-item"><h3 th:text="${recurso.descRecurso} + ' ' + ${recurso.descApellidoPaterno} + ' ' + ${recurso.descApellidoMaterno}"></h3></li>
+						<li class="list-group-item">E-mail: <strong th:text="${recurso.descCorreoElectronico}"></strong></li>
+						<li class="list-group-item">Tel&eacute;fono Celular: <strong th:text="${recurso.descTelCelular}"></strong></li>
+						<li class="list-group-item">Tel&eacute;fono Empresa: <strong th:text="${recurso.descTelEmpresa}"></strong></li>
+						<li class="list-group-item">Extensi&oacute;n: <strong th:text="${recurso.descTelExt}"></strong></li>
+						<li class="list-group-item">R.F.C: <strong th:text="${recurso.descRfc}"></strong></li>
+						<li class="list-group-item">C.U.R.P: <strong th:text="${recurso.descCurp}"></strong></li>
+						<li class="list-group-item">Fecha de Nacimiento: <strong th:text="${recurso.fecNacimiento}"></strong></li>
+						<li class="list-group-item">Direcci&oacute;n: <strong th:text="${recurso.dirCalle}+ ' ' + ${recurso.dirNumeroExt} + ' ' + ${recurso.dirNumeroInt}+ ' ' + ${recurso.dirColonia}+ ' ' + ${recurso.dirAlcaldiaMunicipio}+ ' ' + ${recurso.dirEstado}+ ' ' + ${recurso.dirCp}"></strong></li>
+						<li class="list-group-item">N&uacute;mero de Seguridad Social: <strong th:text="${recurso.descNss}"></strong></li>
+						<li class="list-group-item">Estado Civil: <strong th:text="${recurso.descEstadoCivil}"></strong></li>
+						<li class="list-group-item">No. de Hijos: <strong th:text="${recurso.valNumeroHijos}"></strong></li>
+						<li class="list-group-item">Fecha de ingreso a la empresa: <strong th:text="${recurso.fecIngresoEmpresa}"></strong></li>
+						<li class="list-group-item">Activo/Inactivo: <strong th:text="${recurso.descActivo}"></strong></li>
+						<li class="list-group-item">Fecha de salida de la empresa: <strong th:text="${recurso.fecSalidaEmpresa}"></strong></li>
+						<li class="list-group-item">Motivo de salida de la empresa: <strong th:text="${recurso.descMotivoSalida}"></strong></li>
+						<li class="list-group-item">Puesto: <strong th:text="${recurso.puesto.descPuesto}"></strong></li>
+						<li class="list-group-item">Jornada: <strong th:text="${recurso.jornada.descJornada}"></strong></li>
+						<li class="list-group-item">Tipo de recurso: <strong th:text="${recurso.tiporecurso.descTipoRecurso}"></strong></li>
+						<li class="list-group-item">Proveedor: <strong th:text="${recurso.proveedor.descProveedor}"></strong></li>
+						<li class="list-group-item">Costo m&iacute;nimo: <strong th:text="${recurso.valCostoMinimo}"></strong></li>
+						<li class="list-group-item">Grado de Escolaridad: <strong th:text="${recurso.descEduGradoEscolaridad}"></strong></li>
+						<li class="list-group-item">Etapa: <strong th:text="${recurso.descEduEtapa}"></strong></li>
+						<li class="list-group-item">Instituci&oacute;n acad&eacute;mica: <strong th:text="${recurso.descEduInstitucionAcademica}"></strong></li>
+						<li class="list-group-item">Documento obtenido: <strong th:text="${recurso.descEduDocumentoObtenido}"></strong></li>
+						<li class="list-group-item">Banco: <strong th:text="${recurso.descBancoNombre}"></strong></li>
+						<li class="list-group-item">Cuenta: <strong th:text="${recurso.descBancoNumeroCuenta}"></strong></li>
+						<li class="list-group-item">CLABE Interbancaria: <strong th:text="${recurso.descBancoClabe}"></strong></li>
+						<li class="list-group-item">Tipo de sangre: <strong th:text="${recurso.descMedicosTipoSangre}"></strong></li>
+						<li class="list-group-item">Alergias: <strong th:text="${recurso.descMedicosAlergias}"></strong></li>
+						<li class="list-group-item">Embarazos: <strong th:text="${recurso.descMedicosEmbarazos}"></strong></li>
+						<li class="list-group-item">Cirug&iacute;as: <strong th:text="${recurso.descMedicosCirugias}"></strong></li>
+						<li class="list-group-item">Enfermedades: <strong th:text="${recurso.descMedicosEnfermedades}"></strong></li>
 					</ul>
-					
-				</div>
+      			  </div>
+		          <div class="col-md-6" style="display: flex; align-items: center;">
+		            <img th:if="${recurso.foto} != null" class="img-thumbnail rounded" th:src="@{'/fotoRecursoPerfil/' + ${recurso.codRecurso}}" alt="${recurso.descRecurso}" width="100%">
+		          </div>
+ 				</div>
 			</div>
+			</div>
+		</div>
 <!-- 			
 					
 					<!-- Card Header - Accordion -->
