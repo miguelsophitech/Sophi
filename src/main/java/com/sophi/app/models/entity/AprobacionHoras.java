@@ -4,14 +4,15 @@ import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Column;
-import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.validation.constraints.NotEmpty;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -20,9 +21,23 @@ import org.springframework.format.annotation.DateTimeFormat;
 public class AprobacionHoras implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
-
-	@EmbeddedId
-	private CapHoraId Id;
+	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "cod_cap_hora")
+	private Long codCapHora;
+	
+	@Column(name = "cod_actividad")
+	private Long codActividad;
+	
+	@Column(name = "cod_recurso")
+	private Long codRecurso;
+	
+	@Column(name = "cod_cliente")
+	private Long codCliente;
+	
+	@Column(name = "cod_estatus_proyecto")
+	private Long codEstatusProyecto;
 
 	@OneToOne
 	@JoinColumn(name = "cod_actividad", insertable = false, updatable = false)
@@ -70,14 +85,54 @@ public class AprobacionHoras implements Serializable {
 	@Column(name = "val_nueva_actividad")
 	private Long valNuevaActividad;
 	
-	public CapHoraId getId() {
-		return Id;
+	public Long getCodCapHora() {
+		return codCapHora;
 	}
 
-	public void setId(CapHoraId id) {
-		this.Id = id;
+	public void setCodCapHora(Long codCapHora) {
+		this.codCapHora = codCapHora;
 	}
-	
+
+	public Long getCodActividad() {
+		return codActividad;
+	}
+
+	public void setCodActividad(Long codActividad) {
+		this.codActividad = codActividad;
+	}
+
+	public Long getCodRecurso() {
+		return codRecurso;
+	}
+
+	public void setCodRecurso(Long codRecurso) {
+		this.codRecurso = codRecurso;
+	}
+
+	public Long getCodCliente() {
+		return codCliente;
+	}
+
+	public void setCodCliente(Long codCliente) {
+		this.codCliente = codCliente;
+	}
+
+	public Long getCodEstatusProyecto() {
+		return codEstatusProyecto;
+	}
+
+	public void setCodEstatusProyecto(Long codEstatusProyecto) {
+		this.codEstatusProyecto = codEstatusProyecto;
+	}
+
+	public Long getCodProyecto() {
+		return codProyecto;
+	}
+
+	public void setCodProyecto(Long codProyecto) {
+		this.codProyecto = codProyecto;
+	}
+
 	public Actividad getActividad() {
 		return actividad;
 	}
@@ -158,8 +213,6 @@ public class AprobacionHoras implements Serializable {
 		this.fecValidacion = fecValidacion;
 	}
 
-	
-
 	public Long getValNuevaActividad() {
 		return valNuevaActividad;
 	}
@@ -170,26 +223,6 @@ public class AprobacionHoras implements Serializable {
 
 	public static long getSerialversionuid() {
 		return serialVersionUID;
-	}
-	
-	public AprobacionHoras(CapHoraId id, @NotEmpty(message = "Este dato no debe estar vacío") String descComentarioDetalle,
-			Date fecInicioActividad, Date fecFinActividad, float valDuracionReportada, float valDuracionValidada,
-			Long codRecursoValidador, Long valNuevaActividad, Date fecValidacion, Date fecRegistro) {
-		super();
-		Id = id;
-		this.descComentarioDetalle = descComentarioDetalle;
-		this.fecInicioActividad = fecInicioActividad;
-		this.fecFinActividad = fecFinActividad;
-		this.valDuracionReportada = valDuracionReportada;
-		this.valDuracionValidada = valDuracionValidada;
-		this.codRecursoValidador = codRecursoValidador;
-		this.valNuevaActividad = valNuevaActividad;
-		this.fecValidacion = fecValidacion;
-		this.fecRegistro = fecRegistro;
-	}
-
-	public AprobacionHoras() {
-		
 	}
 
 }
