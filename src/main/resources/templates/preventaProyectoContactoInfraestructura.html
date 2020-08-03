@@ -172,7 +172,6 @@
                 <div class="form-group row">
                   <div class="col-sm-4 mb-3 mb-sm-0">
                       <label for="tecnologia">Tecnología</label>
-                      <a class="btn btn-primary" th:href="@{/planeacionProyecto/} + ${proyecto.codProyecto}" role="button">Cargar planificación</a>
                   </div>
                   <div class="col-sm-4">
                     <input type="text" th:value="${textoTec}" class="form-control" id="tecnologia" placeholder="Tecnología">
@@ -182,11 +181,18 @@
                   </div>
                 </div>
                 <div class="form-group row">
-                  <div class="col-sm-4 mb-3 mb-sm-0">
-                      <a class="btn btn-primary" th:href="@{/planeacionProyecto/} + ${proyecto.codProyecto}" role="button">Cargar planificación</a>
+                  <div th:if="${numAct > 0}" class="col-sm-4 mb-3 mb-sm-0">
+                    <a class="btn btn-primary" th:href="@{/planeacionProyecto/} + ${proyecto.codProyecto}" role="button">Cargar planificación</a>
+                    <a href="#" class="btn btn-success btn-circle">
+                    	<i class="fas fa-check"></i>
+                  	</a>
+                  	Plan cargado
                   </div>
-                  <div class="col-sm-4">
-                    
+                  <div th:unless="${numAct > 0}" class="col-sm-4 mb-3 mb-sm-0">
+                    <a class="btn btn-primary" th:href="@{/planeacionProyecto/} + ${proyecto.codProyecto}" role="button">Cargar planificación</a>
+                  </div>
+                  <div   class="col-sm-4">
+                   
                   </div>
                   <div class="col-sm-4"> 
                        

@@ -1,14 +1,10 @@
 package com.sophi.app.controllers;
 
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-import javax.swing.text.html.FormSubmitEvent.MethodType;
 import javax.validation.Valid;
 
 
@@ -16,12 +12,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
@@ -40,6 +33,7 @@ import com.sophi.app.models.entity.DetalleProyectoContactoId;
 import com.sophi.app.models.entity.DetalleProyectoInfraestructura;
 import com.sophi.app.models.entity.DetalleProyectoInfraestructuraId;
 import com.sophi.app.models.entity.Proyecto;
+import com.sophi.app.models.service.IActividadService;
 import com.sophi.app.models.service.IAgendaService;
 import com.sophi.app.models.service.IAreaComercialService;
 import com.sophi.app.models.service.IClasificacionProyectoService;
@@ -96,6 +90,9 @@ public class PreventaProyectoController {
 	
 	@Autowired
 	private IRecursoService recursoService;
+	
+	@Autowired
+	private IActividadService actividadService;
 	
 	@RequestMapping(value = "/preventaProyecto", method = RequestMethod.GET)
 	public String listarRecursos(Map<String, Object> modelP, Model model) {
@@ -394,9 +391,11 @@ public class PreventaProyectoController {
 	
 	@RequestMapping(value = "/listaProyectosTodo", method = RequestMethod.GET)
 	public String listaProyectos(Model model) {
+		List<Proyecto> listaProyectoTodo = proyectoService.findAll();
+		Proyecto proyectoSophi= proyectoService.findByCodProyecto(1L);
+		listaProyectoTodo.remove(proyectoSophi);
 		model.addAttribute("titulo", "Proyecto");
 		model.addAttribute("clientes", clienteService.findAll());
-		List<Proyecto> listaProyectoTodo = proyectoService.findAll();
 		model.addAttribute("proyectos", listaProyectoTodo);
 		return "preventaProyectoListaTodo";
 	}
@@ -407,12 +406,15 @@ public class PreventaProyectoController {
 		model.addAttribute("clientes", clienteService.findAll());
 		String contenido="";
 		List<Proyecto> listaProyectoTodo;
+		Proyecto proyectoSophi = proyectoService.findByCodProyecto(1L);
 		
 		if(codCliente==-1) {
 			listaProyectoTodo=proyectoService.findAll();
+			listaProyectoTodo.remove(proyectoSophi);
 			
 		}else{
 			listaProyectoTodo=proyectoService.findByCodCliente(codCliente);
+			listaProyectoTodo.remove(proyectoSophi);
 		}
 		
 		contenido=contenido+"<div class=\"table-responsive\">"+
@@ -669,12 +671,16 @@ public class PreventaProyectoController {
 		for(int indice = 0;indice<listaDPC.size();indice++){
 			codCon=listaDPC.get(indice).getDetalleProyectoContactoId().getCodContacto();
 		}
+		
+		Long numActividades = actividadService.countByCodProyecto(proyecto.getCodProyecto());
+		
 		model.addAttribute("titulo", "Proyecto");
 		model.addAttribute("proyecto", proyecto);
 		model.addAttribute("tecnologias", listaDI);
 		model.addAttribute("tecAcept", listaDISel);
 		model.addAttribute("textoTec", texto);
 		model.addAttribute("codCon", codCon);
+		model.addAttribute("numAct",numActividades);
 		model.addAttribute("contactos", agendaService.findContactosBycodCliente(proyecto.getCodCliente()));
 		return "preventaProyectoContactoInfraestructura";
 	}

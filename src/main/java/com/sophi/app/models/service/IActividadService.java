@@ -26,4 +26,6 @@ public interface IActividadService {
 	
 	public List<Actividad> findByCodRecurso(Long codRecurso);
 	
+	public long countByCodProyecto(Long codProyecto);
+	
 }

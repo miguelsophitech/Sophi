@@ -68,6 +68,11 @@ public class ActividadServiceImpl implements IActividadService {
 	public List<Actividad> findByCodRecurso(Long codRecurso) {
 		return actividadDao.findByCodRecurso(codRecurso);
 	}
+	
+	@Override
+	public long countByCodProyecto(Long codProyecto) {
+		return actividadDao.countByCodProyecto(codProyecto);
+	}
 
 
 }
