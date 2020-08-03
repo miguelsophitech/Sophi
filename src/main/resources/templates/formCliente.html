@@ -15,9 +15,9 @@
       <a class="sidebar-brand d-flex align-items-center justify-content-center" th:href="@{/}">
         <div class="sidebar-brand-icon">
           <!--<i class="fas fa-laugh-wink"></i>  rotate-n-15-->
-          <img src="img/logo-img.png" alt="">
+          <img th:src="@{/img/logo-img.png}" alt="">
         </div> 
-        <div class="sidebar-brand-text mx-3"><img src="img/logo-texto.png" alt=""></div>
+        <div class="sidebar-brand-text mx-3"><img th:src="@{/img/logo-texto.png}" alt=""></div>
       </a>
 
       <!-- Divider -->
@@ -151,11 +151,9 @@
                             <!-- Collapsable Card Datos personales -->
                             <div class="card shadow mb-4">
                                 <!-- Card Header - Accordion -->
-                                <a href="#collapseCardCliente" class="d-block card-header py-3"
-                                    data-toggle="collapse" role="button" aria-expanded="true"
-                                    aria-controls="collapseCardCliente">
+                                <div class="card-header py-3">
                                     <h6 class="m-0 font-weight-bold text-primary">Datos del cliente</h6>
-                                </a>
+                                </div>
                                 <!-- Card Content - Collapse -->
                                 <div class="collapse show" id="collapseCardCliente">
                                     <div class="card-body">
