@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.opencsv.bean.CsvToBean;
 import com.opencsv.bean.CsvToBeanBuilder;
@@ -50,13 +51,17 @@ public class PlaneacionController {
 	}
 	
 	@PostMapping("/guardarPlan")
-	public String guardarPlanCSV(@ModelAttribute ActividadDto actividades, Model model) {
+	public String guardarPlanCSV(@ModelAttribute ActividadDto actividades, Model model , RedirectAttributes flash) {
 		if(!(actividades.getActividades().isEmpty() && (actividades.getActividades() == null))) {
-		actividadService.saveAll(actividades.getActividades());
+			Long codProyecto=actividades.getActividades().get(0).getCodProyecto();
+			actividadService.saveAll(actividades.getActividades());
+			flash.addFlashAttribute("success", "Plan cargado con éxito");
+			return "redirect:/preventaProyectoContactoInfraestructura/"+codProyecto;
 		} else {
+			flash.addFlashAttribute("error", "Error al cargar plan");
 			System.out.println("No cargo nada");
+			return "redirect:/";
 		}
-		return "redirect:/";
 	}
 	
 	@PostMapping("/subirPlan")
