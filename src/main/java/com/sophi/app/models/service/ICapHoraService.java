@@ -4,7 +4,6 @@ import java.util.Date;
 import java.util.List;
 
 import com.sophi.app.models.entity.CapHora;
-import com.sophi.app.models.entity.CapHoraId;
 
 public interface ICapHoraService {
 
@@ -12,7 +11,7 @@ public interface ICapHoraService {
 	
 	public void save(CapHora capHora);
 	
-	public CapHora findOne(CapHoraId capHoraId);
+	public CapHora findOne(Long codCapHora);
 	
 	public void delete(CapHora capHora);
 	
