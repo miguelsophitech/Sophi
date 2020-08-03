@@ -26,7 +26,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.sophi.app.models.entity.Actividad;
 import com.sophi.app.models.entity.CapHora;
-import com.sophi.app.models.entity.CapHoraId;
 import com.sophi.app.models.service.IActividadService;
 import com.sophi.app.models.service.ICapHoraService;
 import com.sophi.app.models.service.IProyectoService;
@@ -121,7 +120,7 @@ public class CapHorasController {
 	@GetMapping(value="/cargarDetActividadNoPlan/{codActividad}/{fecCaptura}/{codRecurso}")
 	public String cargarDetActividadNoPlan(@PathVariable Long codActividad, @PathVariable @DateTimeFormat(pattern = "dd-MM-yyyy") Date fecCaptura,@PathVariable Long codRecurso, Model model){
 		System.out.println(codActividad +" "+codRecurso +" "+fecCaptura);
-		CapHoraId capHoraId = new CapHoraId(codActividad, codRecurso, 1L, 1L, 2L);
+//		CapHoraId capHoraId = new CapHoraId(codActividad, codRecurso, 1L, 1L, 2L);
 		CapHora capHora = new CapHora();
 		capHora.setCodActividad(codActividad);
 		capHora.setCodRecurso(codRecurso);
