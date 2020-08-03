@@ -9,7 +9,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.sophi.app.models.dao.ICapHoraDao;
 import com.sophi.app.models.entity.CapHora;
-import com.sophi.app.models.entity.CapHoraId;
 
 @Service
 public class CapHoraServiceImpl implements ICapHoraService {
@@ -31,8 +30,8 @@ public class CapHoraServiceImpl implements ICapHoraService {
 
 	@Override
 	@Transactional(readOnly = true)
-	public CapHora findOne(CapHoraId capHoraId) {
-		return capHoraDao.findById(capHoraId).orElse(null);
+	public CapHora findOne(Long codCapHora) {
+		return capHoraDao.findById(codCapHora).orElse(null);
 	}
 
 	@Override

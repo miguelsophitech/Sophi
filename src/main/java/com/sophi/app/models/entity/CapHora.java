@@ -4,8 +4,10 @@ import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Column;
-import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -21,8 +23,25 @@ public class CapHora implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 	
-	@EmbeddedId
-	CapHoraId Id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "cod_cap_hora")
+	private Long codCapHora;
+	
+	@Column(name = "cod_actividad")
+	private Long codActividad;
+	
+	@Column(name = "cod_recurso")
+	private Long codRecurso;
+	
+	@Column(name = "cod_proyecto")
+	private Long codProyecto;
+	
+	@Column(name = "cod_cliente")
+	private Long codCliente;
+	
+	@Column(name = "cod_estatus_proyecto")
+	private Long codEstatusProyecto;
 	
 	@NotEmpty(message = "Este dato no debe estar vacío")
 	@Column(name = "desc_comentario_detalle")
@@ -72,16 +91,56 @@ public class CapHora implements Serializable{
 		fecRegistro = new Date();
 	}
 
-	public CapHoraId getId() {
-		return Id;
-	}
-
-	public void setId(CapHoraId id) {
-		Id = id;
-	}
-
 	public String getDescComentarioDetalle() {
 		return descComentarioDetalle;
+	}
+
+	public Long getCodCapHora() {
+		return codCapHora;
+	}
+
+	public void setCodCapHora(Long codCapHora) {
+		this.codCapHora = codCapHora;
+	}
+
+	public Long getCodActividad() {
+		return codActividad;
+	}
+
+	public void setCodActividad(Long codActividad) {
+		this.codActividad = codActividad;
+	}
+
+	public Long getCodRecurso() {
+		return codRecurso;
+	}
+
+	public void setCodRecurso(Long codRecurso) {
+		this.codRecurso = codRecurso;
+	}
+
+	public Long getCodProyecto() {
+		return codProyecto;
+	}
+
+	public void setCodProyecto(Long codProyecto) {
+		this.codProyecto = codProyecto;
+	}
+
+	public Long getCodCliente() {
+		return codCliente;
+	}
+
+	public void setCodCliente(Long codCliente) {
+		this.codCliente = codCliente;
+	}
+
+	public Long getCodEstatusProyecto() {
+		return codEstatusProyecto;
+	}
+
+	public void setCodEstatusProyecto(Long codEstatusProyecto) {
+		this.codEstatusProyecto = codEstatusProyecto;
 	}
 
 	public void setDescComentarioDetalle(String descComentarioDetalle) {
@@ -170,26 +229,6 @@ public class CapHora implements Serializable{
 
 	public void setDescProyecto(String descProyecto) {
 		this.descProyecto = descProyecto;
-	}
-
-	public CapHora(CapHoraId id, @NotEmpty(message = "Este dato no debe estar vacío") String descComentarioDetalle,
-			Date fecInicioActividad, Date fecFinActividad, float valDuracionReportada, float valDuracionValidad,
-			Long codRecursoValidador, Long valNuevaActividad, Date fecValidacion, Date fecRegistro) {
-		super();
-		Id = id;
-		this.descComentarioDetalle = descComentarioDetalle;
-		this.fecInicioActividad = fecInicioActividad;
-		this.fecFinActividad = fecFinActividad;
-		this.valDuracionReportada = valDuracionReportada;
-		this.valDuracionValidad = valDuracionValidad;
-		this.codRecursoValidador = codRecursoValidador;
-		this.valNuevaActividad = valNuevaActividad;
-		this.fecValidacion = fecValidacion;
-		this.fecRegistro = fecRegistro;
-	}
-
-	public CapHora() {
-		
 	}
 
 }

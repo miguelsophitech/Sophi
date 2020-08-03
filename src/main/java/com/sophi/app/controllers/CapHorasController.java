@@ -105,9 +105,14 @@ public class CapHorasController {
 	public String cargarDetActividad(@PathVariable Long codActividad, @PathVariable @DateTimeFormat(pattern = "dd-MM-yyyy") Date fecCaptura, Model model){
 		Actividad actividad = new Actividad();
 		actividad = actividadService.findOne(codActividad);
-		CapHoraId capHoraId = new CapHoraId(actividad.getCodActividad(), actividad.getCodRecurso(), actividad.getCodProyecto(), actividad.getCodCliente(), actividad.getCodEstatusProyecto());
+//		CapHoraId capHoraId = new CapHoraId(actividad.getCodActividad(), actividad.getCodRecurso(), actividad.getCodProyecto(), actividad.getCodCliente(), actividad.getCodEstatusProyecto());
 		CapHora capHora = new CapHora();
-		capHora.setId(capHoraId);
+//		capHora.setId(capHoraId);
+		capHora.setCodActividad(actividad.getCodActividad());
+		capHora.setCodRecurso(actividad.getCodRecurso());
+		capHora.setCodProyecto(actividad.getCodProyecto());
+		capHora.setCodCliente(actividad.getCodCliente());
+		capHora.setCodEstatusProyecto(actividad.getCodEstatusProyecto());
 		capHora.setFecInicioActividad(fecCaptura);
 		model.addAttribute("capHora", capHora);
 		return "layout/capHora :: detActividades";
@@ -118,7 +123,12 @@ public class CapHorasController {
 		System.out.println(codActividad +" "+codRecurso +" "+fecCaptura);
 		CapHoraId capHoraId = new CapHoraId(codActividad, codRecurso, 1L, 1L, 2L);
 		CapHora capHora = new CapHora();
-		capHora.setId(capHoraId);
+		capHora.setCodActividad(codActividad);
+		capHora.setCodRecurso(codRecurso);
+		capHora.setCodProyecto(1L);
+		capHora.setCodCliente(1L);
+		capHora.setCodEstatusProyecto(2L);
+//		capHora.setId(capHoraId);
 		capHora.setFecInicioActividad(fecCaptura);
 		model.addAttribute("capHora", capHora);
 		return "layout/capHora :: detActividades";
@@ -142,21 +152,21 @@ public class CapHorasController {
 		List<CapHora> listActHoraCapturadas = new ArrayList<CapHora>();
 		listActHoraCapturadas = capHoraService.findListCapHoraByFechaRecurso(fecCaptura, codRecurso);
 		for (CapHora capHora : listActHoraCapturadas) {
-			if(capHora.getId().getCodProyecto().equals(1L)) {
+			if(capHora.getCodProyecto().equals(1L)) {
 				capHora.setDescProyecto("Sophitech");
 			} else {
-				capHora.setDescProyecto(proyectoService.findByCodProyectoAndCodEstatusProyecto(capHora.getId().getCodProyecto(), 2L).getDescProyecto());
+				capHora.setDescProyecto(proyectoService.findByCodProyectoAndCodEstatusProyecto(capHora.getCodProyecto(), 2L).getDescProyecto());
 			}
 			
-			if(capHora.getId().getCodActividad()<0) {
+			if(capHora.getCodActividad()<0) {
 				for (Map.Entry<Long, String> entry : actividadesSophitech.entrySet()) {
-				    if( capHora.getId().getCodActividad().equals(entry.getKey())) {
+				    if( capHora.getCodActividad().equals(entry.getKey())) {
 				    	capHora.setDescActividadSecundaria(entry.getValue());
 				    	break;
 				    };
 				}
 			} else {
-				capHora.setDescActividadSecundaria(actividadService.findOne(capHora.getId().getCodActividad()).getDescActividadSecundaria());
+				capHora.setDescActividadSecundaria(actividadService.findOne(capHora.getCodActividad()).getDescActividadSecundaria());
 			}
 		}
 		model.addAttribute("listActHoraCapturadas", listActHoraCapturadas);
@@ -177,7 +187,7 @@ public class CapHorasController {
 		capHoraService.save(capHora);
 		status.setComplete();
 		flash.addFlashAttribute("success", mensajeFlash);
-		return "redirect:capHoras/"+recursoService.findOne(capHora.getId().getCodRecurso()).getDescCorreoElectronico();
+		return "redirect:capHoras/"+recursoService.findOne(capHora.getCodRecurso()).getDescCorreoElectronico();
 	}
 	
 	
