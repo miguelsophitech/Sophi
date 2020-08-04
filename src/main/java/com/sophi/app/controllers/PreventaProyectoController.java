@@ -458,7 +458,10 @@ public class PreventaProyectoController {
 			        "<td>"+fecha+"</td>"+
 			        "<td>"+estatusP+"</td>"+
 			        "<td>"+presupuesto+"</td>"+
-			        "<td><a href=\"/preventaProyectoConsulta/"+p.getCodProyecto()+"/"+p.getCodEstatusProyecto()+"/"+p.getCodCliente()+"\">Ver detalle</a></td>"+
+			        "<td>" +
+//			        "<a href=\"/preventaProyectoConsulta/"+p.getCodProyecto()+"/"+p.getCodEstatusProyecto()+"/"+p.getCodCliente()+"\">Ver detalle</a>" +
+			        "<a href=\"/preventaProyectoConsulta/"+p.getCodProyecto()+"/"+p.getCodEstatusProyecto()+"/"+p.getCodCliente()+"\" class=\"badge badge-success\">Detalle  <i class=\"far fa-edit\"></i></a>"+
+			        "</td>"+
 					"</tr>";
 		}
 		
