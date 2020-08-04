@@ -112,7 +112,7 @@ public class PlaneacionController {
 	                	actividadesPlan.add(ap);
 	                	
 	                	if(actividadesPlanStg.get(i).getRecursos().isEmpty()) {
-	                		actividadPrimariaAux = (actividadPrimariaAux + " >> " + actividadesPlanStg.get(i).getNombre()).trim();
+	                		actividadPrimariaAux = (actividadPrimariaAux + " > " + actividadesPlanStg.get(i).getNombre()).trim();
 	                		actividadPrimaria = actividadPrimariaAux;
 	                		continue;
 	                	} else {
@@ -140,7 +140,6 @@ public class PlaneacionController {
 	    	                	actividad.setFecFinActividad(format.parse(actividadesPlanStg.get(i).getFin().substring(0, 10)));
 	    	                	actividad.setCodActividadDependiente(actividadesPlanStg.get(i).getPredecesora());
 	    	                	
-	    	                	System.out.println(descRecurso + " >>> " + descApellidoPaterno);
 	    	                	List<Recurso> listRecursoActividad = new ArrayList<Recurso>(); 
 	    	                	listRecursoActividad=recursoService.findByNombreApellido(descRecurso, descApellidoPaterno);
 	    	                	
@@ -158,31 +157,20 @@ public class PlaneacionController {
 	    	                	}
 	    	                	
 	    	                	
-	    	                	System.out.println(actividadPrimaria);
-	    	                	System.out.println(actividadSecundaria);
-	    	                	
-	    	                	System.out.println("------------------------------------------RECURSO");
-	    	                	
 							}
 	                	}
 	                	
 	                	
 	                	}
 	                	
-	                	System.out.println("------------------------------------------ACTIVIDAD");
 	                	
                 	}
                 	
                 	
 				}
                 
-
-                // TODO: guardar en base.. 
-//                actividadService.saveAll(actividadesCargar);
-                
                 List<Long> listCodRecursosUnicos = new ArrayList<>(new HashSet<>(listCodRecursos));
                 
-
                 model.addAttribute("actividadesPlan", actividadesPlan);
                 ActividadDto actividadesCargarDto = new ActividadDto();
                 actividadesCargarDto.setActividades(actividadesCargar);

@@ -9,5 +9,9 @@ public interface ISubtareaService {
 	public List<Subtarea> findAll();
 	
 	public Subtarea findOne(Long codSubtarea);
+	
+	public List<Subtarea> findByCodTarea(Long codTarea);
+	
+	public List<Subtarea> findFueraDePlan();
 
 }
