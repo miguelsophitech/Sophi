@@ -201,7 +201,7 @@
 											<td><span th:text="${aprobacionhorasunico.valDuracionReportada}"></span></td>
 											<td><input id="validar" type="text" style="height:30px; width:40px;" th:name="|aprobacionhoras[${itemStat.index}].valDuracionValidada|" th:value="${aprobacionhorasunico.getValDuracionValidada()}" disabled/>
 											<input id="RecVal" type="hidden" th:name="|aprobacionhoras[${itemStat.index}].codRecursoValidador|" th:value="${aprobacionhorasunico.getCodRecursoValidador()}">
-											<input class="codProyecto" type="hidden" th:value="${aprobacionhorasunico.Id.codProyecto}"/></td>
+											<input class="codProyecto" type="hidden" th:value="${aprobacionhorasunico.codProyecto}"/></td>
 										</tr>
 										</tbody>
                                 </table>
