@@ -151,8 +151,10 @@
           
           <p class="mb-4">Encuentra aqu&iacute; el listado de todas los dependientes registrados para <b th:text="${recurso.descRecurso}"></b>, podr&aacute;s registrar un nuevo dependiente y gestionar los datos existentes.</p>
 
-		  <p><a th:href="@{'/verRecurso/'} + ${recurso.codRecurso} " th:text="'&laquo; volver'"></a></p>
-		  
+		  <a th:href="@{/verRecurso/} + ${recurso.codRecurso}" class="badge badge-info">Ver recurso <i class="far fa-address-card"></i></a>
+		  <a th:href="@{/formRecurso/} + ${recurso.codRecurso}" class="badge badge-success">Editar recurso <i class="far fa-edit"></i></a>
+		  <br>
+		  <br>
           <!-- DataTales Example -->
           <div class="card shadow mb-4">
             <div class="card-body">
