@@ -181,17 +181,21 @@
                   </div>
                 </div>
                 <div class="form-group row">
-                  <div th:if="${numAct > 0}" class="col-sm-4 mb-3 mb-sm-0">
+                  <div th:if="${numAct > 0}" class="col-sm-6 mb-3 mb-sm-0">
                     <a class="btn btn-primary" th:href="@{/planeacionProyecto/} + ${proyecto.codProyecto}" role="button">Cargar planificación</a>
                     <a href="#" class="btn btn-success btn-circle">
                     	<i class="fas fa-check"></i>
                   	</a>
                   	Plan cargado
                   </div>
-                  <div th:unless="${numAct > 0}" class="col-sm-4 mb-3 mb-sm-0">
+                  <div th:unless="${numAct > 0}" class="col-sm-6 mb-3 mb-sm-0">
                     <a class="btn btn-primary" th:href="@{/planeacionProyecto/} + ${proyecto.codProyecto}" role="button">Cargar planificación</a>
+                  	<a href="#" class="btn btn-warning btn-circle">
+                    	<i class="fas fa-exclamation-triangle"></i>
+                  	</a>
+                  	Sin plan cargado
                   </div>
-                  <div   class="col-sm-4">
+                  <div   class="col-sm-2">
                    
                   </div>
                   <div class="col-sm-4"> 

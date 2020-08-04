@@ -8,116 +8,127 @@
 	<!-- Page Wrapper -->
 	<div id="wrapper">
 
-		<!-- Sidebar -->
-		<ul
-			class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion"
-			id="accordionSidebar">
+		    <!-- Sidebar -->
+    <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
-			<!-- Sidebar - Brand -->
-			<a
-				class="sidebar-brand d-flex align-items-center justify-content-center"
-				th:href="@{/}">
-				<div class="sidebar-brand-icon">
-					<!--<i class="fas fa-laugh-wink"></i>  rotate-n-15-->
-					<img th:src="@{/img/logo-img.png}" alt="">
-				</div>
-				<div class="sidebar-brand-text mx-3">
-					<img th:src="@{/img/logo-texto.png}" alt="">
-				</div>
-			</a>
+      <!-- Sidebar - Brand -->
+      <a class="sidebar-brand d-flex align-items-center justify-content-center" th:href="@{/}">
+        <div class="sidebar-brand-icon">
+          <!--<i class="fas fa-laugh-wink"></i>  rotate-n-15-->
+          <img th:src="@{/img/logo-img.png}" alt="">
+        </div> 
+        <div class="sidebar-brand-text mx-3"><img th:src="@{/img/logo-texto.png}"alt=""></div>
+      </a>
 
-			<!-- Divider -->
-			<hr class="sidebar-divider my-0">
+      <!-- Divider -->
+      <hr class="sidebar-divider my-0">
 
-			<!-- Nav Item - Dashboard -->
-			<li class="nav-item"><a class="nav-link" th:href="@{/}"> <i
-					class="fas fa-fw fa-tachometer-alt"></i> <span>Dashboard</span></a></li>
+      <!-- Nav Item - Dashboard -->
+      <li class="nav-item">
+        <a class="nav-link" th:href="@{/}">
+          <i class="fas fa-fw fa-tachometer-alt"></i>
+          <span>Mi dashboard</span></a>
+      </li>
+      
+      <!-- Divider -->
+      <hr class="sidebar-divider">
 
-			<!-- Divider -->
-			<hr class="sidebar-divider">
+      <!-- Heading Proyecto -->
+      <div class="sidebar-heading">
+        Clientes
+      </div>
 
-			<!-- Heading Proyecto -->
-			<div class="sidebar-heading">Proyecto</div>
+      <!-- Nav Item - Gastos y tiempo Collapse Menu -->
+      <li class="nav-item ">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseClientes" aria-expanded="true" aria-controls="collapseClientes">
+          <i class="fas fa-fw fa-address-book"></i>
+          <span>Gesti&oacute;n de clientes</span>
+        </a>
+        <div id="collapseClientes" class="collapse" aria-labelledby="menuClientes" data-parent="#accordionSidebar">
+          <div class="bg-white py-2 collapse-inner rounded">
+            <h6 class="collapse-header">Ver:</h6>
+            <a class="collapse-item" th:href="@{/listaClientes}">Mis clientes</a>
+            <a class="collapse-item" th:href="@{/agenda}">Mis contactos</a>
+          </div>
+        </div>
+      </li>
+      
 
-			<!-- Nav Item - Gastos y tiempo Collapse Menu -->
-			<li class="nav-item"><a class="nav-link collapsed" href="#"
-				data-toggle="collapse" data-target="#collapseTwo"
-				aria-expanded="true" aria-controls="collapseTwo"> <i
-					class="fas fa-fw fa-cog"></i> <span>Gastos y tiempo</span>
-			</a>
-				<div id="collapseTwo" class="collapse" aria-labelledby="headingTwo"
-					data-parent="#accordionSidebar">
-					<div class="bg-white py-2 collapse-inner rounded">
-						<h6 class="collapse-header">Registrar:</h6>
-						<a class="collapse-item" href="#">Horas</a> <a
-							class="collapse-item" href="#">Gastos</a>
-					</div>
-				</div></li>
+      <!-- Divider -->
+      <hr class="sidebar-divider">
 
-			<!-- Nav Item - Actividades Collapse Menu -->
-			<li class="nav-item"><a class="nav-link collapsed" href="#"
-				data-toggle="collapse" data-target="#collapseUtilities"
-				aria-expanded="true" aria-controls="collapseUtilities"> <i
-					class="fas fa-fw fa-wrench"></i> <span>Actividades</span>
-			</a>
-				<div id="collapseUtilities" class="collapse"
-					aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
-					<div class="bg-white py-2 collapse-inner rounded">
-						<h6 class="collapse-header">Ver:</h6>
-						<a class="collapse-item" href="#">Mis actividades</a> <a
-							class="collapse-item" href="#">Mi forecast</a>
-					</div>
-				</div></li>
+      <!-- Heading Proyecto -->
+      <div class="sidebar-heading">
+        Proyectos
+      </div>
+      
+      
+	  <!-- Nav Item - Actividades Collapse Menu -->
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseProyectos" aria-expanded="true" aria-controls="collapseProyectos">
+          <i class="fas fa-fw fa-wrench"></i>
+          <span>Gesti&oacute;n de proyectos</span>
+        </a>
+        <div id="collapseProyectos" class="collapse" aria-labelledby="menuProyectos" data-parent="#accordionSidebar">
+          <div class="bg-white py-2 collapse-inner rounded">
+            <h6 class="collapse-header">Ver:</h6>
+            <a class="collapse-item"  th:href="@{/listaProyectosTodo}">Mis proyectos</a>
+            <a class="collapse-item" th:href="@{/misActividades/} + ${#authentication.getName()}">Mis actividades</a>
+          </div>
+        </div>
+      </li>
 
-			<!-- Divider -->
-			<hr class="sidebar-divider">
+      <!-- Nav Item - Gastos y tiempo Collapse Menu -->
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseGastosTiempo" aria-expanded="true" aria-controls="collapseGastosTiempo">
+          <i class="fas fa-fw fa-calendar-alt"></i>
+          <span>Gastos y tiempo</span>
+        </a>
+        <div id="collapseGastosTiempo" class="collapse" aria-labelledby="menuGastosTiempo" data-parent="#accordionSidebar">
+          <div class="bg-white py-2 collapse-inner rounded">
+            <h6 class="collapse-header">Ver:</h6>
+            <a class="collapse-item" th:href="@{/capHoras/} + ${#authentication.getName()}">Mi captura de horas</a>
+            <a class="collapse-item" th:href="@{/aprobacionhoras/}+${#authentication.getName()}">Aprobaci&oacute;n de horas</a>
+            <a class="collapse-item" th:href="@{/misGastos/} + ${#authentication.getName()}">Mi captura de gastos</a>
+            <a class="collapse-item" th:href="@{/aprobaciongastos/}+ ${#authentication.getName()}">Aprobaci&oacute;n de gastos</a>
+          </div>
+        </div>
+      </li>
 
-			<!-- Heading Recursos humanos -->
-			<div class="sidebar-heading">Recursos Humanos</div>
+ 
+      
+       <!-- Divider -->
+      <hr class="sidebar-divider">
 
-			<!-- Nav Item - Pages Collapse Menu -->
-			<li class="nav-item active"><a class="nav-link" href="#"
-				data-toggle="collapse" data-target="#collapsePages"
-				aria-expanded="true" aria-controls="collapsePages"> <i
-					class="fas fa-fw fa-folder"></i> <span>Recursos</span>
-			</a>
-				<div id="collapsePages" class="collapse show"
-					aria-labelledby="headingPages" data-parent="#accordionSidebar">
-					<div class="bg-white py-2 collapse-inner rounded">
-						<h6 class="collapse-header">Gestionar</h6>
-						<a class="collapse-item" th:href="@{/formRecurso}">Alta</a> <a
-							class="collapse-item active" href="#">Todos</a>
-						<div class="collapse-divider"></div>
-						<h6 class="collapse-header">Experiencia</h6>
-						<a class="collapse-item" href="#">Skills</a> <a
-							class="collapse-item" href="#">Capacitaci&oacute;n</a>
-					</div>
-				</div></li>
+      <!-- Heading Proyecto -->
+      <div class="sidebar-heading">
+        Recursos
+      </div>
 
-			<!-- Nav Item - Charts -->
-			<!-- <li class="nav-item">
-        <a class="nav-link" href="charts.html">
-          <i class="fas fa-fw fa-chart-area"></i>
-          <span>Charts</span></a>
-      </li> -->
+      <!-- Nav Item - Gastos y tiempo Collapse Menu -->
+      <li class="nav-item active">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseRecursos" aria-expanded="true" aria-controls="collapseRecursos">
+          <i class="fas fa-fw fa-id-card"></i>
+          <span>Gesti&oacute;n de recursos</span>
+        </a>
+        <div id="collapseRecursos" class="collapse" aria-labelledby="menuRecursos" data-parent="#accordionSidebar">
+          <div class="bg-white py-2 collapse-inner rounded">
+            <h6 class="collapse-header">Ver:</h6>
+            <a class="collapse-item active" th:href="@{/listarRecursos}">Mis recursos</a>
+          </div>
+        </div>
+      </li>
 
-			<!-- Nav Item - Tables -->
-			<!-- <li class="nav-item">
-        <a class="nav-link" href="tables.html">
-          <i class="fas fa-fw fa-table"></i>
-          <span>Tables</span></a>
-      </li> -->
+      <!-- Divider -->
+      <hr class="sidebar-divider d-none d-md-block">
 
-			<!-- Divider -->
-			<hr class="sidebar-divider d-none d-md-block">
+      <!-- Sidebar Toggler (Sidebar) -->
+      <div class="text-center d-none d-md-inline">
+        <button class="rounded-circle border-0" id="sidebarToggle"></button>
+      </div>
 
-			<!-- Sidebar Toggler (Sidebar) -->
-			<div class="text-center d-none d-md-inline">
-				<button class="rounded-circle border-0" id="sidebarToggle"></button>
-			</div>
-
-		</ul>
-		<!-- End of Sidebar -->
+    </ul>
+    <!-- End of Sidebar -->
 
 		<!-- Content Wrapper -->
 		<div id="content-wrapper" class="d-flex flex-column">
@@ -141,22 +152,15 @@
 						</a>
 					</div>
 
-					<p class="mb-4">
-						DataTables is a third party plugin that is used to generate the
-						demo table below. For more information about DataTables, please
-						visit the <a target="_blank" href="https://datatables.net">official
-							DataTables documentation</a>.
-					</p>
-<p><a th:href="@{'/'}" th:text="'&laquo; volver'"></a></p>
+					<p class="mb-4">Encuentra aqu&iacute; el listado de todas los sueldos registrados para <b th:text="${recurso.descRecurso}"></b>, podr&aacute;s registrar un nuevo sueldo y gestionar los datos existentes.</p>
+					
+					<p><a th:href="@{'/verRecurso/'} + ${recurso.codRecurso} " th:text="'&laquo; volver'"></a></p>
+					
 					<!-- DataTales Example -->
 					<div class="card shadow mb-4">
-						<div class="card-header py-3">
-							<h6 class="m-0 font-weight-bold text-primary">Listado de
-								sueldos</h6>
-						</div>
 						<div class="card-body">
 							<div class="table-responsive">
-								<table class="table table-bordered" id="dataTable" width="100%"
+								<table class="table" id="dataTable" width="100%"
 									cellspacing="0">
 									<thead>
 										<tr>
@@ -170,17 +174,6 @@
 											<th>Opciones</th>
 										</tr>
 									</thead>
-									<tfoot>
-										<tr>
-											<th>Nomina</th>
-											<th>Asimilado</th>
-											<th>Bono</th>
-											<th>Apoyo</th>
-											<th>Otro</th>
-											<th>Descripci&oacute;n otro</th>
-											<th>Fecha registro</th>
-											<th>Opciones</th>										</tr>
-									</tfoot>
 									<tbody>
 										<tr th:each="sueldo : ${recurso.sueldos}">
 											<td th:text="${sueldo.impMensualNomina}"></td>
