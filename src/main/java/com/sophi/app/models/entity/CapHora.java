@@ -15,6 +15,7 @@ import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotEmpty;
 
+import org.hibernate.validator.constraints.Range;
 import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
@@ -63,7 +64,7 @@ public class CapHora implements Serializable{
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date fecFinActividad;
 	
-	
+	@Range(min=0, max=24, message="No puedes capturar más de 24 horas")
 	@Column(name = "val_duracion_reportada")
 	private float valDuracionReportada;
 
