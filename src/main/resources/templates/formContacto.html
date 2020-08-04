@@ -3,7 +3,7 @@
 
 <head th:replace="layout/layout::head"></head>
 
-<body id="page-top" onLoad="fecNacContacto();">
+<body id="page-top">
 <input id="authGetName" type="hidden" th:value="${#authentication.getName()}"></input>
   <!-- Page Wrapper -->
   <div id="wrapper">
@@ -214,8 +214,8 @@
                       </div>
                        <div class="form-group col-12 col-md-2">
                         <label class="col-form-label">Fecha de nacimiento</label>
-                        <input id="input_fec_nac" type="date" th:field="*{fecNacimiento}" class="form-control" th:errorClass="form-control alert-danger"/>
-                        <label id="fec_nac" class="form-text text-danger"></label>
+                        <input id="input_fec_nac" type="text" placeholder="AAAA-MM-DD" th:field="*{fecNacimiento}" class="form-control" th:errorClass="form-control alert-danger" onchange="fecNacContacto(this.value)" oninvalid="setCustomValidity('Campo inv&aacute;lido')"/>
+                        <small><label id="fec_nac" class="form-text text-danger"></label></small>
 				      </div>
                     </div>
                   </div>
