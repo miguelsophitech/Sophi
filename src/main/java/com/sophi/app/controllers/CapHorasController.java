@@ -26,10 +26,15 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.sophi.app.models.entity.Actividad;
 import com.sophi.app.models.entity.CapHora;
+import com.sophi.app.models.entity.Proyecto;
+import com.sophi.app.models.entity.Subtarea;
+import com.sophi.app.models.entity.Tarea;
 import com.sophi.app.models.service.IActividadService;
 import com.sophi.app.models.service.ICapHoraService;
 import com.sophi.app.models.service.IProyectoService;
 import com.sophi.app.models.service.IRecursoService;
+import com.sophi.app.models.service.ISubtareaService;
+import com.sophi.app.models.service.ITareaService;
 
 @Controller
 @SessionAttributes("capHora")
@@ -39,6 +44,12 @@ public class CapHorasController {
 	private IActividadService actividadService;
 	
 	@Autowired
+	private ITareaService tareaService;
+	
+	@Autowired
+	private ISubtareaService subtareaService;
+	
+	@Autowired
 	private IRecursoService recursoService;
 	
 	@Autowired
@@ -46,6 +57,9 @@ public class CapHorasController {
 	
 	@Autowired
 	private IProyectoService proyectoService;
+	
+	final String PREVENTA = "> Preventa (default)";
+	final String OTRA = "> Otra (fuera de plan)";
 	
 	@GetMapping("/capHoras/{email}")
 	public String capHoras(@PathVariable(value="email") String email, Model model) {
@@ -57,7 +71,8 @@ public class CapHorasController {
 		for (Long id : proyectoListId) {
 			proyectoList.put(id, proyectoService.findByCodProyectoAndCodEstatusProyecto(id, 2L).getDescProyecto());
 		}
-		proyectoList.put(1L,"Sophitech");
+		Proyecto proyecto = proyectoService.findByCodProyecto(1L);
+		proyectoList.put(proyecto.getCodProyecto(),proyecto.getDescProyecto());
 		model.addAttribute("proyectoList", proyectoList);
 		model.addAttribute("codRecurso", codRecurso);
 		return "formCapHoras";
@@ -66,34 +81,35 @@ public class CapHorasController {
 	@GetMapping(value="/cargarActividadPrimaria/{codRecurso}/{codProyecto}")
 	public String cargarActividadPrimaria(@PathVariable Long codRecurso, @PathVariable Long codProyecto, Model model){
 		if(codProyecto.equals(1L)) {
+			Tarea tarea = tareaService.findOne(1L);
 			HashMap<Long, String> actividadesPrimariasList = new HashMap<Long, String>(); 
-			actividadesPrimariasList.put(-1L, "Administración interna");
+			actividadesPrimariasList.put(tarea.getCodTarea(), tarea.getDescTarea());
 			model.addAttribute("actividadesPrimariasNoPlan", actividadesPrimariasList);
 			return "layout/capHora :: listActividadesPrimariasNoPlan";
 		}else {
-			model.addAttribute("actividadesPrimariasList", actividadService.findListaActividadesPrimariasByRecursoProyecto(codRecurso, codProyecto));
+			List<String> listaActividadesPrimarias = new ArrayList<String>();
+			listaActividadesPrimarias.add(PREVENTA);
+			listaActividadesPrimarias.addAll(actividadService.findListaActividadesPrimariasByRecursoProyecto(codRecurso, codProyecto));
+			listaActividadesPrimarias.add(OTRA);
+			model.addAttribute("actividadesPrimariasList", listaActividadesPrimarias);
 			return "layout/capHora :: listActividadesPrimarias";
 		}
 	}
 	
 	@GetMapping(value="/cargarActividadSecundaria/{codRecurso}/{codProyecto}/{descPrimaria}")
 	public String cargarActividadSecundaria(@PathVariable Long codRecurso, @PathVariable Long codProyecto,@PathVariable String descPrimaria,  Model model){
-		System.out.println(codRecurso +" "+codProyecto +" "+descPrimaria );
 		if(codProyecto.equals(1L)) {
-			HashMap<Long, String> actividadesSecundariasList = new HashMap<Long, String>(); 
-			actividadesSecundariasList.put(-1L, "Administrativas");
-			actividadesSecundariasList.put(-2L, "Actividades recreativas internas");
-			actividadesSecundariasList.put(-3L, "Vacaciones");
-			actividadesSecundariasList.put(-4L, "Capacitación");
-			actividadesSecundariasList.put(-5L, "Couching");
-			actividadesSecundariasList.put(-6L, "Enfermedad");
-			actividadesSecundariasList.put(-7L, "Incapacidad");
-			actividadesSecundariasList.put(-8L, "Día festivo");
-			actividadesSecundariasList.put(-9L, "Permiso planeado");
-			actividadesSecundariasList.put(-10L, "Permiso emergencia");
-			actividadesSecundariasList.put(-10L, "Viaje / Desplazamiento");
+			List<Subtarea> actividadesSecundariasList = subtareaService.findByCodTarea(1L);
 			model.addAttribute("actividadesSecundariasNoPlan", actividadesSecundariasList);
 			return "layout/capHora :: listActividadesSecundariasNoPlan";
+		} else if (descPrimaria.equalsIgnoreCase(PREVENTA)) {
+			System.out.println("entra en preventa");
+			model.addAttribute("actividadesSecundariasListFuera", subtareaService.findByCodTarea(2L));
+			return "layout/capHora :: listActividadesSecundariasFuera";
+		} else if (descPrimaria.equalsIgnoreCase(OTRA)){
+			System.out.println("entra en otra fuera de plan");
+			model.addAttribute("actividadesSecundariasListFuera", subtareaService.findFueraDePlan());
+			return "layout/capHora :: listActividadesSecundariasFuera";
 		} else {
 		model.addAttribute("actividadesSecundariasList", actividadService.findListaActividadesByRecursoProyectoPrimaria(codRecurso, codProyecto, descPrimaria));
 		return "layout/capHora :: listActividadesSecundarias";
@@ -112,6 +128,7 @@ public class CapHorasController {
 		capHora.setCodProyecto(actividad.getCodProyecto());
 		capHora.setCodCliente(actividad.getCodCliente());
 		capHora.setCodEstatusProyecto(actividad.getCodEstatusProyecto());
+		capHora.setValNuevaActividad(0L);
 		capHora.setFecInicioActividad(fecCaptura);
 		model.addAttribute("capHora", capHora);
 		return "layout/capHora :: detActividades";
@@ -128,6 +145,26 @@ public class CapHorasController {
 		capHora.setCodCliente(1L);
 		capHora.setCodEstatusProyecto(2L);
 //		capHora.setId(capHoraId);
+		capHora.setValNuevaActividad(1L);
+		capHora.setFecInicioActividad(fecCaptura);
+		model.addAttribute("capHora", capHora);
+		return "layout/capHora :: detActividades";
+	}
+	
+	
+	@GetMapping(value="/cargarDetActividadFuera/{codActividad}/{fecCaptura}/{codRecurso}/{codProyecto}")
+	public String cargarDetActividadFuera(@PathVariable Long codActividad, @PathVariable @DateTimeFormat(pattern = "dd-MM-yyyy") Date fecCaptura,@PathVariable Long codRecurso,@PathVariable Long codProyecto, Model model){
+		System.out.println(codActividad +" "+codRecurso +" "+fecCaptura);
+//		CapHoraId capHoraId = new CapHoraId(codActividad, codRecurso, 1L, 1L, 2L);
+		Proyecto proyecto = proyectoService.findByCodProyecto(codProyecto);
+		CapHora capHora = new CapHora();
+		capHora.setCodActividad(codActividad);
+		capHora.setCodRecurso(codRecurso);
+		capHora.setCodProyecto(proyecto.getCodProyecto());
+		capHora.setCodCliente(proyecto.getCodCliente());
+		capHora.setCodEstatusProyecto(proyecto.getCodEstatusProyecto());
+//		capHora.setId(capHoraId);
+		capHora.setValNuevaActividad(2L);
 		capHora.setFecInicioActividad(fecCaptura);
 		model.addAttribute("capHora", capHora);
 		return "layout/capHora :: detActividades";
@@ -136,35 +173,14 @@ public class CapHorasController {
 	
 	@GetMapping(value="/cargarActividadCapturadas/{codRecurso}/{fecCaptura}")
 	public String cargarActividadesCapturadas(@PathVariable Long codRecurso, @PathVariable @DateTimeFormat(pattern = "dd-MM-yyyy") Date fecCaptura, Model model){
-		HashMap<Long, String> actividadesSophitech = new HashMap<Long, String>(); 
-		actividadesSophitech.put(-1L, "Administrativas");
-		actividadesSophitech.put(-2L, "Actividades recreativas internas");
-		actividadesSophitech.put(-3L, "Vacaciones");
-		actividadesSophitech.put(-4L, "Capacitación");
-		actividadesSophitech.put(-5L, "Couching");
-		actividadesSophitech.put(-6L, "Enfermedad");
-		actividadesSophitech.put(-7L, "Incapacidad");
-		actividadesSophitech.put(-8L, "Día festivo");
-		actividadesSophitech.put(-9L, "Permiso planeado");
-		actividadesSophitech.put(-10L, "Permiso emergencia");
-		actividadesSophitech.put(-10L, "Viaje / Desplazamiento");
 		List<CapHora> listActHoraCapturadas = new ArrayList<CapHora>();
 		listActHoraCapturadas = capHoraService.findListCapHoraByFechaRecurso(fecCaptura, codRecurso);
 		for (CapHora capHora : listActHoraCapturadas) {
-			if(capHora.getCodProyecto().equals(1L)) {
-				capHora.setDescProyecto("Sophitech");
+			if(capHora.getValNuevaActividad().equals(1L) || capHora.getValNuevaActividad().equals(2L)) {
+				capHora.setDescProyecto(proyectoService.findByCodProyecto(capHora.getCodProyecto()).getDescProyecto());
+				capHora.setDescActividadSecundaria(subtareaService.findOne(capHora.getCodActividad()).getDescSubtarea());
 			} else {
-				capHora.setDescProyecto(proyectoService.findByCodProyectoAndCodEstatusProyecto(capHora.getCodProyecto(), 2L).getDescProyecto());
-			}
-			
-			if(capHora.getCodActividad()<0) {
-				for (Map.Entry<Long, String> entry : actividadesSophitech.entrySet()) {
-				    if( capHora.getCodActividad().equals(entry.getKey())) {
-				    	capHora.setDescActividadSecundaria(entry.getValue());
-				    	break;
-				    };
-				}
-			} else {
+				capHora.setDescProyecto(proyectoService.findByCodProyecto(capHora.getCodProyecto()).getDescProyecto());
 				capHora.setDescActividadSecundaria(actividadService.findOne(capHora.getCodActividad()).getDescActividadSecundaria());
 			}
 		}

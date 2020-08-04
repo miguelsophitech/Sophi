@@ -24,7 +24,7 @@ public class Subtarea implements Serializable  {
 	private Long codSubtarea;
 	
 	@Column(name = "desc_subtarea")
-	private String descsubTarea;
+	private String descSubtarea;
 	
 	@OneToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "cod_tarea")
@@ -38,12 +38,12 @@ public class Subtarea implements Serializable  {
 		this.codSubtarea = codSubtarea;
 	}
 
-	public String getDescsubTarea() {
-		return descsubTarea;
+	public String getDescSubtarea() {
+		return descSubtarea;
 	}
 
-	public void setDescsubTarea(String descsubTarea) {
-		this.descsubTarea = descsubTarea;
+	public void setDescSubTarea(String descSubtarea) {
+		this.descSubtarea = descSubtarea;
 	}
 
 	public Tarea getTarea() {

@@ -97,13 +97,39 @@ function altaCapHoraActividadNoPlan(){
 	$("#resultDetActividades").load(url);
 }
 
+function altaCapHoraActividadFuera(){
+	var fech = $("#semanaDias .active span").text();
+	var url="/cargarDetActividadFuera/"+$("#selectActividadesSecundarias").val()+"/"+fech+"/"+$("#valCodRecurso").val()+"/"+$("#selectProyecto").val();
+	$("#resultDetActividades").load(url);
+}
+
 function limpiaActive() {
 	for (var i = 0; i <= 6; i++) {
 		$("#da" + i).removeClass("active");
 	}
 }
 
+function handleChange(input) {
+    if (input.value < 0) input.value = 0;
+    if (input.value > 24) input.value = 24;
+  }
 
+function validaForm(){
+	if(!$("#descDetalleHora").val()){
+		$("#descDetalleHora").addClass("alert-danger");
+		$("#divDescDetalleHora").html("<small class='form-text text-danger'>Este dato es requerido</small>");
+	} else if ($("#valHoraCap").val() > 0 && $("#valHoraCap").val() <= 24 ){
+		document.getElementById('capHorasForm').submit();
+	} else {
+		$("#descDetalleHora").removeClass("alert-danger");
+		$("#divDescDetalleHora").html("");
+		
+		$("#valHoraCap").addClass("alert-danger");
+		$("#divValHoraCap").html("<small class='form-text text-danger'>1-24 hrs</small>");
+	}
+		
+	
+}
 
 function formatoFechaLarga(fecha) {
 	var meses = new Array("Enero", "Febrero", "Marzo", "Abril", "Mayo",
