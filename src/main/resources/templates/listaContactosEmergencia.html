@@ -3,6 +3,7 @@
 <head th:replace="layout/layout::head"></head>
 
 <body id="page-top">
+	<input id="authGetName" type="hidden" th:value="${#authentication.getName()}"></input>
 
   <!-- Page Wrapper -->
   <div id="wrapper">
@@ -174,8 +175,8 @@
 						<td th:text="${contactoEmergencia.descParentescoContactoEmergencia}"></td>
 						<td th:text="${contactoEmergencia.descTelContactoEmergencia}"></td>
 						<td> 
-							<a th:href="@{/formContactoEmergencia/} + ${contactoEmergencia.codContactoEmergencia}" class="btn btn-primary btn-circle btn-sm"><i class="far fa-edit"></i></a>
-							<a th:href="@{/borrarContactoEmergencia/} + ${contactoEmergencia.codContactoEmergencia}" class="btn btn-primary btn-circle btn-sm"><i class="far fa-trash-alt"></i></a>
+							<a th:href="@{/formContactoEmergencia/} + ${contactoEmergencia.codContactoEmergencia}" class="badge badge-success">Editar  <i class="far fa-edit"></i></a>
+							<a th:href="@{/borrarContactoEmergencia/} + ${contactoEmergencia.codContactoEmergencia}" class="badge badge-danger">Eliminar  <i class="far fa-trash-alt"></i></a>
                     	</td>
 					</tr>
                   </tbody>
@@ -226,6 +227,7 @@
   <!-- Page level custom scripts -->
   <script th:src="@{/js/demo/datatables-demo.js}"></script>
   
+  <script th:src="@{/js/datosRecursoSesion.js}"></script>
 
 </body>
 

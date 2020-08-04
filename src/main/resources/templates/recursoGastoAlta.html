@@ -172,42 +172,42 @@
                 
                 <p class="tituloC">Realiza la captura de gastos correspondiente.</p>
                 <div class="form-group row">
-                  <div class="col-sm-4 mb-3 mb-sm-0">
+                  <div class="col-sm-12 col-md-6 col-lg-4 mb-4 mb-sm-4">
                     <label for="nombreProyecto">Proyecto</label>
                     <select class="form-control " th:field="*{codProyecto}" id="proyecto">
                         <option th:each="proyectoAsignado : ${proyectosAsignados}" th:value="${proyectoAsignado.codProyecto}" th:text="${proyectoAsignado.descProyecto}" th:selected="false"/>
                       </select>
                   </div>
-                  <div class="col-sm-4">
+                  <div class="col-sm-12 col-md-6 col-lg-4  mb-4 mb-sm-4">
                   	<label for="tipoFacturacion">Tipo de gasto</label>
                      <select class="form-control " th:field="*{tipoGasto.codTipoGasto}" id="tipoGasto">
                         <option th:each="tipoGasto : ${tiposGastos}" th:value="${tipoGasto.codTipoGasto}" th:text="${tipoGasto.descTipoGasto}" th:selected="false"/>
                       </select>
                   </div>
-                  <div class="col-sm-4">
+                  <div class="col-sm-12 col-md-6 col-lg-4  mb-4 mb-sm-4">
                   </div>
                 </div>
                 <div class="form-group row">
-                  <div class="col-sm-4 mb-3 mb-sm-0">
+                  <div class="col-sm-6 col-md-6 col-lg-4  mb-4 mb-sm-4">
                      <label for="codigoProyecto">Fecha</label>
 					 <input type="date" th:field="*{fecGasto}" class="form-control" id="fechaGasto" oninvalid="setCustomValidity('Fecha inválida')" onchange="try{setCustomValidity('')}catch(e){}" required>
                   </div>
-                  <div class="col-sm-4">
+                  <div class="col-sm-12 col-md-6 col-lg-4 mb-4 mb-sm-4">
                     <label for="presupuesto">Importe</label>
                     <input type="number" th:field="*{impGasto}" class="form-control" id="Cantidad" placeholder="Cantidad" oninvalid="setCustomValidity('Importe inválido')" onchange="try{setCustomValidity('')}catch(e){}" min="0" required>
                   </div>
-                  <div class="col-sm-4">
+                  <div class="col-sm-12 col-md-6 col-lg-4 mb-4 mb-sm-4">
                     
                   </div>
                 </div>
                 <div class="form-group row">
-                  <div class="col-sm-4">
+                  <div class="col-sm-12 col-md-6 col-lg-4 mb-4 mb-sm-4">
                     <label for="totalHoras">Comentario</label>
                     <textarea class="form-control" th:field="*{descComentario}" id="Comentario" rows="3" maxlength="230" oninvalid="setCustomValidity('Campo inválido')" onchange="try{setCustomValidity('')}catch(e){}" required></textarea>
                   </div>
-                  <div class="col-sm-4">
+                  <div class="col-sm-12 col-md-6 col-lg-4 mb-4 mb-sm-4">
 				  <label for="totalHoras">Selecciona tu comprobante <span style="font-size: 14px; color: #c02c57;">(Max.10Mb)</span></label>
-                    <div class="input-group mb-3">
+                    <div class="input-group col-sm-12 mb-12 mb-sm-12">
                         <div class="input-group-prepend">
                             <span class="input-group-text" id="inputGroupFileAddon01">Comprobante</span>
                         </div>
@@ -218,7 +218,7 @@
                         </div>
                     </div>
                   </div>
-                  <div class="col-sm-4 mb-3 mb-sm-0">
+                  <div class="col-sm-12 col-md-6 col-lg-4 mb-4 mb-sm-4">
                   	<label for="">Imagen</label>
                     <div id="preview">
                     	<img th:if="*{comprobante} != null" class="img-thumbnail rounded" style="max-height: 200px;" th:src="@{'/imagenGasto/' + ${recursoGasto.codRecursoGasto} + '/' + ${recursoGasto.tipoGasto.codTipoGasto} + '/' + ${recursoGasto.codProyecto} + '/' + ${recursoGasto.codRecurso} +  '/' + ${recursoGasto.codCliente} +  '/' + ${recursoGasto.codEstatusProyecto}}">
