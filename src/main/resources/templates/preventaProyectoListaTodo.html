@@ -204,7 +204,11 @@
                       <td th:text="${proyecto.fecIncioProyecto}"></td>
                       <td>Proyecto</td>
                       <td th:text="${proyecto.impPresupuesto}"></td>
-                      <td><a th:href="@{/preventaProyectoConsulta/}+${proyecto.codProyecto}+'/'+${proyecto.codEstatusProyecto}+'/'+${proyecto.codCliente}">Ver detalle</a></td>
+                      <td>
+<!--                       	<a th:href="@{/preventaProyectoConsulta/}+${proyecto.codProyecto}+'/'+${proyecto.codEstatusProyecto}+'/'+${proyecto.codCliente}">Ver detalle</a> -->
+                      	<a th:href="@{/preventaProyectoConsulta/}+${proyecto.codProyecto}+'/'+${proyecto.codEstatusProyecto}+'/'+${proyecto.codCliente}" class="badge badge-success">Detalle  <i class="far fa-edit"></i></a>
+                      </td>
+                      
                     </tr>
                     <tr th:unless="${proyecto.codEstatusProyecto == 2}">
                       <td th:text="${proyecto.descCodigoProyecto}"></td>
@@ -212,7 +216,10 @@
                       <td>N/A</td>
                       <td>Preventa</td>
                       <td th:text="${proyecto.impPresupuesto}"></td>
-                      <td><a th:href="@{/preventaProyectoConsulta/}+${proyecto.codProyecto}+'/'+${proyecto.codEstatusProyecto}+'/'+${proyecto.codCliente}">Ver detalle</a></td>
+                      <td>
+<!--                       	<a th:href="@{/preventaProyectoConsulta/}+${proyecto.codProyecto}+'/'+${proyecto.codEstatusProyecto}+'/'+${proyecto.codCliente}">Ver detalle</a> -->
+                      	<a th:href="@{/preventaProyectoConsulta/}+${proyecto.codProyecto}+'/'+${proyecto.codEstatusProyecto}+'/'+${proyecto.codCliente}" class="badge badge-success">Detalle  <i class="far fa-edit"></i></a>
+                      </td>
                     </tr>
                     </th:block>
                   </tbody>

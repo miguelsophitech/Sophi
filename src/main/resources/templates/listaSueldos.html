@@ -4,6 +4,7 @@
 <head th:replace="layout/layout::head"></head>
 
 <body id="page-top">
+	<input id="authGetName" type="hidden" th:value="${#authentication.getName()}"></input>
 
 	<!-- Page Wrapper -->
 	<div id="wrapper">
@@ -185,12 +186,10 @@
 											<td th:text="${sueldo.impMensualOtro}"></td>
 											<td th:text="${sueldo.descMensualOtro}"></td>
 											<td th:text="${sueldo.fecRegistro}"></td>
-											<td><a th:href="@{/formSueldo/} + ${sueldo.codSueldo}"
-												class="btn btn-primary btn-circle btn-sm"><i
-													class="far fa-edit"></i></a> <a
-												th:href="@{/borrarSueldo/} + ${sueldo.codSueldo}"
-												class="btn btn-primary btn-circle btn-sm"><i
-													class="far fa-trash-alt"></i></a></td>
+											<td>
+												<a th:href="@{/formSueldo/} + ${sueldo.codSueldo}" class="badge badge-success">Editar  <i class="far fa-edit"></i></a>
+												<a th:href="@{/borrarSueldo/} + ${sueldo.codSueldo}" class="badge badge-danger">Eliminar  <i class="far fa-trash-alt"></i></a>
+											</td>
 										</tr>
 									</tbody>
 								</table>
@@ -239,6 +238,9 @@
 
 	<!-- Page level custom scripts -->
 	<script th:src="@{/js/demo/datatables-demo.js}"></script>
+	
+	<script th:src="@{/js/datosRecursoSesion.js}"></script>
+	
 
 
 </body>
