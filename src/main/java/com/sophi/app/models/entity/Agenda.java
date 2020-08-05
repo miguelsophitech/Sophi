@@ -60,7 +60,7 @@ public class Agenda implements Serializable {
 	@Column(name = "desc_tel_empresa")
 	private String descTelEmpresa;
 	
-	@Pattern(regexp = "(\\d{3})$", message="Ingresa una extensión válida")
+	@Pattern(regexp = "\\0|\\d+", message="Ingresa una extensión válida")
 	@Column(name = "desc_tel_ext")
 	private String descTelExt;
 	
