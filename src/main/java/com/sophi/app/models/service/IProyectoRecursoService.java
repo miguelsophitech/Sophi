@@ -17,4 +17,6 @@ public interface IProyectoRecursoService {
 	
 	public List<ProyectoRecurso> findByProyectoRecursoIdCodRecurso(Long codRecurso);
 	
+	public void saveAll(List<ProyectoRecurso> proyectoRecurso);
+	
 }

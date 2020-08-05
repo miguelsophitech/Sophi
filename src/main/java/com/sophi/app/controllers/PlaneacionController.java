@@ -26,8 +26,11 @@ import com.sophi.app.models.entity.Actividad;
 import com.sophi.app.models.entity.ActividadDto;
 import com.sophi.app.models.entity.ActividadPlan;
 import com.sophi.app.models.entity.Proyecto;
+import com.sophi.app.models.entity.ProyectoRecurso;
+import com.sophi.app.models.entity.ProyectoRecursoId;
 import com.sophi.app.models.entity.Recurso;
 import com.sophi.app.models.service.IActividadService;
+import com.sophi.app.models.service.IProyectoRecursoService;
 import com.sophi.app.models.service.IProyectoService;
 import com.sophi.app.models.service.IRecursoService;
 import com.sophi.app.models.service.ProyectoServiceImpl;
@@ -44,6 +47,9 @@ public class PlaneacionController {
 	@Autowired
 	private IProyectoService proyectoService;
 	
+	@Autowired
+	private IProyectoRecursoService proyectoRecursoService;
+	
 	@GetMapping("/planeacionProyecto/{codProyecto}")
 	public String planeacionProyecto(@PathVariable Long codProyecto, Model model) {
 		model.addAttribute("codProyecto", codProyecto);
@@ -55,6 +61,16 @@ public class PlaneacionController {
 		if(!(actividades.getActividades().isEmpty() && (actividades.getActividades() == null))) {
 			Long codProyecto=actividades.getActividades().get(0).getCodProyecto();
 			actividadService.saveAll(actividades.getActividades());
+			List<ProyectoRecurso> listaRecursosAsignados = new ArrayList<ProyectoRecurso>();
+			for (Actividad actividad : actividades.getActividades()) {
+				ProyectoRecursoId prId = new ProyectoRecursoId(actividad.getCodProyecto(), actividad.getCodRecurso(), actividad.getCodCliente(), actividad.getCodEstatusProyecto());
+				ProyectoRecurso pr = new ProyectoRecurso();
+				pr.setProyectoRecursoId(prId);
+				if(!listaRecursosAsignados.contains(pr)) {
+				listaRecursosAsignados.add(pr);
+				}
+			}
+			proyectoRecursoService.saveAll(listaRecursosAsignados);
 			flash.addFlashAttribute("success", "Plan cargado con éxito");
 			return "redirect:/preventaProyectoContactoInfraestructura/"+codProyecto;
 		} else {
