@@ -212,5 +212,26 @@ public class CapHorasController {
 		System.out.println(codRecurso + " " + fechaInicioSemana + " "+ fechaFinSemana);
 		return capHoraService.findSumHorasReportadasSemana(codRecurso, fechaInicioSemana, fechaFinSemana);
 	}
+	
+	@RequestMapping(value="/borrarCapHora",produces = MediaType.APPLICATION_JSON_VALUE)
+	@ResponseBody
+	public String borrarCapHora(@RequestParam Long codCaptura, Model model) {
+		CapHora capHora = capHoraService.findOne(codCaptura);
+		capHoraService.delete(capHora);
+		return "Borrado correcto";
+	}
+	
+	@GetMapping(value="/editCaptura/{codCaptura}")
+	public String editCaptura(@PathVariable Long codCaptura, Model model) {
+		CapHora capHora = capHoraService.findOne(codCaptura);
+		capHora.setDescProyecto(proyectoService.findByCodProyecto(capHora.getCodProyecto()).getDescProyecto());
+		if(capHora.getValNuevaActividad()==0) {
+			capHora.setDescActividadSecundaria(actividadService.findOne(capHora.getCodActividad()).getDescActividadSecundaria());
+		} else {
+			capHora.setDescActividadSecundaria(subtareaService.findOne(capHora.getCodActividad()).getDescSubtarea());
+		}
+		model.addAttribute("capHora", capHora);
+		return "layout/capHora :: editDetActividades";
+	}
 
 }

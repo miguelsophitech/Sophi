@@ -36,7 +36,11 @@ $(document).ready(function() {
 		semanaInicioFin(fh);
 	});
 	
-
+	$(document).on('click', '.borrar', function (event) {
+	    event.preventDefault();
+	    $(this).closest('tr').remove();
+	});
+	
 	cargaActividadDia();
 	
 //	cargarActividadesPrimariasProyecto();
@@ -127,8 +131,21 @@ function validaForm(){
 		$("#valHoraCap").addClass("alert-danger");
 		$("#divValHoraCap").html("<small class='form-text text-danger'>1-24 hrs</small>");
 	}
+}
+
+function validaFormEdit(){
+	if(!$("#descDetalleHoraEdit").val()){
+		$("#descDetalleHoraEdit").addClass("alert-danger");
+		$("#divDescDetalleHoraEdit").html("<small class='form-text text-danger'>Este dato es requerido</small>");
+	} else if ($("#valHoraCapEdit").val() > 0 && $("#valHoraCapEdit").val() <= 24 ){
+		document.getElementById('formEditCapHoraActividad').submit();
+	} else {
+		$("#descDetalleHoraEdit").removeClass("alert-danger");
+		$("#divDescDetalleHoraEdit").html("");
 		
-	
+		$("#valHoraCapEdit").addClass("alert-danger");
+		$("#divValHoraCapEdit").html("<small class='form-text text-danger'>1-24 hrs</small>");
+	}
 }
 
 function formatoFechaLarga(fecha) {
@@ -177,5 +194,29 @@ function diasArriba(far) {
 	}
 }
 
+
+
+
+function delCaptura(codCaptura){
+	$.ajax({
+	    type: "GET",
+	    url: "/borrarCapHora",
+	    data: {codCaptura: codCaptura},
+		success: function(result){
+	        console.log(result);
+	        semanaInicioFin(fh);
+	    }
+	});
+	
+	
+}
+
+
+function editCaptura(codCaptura){
+	var url="/editCaptura/"+codCaptura;
+	$("#formEditCaptura").load(url);
+	$('#capHoraModalEdit').modal('show');
+	
+}
 
 

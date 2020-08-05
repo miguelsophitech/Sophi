@@ -166,14 +166,14 @@
 			
 			<div id="semanaDias">
 				<div class="list-group list-group-horizontal-sm">
-				  <a id="da0" href="#" class="list-group-item list-group-item-action">Dom<br><span id="d0" style="font-size: 12px;"></span></a>
-				  <a id="da1" href="#" class="list-group-item list-group-item-action">Lun<br><span id="d1" style="font-size: 12px;"></span></a>
-				  <a id="da2" href="#" class="list-group-item list-group-item-action">Mar<br><span id="d2" style="font-size: 12px;"></span></a>
-				  <a id="da3" href="#" class="list-group-item list-group-item-action">Mie<br><span id="d3" style="font-size: 12px;"></span></a>
-				  <a id="da4" href="#" class="list-group-item list-group-item-action">Jue<br><span id="d4" style="font-size: 12px;"></span></a>
-				  <a id="da5" href="#" class="list-group-item list-group-item-action">Vie<br><span id="d5" style="font-size: 12px;"></span></a>
-				  <a id="da6" href="#" class="list-group-item list-group-item-action">Sab<br><span id="d6" style="font-size: 12px;"></span></a>
-				  <a id="da7" href="#" class="list-group-item list-group-item-action disabled" tabindex="-1" aria-disabled="true">Total:<br><span id="dt" style="font-weight: 700;"></span></a>
+				  <a id="da0" href="#!" class="noLink list-group-item list-group-item-action">Dom<br><span id="d0" style="font-size: 12px;"></span></a>
+				  <a id="da1" href="#!" class="noLink list-group-item list-group-item-action">Lun<br><span id="d1" style="font-size: 12px;"></span></a>
+				  <a id="da2" href="#!" class="noLink list-group-item list-group-item-action">Mar<br><span id="d2" style="font-size: 12px;"></span></a>
+				  <a id="da3" href="#!" class="noLink list-group-item list-group-item-action">Mie<br><span id="d3" style="font-size: 12px;"></span></a>
+				  <a id="da4" href="#!" class="noLink list-group-item list-group-item-action">Jue<br><span id="d4" style="font-size: 12px;"></span></a>
+				  <a id="da5" href="#!" class="noLink list-group-item list-group-item-action">Vie<br><span id="d5" style="font-size: 12px;"></span></a>
+				  <a id="da6" href="#!" class="noLink list-group-item list-group-item-action">Sab<br><span id="d6" style="font-size: 12px;"></span></a>
+				  <a id="da7" href="#!" class="noLink list-group-item list-group-item-action disabled" tabindex="-1" aria-disabled="true">Total:<br><span id="dt" style="font-weight: 700;"></span></a>
 				</div>
 			</div>
 			
@@ -274,6 +274,49 @@
       </div>
     </div>
   </div>
+  
+  
+  	  <div th:fragment="modalCapHoraEdit">
+ <!-- Logout Modal-->
+  <div class="modal fade" id="capHoraModalEdit" tabindex="-1" role="dialog" aria-labelledby="capHoraModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          	<h5 class="modal-title" id="capHoraModalLabel">
+			    Editar captura de horas<br>
+			 
+			</h5>
+          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+        <div class="modal-body">
+		
+			<div class="row">
+				<div class="form-group col-12 col-md-12">
+					<div id="formEditCaptura">
+											
+					</div>
+				</div>
+			</div>
+			
+		</div>
+       <div class="modal-footer">
+    		<button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
+          	<button onclick="validaFormEdit();" class="btn btn-primary" type="submit">Aceptar</button>
+  		</div>
+          
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  
+  
+  
+  
+  
+  
 
 	 <!-- ModalLogout -->
       <footer th:replace="layout/layout :: modalLogout"></footer>
