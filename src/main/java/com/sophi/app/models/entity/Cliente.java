@@ -17,9 +17,9 @@ import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 
+import org.hibernate.validator.constraints.Range;
 import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
@@ -55,7 +55,7 @@ public class Cliente implements Serializable {
 	@Column(name = "desc_grupo_empresarial")
 	private String descGrupoEmpresarial;
 	
-	@Min(value=0, message="Ingresa un monto positivo")
+	@Range(min=0, max=99999999, message="Ingresa un monto positivo y no tan largo")
 	@Column(name = "imp_facturacion_anual")
 	private Float impFacturacionAnual;
 	

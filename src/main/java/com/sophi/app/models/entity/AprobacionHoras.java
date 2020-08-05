@@ -14,6 +14,7 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import org.hibernate.validator.constraints.Range;
 import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
@@ -54,7 +55,7 @@ public class AprobacionHoras implements Serializable {
 	private String descComentarioDetalle;
 	
 	@Column(name = "fec_inicio_actividad")
-	@Temporal(TemporalType.TIMESTAMP)
+	@Temporal(TemporalType.DATE)
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date fecInicioActividad;
 	
@@ -71,6 +72,7 @@ public class AprobacionHoras implements Serializable {
 	@Column(name = "val_duracion_reportada")
 	private Float valDuracionReportada;
 	
+	@Range(min=0, max=24, message="No puedes capturar más de 24 horas")
 	@Column(name = "val_duracion_validada")
 	private Float valDuracionValidada;
 	
