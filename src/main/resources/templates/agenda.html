@@ -195,11 +195,15 @@
                                             <td th:text="${agenda.descTelEmpresa}"></td>
                                             <td th:text="${agenda.descTelExt}"></td>
                                             <td>
-                                            <div class="btn-group btn-group-sm" role="group" aria-label="Basic example">
-											  <a type="button" class="btn btn-info" th:href="@{/dataContacto/} + ${agenda.codContacto}" data-toggle="tooltip" title="Ver"><i class="far fa-address-book"></i></a>
-											  <a type="button" class="btn btn-info" th:href="@{/formContacto/} + ${agenda.codContacto}" data-toggle="tooltip" title="Editar"><i class="far fa-edit"></i></a>
-											  <button type="button" class="btn btn-danger" th:onclick="eliminar([[${agenda.codContacto}]])" data-toggle="tooltip" title="Borrar"><i class="far fa-trash-alt"></i></button>
-											</div>
+<!--                                             <div class="btn-group btn-group-sm" role="group" aria-label="Basic example"> -->
+<!-- 											  <a type="button" class="btn btn-info" th:href="@{/dataContacto/} + ${agenda.codContacto}" data-toggle="tooltip" title="Ver"><i class="far fa-address-book"></i></a> -->
+<!-- 											  <a type="button" class="btn btn-info" th:href="@{/formContacto/} + ${agenda.codContacto}" data-toggle="tooltip" title="Editar"><i class="far fa-edit"></i></a> -->
+<!-- 											  <button type="button" class="btn btn-danger" th:onclick="eliminar([[${agenda.codContacto}]])" data-toggle="tooltip" title="Borrar"><i class="far fa-trash-alt"></i></button> -->
+											  
+											  <a th:href="@{/dataContacto/} + ${agenda.codContacto}" class="badge badge-info">Ver  <i class="far fa-address-book"></i></a><br>
+											  <a th:href="@{/formContacto/} + ${agenda.codContacto}" class="badge badge-success">Editar  <i class="far fa-edit"></i></a><br>
+											  <a th:onclick="eliminar([[${agenda.codContacto}]])" href="#" class="badge badge-danger">Eliminar  <i class="far fa-trash-alt"></i></a><br>
+<!-- 											</div> -->
 											<input class="codCliente" type="hidden" th:value="${agenda.codCliente}"/>
                                             </td>
                                         </tr>

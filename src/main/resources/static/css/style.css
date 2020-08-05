@@ -125,3 +125,7 @@ h1>span.tituloBN {
 	color:#FFFFFF;
 	opacity:0.6;
 }
+
+.custom-file-input ~ .custom-file-label::after {
+    content: "Elegir";
+}

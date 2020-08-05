@@ -13,6 +13,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotEmpty;
 
+import org.hibernate.validator.constraints.Range;
 import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
@@ -36,6 +37,7 @@ public class Proyecto implements Serializable  {
 	@Column(name = "desc_proyecto")
 	private String 	descProyecto;
 	
+	@Range(min=0, max=99999999, message="Ingresa un monto positivo válido")
 	@Column(name = "imp_presupuesto")
 	private Float impPresupuesto;
 	
