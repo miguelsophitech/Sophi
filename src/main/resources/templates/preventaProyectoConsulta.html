@@ -190,7 +190,7 @@
                   	<input id="valCliente" name="valCliente" type="hidden"  th:value="${clienteProyecto.codCliente}">
                   </div>
                   <div class="col-sm-4"> 
-                    <a class="btn btn-primary" th:href="@{/formCliente}" role="button">Agregar cliente <i class="fas fa-plus-circle fa-sm text-white-50"></i></a>
+<!--                     <a class="btn btn-primary" th:href="@{/formCliente}" role="button">Agregar cliente <i class="fas fa-plus-circle fa-sm text-white-50"></i></a> -->
                   </div>
                 </div>
                 <div class="form-group row">
@@ -210,7 +210,7 @@
                 <div class="form-group row">
                   <div class="col-sm-4 mb-3 mb-sm-0">
                      <label for="nombreProyecto">Nombre del proyecto</label>
-                    <input type="text" th:field="*{descProyecto}" class="form-control" id="nombreProyecto" placeholder="Nombre de proyecto" oninvalid="setCustomValidity('Campo inválido')" onchange="try{setCustomValidity('')}catch(e){}" required>
+                    <input type="text" th:field="*{descProyecto}" class="form-control" id="nombreProyecto" placeholder="Nombre de proyecto" oninvalid="setCustomValidity('Campo inválido')" onchange="try{setCustomValidity('')}catch(e){}" maxlength="35" required>
                   </div>
                   <div class="col-sm-4" id="fi">
                     <label for="fechaInicio">Fecha inicio</label>
@@ -224,15 +224,15 @@
                 <div class="form-group row">
                   <div class="col-sm-4 mb-3 mb-sm-0">
                      <label for="codigoProyecto">Código de proyecto</label>
-                    <input th:field="*{descCodigoProyecto}" type="text" class="form-control" id="codigoProyecto" placeholder="Código de proyecto" oninvalid="setCustomValidity('Campo inválido')" onchange="try{setCustomValidity('')}catch(e){}" required>
+                    <input th:field="*{descCodigoProyecto}" type="text" class="form-control" id="codigoProyecto" placeholder="Código de proyecto" oninvalid="setCustomValidity('Campo inválido')" onchange="try{setCustomValidity('')}catch(e){}" maxlength="15" required>
                   </div>
                   <div class="col-sm-4">
                     <label for="presupuesto">Presupuesto</label>
-                    <input th:field="*{impPresupuesto}" type="number" class="form-control" id="presupuesto" placeholder="Presupuesto" oninvalid="setCustomValidity('Presupuesto inválido')" onchange="try{setCustomValidity('')}catch(e){}" min="0">
+                    <input th:field="*{impPresupuesto}" type="number" class="form-control" id="presupuesto" placeholder="Presupuesto" oninvalid="setCustomValidity('Presupuesto inválido')" onchange="try{setCustomValidity('')}catch(e){}" min="0" max="99999999">
                   </div>
                   <div class="col-sm-4" id="pr">
                     <label for="riesgo">Porcentaje de riesgo</label>
-                    <input th:field="*{valPorcentajeRiesgo}" type="number" class="form-control" id="riesgo" placeholder="Porcentaje %" oninvalid="setCustomValidity('Porcentaje inválido')" onchange="try{setCustomValidity('')}catch(e){}" min="0">
+                    <input th:field="*{valPorcentajeRiesgo}" type="number" class="form-control" id="riesgo" placeholder="Porcentaje %" oninvalid="setCustomValidity('Porcentaje inválido')" onchange="try{setCustomValidity('')}catch(e){}" min="0" max="99999999">
                   </div>
                 </div>
                 <div class="form-group row">
@@ -244,7 +244,7 @@
                   </div>
                   <div class="col-sm-4" id="thv">
                     <label for="totalHoras">Total de horas vendidas</label>
-                    <input th:field="*{valTotalHorasVendidas}" type="number" class="form-control" id="totalHoras" placeholder="Total de horas vendidas" oninvalid="setCustomValidity('Horas vendidas inválidas')" onchange="try{setCustomValidity('')}catch(e){}" min="0">
+                    <input th:field="*{valTotalHorasVendidas}" type="number" class="form-control" id="totalHoras" placeholder="Total de horas vendidas" oninvalid="setCustomValidity('Horas vendidas inválidas')" onchange="try{setCustomValidity('')}catch(e){}" min="0" max="99999999">
                   </div>
                   <div class="col-sm-4" id="thp">
                     <label for="thorasProyecto">Total de horas proyecto</label>
@@ -260,7 +260,7 @@
                   </div>
                   <div class="col-sm-4" id="pp">
                     <label for="precio">Precio del proyecto</label>
-                    <input th:field="*{impPrecioPropuesta}" type="number" class="form-control" id="precio" placeholder="Precio del proyecto" oninvalid="setCustomValidity('Precio inválido')" onchange="try{setCustomValidity('')}catch(e){}" min="0">
+                    <input th:field="*{impPrecioPropuesta}" type="number" class="form-control" id="precio" placeholder="Precio del proyecto" oninvalid="setCustomValidity('Precio inválido')" onchange="try{setCustomValidity('')}catch(e){}" min="0" max="99999999">
                   </div>
                   <div class="col-sm-4" id="cp">
                     <label for="costoProyecto">Costo de proyecto</label>

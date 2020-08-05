@@ -39,11 +39,11 @@ $(document).ready(function() {
 		$("#codigoProyecto").val(codigo);
 	});
 	
-	$( "#areaComercial" ).click(function() {
-		var codigo = $("#cliente").val();
-		codigo = codigo +"-"+$("#areaComercial").val();
-		codigo= codigo + "-" +$("#nombreProyecto").val().substring(-1,3);
-		$("#codigoProyecto").val(codigo);
-	});
+//	$( "#areaComercial" ).click(function() {
+//		var codigo = $("#cliente").val();
+//		codigo = codigo +"-"+$("#areaComercial").val();
+//		codigo= codigo + "-" +$("#nombreProyecto").val().substring(-1,3);
+//		$("#codigoProyecto").val(codigo);
+//	});
 	
 });

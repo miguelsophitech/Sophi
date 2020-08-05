@@ -17,9 +17,10 @@ import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Pattern;
 
+import org.hibernate.validator.constraints.Range;
 import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
@@ -55,7 +56,7 @@ public class Cliente implements Serializable {
 	@Column(name = "desc_grupo_empresarial")
 	private String descGrupoEmpresarial;
 	
-	@Min(value=0, message="Ingresa un monto positivo")
+	@Range(min=0, max=99999999, message="Ingresa un monto positivo y no tan largo")
 	@Column(name = "imp_facturacion_anual")
 	private Float impFacturacionAnual;
 	
@@ -63,7 +64,7 @@ public class Cliente implements Serializable {
 	private String descRangoRecursos;
 	
 	@Column(name = "desc_rfc")
-	//@Pattern(regexp = "^([A-ZÑ\\x26]{3,4}([0-9]{2})(0[1-9]|1[0-2])(0[1-9]|1[0-9]|2[0-9]|3[0-1]))([A-Z\\d]{3})?$")
+	@Pattern(regexp = "/^([A-ZÑ&]{3,4}) ?(?:- ?)?(\\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\\d|3[01])) ?(?:- ?)?([A-Z\\d]{2})([A\\d])$/")
 	private String descRFC;
 	
 //	@Column(name = "cod_sector")

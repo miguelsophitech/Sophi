@@ -172,7 +172,7 @@
                                     <thead>
                                         <tr>
                                             <th></th>
-                                            <th>Fecha</th>
+                                            <th>Fecha Inicio</th>
                                             <th>Colaborador</th>
                                             <th>Comentario</th>
                                             <th>Horas Planeadas</th>
@@ -183,7 +183,7 @@
                                     <tfoot>
                                         <tr>
                                             <th></th>
-                                            <th>Fecha</th>
+                                            <th>Fecha Inicio</th>
                                             <th>Colaborador</th>
                                             <th>Comentario</th>
                                             <th>Horas Planeadas</th>
@@ -194,12 +194,12 @@
                                     <tbody>
 										<tr th:each="aprobacionhorasunico, itemStat : ${aprobacionhoraslista.aprobacionhoras}" th:if="${aprobacionhorasunico.getFecValidacion() == null AND aprobacionhorasunico.getCodRecursoValidador() == null}">
 											<td><input id="check" type="checkbox" th:name="|aprobacionhoras[${itemStat.index}].fecValidacion|" th:value="${aprobacionhorasunico.getFecValidacion()}" onClick="checkbox();"/></td>
-											<td><span th:text="${aprobacionhorasunico.fecRegistro}"></span></td>
+											<td><span th:text="${aprobacionhorasunico.fecInicioActividad}"></span></td>
 											<td><span th:text="${aprobacionhorasunico.recurso.descRecurso}"></span></td>
 											<td><span th:text="${aprobacionhorasunico.descComentarioDetalle}"></span></td>
 											<td><span th:text="${aprobacionhorasunico.actividad.valDuracionActividad}"></span></td>
 											<td><span th:text="${aprobacionhorasunico.valDuracionReportada}"></span></td>
-											<td><input id="validar" type="text" style="height:30px; width:40px;" th:name="|aprobacionhoras[${itemStat.index}].valDuracionValidada|" th:value="${aprobacionhorasunico.getValDuracionValidada()}" disabled/>
+											<td><input id="validar" step="any" type="number" style="height:30px; width:50px;" min=0.0 max=24.0 th:name="|aprobacionhoras[${itemStat.index}].valDuracionValidada|" th:value="${aprobacionhorasunico.getValDuracionValidada()}" onchange="handleChange(this);" disabled/>
 											<input id="RecVal" type="hidden" th:name="|aprobacionhoras[${itemStat.index}].codRecursoValidador|" th:value="${aprobacionhorasunico.getCodRecursoValidador()}">
 											<input class="codProyecto" type="hidden" th:value="${aprobacionhorasunico.codProyecto}"/></td>
 										</tr>
