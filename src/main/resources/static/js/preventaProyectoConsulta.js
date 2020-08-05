@@ -46,12 +46,12 @@ $(document).ready(function() {
 		$("#codigoProyecto").val(codigo);
 	}); 
 	
-	$( "#areaComercial" ).click(function() {
-		var codigo = $("#valCliente").val();
-		codigo = codigo +"-"+$("#areaComercial").val();
-		codigo= codigo + "-" +$("#nombreProyecto").val().substring(-1,3);
-		$("#codigoProyecto").val(codigo);
-	});
+//	$( "#areaComercial" ).click(function() {
+//		var codigo = $("#valCliente").val();
+//		codigo = codigo +"-"+$("#areaComercial").val();
+//		codigo= codigo + "-" +$("#nombreProyecto").val().substring(-1,3);
+//		$("#codigoProyecto").val(codigo);
+//	});
 	
 	$( "#guardarInfra" ).click(function() {
 		var codCliente=$('#codCliente').val();
