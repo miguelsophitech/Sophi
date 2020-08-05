@@ -4,8 +4,8 @@ $(document).ready(function() {
 	var fila = $('tr');
 	var filtro = $('#filterProyecto');
 	
-	for(var i=2 ; i<fila.length ; i++){
-		fila.eq(i).attr('id', codProyecto.eq(i-2).val());
+	for(var i=1 ; i<fila.length ; i++){
+		fila.eq(i).attr('id', codProyecto.eq(i-1).val());
 	}
 	
 	$("#filterProyecto").change(function() {
@@ -13,7 +13,6 @@ $(document).ready(function() {
 		if(valor != -1){
 			$('tr:not(#' + valor + ')', tabla).hide();
 			$('tr', tabla).eq(0).show();
-			$('tr', tabla).eq(1).show();
 			$('tr#' + valor, tabla).show();
 		}
 			

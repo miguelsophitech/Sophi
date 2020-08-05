@@ -169,7 +169,7 @@
                         </div>
                         <div class="card-body" id="contenidoTabla">
                             <div class="table-responsive">
-                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                <table class="table" id="dataTable" width="100%" cellspacing="0">
                                     <thead>
                                         <tr>
                                             <th></th>
@@ -180,16 +180,6 @@
                                             <th>Importe</th>
                                         </tr>
                                     </thead>
-                                    <tfoot>
-                                        <tr>
-                                            <th></th>
-                                            <th>Tipo de Gasto</th>
-                                            <th>Fecha</th>
-                                            <th>Colaborador</th>
-                                            <th>Descripci&oacute;n</th>
-                                            <th>Importe</th>
-                                        </tr>
-                                    </tfoot>
                                     <tbody>
                                         <tr th:each="aprobaciongastosunico, item : ${aprobaciongastoslista.aprobaciongastos}" th:if="${aprobaciongastosunico.getFecValidacion() == null AND aprobaciongastosunico.getCodRecursoValidador() == null}">
                                         	<td><input id="check" type="checkbox" th:name="|aprobaciongastos[${item.index}].fecValidacion|" th:value="${aprobaciongastosunico.getFecValidacion()}" onclick="validacion();">
