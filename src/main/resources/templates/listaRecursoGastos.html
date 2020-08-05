@@ -174,8 +174,8 @@
                   </thead>
                   <tbody>
 					<tr th:each="gasto: ${listaGastos}">
-						<td th:if="${gasto.codRecursoValidador != null}" th:text="'Aprobado'"></td>
-						<td th:unless="${gasto.codRecursoValidador != null}" th:text="'Pendiente'"></td>
+						<td th:if="${gasto.codRecursoValidador != null}"><span class="badge badge-success">Aprobada  <i class="far fa-check-circle"></i></span></td>
+						<td th:unless="${gasto.codRecursoValidador != null}"><span class="badge badge-warning">Pendiente  <i class="far fa-hourglass"></i></span></td>
 						<td th:text="${gasto.descComentario}"></td>
 						<td th:text="${gasto.fecGasto}"></td>
 						<td th:text="${gasto.tipoGasto.descTipoGasto}"></td>
@@ -186,8 +186,8 @@
 <!--                     		<a th:href="@{/verRecursoGastos/} + ${gasto.codRecursoGasto} + '/'+ ${gasto.tipoGasto.codTipoGasto} + '/' + ${gasto.codProyecto} + '/'+ ${gasto.codRecurso} + '/' + ${gasto.codCliente} + '/' + ${gasto.codEstatusProyecto}" class="btn btn-primary btn-circle btn-sm"><i class="far fa-id-card"></i></a> -->
 <!--                     		<a th:unless="${gasto.codRecursoValidador != null}" th:href="@{/eliminarRecursoGastos/} + ${gasto.codRecursoGasto} + '/' + ${gasto.tipoGasto.codTipoGasto} + '/' + ${gasto.codProyecto} + '/'+ ${gasto.codRecurso} + '/' + ${gasto.codCliente} + '/' + ${gasto.codEstatusProyecto}" class="btn btn-primary btn-circle btn-sm"><i class="fas fa-trash"></i></a> -->
                     		
+                    		<a th:href="@{/verRecursoGastos/} + ${gasto.codRecursoGasto} + '/'+ ${gasto.tipoGasto.codTipoGasto} + '/' + ${gasto.codProyecto} + '/'+ ${gasto.codRecurso} + '/' + ${gasto.codCliente} + '/' + ${gasto.codEstatusProyecto}" class="badge badge-info">Ver  <i class="far fa-address-card"></i></a><br>
                     		<a th:unless="${gasto.codRecursoValidador != null}" th:href="@{/editarRecursoGastos/} + ${gasto.codRecursoGasto} + '/'+ ${gasto.tipoGasto.codTipoGasto} + '/' + ${gasto.codProyecto} + '/'+ ${gasto.codRecurso} + '/' + ${gasto.codCliente} + '/' + ${gasto.codEstatusProyecto}" class="badge badge-success">Editar  <i class="far fa-edit"></i></a><br>
-							<a th:href="@{/verRecursoGastos/} + ${gasto.codRecursoGasto} + '/'+ ${gasto.tipoGasto.codTipoGasto} + '/' + ${gasto.codProyecto} + '/'+ ${gasto.codRecurso} + '/' + ${gasto.codCliente} + '/' + ${gasto.codEstatusProyecto}" class="badge badge-info">Ver  <i class="far fa-address-card"></i></a><br>
 							<a th:unless="${gasto.codRecursoValidador != null}" th:href="@{/eliminarRecursoGastos/} + ${gasto.codRecursoGasto} + '/' + ${gasto.tipoGasto.codTipoGasto} + '/' + ${gasto.codProyecto} + '/'+ ${gasto.codRecurso} + '/' + ${gasto.codCliente} + '/' + ${gasto.codEstatusProyecto}" class="badge badge-danger">Eliminar  <i class="far fa-trash-alt"></i></a>
 
 						</td>
