@@ -212,7 +212,7 @@
                   </div>
                   <div class="col-sm-4">
                     <label for="presupuesto">Presupuesto</label>
-                    <input th:field="*{impPresupuesto}" type="number" class="form-control" id="presupuesto" placeholder="Presupuesto" oninvalid="setCustomValidity('Presupuesto inválido')" onchange="try{setCustomValidity('')}catch(e){}" min="0" max="99999999">
+                    <input th:field="*{impPresupuesto}" type="number" class="form-control" id="presupuesto" placeholder="Presupuesto" oninvalid="setCustomValidity('Presupuesto inválido')" onchange="try{setCustomValidity('')}catch(e){}" min="0" max="99999999" step="any">
                     <small class="form-text text-danger" th:if="${#fields.hasErrors('impPresupuesto')}" th:errors="*{impPresupuesto}"></small>
                   </div>
                   <div class="col-sm-4" id="pr">
