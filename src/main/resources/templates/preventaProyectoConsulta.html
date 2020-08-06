@@ -195,7 +195,7 @@
                 </div>
                 <div class="form-group row">
                   <div class="col-sm-3 mb-3 mb-sm-0">
-                      <label for="areaComercial">Área comercial</label>
+                      <label for="areaComercial">&Aacute;rea comercial</label>
                   </div>
                   <div class="col-sm-5">
                     <select th:field="*{codAreaComercial}" class="form-control " id="areaComercial">
@@ -206,11 +206,11 @@
                   </div>
                 </div>
                 <input th:field="*{codProyecto}" id="codProyecto" name="codProyecto" type="hidden"  th:value="${proyecto.codProyecto}">
-                <p class="tituloC">Completa la información del proyecto.</p>
+                <p class="tituloC">Completa la informaci&oacute;n del proyecto.</p>
                 <div class="form-group row">
                   <div class="col-sm-4 mb-3 mb-sm-0">
                      <label for="nombreProyecto">Nombre del proyecto</label>
-                    <input type="text" th:field="*{descProyecto}" class="form-control" id="nombreProyecto" placeholder="Nombre de proyecto" oninvalid="setCustomValidity('Campo inválido')" onchange="try{setCustomValidity('')}catch(e){}" maxlength="35" required>
+                    <input type="text" th:field="*{descProyecto}" class="form-control" id="nombreProyecto" placeholder="Nombre de proyecto" oninvalid="setCustomValidity('Campo invÃ¡lido')" onchange="try{setCustomValidity('')}catch(e){}" maxlength="35" required>
                   </div>
                   <div class="col-sm-4" id="fi">
                     <label for="fechaInicio">Fecha inicio</label>
@@ -223,16 +223,16 @@
                 </div>
                 <div class="form-group row">
                   <div class="col-sm-4 mb-3 mb-sm-0">
-                     <label for="codigoProyecto">Código de proyecto</label>
-                    <input th:field="*{descCodigoProyecto}" type="text" class="form-control" id="codigoProyecto" placeholder="Código de proyecto" oninvalid="setCustomValidity('Campo inválido')" onchange="try{setCustomValidity('')}catch(e){}" maxlength="15" required>
+                     <label for="codigoProyecto">C&oacute;digo de proyecto</label>
+                    <input th:field="*{descCodigoProyecto}" type="text" class="form-control" id="codigoProyecto" placeholder="CÃ³digo de proyecto" oninvalid="setCustomValidity('Campo invÃ¡lido')" onchange="try{setCustomValidity('')}catch(e){}" maxlength="15" required>
                   </div>
                   <div class="col-sm-4">
                     <label for="presupuesto">Presupuesto</label>
-                    <input th:field="*{impPresupuesto}" type="number" class="form-control" id="presupuesto" placeholder="Presupuesto" oninvalid="setCustomValidity('Presupuesto inválido')" onchange="try{setCustomValidity('')}catch(e){}" min="0" max="99999999" step="any">
+                    <input th:field="*{impPresupuesto}" type="number" class="form-control" id="presupuesto" placeholder="Presupuesto" oninvalid="setCustomValidity('Presupuesto invÃ¡lido')" onchange="try{setCustomValidity('')}catch(e){}" min="0" max="99999999" step="any">
                   </div>
                   <div class="col-sm-4" id="pr">
                     <label for="riesgo">Porcentaje de riesgo</label>
-                    <input th:field="*{valPorcentajeRiesgo}" type="number" class="form-control" id="riesgo" placeholder="Porcentaje %" oninvalid="setCustomValidity('Porcentaje inválido')" onchange="try{setCustomValidity('')}catch(e){}" min="0" max="99999999">
+                    <input th:field="*{valPorcentajeRiesgo}" type="number" class="form-control" id="riesgo" placeholder="Porcentaje %" oninvalid="setCustomValidity('Porcentaje invÃ¡lido')" onchange="try{setCustomValidity('')}catch(e){}" min="0" max="99999999">
                   </div>
                 </div>
                 <div class="form-group row">
@@ -244,7 +244,7 @@
                   </div>
                   <div class="col-sm-4" id="thv">
                     <label for="totalHoras">Total de horas vendidas</label>
-                    <input th:field="*{valTotalHorasVendidas}" type="number" class="form-control" id="totalHoras" placeholder="Total de horas vendidas" oninvalid="setCustomValidity('Horas vendidas inválidas')" onchange="try{setCustomValidity('')}catch(e){}" min="0" max="99999999">
+                    <input th:field="*{valTotalHorasVendidas}" type="number" class="form-control" id="totalHoras" placeholder="Total de horas vendidas" oninvalid="setCustomValidity('Horas vendidas invÃ¡lidas')" onchange="try{setCustomValidity('')}catch(e){}" min="0" max="99999999">
                   </div>
                   <div class="col-sm-4" id="thp">
                     <label for="thorasProyecto">Total de horas proyecto</label>
@@ -253,14 +253,14 @@
                 </div>
                 <div class="form-group row">
                   <div class="col-sm-4 mb-3 mb-sm-0" id="tp">
-                  	<label for="tipoFacturacion">Tipo de facturacion</label>
+                  	<label for="tipoFacturacion">Tipo de facturaci&oacute;n</label>
                      <select th:field="*{codTipoFacturacion}" class="form-control " id="tipoFacturacion">
                         <option th:each="tipoFacturacion : ${tiposFacturacion}" th:value="${tipoFacturacion.codTipoFacturacion}" th:text="${tipoFacturacion.descTipoFacturacion}" th:selected="${tipoFacturacion.codTipoFacturacion==proyecto.codTipoFacturacion}"/>
                       </select>
                   </div>
                   <div class="col-sm-4" id="pp">
                     <label for="precio">Precio del proyecto</label>
-                    <input th:field="*{impPrecioPropuesta}" type="number" class="form-control" id="precio" placeholder="Precio del proyecto" oninvalid="setCustomValidity('Precio inválido')" onchange="try{setCustomValidity('')}catch(e){}" min="0" max="99999999" step="any">
+                    <input th:field="*{impPrecioPropuesta}" type="number" class="form-control" id="precio" placeholder="Precio del proyecto" oninvalid="setCustomValidity('Precio invÃ¡lido')" onchange="try{setCustomValidity('')}catch(e){}" min="0" max="99999999" step="any" oninput="Intl.NumberFormat('es-MX').format(this.value)">
                   </div>
                   <div class="col-sm-4" id="cp">
                     <label for="costoProyecto">Costo de proyecto</label>
@@ -269,20 +269,20 @@
                 </div>
                  <div class="form-group row">
                 	<div class="col-sm-4 mb-3 mb-sm-0">
-                      <label for="clasificacion">Clasificación del proyecto</label>
+                      <label for="clasificacion">Clasificaci&oacute;n del proyecto</label>
                       <select th:field="*{codClasificacionProyecto}" class="form-control " id="clasificacionProyecto">
                         	<option th:each="clasificacionProyecto : ${clasificacionesProyecto}" th:value="${clasificacionProyecto.codClasificacionProyecto}" th:text="${clasificacionProyecto.descClasificacion}" th:selected="${clasificacionProyecto.codClasificacionProyecto==proyecto.codClasificacionProyecto}"/>
                       </select>
                   	</div>
                   	<div class="col-sm-4">
-                    	<label for="clasificacion">Líder de proyecto</label>
+                    	<label for="clasificacion">L&iacute;der de proyecto</label>
                       <select th:field="*{codRecursoLider}" class="form-control " id="liderProyecto">
                         	<option th:each="recurso : ${recursos}" th:value="${recurso.codRecurso}" th:text="${recurso.descRecurso}" th:selected="${recurso.codRecurso==proyecto.codRecursoLider}"/>
                       </select>
                   	</div>
                   	<div class="col-sm-4" id="complementoProyecto"> 
                        <br>
-                       <a class="btn btn-primary" data-toggle="modal" data-target="#modalComplemento" href="#" role="button">Información de contacto e infraestructura</a>
+                       <a class="btn btn-primary" data-toggle="modal" data-target="#modalComplemento" href="#" role="button">InformaciÃ³n de contacto e infraestructura</a>
                   	</div>
                 </div>
                 <div class="form-group row">
@@ -332,7 +332,7 @@
         <div class="modal-header">
           <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
           <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">×</span>
+            <span aria-hidden="true">Ã—</span>
           </button>
         </div>
         <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
@@ -351,10 +351,10 @@
         <div class="modal-header">
           <h5 class="modal-title" id="exampleModalLabel">Cambio de preventa a proyecto</h5>
           <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">×</span>
+            <span aria-hidden="true"></span>
           </button>
         </div>
-        <div class="modal-body">Cambiaras el estatus de la preventa a proyecto, esta operación no se podrá recuperar. ¿Estás de acuerdo?</div>
+        <div class="modal-body">Cambiar&aacute;s el estatus de la preventa a proyecto, esta operaci&oacute;n no se podr&aacute; recuperar. ¿Est&aacute;s de acuerdo?</div>
         <div class="modal-footer">
           <button class="btn btn-secondary" type="button" data-dismiss="modal" id="cancelarProyecto" >Cancelar</button>
           <a class="btn btn-primary" data-dismiss="modal" href="" id="aceptarProyecto">Aceptar</a>
@@ -371,28 +371,28 @@
         <div class="modal-header">
           <h5 class="modal-title" id="exampleModalLabel">Datos complementarios</h5>
           <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">×</span>
+            <span aria-hidden="true">Ã—</span>
           </button>
         </div>
         <div class="modal-body">
           Contacto
           <ul th:if="${contactoVista != null}">
   			<li th:text="'Nombre: ' + ${contactoVista.descContacto}"></li>
-  			<li th:text="'Correo electrónico: ' + ${contactoVista.descCorreoElectronico}"></li>
+  			<li th:text="'Correo electrÃ³nico: ' + ${contactoVista.descCorreoElectronico}"></li>
   			<li th:text="'Celular: ' + ${contactoVista.descTelCelular}"></li>
-  			<li th:text="'Teléfono empresa: ' + ${contactoVista.descTelEmpresa}"></li>
-  			<li th:text="'Cumpleaños: ' + ${contactoVista.fecNacimiento}"></li>
+  			<li th:text="'TelÃ©fono empresa: ' + ${contactoVista.descTelEmpresa}"></li>
+  			<li th:text="'CumpleaÃ±os: ' + ${contactoVista.fecNacimiento}"></li>
 		  </ul>
 		  <ul th:unless="${contactoVista != null}">
   			<li th:text="'Sin contacto asignado '"></li>
   		  </ul>
-          Tecnología
+          TecnologÃ­a
           <ul th:if="${tecAcept != null}">
-          	<li th:if="${tecTam == 0}" >Tecnología sin definir</li>
+          	<li th:if="${tecTam == 0}" >TecnologÃ­a sin definir</li>
   			<li th:each="tec : ${tecAcept}" th:text="${tec.descDetalle}"></li>
 		  </ul>
 		  <ul th:unless="${tecAcept != null}">
-  			<li th:text="'Tecnología sin definir'"></li>
+  			<li th:text="'TecnologÃ­a sin definir'"></li>
   		  </ul>
         </div>
         <div class="modal-footer">

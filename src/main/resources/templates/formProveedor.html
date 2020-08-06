@@ -153,7 +153,7 @@
 								</div>
 								<div class="form-group col-12 col-md-6">
 									<label class="col-form-label">Tel&eacute;fono del proveedor*</label>
-									<input type="text" th:field="*{descTelProveedor}" class="form-control" maxlength="12" th:errorclass="'form-control alert-danger'"/>
+									<input type="text" th:field="*{descTelProveedor}" class="form-control" th:errorclass="'form-control alert-danger'" oninvalid="setCustomValidity('N&uacute;mero inv&aacute;lido')" onchange="try{setCustomValidity('')}catch(e){}" pattern="[0-9]{10}"/>
 									<small class="form-text text-danger" th:if="${#fields.hasErrors('descTelProveedor')}" th:errors="*{descTelProveedor}"></small>
 								</div>
 							</div>

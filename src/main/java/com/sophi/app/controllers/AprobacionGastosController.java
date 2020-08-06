@@ -84,7 +84,7 @@ public class AprobacionGastosController {
 		}
 		aprobaciongastosService.saveAll(aprobaciongastoslista.getAprobaciongastos());
 		status.setComplete();
-		flash.addFlashAttribute("success", "Gastos Validados");
+		flash.addFlashAttribute("success", "Gastos aprobados");
 		return "redirect:/aprobaciongastos/"+recursoService.findOne(CodRecurso).getDescCorreoElectronico();
     }
     
