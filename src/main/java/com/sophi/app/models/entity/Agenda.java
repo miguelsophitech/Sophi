@@ -15,7 +15,6 @@ import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.Pattern;
 
 import org.hibernate.validator.constraints.Range;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -51,16 +50,12 @@ public class Agenda implements Serializable {
 	@Column(name = "fec_nacimiento")
 	private String fecNacimiento;
 	
-	@NotEmpty(message = "Este dato no debe estar vacío")
-	//@Pattern(regexp = "\\d{10}", message="Ingresa un teléfono válido")
 	@Column(name = "desc_tel_celular")
 	private String descTelCelular;
 	
-	//@Pattern(regexp = "\\d{10}", message="Ingresa un teléfono válido")
 	@Column(name = "desc_tel_empresa")
 	private String descTelEmpresa;
 	
-	//@Pattern(regexp = "\\d+", message="Ingresa una extensión válida")
 	@Column(name = "desc_tel_ext")
 	private String descTelExt;
 	
