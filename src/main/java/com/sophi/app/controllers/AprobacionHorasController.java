@@ -86,7 +86,7 @@ public class AprobacionHorasController {
 
 		aprobacionHorasService.saveAll(aprobacionhoraslista.getAprobacionhoras());
 		status.setComplete();
-		flash.addFlashAttribute("success", "Horas Validadas");
+		flash.addFlashAttribute("success", "Horas aprobadas");
 		return "redirect:/aprobacionhoras/"+recursoService.findOne(CodRecurso).getDescCorreoElectronico();
 	}
 }
