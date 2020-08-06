@@ -73,7 +73,7 @@ public class Recurso implements Serializable  {
 	
 	@NotEmpty(message = "Este dato no debe estar vacío")
 	@Column(name = "desc_rfc")
-	//@Pattern(regexp = "^([A-Z,Ñ,&]{3,4}([0-9]{2})(0[1-9]|1[0-2])(0[1-9]|1[0-9]|2[0-9]|3[0-1])[A-Z|\\\\\\\\d]{3})$")
+	//@Pattern(regexp = "^([A-ZÑ\\x26]{3,4}([0-9]{2})(0[1-9]|1[0-2])(0[1-9]|1[0-9]|2[0-9]|3[0-1]))([A-Z\\d]{3})?$")
 	private String descRfc;
 	
 	@Column(name = "desc_tel_ext")

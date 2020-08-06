@@ -203,7 +203,7 @@
 	                                        </div>
 	                                        <div class="form-group col-12 col-md-3">
 	                                            <label class="col-form-label">R.F.C.</label>
-	                                            <input type="text" th:field="*{descRFC}" class="form-control" th:errorClass="form-control alert-danger" oninvalid="	setCustomValidity('Campo inv&aacute;lido')" onchange="try{setCustomValidity('')}catch(e){}"/>
+	                                            <input type="text" th:field="*{descRFC}" maxlength="13" class="form-control" th:errorClass="form-control alert-danger" oninvalid="	setCustomValidity('Campo inv&aacute;lido')" onchange="try{setCustomValidity('')}catch(e){}"/>
 	                                            <small class="form-text text-danger" th:if="${#fields.hasErrors('descRFC')}" th:errors="*{descRFC}"></small>
 	                                        </div>
 	                                        <div class="form-group col-12 col-md-4">
