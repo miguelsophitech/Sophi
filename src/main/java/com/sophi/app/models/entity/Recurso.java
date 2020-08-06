@@ -63,12 +63,12 @@ public class Recurso implements Serializable  {
 	private String descCorreoElectronico;
 	
 	@NotEmpty(message = "Este dato no debe estar vacío")
-	@Pattern(regexp="\\d{10}", message = "No es un número telefónico correcto")
+	//@Pattern(regexp="\\d{10}", message = "No es un número telefónico correcto")
 	@Column(name = "desc_tel_celular")
 	private String descTelCelular;
 	
 	@Column(name = "desc_tel_empresa")
-	@Pattern(regexp="\\d{10}", message = "No es un número telefónico correcto")
+	//@Pattern(regexp="\\d{10}", message = "No es un número telefónico correcto")
 	private String descTelEmpresa;
 	
 	@NotEmpty(message = "Este dato no debe estar vacío")
@@ -77,7 +77,7 @@ public class Recurso implements Serializable  {
 	private String descRfc;
 	
 	@Column(name = "desc_tel_ext")
-	@Pattern(regexp="\\d+", message = "No es una extensión correcta")
+	//@Pattern(regexp="\\d+", message = "No es una extensión correcta")
 	private String descTelExt;
 	
 	@NotEmpty(message = "Este dato no debe estar vacío")
