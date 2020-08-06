@@ -9,6 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -34,6 +35,10 @@ public class AprobacionGastos implements Serializable {
 	@Column(name = "cod_proyecto")
 	private Long codProyecto;
 	
+	@OneToOne
+	@JoinColumn(name="cod_proyecto", insertable = false, updatable = false)
+	private Proyecto proyecto;
+
 	@Column(name = "cod_recurso")
 	private Long codRecurso;
 	
@@ -70,7 +75,27 @@ public class AprobacionGastos implements Serializable {
     @Column(name = "cod_recurso_validador")
 	private Long codRecursoValidador;
     
-    public Long getCodRecursoValidador() {
+    @Lob
+    @Column(name = "desc_comprobante", columnDefinition="BLOB", insertable = false, updatable=false)
+	private byte[] foto;
+    
+    public Proyecto getProyecto() {
+		return proyecto;
+	}
+
+	public void setProyecto(Proyecto proyecto) {
+		this.proyecto = proyecto;
+	}
+    
+    public byte[] getFoto() {
+		return foto;
+	}
+
+	public void setFoto(byte[] foto) {
+		this.foto = foto;
+	}
+
+	public Long getCodRecursoValidador() {
 		return codRecursoValidador;
 	}
 
