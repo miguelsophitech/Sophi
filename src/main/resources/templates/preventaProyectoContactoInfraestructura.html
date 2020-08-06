@@ -88,9 +88,9 @@
         <div id="collapseGastosTiempo" class="collapse" aria-labelledby="menuGastosTiempo" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
             <h6 class="collapse-header">Ver:</h6>
-            <a class="collapse-item" th:href="@{/capHoras/} + ${#authentication.getName()}">Mi captura de horas</a>
+            <a class="collapse-item" th:href="@{/capHoras/} + ${#authentication.getName()}">Mis horas</a>
             <a class="collapse-item" th:href="@{/aprobacionhoras/}+${#authentication.getName()}">Aprobaci&oacute;n de horas</a>
-            <a class="collapse-item" th:href="@{/misGastos/} + ${#authentication.getName()}">Mi captura de gastos</a>
+            <a class="collapse-item" th:href="@{/misGastos/} + ${#authentication.getName()}">Mis gastos</a>
             <a class="collapse-item" th:href="@{/aprobaciongastos/}+ ${#authentication.getName()}">Aprobaci&oacute;n de gastos</a>
           </div>
         </div>
@@ -153,7 +153,7 @@
              	<input id="codEstatusProyecto" name="codEstatusProyecto" type="hidden"  th:value="${proyecto.codEstatusProyecto}">
                 <div class="form-group row">
                 	<div class="col-sm-12 mb-3 mb-sm-0">
-                		<p>Por favor, continua con la información complementaria.</p>
+                		<p>Por favor, continua con la informaci&oacute;n complementaria.</p>
                 	</div>
                 </div>
                 <div class="form-group row">
@@ -165,13 +165,13 @@
                       </select>
                   </div>
                   <div class="col-sm-8">
-                    <label class="comentario">En caso de no encontrarlo puedes agregarlo aquí</label><br>
+                    <label class="comentario">En caso de no encontrarlo puedes agregarlo aqu&iacute;</label><br>
                     <a class="btn btn-primary"  th:href="@{/formContacto}"  role="button">Agregar contacto <i class="fas fa-plus-circle fa-sm text-white-50"></i></a>
                   </div>
                 </div>
                 <div class="form-group row">
                   <div class="col-sm-4 mb-3 mb-sm-0">
-                      <label for="tecnologia">Tecnología</label>
+                      <label for="tecnologia">Tecnolog&iacute;a</label>
                   </div>
                   <div class="col-sm-4">
                     <input type="text" th:value="${textoTec}" class="form-control" id="tecnologia" placeholder="Tecnología">
@@ -182,14 +182,14 @@
                 </div>
                 <div class="form-group row">
                   <div th:if="${numAct > 0}" class="col-sm-6 mb-3 mb-sm-0">
-                    <a class="btn btn-primary" th:href="@{/planeacionProyecto/} + ${proyecto.codProyecto}" role="button">Cargar planificación</a>
+                    <a class="btn btn-primary" th:href="@{/planeacionProyecto/} + ${proyecto.codProyecto}" role="button">Cargar planificaci&oacute;n</a>
                     <a href="#" class="btn btn-success btn-circle">
                     	<i class="fas fa-check"></i>
                   	</a>
                   	Plan cargado
                   </div>
                   <div th:unless="${numAct > 0}" class="col-sm-6 mb-3 mb-sm-0">
-                    <a class="btn btn-primary" th:href="@{/planeacionProyecto/} + ${proyecto.codProyecto}" role="button">Cargar planificación</a>
+                    <a class="btn btn-primary" th:href="@{/planeacionProyecto/} + ${proyecto.codProyecto}" role="button">Cargar planificaci&oacute;n</a>
                   	<a href="#" class="btn btn-warning btn-circle">
                     	<i class="fas fa-exclamation-triangle"></i>
                   	</a>
@@ -267,13 +267,13 @@
     <div class="modal-dialog modal-lg" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Tecnología del proyecto</h5>
+          <h5 class="modal-title" id="exampleModalLabel">Tecnolog&iacute;a del proyecto</h5>
           <button class="close" type="button" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">×</span>
           </button>
         </div>
         <div class="modal-body">
-          Por favor, agrega las tecnologías del proyecto
+          Por favor, agrega las tecnolog&iacute;as del proyecto
   <div class="row">
         <div class="col-md-5">
           <select name="from" id="undo_redo" class="form-control" size="13" multiple="multiple">
