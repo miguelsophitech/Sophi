@@ -87,9 +87,9 @@
         <div id="collapseGastosTiempo" class="collapse" aria-labelledby="menuGastosTiempo" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
             <h6 class="collapse-header">Ver:</h6>
-            <a class="collapse-item" th:href="@{/capHoras/} + ${#authentication.getName()}">Mi captura de horas</a>
+            <a class="collapse-item" th:href="@{/capHoras/} + ${#authentication.getName()}">Mis horas</a>
             <a class="collapse-item" th:href="@{/aprobacionhoras/}+${#authentication.getName()}">Aprobaci&oacute;n de horas</a>
-            <a class="collapse-item" th:href="@{/misGastos/} + ${#authentication.getName()}">Mi captura de gastos</a>
+            <a class="collapse-item" th:href="@{/misGastos/} + ${#authentication.getName()}">Mis gastos</a>
             <a class="collapse-item" th:href="@{/aprobaciongastos/}+ ${#authentication.getName()}">Aprobaci&oacute;n de gastos</a>
           </div>
         </div>
@@ -143,12 +143,14 @@
 
           <!-- Page Heading -->
           <div class="d-sm-flex align-items-center justify-content-between mb-4">
-            <h1 class="h3 mb-0 text-gray-800"><span class="tituloA">Registrar preventa o proyecto</span></br><span class="tituloBN">Enhorabuena, tienes un nuevo proyecto que registrar</span></h1>
+            <h1 class="h3 mb-0 text-gray-800"><span class="tituloA">Preventa o proyecto</span>
+<!--             </br><span class="tituloBN">Enhorabuena, tienes un nuevo proyecto que registrar</span> -->
+            </h1>
           </div>
 
             <!--form-->
               <form class="user" th:action="@{/preventaProyectoActualizar}" th:Object="${proyecto}" method="post">
-                <p class="tituloC">Lo primero, elige a un cliente o registra un cliente nuevo.</p>
+<!--                 <p class="tituloC">Lo primero, elige a un cliente o registra un cliente nuevo.</p> -->
                 <div class="form-group row" th:if="${proyecto.codEstatusProyecto == 2}">
                   <div class="col-sm-5 mb-3 mb-sm-0">
                     <div class="form-check form-check-inline">
@@ -260,7 +262,7 @@
                   </div>
                   <div class="col-sm-4" id="pp">
                     <label for="precio">Precio del proyecto</label>
-                    <input th:field="*{impPrecioPropuesta}" type="number" class="form-control" id="precio" placeholder="Precio del proyecto" oninvalid="setCustomValidity('Precio invÃ¡lido')" onchange="try{setCustomValidity('')}catch(e){}" min="0" max="99999999" step="any" oninput="Intl.NumberFormat('es-MX').format(this.value)">
+                    <input th:field="*{impPrecioPropuesta}" type="number" class="form-control" id="precio" placeholder="Precio del proyecto" oninvalid="setCustomValidity('Precio inválido')" onchange="try{setCustomValidity('')}catch(e){}" min="0" max="99999999" step="any" oninput="Intl.NumberFormat('es-MX').format(this.value)">
                   </div>
                   <div class="col-sm-4" id="cp">
                     <label for="costoProyecto">Costo de proyecto</label>
@@ -282,7 +284,7 @@
                   	</div>
                   	<div class="col-sm-4" id="complementoProyecto"> 
                        <br>
-                       <a class="btn btn-primary" data-toggle="modal" data-target="#modalComplemento" href="#" role="button">InformaciÃ³n de contacto e infraestructura</a>
+                       <a class="btn btn-primary" data-toggle="modal" data-target="#modalComplemento" href="#" role="button">Informaci&oacute;n de contacto e infraestructura</a>
                   	</div>
                 </div>
                 <div class="form-group row">
@@ -378,17 +380,17 @@
           Contacto
           <ul th:if="${contactoVista != null}">
   			<li th:text="'Nombre: ' + ${contactoVista.descContacto}"></li>
-  			<li th:text="'Correo electrÃ³nico: ' + ${contactoVista.descCorreoElectronico}"></li>
+  			<li th:text="'Correo electrónico: ' + ${contactoVista.descCorreoElectronico}"></li>
   			<li th:text="'Celular: ' + ${contactoVista.descTelCelular}"></li>
-  			<li th:text="'TelÃ©fono empresa: ' + ${contactoVista.descTelEmpresa}"></li>
+  			<li th:text="'Teléfono empresa: ' + ${contactoVista.descTelEmpresa}"></li>
   			<li th:text="'CumpleaÃ±os: ' + ${contactoVista.fecNacimiento}"></li>
 		  </ul>
 		  <ul th:unless="${contactoVista != null}">
   			<li th:text="'Sin contacto asignado '"></li>
   		  </ul>
-          TecnologÃ­a
+          Tecnolog&iacute;a
           <ul th:if="${tecAcept != null}">
-          	<li th:if="${tecTam == 0}" >TecnologÃ­a sin definir</li>
+          	<li th:if="${tecTam == 0}" >Tecnolog&iacute;a sin definir</li>
   			<li th:each="tec : ${tecAcept}" th:text="${tec.descDetalle}"></li>
 		  </ul>
 		  <ul th:unless="${tecAcept != null}">
@@ -396,7 +398,7 @@
   		  </ul>
         </div>
         <div class="modal-footer">
-          <a class="btn btn-primary" data-dismiss="modal" href="">Entendido</a>
+          <a class="btn btn-primary" data-dismiss="modal" href="">Regresar</a>
         </div>
       </div>
     </div>
