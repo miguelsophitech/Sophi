@@ -201,12 +201,12 @@
                       </div>
                       <div class="form-group col-12 col-md-3">
                         <label class="col-form-label">Tel&eacute;fono celular</label>
-                        <input type="tel" th:field="*{descTelCelular}" class="form-control" th:errorClass="'form-control alert-danger'"/>
+                        <input type="tel" th:field="*{descTelCelular}" maxlength="10" class="form-control" th:errorClass="'form-control alert-danger'"/>
                         <small class="form-text text-danger" th:if="${#fields.hasErrors('descTelCelular')}" th:errors="*{descTelCelular}"></small>
                       </div>
                       <div class="form-group col-8 col-md-3">
                         <label class="col-form-label">Tel&eacute;fono empresa</label>
-                        <input type="tel" th:field="*{descTelEmpresa}" class="form-control"/>
+                        <input type="tel" th:field="*{descTelEmpresa}" maxlength="10" class="form-control"/>
                         <small class="form-text text-danger" th:if="${#fields.hasErrors('descTelCelular')}" th:errors="*{descTelCelular}"></small>
                       </div>
                       <div class="form-group col-4 col-md-1">
