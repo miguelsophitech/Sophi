@@ -64,7 +64,7 @@ public class Cliente implements Serializable {
 	private String descRangoRecursos;
 	
 	@Column(name = "desc_rfc")
-	@Pattern(regexp = "/^([A-ZÑ&]{3,4}) ?(?:- ?)?(\\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\\d|3[01])) ?(?:- ?)?([A-Z\\d]{2})([A\\d])$/")
+	//@Pattern(regexp = "^([A-Z,Ñ,&]{3,4}([0-9]{2})(0[1-9]|1[0-2])(0[1-9]|1[0-9]|2[0-9]|3[0-1])[A-Z|\\\\d]{3})$")
 	private String descRFC;
 	
 //	@Column(name = "cod_sector")

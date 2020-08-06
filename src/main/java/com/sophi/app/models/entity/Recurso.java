@@ -63,25 +63,25 @@ public class Recurso implements Serializable  {
 	private String descCorreoElectronico;
 	
 	@NotEmpty(message = "Este dato no debe estar vacío")
-	@Pattern(regexp="[\\d]{10}", message = "No es un número telefónico correcto")
+	@Pattern(regexp="\\d{10}", message = "No es un número telefónico correcto")
 	@Column(name = "desc_tel_celular")
 	private String descTelCelular;
 	
 	@Column(name = "desc_tel_empresa")
-	@Pattern(regexp="[\\d]{10}", message = "No es un número telefónico correcto")
+	@Pattern(regexp="\\d{10}", message = "No es un número telefónico correcto")
 	private String descTelEmpresa;
 	
 	@NotEmpty(message = "Este dato no debe estar vacío")
 	@Column(name = "desc_rfc")
-	@Pattern(regexp = "/^([A-ZÑ&]{3,4}) ?(?:- ?)?(\\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\\d|3[01])) ?(?:- ?)?([A-Z\\d]{2})([A\\d])$/")
+	//@Pattern(regexp = "^([A-Z,Ñ,&]{3,4}([0-9]{2})(0[1-9]|1[0-2])(0[1-9]|1[0-9]|2[0-9]|3[0-1])[A-Z|\\\\\\\\d]{3})$")
 	private String descRfc;
 	
 	@Column(name = "desc_tel_ext")
-//	@Pattern(regexp="\\0|\\d+", message = "No es una extensión correcta")
+	@Pattern(regexp="\\d+", message = "No es una extensión correcta")
 	private String descTelExt;
 	
 	@NotEmpty(message = "Este dato no debe estar vacío")
-	@Pattern(regexp = "/^([A-Z][AEIOUX][A-Z]{2}\\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\\d|3[01])[HM](?:AS|B[CS]|C[CLMSH]|D[FG]|G[TR]|HG|JC|M[CNS]|N[ETL]|OC|PL|Q[TR]|S[PLR]|T[CSL]|VZ|YN|ZS)[B-DF-HJ-NP-TV-Z]{3}[A-Z\\d])(\\d)$/")
+	//@Pattern(regexp = "^([A-Z][AEIOUX][A-Z]{2}\\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\\d|3[01])[HM](?:AS|B[CS]|C[CLMSH]|D[FG]|G[TR]|HG|JC|M[CNS]|N[ETL]|OC|PL|Q[TR]|S[PLR]|T[CSL]|VZ|YN|ZS)[B-DF-HJ-NP-TV-Z]{3}[A-Z\\d])(\\d)$")
 	@Column(name = "desc_curp")
 	private String descCurp;
 	
