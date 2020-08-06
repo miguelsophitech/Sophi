@@ -98,7 +98,7 @@ public class AgendaController {
 		}
 		agendaService.save(agenda);
 		status.setComplete();
-		flash.addFlashAttribute("success", "Contacto guardado con exito");
+		flash.addFlashAttribute("success", "Contacto guardado con éxito");
 		return "redirect:/agenda";
 	}
 	

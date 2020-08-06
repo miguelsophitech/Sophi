@@ -97,7 +97,7 @@ public class ContactoEmergenciaController {
 		}
 		contactoEmergenciaService.save(contactoEmergencia);
 		status.setComplete();
-		flash.addFlashAttribute("success", "Contacto de emergencia guardado con exito");
+		flash.addFlashAttribute("success", "Contacto de emergencia guardado con éxito");
 		return "redirect:listarContactosEmergencia/" + contactoEmergencia.getRecurso().getCodRecurso().toString();
 	}
 	
@@ -116,7 +116,7 @@ public class ContactoEmergenciaController {
 		}
 		
 		contactoEmergenciaService.delete(contactoEmergencia);
-		flash.addFlashAttribute("success", "Contacto de emergencia eliminado con exito");
+		flash.addFlashAttribute("success", "Contacto de emergencia eliminado con éxito");
 		return "redirect:../listarContactosEmergencia/" + contactoEmergencia.getRecurso().getCodRecurso().toString();
 	}
 	

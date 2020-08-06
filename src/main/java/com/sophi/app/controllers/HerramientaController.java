@@ -97,7 +97,7 @@ public class HerramientaController {
 		}
 		herramientaService.save(herramienta);
 		status.setComplete();
-		flash.addFlashAttribute("success", "Herramienta guardada con exito");
+		flash.addFlashAttribute("success", "Herramienta guardada con éxito");
 		return "redirect:listarHerramientas/" + herramienta.getRecurso().getCodRecurso().toString();
 	}
 	
@@ -116,7 +116,7 @@ public class HerramientaController {
 		}
 		
 		herramientaService.delete(herramienta);
-		flash.addFlashAttribute("success", "Herramienta eliminada con exito");
+		flash.addFlashAttribute("success", "Herramienta eliminada con éxito");
 		return "redirect:../listarHerramientas/" + herramienta.getRecurso().getCodRecurso().toString();
 	}
 	

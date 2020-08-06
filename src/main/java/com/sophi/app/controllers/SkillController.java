@@ -107,7 +107,7 @@ public class SkillController {
 		}
 		skillService.save(skill);
 		status.setComplete();
-		flash.addFlashAttribute("success", "Skill guardado con exito");
+		flash.addFlashAttribute("success", "Skill guardado con éxito");
 		return "redirect:listarSkill/" + skill.getRecurso().getCodRecurso().toString();
 	}
 	
@@ -126,7 +126,7 @@ public class SkillController {
 		}
 		
 		skillService.delete(skill);
-		flash.addFlashAttribute("success", "Skill eliminado con exito");
+		flash.addFlashAttribute("success", "Skill eliminado con éxito");
 		return "redirect:../listarSkill/" + skill.getRecurso().getCodRecurso().toString();
 	}
 

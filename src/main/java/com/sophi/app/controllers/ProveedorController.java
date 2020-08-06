@@ -42,7 +42,7 @@ public class ProveedorController {
 			model.addAttribute("titulo", "Formulario proveedores");
 			return "formProveedor";
 		}
-		String mensajeFlash = (proveedor.getCodProveedor() != null)?"Proveedor editado con éxito!": "Proveedor guardado con exito";
+		String mensajeFlash = (proveedor.getCodProveedor() != null)?"Proveedor editado con éxito!": "Proveedor guardado con éxito";
 		
 		proveedorService.save(proveedor);
 		status.setComplete();

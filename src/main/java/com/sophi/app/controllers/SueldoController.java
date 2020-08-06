@@ -97,7 +97,7 @@ public class SueldoController {
 		}
 		sueldoService.save(sueldo);
 		status.setComplete();
-		flash.addFlashAttribute("success", "Sueldo guardado con exito");
+		flash.addFlashAttribute("success", "Sueldo guardado con éxito");
 		return "redirect:listarSueldos/" + sueldo.getRecurso().getCodRecurso().toString();
 	}
 	
@@ -116,7 +116,7 @@ public class SueldoController {
 		}
 		
 		sueldoService.delete(sueldo);
-		flash.addFlashAttribute("success", "Sueldo eliminado con exito");
+		flash.addFlashAttribute("success", "Sueldo eliminado con éxito");
 		return "redirect:../listarSueldos/" + sueldo.getRecurso().getCodRecurso().toString();
 	}
 	

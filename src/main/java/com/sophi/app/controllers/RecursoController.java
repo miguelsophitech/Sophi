@@ -142,7 +142,7 @@ public class RecursoController {
 //				e.printStackTrace();
 //			}
 //		}
-		String mensajeFlash = (recurso.getCodRecurso() != null)?"Recurso editado con éxito!": "Recurso guardado con exito";
+		String mensajeFlash = (recurso.getCodRecurso() != null)?"Recurso editado con éxito!": "Recurso guardado con éxito";
 		
 		recursoService.save(recurso);
 		status.setComplete();

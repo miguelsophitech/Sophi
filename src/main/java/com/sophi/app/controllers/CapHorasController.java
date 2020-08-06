@@ -197,7 +197,7 @@ public class CapHorasController {
 			return "formCapHoras";
 		}
 		
-		String mensajeFlash = "Registro guardado con exito";
+		String mensajeFlash = "Registro guardado con éxito";
 		
 		capHoraService.save(capHora);
 		status.setComplete();
