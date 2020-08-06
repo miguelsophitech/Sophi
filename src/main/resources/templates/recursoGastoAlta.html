@@ -194,7 +194,7 @@
                   </div>
                   <div class="col-sm-12 col-md-6 col-lg-4 mb-4 mb-sm-4">
                     <label for="presupuesto">Importe</label>
-                    <input type="number" th:field="*{impGasto}" class="form-control" id="Cantidad" placeholder="Cantidad" oninvalid="setCustomValidity('Importe inválido')" onchange="try{setCustomValidity('')}catch(e){}" min="0" step="any" required>
+                    <input type="number" th:field="*{impGasto}" class="form-control" id="Cantidad" placeholder="Cantidad" oninvalid="setCustomValidity('Importe inválido')" onchange="try{setCustomValidity('')}catch(e){}" min=1 step="any" required>
                   </div>
                   <div class="col-sm-12 col-md-6 col-lg-4 mb-4 mb-sm-4">
                     
