@@ -201,22 +201,22 @@
                       </div>
                       <div class="form-group col-12 col-md-3">
                         <label class="col-form-label">Tel&eacute;fono celular</label>
-                        <input type="tel" th:field="*{descTelCelular}" maxlength="10" class="form-control" th:errorClass="'form-control alert-danger'"/>
+                        <input type="tel" th:field="*{descTelCelular}" class="form-control" th:errorClass="'form-control alert-danger'" oninvalid="setCustomValidity('N&uacute;mero inv&aacute;lido')" onchange="try{setCustomValidity('')}catch(e){}" pattern="[0-9]{10}"/>
                         <small class="form-text text-danger" th:if="${#fields.hasErrors('descTelCelular')}" th:errors="*{descTelCelular}"></small>
                       </div>
                       <div class="form-group col-8 col-md-3">
                         <label class="col-form-label">Tel&eacute;fono empresa</label>
-                        <input type="tel" th:field="*{descTelEmpresa}" maxlength="10" class="form-control"/>
-                        <small class="form-text text-danger" th:if="${#fields.hasErrors('descTelCelular')}" th:errors="*{descTelCelular}"></small>
+                        <input type="tel" th:field="*{descTelEmpresa}" class="form-control" oninvalid="setCustomValidity('N&uacute;mero inv&aacute;lido')" onchange="try{setCustomValidity('')}catch(e){}" pattern="[0-9]{10}"/>
+                        <small class="form-text text-danger" th:if="${#fields.hasErrors('descTelEmpresa')}" th:errors="*{descTelEmpresa}"></small>
                       </div>
                       <div class="form-group col-4 col-md-1">
-                        <label class="col-form-label">Extensi&oacute;n</label>
-                        <input type="tel" th:field="*{descTelExt}" maxlength="10" class="form-control"/>
+                        <label class="col-form-label">Extension</label>
+                        <input type="tel" th:field="*{descTelExt}" class="form-control" oninvalid="setCustomValidity('Ext&eacute;nci&oacute;n inv&aacute;lida')"/>
                         <small class="form-text text-danger" th:if="${#fields.hasErrors('descTelExt')}" th:errors="*{descTelExt}"></small>
                       </div>
                        <div class="form-group col-12 col-md-2">
                         <label class="col-form-label">Fecha de nacimiento</label>
-                        <input id="input_fec_nac" type="text" th:field="*{fecNacimiento}" class="form-control" th:errorClass="form-control alert-danger" onchange="fecNacContacto(this.value)" oninvalid="setCustomValidity('Campo inv&aacute;lido')"/>
+                        <input id="input_fec_nac" type="text" placeholder="Ingrese fecha de nacimiento" th:field="*{fecNacimiento}" class="form-control" th:errorClass="form-control alert-danger" oninvalid="setCustomValidity('Campo inv&aacute;lido')" onchange="try{setCustomValidity('')}catch(e){}"/>
                         <small><label id="fec_nac" class="form-text text-danger"></label></small>
 				      </div>
                     </div>

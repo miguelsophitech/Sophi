@@ -18,7 +18,6 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.Pattern;
 
 import org.hibernate.validator.constraints.Range;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -50,7 +49,6 @@ public class Cliente implements Serializable {
 	private Date fecActualizacion;
 	
 	@Column(name = "desc_direccion_fiscal")
-	//@Pattern(regexp = "/\\ s + (\\ d {2,5} \\ s +) (([a -zA-Z | \\ s +] {1,5}) {1,2})? ([\\ s | \\, |.] +)? (([a-zA-Z | \\ s +] {1,30 }) {1,4}) (tribunal | ct | calle | st | unidad | dr | carril | ln | ro ad | rd | blvd) ([\\ s | \\, |. | \\;] +)? (([a-zA-Z | \\ s +] {1,30}) {1,2}) ([\\ s | \\, |.] +)? \\ b (AK | AL | AR | AZ | CA | CO | CT | DC | DE | FL | GA | GU | HI | IA | ID | IL | IN | KS | KY | LA | MA | MD | ME | MI | MN | MO | MS | MT | NC | ND | NE | NH | NJ | NM | NV | NY | OH | OK | O | PA | RI | SC | SD | TN | TX | UT | VA | VI | VT | WA | WI | WV | WY) ([\\ s | \\, |.] +)? (\\ S + \\ d {5})? ([\\ S | \\, |. ] +)/i")
 	private String descDireccionFiscal;
 	
 	@Column(name = "desc_grupo_empresarial")
@@ -64,7 +62,6 @@ public class Cliente implements Serializable {
 	private String descRangoRecursos;
 	
 	@Column(name = "desc_rfc")
-	//@Pattern(regexp = "^([A-ZÑ\\x26]{3,4}([0-9]{2})(0[1-9]|1[0-2])(0[1-9]|1[0-9]|2[0-9]|3[0-1]))([A-Z\\d]{3})?$")
 	private String descRFC;
 	
 //	@Column(name = "cod_sector")
