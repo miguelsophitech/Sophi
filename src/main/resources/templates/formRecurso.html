@@ -186,7 +186,7 @@
 								</div>
 								<div class="form-group col-12 col-md-3">
 									<label class="col-form-label">Tel. particular*</label>
-									<input type="text" th:field="*{descTelCelular}" class="form-control" maxlength="10" th:errorclass="'form-control alert-danger'" oninvalid="setCustomValidity('N&uacute;mero inv&aacute;lido')" onchange="try{setCustomValidity('')}catch(e){}" pattern="[0-9]{10}"/>
+									<input type="tel" th:field="*{descTelCelular}" class="form-control" maxlength="10" th:errorclass="'form-control alert-danger'" oninvalid="setCustomValidity('N&uacute;mero inv&aacute;lido')" onchange="try{setCustomValidity('')}catch(e){}" pattern="[0-9]{10}"/>
 									<small class="form-text text-danger" th:if="${#fields.hasErrors('descTelCelular')}" th:errors="*{descTelCelular}"></small>
 								</div>
 							</div>
@@ -194,7 +194,7 @@
 							<div class="row">
 							<div class="form-group col-12 col-md-3">
 									<label class="col-form-label">Fecha ingreso*</label>
-									<input type="text" th:field="*{fecIngresoEmpresa}" class="form-control" placeholder="AAAA-MM-DD" th:errorclass="'form-control alert-danger'"/>
+									<input type="date" th:field="*{fecIngresoEmpresa}" class="form-control" placeholder="AAAA-MM-DD" th:errorclass="'form-control alert-danger'"/>
 									<small class="form-text text-danger" th:if="${#fields.hasErrors('fecIngresoEmpresa')}" th:errors="*{fecIngresoEmpresa}"></small>
 								</div>
 								<div class="form-group col-12 col-md-4">
@@ -204,7 +204,7 @@
 								</div>
 								<div class="form-group col-8 col-md-3">
 									<label class="col-form-label">Tel. empresa</label>
-									<input type="text" th:field="*{descTelEmpresa}" class="form-control"  maxlength="10" th:errorclass="'form-control alert-danger'" oninvalid="setCustomValidity('N&uacute;mero inv&aacute;lido')" onchange="try{setCustomValidity('')}catch(e){}" pattern="[0-9]{10}"/>
+									<input type="tel" th:field="*{descTelEmpresa}" class="form-control"  maxlength="10" th:errorclass="'form-control alert-danger'" oninvalid="setCustomValidity('N&uacute;mero inv&aacute;lido')" onchange="try{setCustomValidity('')}catch(e){}" pattern="[0-9]{10}"/>
 									<small class="form-text text-danger" th:if="${#fields.hasErrors('descTelEmpresa')}" th:errors="*{descTelEmpresa}"></small>
 								</div>
 								<div class="form-group col-4 col-md-2">
@@ -217,7 +217,7 @@
 							<div class="row">
 								<div class="form-group col-12 col-md-3">
 									<label class="col-form-label">Fecha nacimiento*</label>
-									<input type="text" th:field="*{fecNacimiento}" class="form-control" placeholder="AAAA-MM-DD" th:errorclass="'form-control alert-danger'"/>
+									<input type="date" th:field="*{fecNacimiento}" class="form-control" placeholder="AAAA-MM-DD" th:errorclass="'form-control alert-danger'"/>
 									<small class="form-text text-danger" th:if="${#fields.hasErrors('fecNacimiento')}" th:errors="*{fecNacimiento}"></small>
 								</div>
 								<div class="form-group col-12 col-md-3">
