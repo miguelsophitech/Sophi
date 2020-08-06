@@ -174,6 +174,7 @@
                                         <tr>
                                             <th></th>
                                             <th>Tipo de gasto</th>
+                                            <th>Proyecto</th>
                                             <th>Fecha</th>
                                             <th>Colaborador</th>
                                             <th>Descripci&oacute;n</th>
@@ -186,6 +187,7 @@
                                         	<input id="RecVal" type="hidden" th:name="|aprobaciongastos[${item.index}].codRecursoValidador|" th:value="${aprobaciongastosunico.getCodRecursoValidador()}">
                                         	<input class="codProyecto" type="hidden" th:value="${aprobaciongastosunico.codProyecto}"/></td>
                                             <td><span th:text="${aprobaciongastosunico.tipogasto.descTipoGasto}"></span></td>
+                                            <td><span th:text="${aprobaciongastosunico.Proyecto.descProyecto}"></span></td>
                                             <td><span th:text="${aprobaciongastosunico.fecRegistro}"></span></td>
                                             <td><span th:text="${aprobaciongastosunico.recurso.descRecurso}"></span></td>
                                             <td><span th:text="${aprobaciongastosunico.descComentario}"></span></td>
