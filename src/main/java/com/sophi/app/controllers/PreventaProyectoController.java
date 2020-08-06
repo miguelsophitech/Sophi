@@ -143,7 +143,7 @@ public class PreventaProyectoController {
 //		DetalleInfraestructura di= detalleInfraestructuraService.findAll().get(0);
 //		System.out.println("Primero "+);
 		modelM.put("proyecto", proyectoN);
-		flash.addFlashAttribute("success", "Recurso guardado con exito");
+		flash.addFlashAttribute("success", "Recurso guardado con éxito");
 		return "preventaProyectoComplemento";
 	}
 	
@@ -229,7 +229,7 @@ public class PreventaProyectoController {
 			detalleProyectoContactoService.save(dpc);
 			proyectoService.save(proyecto);
 		}
-		flash.addFlashAttribute("success", "Complemento guardado con exito");
+		flash.addFlashAttribute("success", "Complemento guardado con éxito");
 		System.out.println("Enviar a consulta");		
 		return "redirect:/preventaProyectoConsulta/"+codProyecto+"/"+proyecto.getCodEstatusProyecto()+"/"+proyecto.getCodCliente();
     }
@@ -342,7 +342,7 @@ public class PreventaProyectoController {
 		}
 		
 		proyectoService.save(proyecto);
-		flash.addFlashAttribute("success", "Recurso guardado con exito");
+		flash.addFlashAttribute("success", "Recurso guardado con éxito");
 		return "preventaProyectoLista";
 	}
 	
@@ -586,7 +586,7 @@ public class PreventaProyectoController {
 		modelM.put("proyecto", proyectoN);
 		
 		if(proyectoN.getCodEstatusProyecto()==1) {
-			flash.addFlashAttribute("success", "Preventa/Proyecto guardado con exito");
+			flash.addFlashAttribute("success", "Preventa/Proyecto guardado con éxito");
 			model.addAttribute("proyectos", proyectoService.findAll());
 			return "redirect:/listaProyectosTodo";
 		}else {
@@ -633,16 +633,16 @@ public class PreventaProyectoController {
 		proyectoService.save(proyecto);
 		
 		System.out.println("guarda proyecto "+proyecto.getCodProyecto()+" "+proyecto.getDescProyecto() +" cliente "+proyecto.getCodCliente()+" codStatus "+proyecto.getCodEstatusProyecto());
-		flash.addFlashAttribute("success", "Recurso guardado con exito");
+		flash.addFlashAttribute("success", "Recurso guardado con éxito");
 		
 		//redirijo dependiendo
 		if(proyecto.getCodEstatusProyecto()==1) {
 			List<Proyecto> listaProyectoTodo = proyectoService.findAll();
-			flash.addFlashAttribute("success", "Preventa/Proyecto actualizado con exito");
+			flash.addFlashAttribute("success", "Preventa/Proyecto actualizado con éxito");
 			model.addAttribute("proyectos", listaProyectoTodo);
 			return "redirect:/listaProyectosTodo";
 		}else {
-			flash.addFlashAttribute("success", "Proyecto actualizado con exito");
+			flash.addFlashAttribute("success", "Proyecto actualizado con éxito");
 			return "redirect:/preventaProyectoContactoInfraestructura/"+proyecto.getCodProyecto();
 		}
 	}
@@ -731,7 +731,7 @@ public class PreventaProyectoController {
 		model.addAttribute("titulo", "Proyecto");
 		modelM.put("proyecto", proyectoN);
 		model.addAttribute("codCon", codCon);
-		flash.addFlashAttribute("success", "Recurso guardado con exito");
+		flash.addFlashAttribute("success", "Recurso guardado con éxito");
 		return "preventaProyectoContactoInfraestructura";
 	}
 

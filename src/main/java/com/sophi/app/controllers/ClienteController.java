@@ -86,7 +86,7 @@ public class ClienteController {
 		}
 		clienteService.save(cliente);
 		status.setComplete();
-		flash.addFlashAttribute("success", "Cliente guardado con exito");
+		flash.addFlashAttribute("success", "Cliente guardado con éxito");
 		return "redirect:/listaClientes";
 	}
 	

@@ -121,7 +121,7 @@ function handleChange(input) {
 function validaForm(){
 	if(!$("#descDetalleHora").val()){
 		$("#descDetalleHora").addClass("alert-danger");
-		$("#divDescDetalleHora").html("<small class='form-text text-danger'>Este dato es requerido</small>");
+		$("#divDescDetalleHora").html("<small class='form-text text-danger'>Est&eacute; dato es requerido</small>");
 	} else if ($("#valHoraCap").val() > 0 && $("#valHoraCap").val() <= 24 ){
 		document.getElementById('capHorasForm').submit();
 	} else {
@@ -136,7 +136,7 @@ function validaForm(){
 function validaFormEdit(){
 	if(!$("#descDetalleHoraEdit").val()){
 		$("#descDetalleHoraEdit").addClass("alert-danger");
-		$("#divDescDetalleHoraEdit").html("<small class='form-text text-danger'>Este dato es requerido</small>");
+		$("#divDescDetalleHoraEdit").html("<small class='form-text text-danger'>Est&eacute; dato es requerido</small>");
 	} else if ($("#valHoraCapEdit").val() > 0 && $("#valHoraCapEdit").val() <= 24 ){
 		document.getElementById('formEditCapHoraActividad').submit();
 	} else {
@@ -195,8 +195,6 @@ function diasArriba(far) {
 }
 
 
-
-
 function delCaptura(codCaptura){
 	$.ajax({
 	    type: "GET",
@@ -207,8 +205,6 @@ function delCaptura(codCaptura){
 	        semanaInicioFin(fh);
 	    }
 	});
-	
-	
 }
 
 
@@ -216,7 +212,6 @@ function editCaptura(codCaptura){
 	var url="/editCaptura/"+codCaptura;
 	$("#formEditCaptura").load(url);
 	$('#capHoraModalEdit').modal('show');
-	
 }
 
 

@@ -97,7 +97,7 @@ public class DependienteController {
 		}
 		dependienteService.save(dependiente);
 		status.setComplete();
-		flash.addFlashAttribute("success", "Dependiente guardado con exito");
+		flash.addFlashAttribute("success", "Dependiente guardado con éxito");
 		return "redirect:listarDependientes/" + dependiente.getRecurso().getCodRecurso().toString();
 	}
 	
@@ -116,7 +116,7 @@ public class DependienteController {
 		}
 		
 		dependienteService.delete(dependiente);
-		flash.addFlashAttribute("success", "Dependiente eliminado con exito");
+		flash.addFlashAttribute("success", "Dependiente eliminado con éxito");
 		return "redirect:../listarDependientes/" + dependiente.getRecurso().getCodRecurso().toString();
 	}
 	

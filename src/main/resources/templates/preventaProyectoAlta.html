@@ -143,12 +143,14 @@
 
           <!-- Page Heading -->
           <div class="d-sm-flex align-items-center justify-content-between mb-4">
-            <h1 class="h3 mb-0 text-gray-800"><span class="tituloA">Registrar preventa o proyecto</span></br><span class="tituloBN">Enhorabuena, tienes un nuevo proyecto que registrar</span></h1>
+            <h1 class="h3 mb-0 text-gray-800"><span class="tituloA">Registrar preventa o proyecto</span>
+<!--             </br><span class="tituloBN">Enhorabuena, tienes un nuevo proyecto que registrar</span> -->
+            </h1>
           </div>
 
             <!--form-->
               <form class="user" th:action="@{/preventaProyectoCI}" th:Object="${proyecto}" method="post">
-                <p class="tituloC">Lo primero, elige a un cliente o registra un cliente nuevo.</p>
+<!--                 <p class="tituloC">Lo primero, elige a un cliente o registra un cliente nuevo.</p> -->
                 <div class="form-group row">
                   <div class="col-sm-5 mb-3 mb-sm-0">
                     <div class="form-check form-check-inline">
@@ -180,7 +182,7 @@
                 </div>
                 <div class="form-group row">
                   <div class="col-sm-3 mb-3 mb-sm-0">
-                      <label for="areaComercial">Área comercial</label>
+                      <label for="areaComercial">&Aacute;rea comercial</label>
                   </div>
                   <div class="col-sm-5">
                     <select th:field="*{codAreaComercial}" class="form-control " id="areaComercial">
@@ -190,11 +192,11 @@
                   <div class="col-sm-4">
                   </div>
                 </div>
-                <p class="tituloC">Completa la información del proyecto.</p>
+                <p class="tituloC">Completa la informaci&oacute;n del proyecto.</p>
                 <div class="form-group row">
                   <div class="col-sm-4 mb-3 mb-sm-0">
                      <label for="nombreProyecto">Nombre del proyecto</label>
-                    <input type="text" th:field="*{descProyecto}" class="form-control" id="nombreProyecto" placeholder="Nombre de proyecto"  oninvalid="setCustomValidity('Campo inválido')" onchange="try{setCustomValidity('')}catch(e){}" maxlength="35" required>
+                    <input type="text" th:field="*{descProyecto}" class="form-control" id="nombreProyecto" placeholder="Nombre de proyecto"  oninvalid="setCustomValidity('Campo invÃ¡lido')" onchange="try{setCustomValidity('')}catch(e){}" maxlength="35" required>
                   </div>
                   <div class="col-sm-4" id="fi">
                     <label for="fechaInicio">Fecha inicio</label>
@@ -207,12 +209,12 @@
                 </div>
                 <div class="form-group row">
                   <div class="col-sm-4 mb-3 mb-sm-0">
-                    <label for="codigoProyecto">Código de proyecto</label>
-                    <input th:field="*{descCodigoProyecto}" type="text" class="form-control" id="codigoProyecto" placeholder="Código de proyecto" oninvalid="setCustomValidity('Campo inválido')" onchange="try{setCustomValidity('')}catch(e){}" maxlength="15" required>
+                    <label for="codigoProyecto">C&oacute;digo de proyecto</label>
+                    <input th:field="*{descCodigoProyecto}" type="text" class="form-control" id="codigoProyecto" placeholder="CÃ³digo de proyecto" oninvalid="setCustomValidity('Campo invÃ¡lido')" onchange="try{setCustomValidity('')}catch(e){}" maxlength="15" required>
                   </div>
                   <div class="col-sm-4">
                     <label for="presupuesto">Presupuesto</label>
-                    <input th:field="*{impPresupuesto}" type="number" class="form-control" id="presupuesto" placeholder="Presupuesto" oninvalid="setCustomValidity('Presupuesto inválido')" onchange="try{setCustomValidity('')}catch(e){}" min="0" max="99999999" step="any">
+                    <input th:field="*{impPresupuesto}" type="number" class="form-control" id="presupuesto" placeholder="Presupuesto" oninvalid="setCustomValidity('Presupuesto invÃ¡lido')" onchange="try{setCustomValidity('')}catch(e){}" min="0" max="99999999" step="any">
                     <small class="form-text text-danger" th:if="${#fields.hasErrors('impPresupuesto')}" th:errors="*{impPresupuesto}"></small>
                   </div>
                   <div class="col-sm-4" id="pr">
@@ -254,13 +256,13 @@
                 </div>
                 <div class="form-group row">
                 	<div class="col-sm-4 mb-3 mb-sm-0">
-                      <label for="clasificacion">Clasificación del proyecto</label>
+                      <label for="clasificacion">Clasificaci&oacute;n del proyecto</label>
                       <select th:field="*{codClasificacionProyecto}" class="form-control " id="clasificacionProyecto">
                         	<option th:each="clasificacionProyecto : ${clasificacionesProyecto}" th:value="${clasificacionProyecto.codClasificacionProyecto}" th:text="${clasificacionProyecto.descClasificacion}" th:selected="false"/>
                       </select>
                   	</div>
                   	<div class="col-sm-4">
-                    	<label for="clasificacion">Líder de proyecto</label>
+                    	<label for="clasificacion">L&iacute;der de proyecto</label>
                       <select th:field="*{codRecursoLider}" class="form-control " id="liderProyecto">
                         	<option th:each="recurso : ${recursos}" th:value="${recurso.codRecurso}" th:text="${recurso.descRecurso}" th:selected="false"/>
                       </select>
@@ -305,7 +307,7 @@
         <div class="modal-header">
           <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
           <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">×</span>
+            <span aria-hidden="true">Ã—</span>
           </button>
         </div>
         <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
@@ -324,13 +326,13 @@
         <div class="modal-header">
           <h5 class="modal-title" id="exampleModalLabel">Cambio de preventa a proyecto</h5>
           <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">×</span>
+            <span aria-hidden="true">Ã—</span>
           </button>
         </div>
-        <div class="modal-body">Cambiaras el estatus de la preventa a proyecto, esta operación no se podrá recuperar. ¿Estás de acuerdo?</div>
+        <div class="modal-body">Cambiar&aacute;s el estatus de la preventa a proyecto, esta operaci&oacute;n no se podr&aacute; recuperar. &iquest;Est&aacute;s de acuerdo?</div>
         <div class="modal-footer">
           <button class="btn btn-secondary" type="button" data-dismiss="modal" id="cancelarProyecto" >Cancelar</button>
-          <a class="btn btn-primary" data-dismiss="modal" href="" id="aceptarProyecto">Aceptar</a>
+          <a class="btn btn-primary" data-dismiss="modal" href="#" id="aceptarProyecto">Aceptar</a>
         </div>
       </div>
     </div>
