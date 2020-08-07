@@ -292,7 +292,7 @@
                       <br>
                      <input th:if="${proyecto.codEstatusProyecto == 2}" type="submit" value="Guardar y continuar" class="btn btn-primary" id="btnEnviar"/>
                      <input th:unless="${proyecto.codEstatusProyecto == 2}" type="submit" value="Guardar" class="btn btn-primary" id="btnEnviar"/>
-                     <a class="btn btn-secondary" type="button" th:href="@{/listaProyectosTodo}" >Cancelar</a>
+                     <a class="btn btn-secondary" type="button" th:href="@{/listaProyectosTodo}" >Regresar</a>
                    </div>
                    <div class="col-sm-5 mb-6 mb-sm-0">
                    </div>
@@ -383,7 +383,7 @@
   			<li th:text="'Correo electrónico: ' + ${contactoVista.descCorreoElectronico}"></li>
   			<li th:text="'Celular: ' + ${contactoVista.descTelCelular}"></li>
   			<li th:text="'Teléfono empresa: ' + ${contactoVista.descTelEmpresa}"></li>
-  			<li th:text="'CumpleaÃ±os: ' + ${contactoVista.fecNacimiento}"></li>
+  			<li th:text="'Cumpleaños: ' + ${contactoVista.fecNacimiento}"></li>
 		  </ul>
 		  <ul th:unless="${contactoVista != null}">
   			<li th:text="'Sin contacto asignado '"></li>
