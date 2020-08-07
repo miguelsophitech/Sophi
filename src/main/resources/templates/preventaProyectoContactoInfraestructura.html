@@ -174,7 +174,7 @@
                       <label for="tecnologia">Tecnolog&iacute;a</label>
                   </div>
                   <div class="col-sm-4">
-                    <input type="text" th:value="${textoTec}" class="form-control" id="tecnologia" placeholder="Tecnolog&iacute;">
+                    <input type="text" th:value="${textoTec}" class="form-control" id="tecnologia" placeholder="Tecnolog&iacute;a" readonly="readonly">
                   </div>
                   <div class="col-sm-4"> 
                      <a class="btn btn-primary" href="#" data-toggle="modal" data-target="#modalTecnologia" role="button"><i class="fas fa-plus-circle fa-sm text-white-50"></i></a>
@@ -208,7 +208,7 @@
                       <button class="btn btn-primary"  onclick="guardarCom()">Guardar</button>
 <!--                       onclick="guardaC()" -->
 <!--                       <a class="btn btn-secondary" type="button" th:href="@{/listaProyectosTodo}" >Cancelar</a> -->
-                      <a class="btn btn-secondary" type="button" th:href="@{/preventaProyectoConsulta/} + ${proyecto.codProyecto} + '/' + ${proyecto.codEstatusProyecto} + '/' + ${proyecto.codCliente}" >Cancelar</a>
+                      <a class="btn btn-secondary" type="button" th:href="@{/preventaProyectoConsulta/} + ${proyecto.codProyecto} + '/' + ${proyecto.codEstatusProyecto} + '/' + ${proyecto.codCliente}" >Regresar</a>
                    </div>
                    <div class="col-sm-3 mb-6 mb-sm-0">
                       <br>

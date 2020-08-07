@@ -27,6 +27,7 @@ verificarFecha();
 
 function verificarFecha(){
 
+	//Minimo mes anterior
 	var e = new Date();
 	var dia;
 	var mes;
@@ -44,7 +45,26 @@ function verificarFecha(){
 		dia=e.getDate();
 	}
 	
+	//Maximo dia siguiente
+	var d = new Date();
+	var diaPosterior;
+	var mesActual;
+	
+	if((d.getMonth()+1)<10){
+		mesActual="0"+(d.getMonth()+1);
+	}else{
+		mesActual=(d.getMonth()+1);
+	}
+	
+	if(d.getDate()<10){
+		diaPosterior="0"+d.getDate();
+	}else{
+		diaPosterior=d.getDate();
+	}
+	
+	
 	document.getElementById('fechaGasto').setAttribute("min", e.getFullYear()+"-"+mes+"-"+dia);
+	document.getElementById('fechaGasto').setAttribute("max", e.getFullYear()+"-"+mesActual+"-"+diaPosterior);
 	
 }
 

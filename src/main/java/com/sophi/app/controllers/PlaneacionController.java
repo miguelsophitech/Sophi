@@ -186,6 +186,8 @@ public class PlaneacionController {
 				}
                 
                 List<Long> listCodRecursosUnicos = new ArrayList<>(new HashSet<>(listCodRecursos));
+                Proyecto proyecto = proyectoService.findByCodProyecto(codProyecto);
+                
                 
                 model.addAttribute("actividadesPlan", actividadesPlan);
                 ActividadDto actividadesCargarDto = new ActividadDto();
@@ -194,6 +196,7 @@ public class PlaneacionController {
                 model.addAttribute("fechaInicioPlan",fechaInicioPlan);
                 model.addAttribute("fechaFinPlan",fechaFinPlan);
                 model.addAttribute("actividadesCargarDto", actividadesCargarDto);
+                model.addAttribute("proyecto", proyecto);
                 model.addAttribute("status", true);
 
             } catch (Exception ex) {
@@ -202,7 +205,6 @@ public class PlaneacionController {
             }
         	
         }
-		
 		return "listaActividadesPlan";
 	}
 	

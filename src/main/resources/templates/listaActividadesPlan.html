@@ -205,7 +205,7 @@
 					 
 					<p class="mb-4">Verifica que la informaci&oacute;n sea correcta antes de cargar la planeaci&oacute;n.</p>
 
-					<p><a th:href="@{'/'}" th:text="'&laquo; volver'"></a></p>
+					<p><a th:href="@{'/planeacionProyecto/'} + ${proyecto.codProyecto}" th:text="'&laquo; volver'"></a></p>
 					
 					<!-- DataTales Example -->
 					<div class="card shadow mb-4">
@@ -331,7 +331,7 @@
 						<div class="row">
 							<div class="col-sm-6">
 								<input type="submit" value="Cargar planeaci&oacute;n" class="btn btn-primary"/>
-<!-- 								<a class="btn btn-secondary" type="button" th:href="@{/preventaProyectoContactoInfraestructura/} + " >Cancelar</a> -->
+								<a class="btn btn-secondary" type="button" th:href="@{/preventaProyectoContactoInfraestructura/} + ${proyecto.codProyecto}" >Cancelar</a>
 							</div>
 						</div>
 					</form>
