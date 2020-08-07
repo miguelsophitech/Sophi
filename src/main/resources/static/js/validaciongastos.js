@@ -21,6 +21,9 @@ function validacion(){
 	var input = document.querySelectorAll("#check");
 	console.log(input.length);
 	
+	var validar = document.querySelectorAll("#validar");
+	console.log(input.length);
+	
 	var RecVal = document.getElementById("codRecVal").value;
 	var target = document.querySelectorAll("#RecVal");
 	console.log(RecVal);
@@ -28,11 +31,13 @@ function validacion(){
 	for(var i=0 ; i<input.length ; i++){
 		console.log(RecVal);
 		if(input[i].checked){
+			validar[i].disabled = false;
 			input[i].value = fecha;
 			target[i].value = RecVal;
 		}
 		
 		else{
+			validar[i].disabled = true;
 			input[i].value = "";
 			target[i].value = "";
 		}
