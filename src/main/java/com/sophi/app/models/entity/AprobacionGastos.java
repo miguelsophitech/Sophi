@@ -79,7 +79,18 @@ public class AprobacionGastos implements Serializable {
     @Column(name = "desc_comprobante", columnDefinition="BLOB", insertable = false, updatable=false)
 	private byte[] foto;
     
-    public Proyecto getProyecto() {
+    @Column(name = "val_importe_validado")
+    private Float valImporteValidado;
+    
+    public Float getValImporteValidado() {
+		return valImporteValidado;
+	}
+
+	public void setValImporteValidado(Float valImporteValidado) {
+		this.valImporteValidado = valImporteValidado;
+	}
+
+	public Proyecto getProyecto() {
 		return proyecto;
 	}
 
