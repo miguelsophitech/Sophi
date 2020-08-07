@@ -169,7 +169,7 @@
                         </div>
                         <div class="card-body" id="contenidoTabla">
                             <div class="table-responsive">
-                                <table class="table" id="dataTable" width="100%" cellspacing="0">
+                                <table class="table" id="dataTable" width="100%" cellspacing="0" style="font-size: 12px;">
                                     <thead>
                                         <tr>
                                             <th></th>
@@ -193,7 +193,7 @@
                                             <td><span th:text="${aprobaciongastosunico.recurso.descRecurso}"></span></td>
                                             <td><span th:text="${aprobaciongastosunico.descComentario}"></span></td>
                                             <td>$<span th:text="${aprobaciongastosunico.impGasto}"></span></td>
-                                            <td><input id="validar" step="any" type="number" style="height:30px; width:50px;" th:name="|aprobaciongastos[${item.index}].valImporteValidado|" th:value="${aprobaciongastosunico.getValImporteValidado()}" onchange="handleChange(this);" disabled></td>
+                                            <td><input id="validar" step="any" type="number" style="height:20px; width:40px;" th:name="|aprobaciongastos[${item.index}].valImporteValidado|" th:value="${aprobaciongastosunico.getValImporteValidado()}" onchange="handleChange(this);" disabled></td>
                                         </tr>
                                     </tbody>
                                 </table>
