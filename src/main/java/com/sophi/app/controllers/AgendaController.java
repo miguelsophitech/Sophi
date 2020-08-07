@@ -43,8 +43,11 @@ public class AgendaController {
 	@RequestMapping(value = "/agenda", method = RequestMethod.GET)
 	public String Agenda(Model model) {
 		List<Cliente> listaClientes = clienteService.findAll();
+		Agenda agenda = agendaService.findOne(1L);
+		List<Agenda> listaAgenda =  agendaService.findAll();
+		listaAgenda.remove(agenda);
 		model.addAttribute("titulo", "Lista de Contactos");
-		model.addAttribute("contactos", agendaService.findAll());
+		model.addAttribute("contactos",listaAgenda);
 		model.addAttribute("clientes", listaClientes);
 		return "agenda";
 	}
