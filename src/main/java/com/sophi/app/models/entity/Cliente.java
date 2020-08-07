@@ -44,7 +44,7 @@ public class Cliente implements Serializable {
 	private String descClienteAnterior;
 	
 	@Column(name = "fec_actualizacion")
-	@Temporal(TemporalType.TIMESTAMP)
+	@Temporal(TemporalType.DATE)
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date fecActualizacion;
 	
