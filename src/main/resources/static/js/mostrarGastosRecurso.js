@@ -21,3 +21,9 @@ $(document).ready(function() {
 		}
 	});
 });
+
+function verComprobante(codGasto){
+	$("#imgComprobante").removeAttr('src');
+	url="/imagenComprobante/"+codGasto;	
+	$("#imgComprobante").attr('src',url);
+}

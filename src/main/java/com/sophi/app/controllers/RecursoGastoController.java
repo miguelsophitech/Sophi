@@ -62,13 +62,12 @@ public class RecursoGastoController {
 	public String recursosGastosA(Model model,@PathVariable(value = "email") String email) {
     	model.addAttribute("titulo", "Gastos");
     	Long codRecurso = recursoService.findByDescCorreoElectronico(email).getCodRecurso();
-    	List<ProyectoRecurso> listaProRec = proyectoRecursoService.findByProyectoRecursoIdCodRecurso(codRecurso);
+    	List<ProyectoRecurso> listaProRec = proyectoRecursoService.findProyectoRecursoActivo(codRecurso);
     	List<Proyecto> listaProyecto = new ArrayList<Proyecto>();
     	RecursoGasto recursoGasto = new RecursoGasto();
 		
     			
     	for(ProyectoRecurso proRec:listaProRec) {
-    		proyectoService.findByCodProyectoAndCodEstatusProyectoAndCodCliente(proRec.getProyectoRecursoId().getCodProyecto(), proRec.getProyectoRecursoId().getCodEstatusProyecto(), proRec.getProyectoRecursoId().getCodCliente());
     		listaProyecto.add(proyectoService.findByCodProyectoAndCodEstatusProyectoAndCodCliente(proRec.getProyectoRecursoId().getCodProyecto(), proRec.getProyectoRecursoId().getCodEstatusProyecto(), proRec.getProyectoRecursoId().getCodCliente()));
     	}
     	
@@ -209,6 +208,15 @@ public class RecursoGastoController {
     //imagen de gasto
     @GetMapping(value = "/imagenGasto/{codRecursoGasto}/{codTipoGasto}/{codProyecto}/{codRecurso}/{codCliente}/{codEstatusProyecto}")
 	public void verImagenGasto(@PathVariable(value = "codRecursoGasto") long codRecursoGasto,@PathVariable(value = "codTipoGasto") long codTipoGasto,@PathVariable(value = "codProyecto") long codProyecto,@PathVariable(value = "codRecurso") long codRecurso,@PathVariable(value = "codCliente") long codCliente,@PathVariable(value = "codEstatusProyecto") long codEstatusProyecto,  HttpServletResponse response) throws IOException{
+    	response.setContentType("image/jpeg");
+    	RecursoGasto recursoGasto = recursoGastoService.findOne(codRecursoGasto);
+		InputStream is = new ByteArrayInputStream(recursoGasto.getComprobante());
+		IOUtils.copy(is, response.getOutputStream());
+	}
+    
+    //imagen de comprobante
+    @GetMapping(value = "/imagenComprobante/{codRecursoGasto}")
+	public void verComprobanteGasto(@PathVariable(value = "codRecursoGasto") long codRecursoGasto,  HttpServletResponse response) throws IOException{
     	response.setContentType("image/jpeg");
     	RecursoGasto recursoGasto = recursoGastoService.findOne(codRecursoGasto);
 		InputStream is = new ByteArrayInputStream(recursoGasto.getComprobante());

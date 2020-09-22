@@ -27,10 +27,12 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.sophi.app.models.entity.Actividad;
 import com.sophi.app.models.entity.CapHora;
 import com.sophi.app.models.entity.Proyecto;
+import com.sophi.app.models.entity.ProyectoRecurso;
 import com.sophi.app.models.entity.Subtarea;
 import com.sophi.app.models.entity.Tarea;
 import com.sophi.app.models.service.IActividadService;
 import com.sophi.app.models.service.ICapHoraService;
+import com.sophi.app.models.service.IProyectoRecursoService;
 import com.sophi.app.models.service.IProyectoService;
 import com.sophi.app.models.service.IRecursoService;
 import com.sophi.app.models.service.ISubtareaService;
@@ -58,6 +60,9 @@ public class CapHorasController {
 	@Autowired
 	private IProyectoService proyectoService;
 	
+	@Autowired
+	private IProyectoRecursoService proyectoRecursoService;
+	
 	final String PREVENTA = "> Preventa (default)";
 	final String OTRA = "> Otra (fuera de plan)";
 	
@@ -68,9 +73,29 @@ public class CapHorasController {
 		List<Long> proyectoListId = new ArrayList<Long>();
 		HashMap<Long, String> proyectoList = new HashMap<Long, String>(); 
 		proyectoListId = actividadService.findListaProyectoByRecurso(codRecurso);
-		for (Long id : proyectoListId) {
-			proyectoList.put(id, proyectoService.findByCodProyectoAndCodEstatusProyecto(id, 2L).getDescProyecto());
+		if (proyectoListId.size() > 0) {
+			for (Long id : proyectoListId) {
+				Proyecto proyecto = proyectoService.findByCodProyectoAndCodEstatusProyecto(id, 2L);
+				if(proyecto != null) {
+					proyectoList.put(id, proyecto.getDescProyecto());
+				}
+			}
+		} 
+		
+		List<ProyectoRecurso> proyectosRecurso = new ArrayList<ProyectoRecurso>();
+		proyectosRecurso = proyectoRecursoService.findByProyectoRecursoIdCodRecurso(codRecurso);
+		if (proyectosRecurso.size() > 0) {
+			for (ProyectoRecurso proyectoRecurso : proyectosRecurso) {
+				Long idProyect = proyectoRecurso.getProyectoRecursoId().getCodProyecto();
+				Proyecto proyecto = proyectoService.findByCodProyectoAndCodEstatusProyecto(idProyect, 2L);
+				if (proyecto != null) {
+					proyectoList.put(idProyect,proyecto.getDescProyecto());
+				}
+				
+			}
 		}
+		
+		
 		Proyecto proyecto = proyectoService.findByCodProyecto(1L);
 		proyectoList.put(proyecto.getCodProyecto(),proyecto.getDescProyecto());
 		model.addAttribute("proyectoList", proyectoList);
@@ -108,8 +133,9 @@ public class CapHorasController {
 			return "layout/capHora :: listActividadesSecundariasFuera";
 		} else if (descPrimaria.equalsIgnoreCase(OTRA)){
 			System.out.println("entra en otra fuera de plan");
-			model.addAttribute("actividadesSecundariasListFuera", subtareaService.findFueraDePlan());
-			return "layout/capHora :: listActividadesSecundariasFuera";
+//			model.addAttribute("actividadesSecundariasListFuera", subtareaService.findFueraDePlan());
+			model.addAttribute("actividadesSecundariasListFuera", tareaService.findTareaFueraPlan());
+			return "layout/capHora :: listActividadesSecundariasFueraOtra";
 		} else {
 		model.addAttribute("actividadesSecundariasList", actividadService.findListaActividadesByRecursoProyectoPrimaria(codRecurso, codProyecto, descPrimaria));
 		return "layout/capHora :: listActividadesSecundarias";
@@ -191,7 +217,7 @@ public class CapHorasController {
 	
 
 	@RequestMapping(value="/formCapHoraActividad", method = RequestMethod.POST)
-	public String guardarCapHora(@Valid CapHora capHora, BindingResult result, Model model, RedirectAttributes flash,SessionStatus status) {
+	public String guardarCapHora(@Valid CapHora capHora, BindingResult result, Model model, RedirectAttributes flash ,SessionStatus status) {
 		if(result.hasErrors()) {
 
 			return "formCapHoras";

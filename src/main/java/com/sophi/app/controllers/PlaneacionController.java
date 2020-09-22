@@ -33,7 +33,6 @@ import com.sophi.app.models.service.IActividadService;
 import com.sophi.app.models.service.IProyectoRecursoService;
 import com.sophi.app.models.service.IProyectoService;
 import com.sophi.app.models.service.IRecursoService;
-import com.sophi.app.models.service.ProyectoServiceImpl;
 
 @Controller
 public class PlaneacionController {
@@ -206,6 +205,17 @@ public class PlaneacionController {
         	
         }
 		return "listaActividadesPlan";
+	}
+	
+	
+	@GetMapping("/verPlanActividades/{codProyecto}")
+	public String verPlanActividades(@PathVariable Long codProyecto, Model model) {
+		List<Actividad> listaActividades =  actividadService.findByCodProyecto(codProyecto);
+		String nombreProyecto = proyectoService.findOne(codProyecto).getDescProyecto();
+		
+		model.addAttribute("listaActividades", listaActividades);
+		model.addAttribute("nombreProyecto", nombreProyecto);
+		return "listaActividadesProyecto";
 	}
 	
 

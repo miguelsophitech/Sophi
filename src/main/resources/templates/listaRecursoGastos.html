@@ -7,7 +7,7 @@
   <!-- Page Wrapper -->
   <div id="wrapper">
 
-     <!-- Sidebar -->
+    <!-- Sidebar -->
     <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
       <!-- Sidebar - Brand -->
@@ -16,7 +16,7 @@
           <!--<i class="fas fa-laugh-wink"></i>  rotate-n-15-->
           <img th:src="@{/img/logo-img.png}" alt="">
         </div> 
-        <div class="sidebar-brand-text mx-3"><img th:src="@{/img/logo-texto.png}"alt=""></div>
+        <div class="sidebar-brand-text mx-3"><img th:src="@{/img/logo-texto.png}" alt=""></div>
       </a>
 
       <!-- Divider -->
@@ -30,15 +30,15 @@
       </li>
       
       <!-- Divider -->
-      <hr class="sidebar-divider">
+      <hr sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_LIDER')" class="sidebar-divider">
 
       <!-- Heading Proyecto -->
-      <div class="sidebar-heading">
+      <div sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_LIDER')" class="sidebar-heading">
         Clientes
       </div>
 
       <!-- Nav Item - Gastos y tiempo Collapse Menu -->
-      <li class="nav-item ">
+      <li class="nav-item" sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_LIDER')">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseClientes" aria-expanded="true" aria-controls="collapseClientes">
           <i class="fas fa-fw fa-address-book"></i>
           <span>Gesti&oacute;n de clientes</span>
@@ -54,42 +54,41 @@
       
 
       <!-- Divider -->
-      <hr class="sidebar-divider">
+      <hr sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_LIDER', 'ROLE_USER')"  class="sidebar-divider">
 
       <!-- Heading Proyecto -->
-      <div class="sidebar-heading">
+      <div sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_LIDER', 'ROLE_USER')" class="sidebar-heading">
         Proyectos
       </div>
       
-      
 	  <!-- Nav Item - Actividades Collapse Menu -->
       <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseProyectos" aria-expanded="true" aria-controls="collapseProyectos">
+        <a sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_LIDER', 'ROLE_USER')" class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseProyectos" aria-expanded="true" aria-controls="collapseProyectos">
           <i class="fas fa-fw fa-wrench"></i>
           <span>Gesti&oacute;n de proyectos</span>
         </a>
         <div id="collapseProyectos" class="collapse" aria-labelledby="menuProyectos" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
             <h6 class="collapse-header">Ver:</h6>
-            <a class="collapse-item"  th:href="@{/listaProyectosTodo}">Mis proyectos</a>
-            <a class="collapse-item" th:href="@{/misActividades/} + ${#authentication.getName()}">Mis actividades</a>
+            <a sec:authorize="hasRole('ROLE_ADMIN')" class="collapse-item"  th:href="@{/listaProyectosTodo}">Mis proyectos</a><a sec:authorize="hasRole('ROLE_LIDER')" class="collapse-item"  th:href="@{/listaMisProyectos/} + ${#authentication.getName()}">Mis proyectos</a>
+            <a sec:authorize="hasAnyRole('ROLE_LIDER','ROLE_USER')" class="collapse-item" th:href="@{/misActividades/} + ${#authentication.getName()}">Mis actividades</a>
           </div>
         </div>
       </li>
 
       <!-- Nav Item - Gastos y tiempo Collapse Menu -->
       <li class="nav-item active">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseGastosTiempo" aria-expanded="true" aria-controls="collapseGastosTiempo">
+        <a sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_LIDER', 'ROLE_USER')" class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseGastosTiempo" aria-expanded="true" aria-controls="collapseGastosTiempo">
           <i class="fas fa-fw fa-calendar-alt"></i>
-          <span>Gastos y tiempo</span>
+          <span>Gesti&oacute;n de tiempo</span>
         </a>
         <div id="collapseGastosTiempo" class="collapse" aria-labelledby="menuGastosTiempo" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
             <h6 class="collapse-header">Ver:</h6>
-            <a class="collapse-item" th:href="@{/capHoras/} + ${#authentication.getName()}">Mis horas</a>
-            <a class="collapse-item " th:href="@{/aprobacionhoras/}+${#authentication.getName()}">Aprobaci&oacute;n de horas</a>
-            <a class="collapse-item active" th:href="@{/misGastos/} + ${#authentication.getName()}">Mis gastos</a>
-            <a class="collapse-item" th:href="@{/aprobaciongastos/}+ ${#authentication.getName()}">Aprobaci&oacute;n de gastos</a>
+            <a sec:authorize="hasAnyRole('ROLE_LIDER','ROLE_USER' )" class="collapse-item" th:href="@{/capHoras/} + ${#authentication.getName()}">Mis horas</a>
+            <a sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_LIDER')" class="collapse-item" th:href="@{/aprobacionhoras/}+${#authentication.getName()}">Aprobaci&oacute;n de horas</a>
+            <a sec:authorize="hasAnyRole('ROLE_LIDER','ROLE_USER' )" class="collapse-item active" th:href="@{/misGastos/} + ${#authentication.getName()}">Mis gastos</a>
+            <a sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_LIDER')" class="collapse-item" th:href="@{/aprobaciongastos/}+ ${#authentication.getName()}">Aprobaci&oacute;n de gastos</a>
           </div>
         </div>
       </li>
@@ -97,15 +96,15 @@
  
       
        <!-- Divider -->
-      <hr class="sidebar-divider">
+      <hr sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_RH')" class="sidebar-divider">
 
       <!-- Heading Proyecto -->
-      <div class="sidebar-heading">
+      <div sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_RH')" class="sidebar-heading">
         Recursos
       </div>
 
-      <!-- Nav Item - Gastos y tiempo Collapse Menu -->
-      <li class="nav-item">
+      <!-- Nav Item - Recursos Collapse Menu -->
+      <li sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_RH')" class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseRecursos" aria-expanded="true" aria-controls="collapseRecursos">
           <i class="fas fa-fw fa-id-card"></i>
           <span>Gesti&oacute;n de recursos</span>
@@ -142,16 +141,14 @@
 
 
 		     <!-- Page Heading -->
-          <div class="d-sm-flex align-items-center justify-content-between mb-4">
+          <div class="d-sm-flex align-items-center justify-content-between mb-1">
             <h1 class="h3 mb-2 text-gray-800">Mis gastos</h1>
             <a type="button" class="btn btn-primary" th:href="@{/recursoGastoAlta/} + ${#authentication.getName()}" >
-              <i class="fas fa-plus fa-sm text-white-50"></i> Registrar nuevo gasto 
+              <i class="fas fa-plus fa-sm text-white-50"></i> Nuevo 
             </a>
           </div>
           
-          <p class="mb-4">En este apartado encontrar&aacute;s los gastos que has realizado.</p>
-
-
+<!--           <p class="mb-4">En este apartado encontrar&aacute;s los gastos que has realizado.</p> -->
 
           <!-- DataTales Example -->
           <div class="card shadow mb-4">
@@ -159,8 +156,8 @@
 <!--               <h6 class="m-0 font-weight-bold text-primary">Gastos</h6> -->
 <!--             </div> -->
             <div class="card-body">
-              <div class="table-responsive">
-                <table class="table" id="dataTable" width="100%" cellspacing="0" style="font-size: 12px;">
+              <div class="table-responsive fz-12">
+                <table class="table" id="dataTable" width="100%" cellspacing="0">
 
                   <thead>
                     <tr>
@@ -177,7 +174,7 @@
 						<td th:if="${gasto.codRecursoValidador != null}"><span class="badge badge-success">Aprobada  <i class="far fa-check-circle"></i></span></td>
 						<td th:unless="${gasto.codRecursoValidador != null}"><span class="badge badge-warning">Pendiente  <i class="far fa-hourglass"></i></span></td>
 						<td th:text="${gasto.descComentario}"></td>
-						<td th:text="${gasto.fecGasto}"></td>
+						<td th:text="${#dates.format(gasto.fecGasto,'dd/MM/yy')}"></td>
 						<td th:text="${gasto.tipoGasto.descTipoGasto}"></td>
 						<td th:text="'$' + ${gasto.impGasto}"></td>
 						<td>
@@ -186,8 +183,8 @@
 <!--                     		<a th:href="@{/verRecursoGastos/} + ${gasto.codRecursoGasto} + '/'+ ${gasto.tipoGasto.codTipoGasto} + '/' + ${gasto.codProyecto} + '/'+ ${gasto.codRecurso} + '/' + ${gasto.codCliente} + '/' + ${gasto.codEstatusProyecto}" class="btn btn-primary btn-circle btn-sm"><i class="far fa-id-card"></i></a> -->
 <!--                     		<a th:unless="${gasto.codRecursoValidador != null}" th:href="@{/eliminarRecursoGastos/} + ${gasto.codRecursoGasto} + '/' + ${gasto.tipoGasto.codTipoGasto} + '/' + ${gasto.codProyecto} + '/'+ ${gasto.codRecurso} + '/' + ${gasto.codCliente} + '/' + ${gasto.codEstatusProyecto}" class="btn btn-primary btn-circle btn-sm"><i class="fas fa-trash"></i></a> -->
                     		
-                    		<a th:href="@{/verRecursoGastos/} + ${gasto.codRecursoGasto} + '/'+ ${gasto.tipoGasto.codTipoGasto} + '/' + ${gasto.codProyecto} + '/'+ ${gasto.codRecurso} + '/' + ${gasto.codCliente} + '/' + ${gasto.codEstatusProyecto}" class="badge badge-info">Ver  <i class="far fa-address-card"></i></a><br>
-                    		<a th:unless="${gasto.codRecursoValidador != null}" th:href="@{/editarRecursoGastos/} + ${gasto.codRecursoGasto} + '/'+ ${gasto.tipoGasto.codTipoGasto} + '/' + ${gasto.codProyecto} + '/'+ ${gasto.codRecurso} + '/' + ${gasto.codCliente} + '/' + ${gasto.codEstatusProyecto}" class="badge badge-success">Editar  <i class="far fa-edit"></i></a><br>
+                    		<a th:href="@{/verRecursoGastos/} + ${gasto.codRecursoGasto} + '/'+ ${gasto.tipoGasto.codTipoGasto} + '/' + ${gasto.codProyecto} + '/'+ ${gasto.codRecurso} + '/' + ${gasto.codCliente} + '/' + ${gasto.codEstatusProyecto}" class="badge badge-info">Ver  <i class="far fa-address-card"></i></a>
+                    		<a th:unless="${gasto.codRecursoValidador != null}" th:href="@{/editarRecursoGastos/} + ${gasto.codRecursoGasto} + '/'+ ${gasto.tipoGasto.codTipoGasto} + '/' + ${gasto.codProyecto} + '/'+ ${gasto.codRecurso} + '/' + ${gasto.codCliente} + '/' + ${gasto.codEstatusProyecto}" class="badge badge-success">Editar  <i class="far fa-edit"></i></a>
 							<a th:unless="${gasto.codRecursoValidador != null}" th:href="@{/eliminarRecursoGastos/} + ${gasto.codRecursoGasto} + '/' + ${gasto.tipoGasto.codTipoGasto} + '/' + ${gasto.codProyecto} + '/'+ ${gasto.codRecurso} + '/' + ${gasto.codCliente} + '/' + ${gasto.codEstatusProyecto}" class="badge badge-danger">Eliminar  <i class="far fa-trash-alt"></i></a>
 
 						</td>

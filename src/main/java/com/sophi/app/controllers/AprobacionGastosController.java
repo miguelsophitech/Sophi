@@ -45,8 +45,8 @@ public class AprobacionGastosController {
     	List<AprobacionGastos> aprobacionesgastos = new ArrayList<>();
         List<Recurso> listaRecursos = new ArrayList<Recurso>();
         
-        List<Proyecto> listaProyecto = proyectoService.findAll();
-		List<Proyecto> listaProyectoTodo = proyectoService.findAll();
+        List<Proyecto> listaProyecto = proyectoService.findProyectosActivos();
+		List<Proyecto> listaProyectoTodo = proyectoService.findProyectosActivos();
 		Proyecto proyectoAux;
         
         for(Proyecto p : listaProyecto) {
@@ -58,7 +58,7 @@ public class AprobacionGastosController {
 			}
 		}
         
-        aprobaciongastosService.findAll().iterator().forEachRemaining(aprobacionesgastos::add);
+        aprobaciongastosService.findAprobacionGastosGeneral().iterator().forEachRemaining(aprobacionesgastos::add);
         listaRecursos = recursoService.findAll();
         AprobacionGastosDto apgdto = new AprobacionGastosDto();
         apgdto.setAprobaciongastos(aprobacionesgastos);
@@ -82,7 +82,14 @@ public class AprobacionGastosController {
 	        model.addAttribute("r", CodRecurso);
 			return "aprobaciongastos";
 		}
-		aprobaciongastosService.saveAll(aprobaciongastoslista.getAprobaciongastos());
+    	
+    	List<AprobacionGastos> listaAprobacion = new ArrayList<AprobacionGastos>();
+    	listaAprobacion = aprobaciongastoslista.getAprobaciongastos();
+    	for (AprobacionGastos aprobacionGastos : listaAprobacion) {
+    		aprobaciongastosService.updateValidacion(aprobacionGastos.getCodRecursoValidador(), aprobacionGastos.getFecValidacion(), aprobacionGastos.getValImporteValidado(), aprobacionGastos.getCodRecursoGasto());
+		}
+    	
+//		aprobaciongastosService.saveAll(aprobaciongastoslista.getAprobaciongastos());
 		status.setComplete();
 		flash.addFlashAttribute("success", "Gastos aprobados");
 		return "redirect:/aprobaciongastos/"+recursoService.findOne(CodRecurso).getDescCorreoElectronico();

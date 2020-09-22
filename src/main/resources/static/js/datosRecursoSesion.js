@@ -1,6 +1,8 @@
 $(document).ready(function() {
 	console.log("entra en layout");
 	var url="/datosRecursoLogin/"+$("#authGetName").val();
-	console.log(url);
 	$("#encabezado").load(url);
+	
+	var url="/datosOpcionesRecursoLogin/"+$("#authGetName").val();
+	$("#opciones").load(url);
 });

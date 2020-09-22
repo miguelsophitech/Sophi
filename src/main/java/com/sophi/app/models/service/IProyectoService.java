@@ -13,7 +13,8 @@ public interface IProyectoService {
 	
 	public Proyecto findOne(Long codProyecto);
 	
-	public Proyecto findByDescProyectoAndCodClienteAndCodEstatusProyectoAndFecRegistro(String descProyecto, Long codCliente, Long codEstatusProyecto, Date fecRegistro);
+//	public Proyecto findByDescProyectoAndCodClienteAndCodEstatusProyectoAndFecRegistro(String descProyecto, Long codCliente, Long codEstatusProyecto, Date fecRegistro);
+	public Proyecto findByDescProyectoAndCodClienteAndCodEstatusProyecto(String descProyecto, Long codCliente, Long codEstatusProyecto);
 	
 	public List<Proyecto> findByCodCliente(Long codCliente);
 	
@@ -21,6 +22,10 @@ public interface IProyectoService {
 	
 	public Proyecto findByCodProyectoAndCodEstatusProyecto(Long codProyecto, Long codEstatusProyecto);
 	
+	public List<Proyecto> findByCodRecursoLider(Long codRecursoLider);
+	
 	public Proyecto findByCodProyectoAndCodEstatusProyectoAndCodCliente(Long codProyecto, Long codEstatusProyecto, Long codCliente);
+	
+	public List<Proyecto> findProyectosActivos();
 
 }

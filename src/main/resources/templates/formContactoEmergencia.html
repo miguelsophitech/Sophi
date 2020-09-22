@@ -18,7 +18,7 @@
           <!--<i class="fas fa-laugh-wink"></i>  rotate-n-15-->
           <img th:src="@{/img/logo-img.png}" alt="">
         </div> 
-        <div class="sidebar-brand-text mx-3"><img th:src="@{/img/logo-texto.png}"alt=""></div>
+        <div class="sidebar-brand-text mx-3"><img th:src="@{/img/logo-texto.png}" alt=""></div>
       </a>
 
       <!-- Divider -->
@@ -32,15 +32,15 @@
       </li>
       
       <!-- Divider -->
-      <hr class="sidebar-divider">
+      <hr sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_LIDER')" class="sidebar-divider">
 
       <!-- Heading Proyecto -->
-      <div class="sidebar-heading">
+      <div sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_LIDER')" class="sidebar-heading">
         Clientes
       </div>
 
       <!-- Nav Item - Gastos y tiempo Collapse Menu -->
-      <li class="nav-item ">
+      <li class="nav-item" sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_LIDER')">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseClientes" aria-expanded="true" aria-controls="collapseClientes">
           <i class="fas fa-fw fa-address-book"></i>
           <span>Gesti&oacute;n de clientes</span>
@@ -56,42 +56,41 @@
       
 
       <!-- Divider -->
-      <hr class="sidebar-divider">
+      <hr sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_LIDER', 'ROLE_USER')"  class="sidebar-divider">
 
       <!-- Heading Proyecto -->
-      <div class="sidebar-heading">
+      <div sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_LIDER', 'ROLE_USER')" class="sidebar-heading">
         Proyectos
       </div>
       
-      
 	  <!-- Nav Item - Actividades Collapse Menu -->
       <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseProyectos" aria-expanded="true" aria-controls="collapseProyectos">
+        <a sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_LIDER', 'ROLE_USER')" class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseProyectos" aria-expanded="true" aria-controls="collapseProyectos">
           <i class="fas fa-fw fa-wrench"></i>
           <span>Gesti&oacute;n de proyectos</span>
         </a>
         <div id="collapseProyectos" class="collapse" aria-labelledby="menuProyectos" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
             <h6 class="collapse-header">Ver:</h6>
-            <a class="collapse-item"  th:href="@{/listaProyectosTodo}">Mis proyectos</a>
-            <a class="collapse-item" th:href="@{/misActividades/} + ${#authentication.getName()}">Mis actividades</a>
+            <a sec:authorize="hasRole('ROLE_ADMIN')" class="collapse-item"  th:href="@{/listaProyectosTodo}">Mis proyectos</a><a sec:authorize="hasRole('ROLE_LIDER')" class="collapse-item"  th:href="@{/listaMisProyectos/} + ${#authentication.getName()}">Mis proyectos</a>
+            <a sec:authorize="hasAnyRole('ROLE_LIDER','ROLE_USER')" class="collapse-item" th:href="@{/misActividades/} + ${#authentication.getName()}">Mis actividades</a>
           </div>
         </div>
       </li>
 
       <!-- Nav Item - Gastos y tiempo Collapse Menu -->
       <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseGastosTiempo" aria-expanded="true" aria-controls="collapseGastosTiempo">
+        <a sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_LIDER', 'ROLE_USER')" class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseGastosTiempo" aria-expanded="true" aria-controls="collapseGastosTiempo">
           <i class="fas fa-fw fa-calendar-alt"></i>
-          <span>Gastos y tiempo</span>
+          <span>Gesti&oacute;n de tiempo</span>
         </a>
         <div id="collapseGastosTiempo" class="collapse" aria-labelledby="menuGastosTiempo" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
             <h6 class="collapse-header">Ver:</h6>
-            <a class="collapse-item" th:href="@{/capHoras/} + ${#authentication.getName()}">Mis horas</a>
-            <a class="collapse-item" th:href="@{/aprobacionhoras/}+${#authentication.getName()}">Aprobaci&oacute;n de horas</a>
-            <a class="collapse-item" th:href="@{/misGastos/} + ${#authentication.getName()}">Mis gastos</a>
-            <a class="collapse-item" th:href="@{/aprobaciongastos/}+ ${#authentication.getName()}">Aprobaci&oacute;n de gastos</a>
+            <a sec:authorize="hasAnyRole('ROLE_LIDER','ROLE_USER' )" class="collapse-item" th:href="@{/capHoras/} + ${#authentication.getName()}">Mis horas</a>
+            <a sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_LIDER')" class="collapse-item" th:href="@{/aprobacionhoras/}+${#authentication.getName()}">Aprobaci&oacute;n de horas</a>
+            <a sec:authorize="hasAnyRole('ROLE_LIDER','ROLE_USER' )" class="collapse-item" th:href="@{/misGastos/} + ${#authentication.getName()}">Mis gastos</a>
+            <a sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_LIDER')" class="collapse-item" th:href="@{/aprobaciongastos/}+ ${#authentication.getName()}">Aprobaci&oacute;n de gastos</a>
           </div>
         </div>
       </li>
@@ -99,15 +98,15 @@
  
       
        <!-- Divider -->
-      <hr class="sidebar-divider">
+      <hr sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_RH')" class="sidebar-divider">
 
       <!-- Heading Proyecto -->
-      <div class="sidebar-heading">
+      <div sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_RH')" class="sidebar-heading">
         Recursos
       </div>
 
-      <!-- Nav Item - Gastos y tiempo Collapse Menu -->
-      <li class="nav-item active">
+      <!-- Nav Item - Recursos Collapse Menu -->
+      <li sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_RH')" class="nav-item active">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseRecursos" aria-expanded="true" aria-controls="collapseRecursos">
           <i class="fas fa-fw fa-id-card"></i>
           <span>Gesti&oacute;n de recursos</span>

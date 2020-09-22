@@ -36,8 +36,8 @@ public class ProyectoServiceImpl implements IProyectoService {
 	
 	@Override
 	@Transactional(readOnly = true)
-	public Proyecto findByDescProyectoAndCodClienteAndCodEstatusProyectoAndFecRegistro(String descProyecto, Long codCliente, Long codEstatusProyecto, Date fecRegistro) {
-		return (Proyecto) proyectoDao.findByDescProyectoAndCodClienteAndCodEstatusProyectoAndFecRegistro(descProyecto, codCliente, codEstatusProyecto, fecRegistro);
+	public Proyecto findByDescProyectoAndCodClienteAndCodEstatusProyecto(String descProyecto, Long codCliente, Long codEstatusProyecto) {//, Date fecRegistro) {
+		return (Proyecto) proyectoDao.findByDescProyectoAndCodClienteAndCodEstatusProyecto(descProyecto, codCliente, codEstatusProyecto);
 	}
 	
 	@Override
@@ -62,6 +62,18 @@ public class ProyectoServiceImpl implements IProyectoService {
 	@Transactional(readOnly = true)
 	public Proyecto findByCodProyectoAndCodEstatusProyectoAndCodCliente(Long codProyecto, Long codEstatusProyecto, Long codCliente) {
 		return proyectoDao.findByCodProyectoAndCodEstatusProyectoAndCodCliente(codProyecto, codEstatusProyecto, codCliente);
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public List<Proyecto> findByCodRecursoLider(Long codRecursoLider) {
+		return proyectoDao.findByCodRecursoLider(codRecursoLider);
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public List<Proyecto> findProyectosActivos() {
+		return proyectoDao.findProyectosActivos();
 	}
 
 }

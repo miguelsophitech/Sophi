@@ -11,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotEmpty;
 
 import org.hibernate.validator.constraints.Range;
@@ -37,9 +38,9 @@ public class Proyecto implements Serializable  {
 	@Column(name = "desc_proyecto")
 	private String 	descProyecto;
 	
-	@Range(min=0, max=99999999, message="Ingresa un monto positivo válido")
+//	@Range(min=0, max=99999999, message="Ingresa un monto positivo válido")
 	@Column(name = "imp_presupuesto")
-	private Float impPresupuesto;
+	private Long impPresupuesto;
 	
 	@NotEmpty
 	@Column(name = "desc_codigo_proyecto")
@@ -55,7 +56,7 @@ public class Proyecto implements Serializable  {
 	private Long valTotalHorasVendidas;
 	
 	@Column(name = "imp_precio_propuesta")
-	private Float impPrecioPropuesta;
+	private Long impPrecioPropuesta;
 	
 	@Column(name = "fec_incio_proyecto")
 	@Temporal(TemporalType.DATE)
@@ -77,7 +78,7 @@ public class Proyecto implements Serializable  {
 	private Long valTotalHorasProyecto;
 	
 	@Column(name = "imp_costo_proyecto")
-	private Float impCostoProyecto;
+	private Long impCostoProyecto;
 	
 	@Column(name = "fec_registro")
 	@Temporal(TemporalType.TIMESTAMP)
@@ -88,6 +89,9 @@ public class Proyecto implements Serializable  {
 	
 	@Column(name = "cod_tipo_facturacion")
 	private Long codTipoFacturacion;
+	
+	@Transient
+	private Long numAct;
 
 	public Long getCodProyecto() {
 		return codProyecto;
@@ -121,11 +125,11 @@ public class Proyecto implements Serializable  {
 		this.descProyecto = descProyecto;
 	}
 
-	public Float getImpPresupuesto() {
+	public Long getImpPresupuesto() {
 		return impPresupuesto;
 	}
 
-	public void setImpPresupuesto(Float impPresupuesto) {
+	public void setImpPresupuesto(Long impPresupuesto) {
 		this.impPresupuesto = impPresupuesto;
 	}
 
@@ -161,11 +165,11 @@ public class Proyecto implements Serializable  {
 		this.valTotalHorasVendidas = valTotalHorasVendidas;
 	}
 
-	public Float getImpPrecioPropuesta() {
+	public Long getImpPrecioPropuesta() {
 		return impPrecioPropuesta;
 	}
 
-	public void setImpPrecioPropuesta(Float impPrecioPropuesta) {
+	public void setImpPrecioPropuesta(Long impPrecioPropuesta) {
 		this.impPrecioPropuesta = impPrecioPropuesta;
 	}
 
@@ -209,11 +213,11 @@ public class Proyecto implements Serializable  {
 		this.valTotalHorasProyecto = valTotalHorasProyecto;
 	}
 
-	public Float getImpCostoProyecto() {
+	public Long getImpCostoProyecto() {
 		return impCostoProyecto;
 	}
 
-	public void setImpCostoProyecto(Float impCostoProyecto) {
+	public void setImpCostoProyecto(Long impCostoProyecto) {
 		this.impCostoProyecto = impCostoProyecto;
 	}
 
@@ -244,5 +248,15 @@ public class Proyecto implements Serializable  {
 	public void setCodTipoFacturacion(Long codTipoFacturacion) {
 		this.codTipoFacturacion = codTipoFacturacion;
 	}
+
+	public Long getNumAct() {
+		return numAct;
+	}
+
+	public void setNumAct(Long numAct) {
+		this.numAct = numAct;
+	}
+	
+	
 	
 }

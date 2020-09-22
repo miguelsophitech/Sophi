@@ -33,6 +33,9 @@ import com.sophi.app.models.entity.DetalleProyectoContactoId;
 import com.sophi.app.models.entity.DetalleProyectoInfraestructura;
 import com.sophi.app.models.entity.DetalleProyectoInfraestructuraId;
 import com.sophi.app.models.entity.Proyecto;
+import com.sophi.app.models.entity.ProyectoRecurso;
+import com.sophi.app.models.entity.Recurso;
+import com.sophi.app.models.entity.Rol;
 import com.sophi.app.models.service.IActividadService;
 import com.sophi.app.models.service.IAgendaService;
 import com.sophi.app.models.service.IAreaComercialService;
@@ -43,8 +46,10 @@ import com.sophi.app.models.service.IDetalleClienteInfraestructuraService;
 import com.sophi.app.models.service.IDetalleInfraestructuraService;
 import com.sophi.app.models.service.IDetalleProyectoContactoService;
 import com.sophi.app.models.service.IDetalleProyectoInfraestructuraService;
+import com.sophi.app.models.service.IProyectoRecursoService;
 import com.sophi.app.models.service.IProyectoService;
 import com.sophi.app.models.service.IRecursoService;
+import com.sophi.app.models.service.IRolService;
 import com.sophi.app.models.service.ITipoFacturacionService;
 import com.sophi.app.models.service.ITipoProyectoService;
 
@@ -54,6 +59,9 @@ public class PreventaProyectoController {
 	
 	@Autowired
 	private IClienteService clienteService;
+	
+	@Autowired
+	private IProyectoRecursoService proyectoRecursoService;
 	
 	@Autowired
 	private IAreaComercialService areaComercialService;
@@ -90,6 +98,9 @@ public class PreventaProyectoController {
 	
 	@Autowired
 	private IRecursoService recursoService;
+	
+	@Autowired
+	private IRolService rolService;
 	
 	@Autowired
 	private IActividadService actividadService;
@@ -137,7 +148,8 @@ public class PreventaProyectoController {
 		
 		System.out.println("Proyeto buscado "+proyecto.getDescProyecto()+" "+proyecto.getCodCliente()+" "+proyecto.getCodEstatusProyecto()+" "+ proyecto.getFecRegistro());
 		//obtengo el proyecto guardado
-		Proyecto proyectoN = proyectoService.findByDescProyectoAndCodClienteAndCodEstatusProyectoAndFecRegistro(proyecto.getDescProyecto(), proyecto.getCodCliente(), proyecto.getCodEstatusProyecto(), proyecto.getFecRegistro());
+//		Proyecto proyectoN = proyectoService.findByDescProyectoAndCodClienteAndCodEstatusProyectoAndFecRegistro(proyecto.getDescProyecto(), proyecto.getCodCliente(), proyecto.getCodEstatusProyecto(), proyecto.getFecRegistro());
+		Proyecto proyectoN = proyectoService.findByDescProyectoAndCodClienteAndCodEstatusProyecto(proyecto.getDescProyecto(), proyecto.getCodCliente(), proyecto.getCodEstatusProyecto());
 		model.addAttribute("contactos", agendaService.findContactosBycodCliente(proyecto.getCodCliente()));
 		model.addAttribute("tecnologias", detalleInfraestructuraService.findAll());
 //		DetalleInfraestructura di= detalleInfraestructuraService.findAll().get(0);
@@ -380,12 +392,21 @@ public class PreventaProyectoController {
 		model.addAttribute("titulo", "Proyecto");
 		Proyecto proyecto = new Proyecto();
 		modelP.put("proyecto", proyecto);
+		List<Rol> listaRolesLider = rolService.findListaRoles();
+		List<Recurso> listaRecursosLider = new ArrayList<Recurso>();
+		for (Rol rol : listaRolesLider) {
+			Recurso recursoLider = recursoService.findOne(rol.getCod_recurso());
+			if(recursoLider != null) {
+				listaRecursosLider.add(recursoLider);
+			}
+		}
+		
 		model.addAttribute("clientes", clienteService.findAll());
 		model.addAttribute("areasComerciales", areaComercialService.findAll());
 		model.addAttribute("tiposProyecto", tipoProyectoService.findAll());
 		model.addAttribute("tiposFacturacion", tipoFacturacionService.findAll());
 		model.addAttribute("clasificacionesProyecto", clasificacionproyectoService.findAll());
-		model.addAttribute("recursos", recursoService.findAll());
+		model.addAttribute("recursos", listaRecursosLider);
 		return "preventaProyectoAlta";
 	}
 	
@@ -394,11 +415,36 @@ public class PreventaProyectoController {
 		List<Proyecto> listaProyectoTodo = proyectoService.findAll();
 		Proyecto proyectoSophi= proyectoService.findByCodProyecto(1L);
 		listaProyectoTodo.remove(proyectoSophi);
+		for (Proyecto proyecto2 : listaProyectoTodo) {
+			proyecto2.setNumAct(actividadService.countByCodProyecto(proyecto2.getCodProyecto()));
+		}
 		model.addAttribute("titulo", "Proyecto");
 		model.addAttribute("clientes", clienteService.findAll());
 		model.addAttribute("proyectos", listaProyectoTodo);
 		return "preventaProyectoListaTodo";
 	}
+	
+	@RequestMapping(value = "/listaMisProyectos/{email}", method = RequestMethod.GET)
+	public String listaProyectosPorLider(@PathVariable(value = "email") String email, Model model) {
+		Long codLider = recursoService.findByDescCorreoElectronico(email).getCodRecurso();
+		List<Proyecto> listaProyectoTodo = proyectoService.findByCodRecursoLider(codLider);
+		Proyecto proyectoSophi = proyectoService.findOne(1L);
+		listaProyectoTodo.remove(proyectoSophi);
+		
+		List<Cliente> listaClientesLider = new ArrayList<Cliente>();
+		for (Proyecto proyecto2 : listaProyectoTodo) {
+			proyecto2.setNumAct(actividadService.countByCodProyecto(proyecto2.getCodProyecto()));
+			Cliente clienteLider = clienteService.findOne(proyecto2.getCodCliente());
+			listaClientesLider.remove(clienteLider);
+			listaClientesLider.add(clienteLider);
+		}
+		model.addAttribute("titulo", "Proyecto");
+		model.addAttribute("clientes", listaClientesLider);
+		model.addAttribute("proyectos", listaProyectoTodo);
+		return "preventaProyectoListaTodo";
+	}
+	
+	
 	
 	@RequestMapping(value = "/cargaProyectosTodo/{codCliente}", method = RequestMethod.GET)
 	@ResponseBody
@@ -527,6 +573,15 @@ public class PreventaProyectoController {
 			}
 		}
 		
+		List<Rol> listaRolesLider = rolService.findListaRoles();
+		List<Recurso> listaRecursosLider = new ArrayList<Recurso>();
+		for (Rol rol : listaRolesLider) {
+			Recurso recursoLider = recursoService.findOne(rol.getCod_recurso());
+			if(recursoLider != null) {
+				listaRecursosLider.add(recursoLider);
+			}
+		}
+		
 		Cliente cp = clienteService.findOne(proyecto.getCodCliente());
 		modelM.put("proyecto", proyecto);
 		model.addAttribute("clienteProyecto", cp);
@@ -541,7 +596,7 @@ public class PreventaProyectoController {
 		model.addAttribute("textoTec", texto);
 		model.addAttribute("codCon", codCon);
 		model.addAttribute("contactoVista", agendaService.findOne(codCon));
-		model.addAttribute("recursos", recursoService.findAll());
+		model.addAttribute("recursos", listaRecursosLider);
 		model.addAttribute("tecTam", listaDISel.size());
 			
 		model.addAttribute("clasificacionesProyecto", clasificacionproyectoService.findAll());
@@ -563,6 +618,7 @@ public class PreventaProyectoController {
 		}
 		
 		Date fechaHoy = new Date(); 
+		
 		proyecto.setFecRegistro(fechaHoy);
 		
 		//agrego el arrea comercial al cliente
@@ -579,7 +635,8 @@ public class PreventaProyectoController {
 		
 		System.out.println("Proyeto buscado "+proyecto.getDescProyecto()+" "+proyecto.getCodCliente()+" "+proyecto.getCodEstatusProyecto()+" "+ proyecto.getFecRegistro());
 		//obtengo el proyecto guardado
-		Proyecto proyectoN = proyectoService.findByDescProyectoAndCodClienteAndCodEstatusProyectoAndFecRegistro(proyecto.getDescProyecto(), proyecto.getCodCliente(), proyecto.getCodEstatusProyecto(), proyecto.getFecRegistro());
+//		Proyecto proyectoN = proyectoService.findByDescProyectoAndCodClienteAndCodEstatusProyectoAndFecRegistro(proyecto.getDescProyecto(), proyecto.getCodCliente(), proyecto.getCodEstatusProyecto(), proyecto.getFecRegistro());
+		Proyecto proyectoN = proyectoService.findByDescProyectoAndCodClienteAndCodEstatusProyecto(proyecto.getDescProyecto(), proyecto.getCodCliente(), proyecto.getCodEstatusProyecto());
 		model.addAttribute("contactos", agendaService.findContactosBycodCliente(proyecto.getCodCliente()));
 		model.addAttribute("tecnologias", detalleInfraestructuraService.findAll());
 
@@ -636,9 +693,9 @@ public class PreventaProyectoController {
 		flash.addFlashAttribute("success", "Recurso guardado con éxito");
 		
 		//redirijo dependiendo
-		if(proyecto.getCodEstatusProyecto()==1) {
+		if(proyecto.getCodEstatusProyecto()==1 || proyecto.getCodEstatusProyecto()==3) {
 			List<Proyecto> listaProyectoTodo = proyectoService.findAll();
-			flash.addFlashAttribute("success", "Preventa/Proyecto actualizado con éxito");
+			flash.addFlashAttribute("success", "Proyecto actualizado con éxito");
 			model.addAttribute("proyectos", listaProyectoTodo);
 			return "redirect:/listaProyectosTodo";
 		}else {
@@ -677,6 +734,11 @@ public class PreventaProyectoController {
 		
 		Long numActividades = actividadService.countByCodProyecto(proyecto.getCodProyecto());
 		
+		List<ProyectoRecurso> listProyectoRecurso = new ArrayList<ProyectoRecurso>();
+		listProyectoRecurso = proyectoRecursoService.findByProyectoRecursoIdCodProyecto(codProyecto);
+		Long numRecursosAsignados = 0L;
+		numRecursosAsignados = (long) listProyectoRecurso.size();
+		
 		model.addAttribute("titulo", "Proyecto");
 		model.addAttribute("proyecto", proyecto);
 		model.addAttribute("tecnologias", listaDI);
@@ -684,6 +746,7 @@ public class PreventaProyectoController {
 		model.addAttribute("textoTec", texto);
 		model.addAttribute("codCon", codCon);
 		model.addAttribute("numAct",numActividades);
+		model.addAttribute("numAsignados", numRecursosAsignados);
 		model.addAttribute("contactos", agendaService.findContactosBycodCliente(proyecto.getCodCliente()));
 		return "preventaProyectoContactoInfraestructura";
 	}
@@ -716,7 +779,8 @@ public class PreventaProyectoController {
 		
 		System.out.println("Proyeto buscado "+proyecto.getDescProyecto()+" "+proyecto.getCodCliente()+" "+proyecto.getCodEstatusProyecto()+" "+ proyecto.getFecRegistro());
 		//obtengo el proyecto guardado
-		Proyecto proyectoN = proyectoService.findByDescProyectoAndCodClienteAndCodEstatusProyectoAndFecRegistro(proyecto.getDescProyecto(), proyecto.getCodCliente(), proyecto.getCodEstatusProyecto(), proyecto.getFecRegistro());
+//		Proyecto proyectoN = proyectoService.findByDescProyectoAndCodClienteAndCodEstatusProyectoAndFecRegistro(proyecto.getDescProyecto(), proyecto.getCodCliente(), proyecto.getCodEstatusProyecto(), proyecto.getFecRegistro());
+		Proyecto proyectoN = proyectoService.findByDescProyectoAndCodClienteAndCodEstatusProyecto(proyecto.getDescProyecto(), proyecto.getCodCliente(), proyecto.getCodEstatusProyecto());
 		model.addAttribute("contactos", agendaService.findContactosBycodCliente(proyecto.getCodCliente()));
 		model.addAttribute("tecnologias", detalleInfraestructuraService.findAll());
 

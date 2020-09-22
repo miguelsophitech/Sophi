@@ -24,5 +24,7 @@ public interface IActividadDao extends CrudRepository<Actividad, Long>{
 	List<Actividad> findByCodRecurso(Long codRecurso);
 	
 	long countByCodProyecto(Long codProyecto);
+	
+	List<Actividad> findByCodProyecto(Long codProyecto);
 
 }

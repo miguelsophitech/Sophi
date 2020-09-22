@@ -33,8 +33,16 @@ public class AprobacionHorasServicelmpl implements IAprobacionHorasService {
 	}
 
 	@Override
+	@Transactional
 	public void saveAll(List<AprobacionHoras> aprobacionhoras) {
 		aprobacionhorasDao.saveAll(aprobacionhoras);		
 	}
+
+	@Override
+	@Transactional
+	public List<AprobacionHoras> findAprobacionHorasGeneral() {
+		return aprobacionhorasDao.findAprobacionHorasGeneral();
+	}
+	
 
 }

@@ -1,5 +1,6 @@
 package com.sophi.app.models.service;
 
+import java.util.Date;
 import java.util.List;
 
 import com.sophi.app.models.dao.IAprobacionGastosDao;
@@ -22,13 +23,27 @@ public class AprobacionGastosServiceImpl implements IAprobacionGastosService {
 	}
 
 	@Override
+	@Transactional
 	public void saveAll(List<AprobacionGastos> aprobaciongastos) {
 		aprobaciongastosDao.saveAll(aprobaciongastos);
 	}
 
 	@Override
+	@Transactional(readOnly = true)
 	public List<AprobacionGastos> findAprobacionGastosBycodProyecto(Long codProyecto) {
 		return aprobaciongastosDao.findAprobacionGastosBycodProyecto(codProyecto);
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public List<AprobacionGastos> findAprobacionGastosGeneral() {
+		return aprobaciongastosDao.findAprobacionGastosGeneral();
+	}
+
+	@Override
+	@Transactional
+	public void updateValidacion(Long codValidador, Date fecValidacion, Float valImporteValidado, Long codRecursoGasto) {
+		aprobaciongastosDao.updateValidacion(codValidador, fecValidacion, valImporteValidado, codRecursoGasto);
 	}
     
 }

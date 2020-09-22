@@ -22,12 +22,25 @@ public class SophiController {
 		return "index";
 	}
 	
+	@GetMapping({"/accessDenied"})
+	public String accessDenied(Map<String, Object> map) {
+		return "accessDenied";
+	}
+	
+	
 	
 	@GetMapping(value="/datosRecursoLogin/{login}")
-	public String cargarActividadPrimaria(@PathVariable String login, Model model){
+	public String cargarDatosRecursoLogin(@PathVariable String login, Model model){
 		recursoService.findByDescCorreoElectronico(login);
 		model.addAttribute("recursoSesion", recursoService.findByDescCorreoElectronico(login));
 		return "layout/layout :: dataSesion";
+	}
+	
+	@GetMapping(value="/datosOpcionesRecursoLogin/{login}")
+	public String cargarDatosOpcionesRecursoLogin(@PathVariable String login, Model model){
+		recursoService.findByDescCorreoElectronico(login);
+		model.addAttribute("recursoSesion", recursoService.findByDescCorreoElectronico(login));
+		return "layout/layout :: dataSesionOption";
 	}
 	
 	

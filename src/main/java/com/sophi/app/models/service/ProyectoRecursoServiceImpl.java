@@ -51,5 +51,17 @@ public class ProyectoRecursoServiceImpl implements IProyectoRecursoService {
 	public void saveAll(List<ProyectoRecurso> proyectoRecurso) {
 		proyectoRecursoDao.saveAll(proyectoRecurso);
 	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public List<ProyectoRecurso> findByProyectoRecursoIdCodProyecto(Long codProyecto) {
+		return (List<ProyectoRecurso>) proyectoRecursoDao.findByProyectoRecursoIdCodProyecto(codProyecto);
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public List<ProyectoRecurso> findProyectoRecursoActivo(Long codRecurso) {
+		return proyectoRecursoDao.findProyectoRecursoActivo(codRecurso);
+	}
 	
 }

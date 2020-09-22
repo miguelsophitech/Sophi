@@ -13,6 +13,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 
 import org.hibernate.validator.constraints.Range;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -40,10 +41,10 @@ public class AprobacionHoras implements Serializable {
 	@Column(name = "cod_estatus_proyecto")
 	private Long codEstatusProyecto;
 
-	@OneToOne
-	@JoinColumn(name = "cod_actividad", insertable = false, updatable = false)
-	private Actividad actividad;
-
+//	@OneToOne
+//	@JoinColumn(name = "cod_actividad", insertable = false, updatable = false)
+//	private Actividad actividad;
+	
 	@OneToOne
 	@JoinColumn(name = "cod_recurso", insertable = false, updatable = false)
 	private Recurso recurso;
@@ -86,6 +87,15 @@ public class AprobacionHoras implements Serializable {
 	
 	@Column(name = "val_nueva_actividad")
 	private Long valNuevaActividad;
+	
+	@Transient
+	private Float horasPlaneadas;
+	
+	@Transient
+	private String descProyecto;
+	
+	@Transient
+	private String descActividadSecundaria;
 	
 	public Long getCodCapHora() {
 		return codCapHora;
@@ -135,13 +145,13 @@ public class AprobacionHoras implements Serializable {
 		this.codProyecto = codProyecto;
 	}
 
-	public Actividad getActividad() {
-		return actividad;
-	}
-
-	public void setActividad(Actividad actividad) {
-		this.actividad = actividad;
-	}
+//	public Actividad getActividad() {
+//		return actividad;
+//	}
+//
+//	public void setActividad(Actividad actividad) {
+//		this.actividad = actividad;
+//	}
 	
 	public Recurso getRecurso() {
 		return recurso;
@@ -221,6 +231,30 @@ public class AprobacionHoras implements Serializable {
 
 	public void setValNuevaActividad(Long valNuevaActividad) {
 		this.valNuevaActividad = valNuevaActividad;
+	}
+	
+	public Float getHorasPlaneadas() {
+		return horasPlaneadas;
+	}
+
+	public void setHorasPlaneadas(Float horasPlaneadas) {
+		this.horasPlaneadas = horasPlaneadas;
+	}
+
+	public String getDescProyecto() {
+		return descProyecto;
+	}
+
+	public void setDescProyecto(String descProyecto) {
+		this.descProyecto = descProyecto;
+	}
+
+	public String getDescActividadSecundaria() {
+		return descActividadSecundaria;
+	}
+
+	public void setDescActividadSecundaria(String descActividadSecundaria) {
+		this.descActividadSecundaria = descActividadSecundaria;
 	}
 
 	public static long getSerialversionuid() {

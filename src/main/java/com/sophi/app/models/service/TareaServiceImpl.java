@@ -27,4 +27,10 @@ public class TareaServiceImpl implements ITareaService {
 		return tareaDao.findById(codTarea).orElse(null);
 	}
 
+	@Override
+	@Transactional(readOnly = true)
+	public List<Tarea> findTareaFueraPlan() {
+		return tareaDao.findTareaFueraPlan();
+	}
+
 }

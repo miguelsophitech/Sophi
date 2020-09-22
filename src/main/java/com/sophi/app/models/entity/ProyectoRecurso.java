@@ -9,6 +9,7 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -38,6 +39,17 @@ public class ProyectoRecurso implements Serializable{
 	
 	@Column(name = "imp_costo_recurso")
 	private float impCostoRecurso;
+	
+	@Transient
+	private String nombreRecurso;
+	
+	public String getNombreRecurso() {
+		return nombreRecurso;
+	}
+
+	public void setNombreRecurso(String nombreRecurso) {
+		this.nombreRecurso = nombreRecurso;
+	}
 
 	public ProyectoRecursoId getProyectoRecursoId() {
 		return proyectoRecursoId;
