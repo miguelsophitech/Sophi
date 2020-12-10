@@ -76,7 +76,12 @@ public class CapHorasController {
 		if (proyectoListId.size() > 0) {
 			for (Long id : proyectoListId) {
 				Proyecto proyecto = proyectoService.findByCodProyectoAndCodEstatusProyecto(id, 2L);
-				if(proyecto != null) {
+				if(proyecto == null) {
+					proyecto = proyectoService.findByCodProyectoAndCodEstatusProyecto(id, 1L);
+					if(proyecto != null){
+						proyectoList.put(id, proyecto.getDescProyecto());
+					}
+				} else if(proyecto != null){
 					proyectoList.put(id, proyecto.getDescProyecto());
 				}
 			}
@@ -88,7 +93,12 @@ public class CapHorasController {
 			for (ProyectoRecurso proyectoRecurso : proyectosRecurso) {
 				Long idProyect = proyectoRecurso.getProyectoRecursoId().getCodProyecto();
 				Proyecto proyecto = proyectoService.findByCodProyectoAndCodEstatusProyecto(idProyect, 2L);
-				if (proyecto != null) {
+				if (proyecto == null) {
+					proyecto = proyectoService.findByCodProyectoAndCodEstatusProyecto(idProyect, 1L);
+					if (proyecto != null) {
+						proyectoList.put(idProyect,proyecto.getDescProyecto());
+					}
+				} else if (proyecto != null) {
 					proyectoList.put(idProyect,proyecto.getDescProyecto());
 				}
 				
@@ -113,7 +123,10 @@ public class CapHorasController {
 			return "layout/capHora :: listActividadesPrimariasNoPlan";
 		}else {
 			List<String> listaActividadesPrimarias = new ArrayList<String>();
-			listaActividadesPrimarias.add(PREVENTA);
+			Proyecto proyecto = proyectoService.findByCodProyecto(codProyecto);
+			if(!proyecto.getCodEstatusProyecto().equals(2L)) {
+				listaActividadesPrimarias.add(PREVENTA);
+			}
 			listaActividadesPrimarias.addAll(actividadService.findListaActividadesPrimariasByRecursoProyecto(codRecurso, codProyecto));
 			listaActividadesPrimarias.add(OTRA);
 			model.addAttribute("actividadesPrimariasList", listaActividadesPrimarias);
@@ -224,7 +237,7 @@ public class CapHorasController {
 		}
 		
 		String mensajeFlash = "Registro guardado con éxito";
-		
+
 		capHoraService.save(capHora);
 		status.setComplete();
 		flash.addFlashAttribute("success", mensajeFlash);

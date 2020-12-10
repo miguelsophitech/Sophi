@@ -1,6 +1,5 @@
 package com.sophi.app.models.service;
 
-import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -74,6 +73,38 @@ public class ProyectoServiceImpl implements IProyectoService {
 	@Transactional(readOnly = true)
 	public List<Proyecto> findProyectosActivos() {
 		return proyectoDao.findProyectosActivos();
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public List<Long> findListaClientesRecursoAprobador(Long codRecursoAprobador) {
+		return proyectoDao.findListaClientesRecursoAprobador(codRecursoAprobador);
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public List<Long> findListaClientesRecursoLider(Long codRecursoLider) {
+		return proyectoDao.findListaClientesRecursoLider(codRecursoLider);
+	}
+
+	@Override
+	public List<Proyecto> findListaProyectosRecursoAprobador(Long codRecursoAprobador, Long codCliente) {
+		return proyectoDao.findListaProyectosRecursoAprobador(codRecursoAprobador, codCliente);
+	}
+
+	@Override
+	public List<Proyecto> findListaProyectosRecursoLider(Long codRecursoLider, Long codCliente) {
+		return proyectoDao.findListaProyectosRecursoLider(codRecursoLider, codCliente);
+	}
+
+	@Override
+	public List<Proyecto> findListaProyectosRecursoAprobadorTodos(Long codRecursoAprobador) {
+		return proyectoDao.findListaProyectosRecursoAprobadorTodos(codRecursoAprobador);
+	}
+
+	@Override
+	public List<Proyecto> findListaProyectosRecursoLiderTodos(Long codRecursoLider) {
+		return proyectoDao.findListaProyectosRecursoLiderTodos(codRecursoLider);
 	}
 
 }

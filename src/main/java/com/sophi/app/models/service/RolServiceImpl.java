@@ -19,4 +19,9 @@ public class RolServiceImpl implements IRolService{
 		return rolDao.findListaRoles();
 	}
 
+	@Override
+	public List<Rol> findByCodRecurso(Long codRecurso) {
+		return rolDao.findByCodRecurso(codRecurso);
+	}
+
 }

@@ -52,23 +52,43 @@ public class AprobacionHorasController {
     @RequestMapping(value = "/aprobacionhoras/{email}", method = RequestMethod.GET)
     public String AprobacionHoras(Model model, @PathVariable(value = "email") String email){
     	Long codRecurso = recursoService.findByDescCorreoElectronico(email).getCodRecurso();
+    	
+    	//Obtiene listado de proyectos donde el recurso es lider.
+    	List<Proyecto> listaProyectosLider = new ArrayList<Proyecto>();
+    	listaProyectosLider = proyectoService.findByCodRecursoLider(codRecurso);
+    	
+    	
     	List<AprobacionHoras> aprobacioneshoras = new ArrayList<>();
         List<Recurso> listaRecursos = new ArrayList<Recurso>();
-        List<Proyecto> listaProyecto = proyectoService.findProyectosActivos();
-		List<Proyecto> listaProyectoTodo = proyectoService.findProyectosActivos();
-		Proyecto proyectoAux;
+//        List<Proyecto> listaProyecto = proyectoService.findProyectosActivos();
+//		List<Proyecto> listaProyectoTodo = proyectoService.findProyectosActivos();
+		List<Proyecto> listaProyecto = new ArrayList<Proyecto>();
+		List<Proyecto> listaProyectoTodo = new ArrayList<Proyecto>();
+		
+		List<AprobacionHoras> tmpListAprobacion = new ArrayList<AprobacionHoras>();
         
-        for(Proyecto p : listaProyecto) {
-			if(p.getCodEstatusProyecto()==2) {
-				proyectoAux=proyectoService.findByCodProyectoAndCodEstatusProyectoAndCodCliente(p.getCodProyecto(), 1L, p.getCodCliente());
-				if(proyectoAux!=null) {
-					listaProyectoTodo.remove(proyectoAux);
-				}
+		
+		for (Proyecto proyecto : listaProyectosLider) {
+			if(proyecto.getCodEstatusProyecto().equals(1L) || proyecto.getCodEstatusProyecto().equals(2L)) {
+				listaProyecto.add(proyecto);
+				listaProyectoTodo.add(proyecto);
+				tmpListAprobacion.addAll(aprobacionHorasService.findAprobacionHorasGeneral(proyecto.getCodProyecto()));
 			}
 		}
+		
+//		Proyecto proyectoAux;
+//        
+//        for(Proyecto p : listaProyecto) {
+//			if(p.getCodEstatusProyecto().equals(1L) || p.getCodEstatusProyecto().equals(2L)) {
+//				proyectoAux=proyectoService.findByCodProyectoAndCodEstatusProyectoAndCodCliente(p.getCodProyecto(), 1L, p.getCodCliente());
+//				if(proyectoAux!=null) {
+//					listaProyectoTodo.remove(proyectoAux);
+//				}
+//			}
+//		}
         
-        List<AprobacionHoras> tmpListAprobacion = new ArrayList<AprobacionHoras>();
-        tmpListAprobacion = aprobacionHorasService.findAprobacionHorasGeneral();
+//        List<AprobacionHoras> tmpListAprobacion = new ArrayList<AprobacionHoras>();
+//        tmpListAprobacion = aprobacionHorasService.findAprobacionHorasGeneral();
         
         
         
@@ -80,7 +100,7 @@ public class AprobacionHorasController {
 			} else {
 				aprobacionHoras.setDescProyecto(proyectoService.findByCodProyecto(aprobacionHoras.getCodProyecto()).getDescProyecto());
 				aprobacionHoras.setDescActividadSecundaria(actividadService.findOne(aprobacionHoras.getCodActividad()).getDescActividadSecundaria());
-				aprobacionHoras.setHorasPlaneadas(actividadService.findOne(aprobacionHoras.getCodActividad()).getValDuracionActividad());
+				aprobacionHoras.setHorasPlaneadas(Float.parseFloat(actividadService.findOne(aprobacionHoras.getCodActividad()).getValDuracionActividad()));
 			}
 		}
         

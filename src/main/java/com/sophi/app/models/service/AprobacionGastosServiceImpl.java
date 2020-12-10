@@ -42,8 +42,8 @@ public class AprobacionGastosServiceImpl implements IAprobacionGastosService {
 
 	@Override
 	@Transactional
-	public void updateValidacion(Long codValidador, Date fecValidacion, Float valImporteValidado, Long codRecursoGasto) {
-		aprobaciongastosDao.updateValidacion(codValidador, fecValidacion, valImporteValidado, codRecursoGasto);
+	public void updateValidacion(Long codValidador, Date fecValidacion, Float valImporteValidado, Long valGastoPlaneado, Long codRecursoGasto) {
+		aprobaciongastosDao.updateValidacion(codValidador, fecValidacion, valImporteValidado, valGastoPlaneado, codRecursoGasto);
 	}
     
 }

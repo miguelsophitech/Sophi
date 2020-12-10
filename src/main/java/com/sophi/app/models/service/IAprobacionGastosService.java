@@ -15,6 +15,6 @@ public interface IAprobacionGastosService {
 	
 	public List<AprobacionGastos> findAprobacionGastosGeneral(); 
 	
-	public void updateValidacion(Long codValidador, Date fecValidacion, Float valImporteValidado, Long codRecursoGasto);
+	public void updateValidacion(Long codValidador, Date fecValidacion, Float valImporteValidado, Long valGastoPlaneado, Long codRecursoGasto);
     
 }

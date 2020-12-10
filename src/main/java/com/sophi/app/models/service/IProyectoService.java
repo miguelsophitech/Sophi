@@ -1,6 +1,5 @@
 package com.sophi.app.models.service;
 
-import java.util.Date;
 import java.util.List;
 
 import com.sophi.app.models.entity.Proyecto;
@@ -27,5 +26,17 @@ public interface IProyectoService {
 	public Proyecto findByCodProyectoAndCodEstatusProyectoAndCodCliente(Long codProyecto, Long codEstatusProyecto, Long codCliente);
 	
 	public List<Proyecto> findProyectosActivos();
+	
+	public List<Long> findListaClientesRecursoAprobador(Long codRecursoAprobador);
+	
+	public List<Long> findListaClientesRecursoLider(Long codRecursoLider);
+	
+	public List<Proyecto> findListaProyectosRecursoAprobador(Long codRecursoAprobador, Long codCliente);
+	
+	public List<Proyecto> findListaProyectosRecursoLider(Long codRecursoLider, Long codCliente);
+	
+	public List<Proyecto> findListaProyectosRecursoAprobadorTodos(Long codRecursoAprobador);
+	
+	public List<Proyecto> findListaProyectosRecursoLiderTodos(Long codRecursoLider);
 
 }

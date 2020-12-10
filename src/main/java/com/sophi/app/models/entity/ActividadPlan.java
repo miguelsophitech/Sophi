@@ -8,27 +8,30 @@ public class ActividadPlan {
 	private String numActividad;
 	
 	@CsvBindByPosition(position = 1)
-	private String nombre;
+	private String edt;
 	
 	@CsvBindByPosition(position = 2)
-	private String duracion;
+	private String nombre;
 	
 	@CsvBindByPosition(position = 3)
-	private String esfuerzo;
+	private String duracion;
 	
 	@CsvBindByPosition(position = 4)
+	private String esfuerzo;
+	
+	@CsvBindByPosition(position = 5)
 	private String porcentajeCompletado;
 		
-	@CsvBindByPosition(position = 5)
+	@CsvBindByPosition(position = 6)
 	private String inicio;
 	
-	@CsvBindByPosition(position = 6)
+	@CsvBindByPosition(position = 7)
 	private String fin;
 	
-	@CsvBindByPosition(position = 7)
+	@CsvBindByPosition(position = 8)
 	private String predecesora;
 	
-	@CsvBindByPosition(position = 8)
+	@CsvBindByPosition(position = 9)
 	private String recursos;
 	
 	private int serie; 
@@ -45,10 +48,11 @@ public class ActividadPlan {
 		
 	}
 
-	public ActividadPlan(String numActividad, String nombre, String duracion, String esfuerzo,
+	public ActividadPlan(String numActividad, String edt, String nombre, String duracion, String esfuerzo,
 			String porcentajeCompletado, String inicio, String fin, String predecesora, String recursos) {
 		super();
 		this.numActividad = numActividad;
+		this.edt = edt;
 		this.nombre = nombre;
 		this.duracion = duracion;
 		this.esfuerzo = esfuerzo;
@@ -73,6 +77,14 @@ public class ActividadPlan {
 
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
+	}
+
+	public String getEdt() {
+		return edt;
+	}
+
+	public void setEdt(String edt) {
+		this.edt = edt;
 	}
 
 	public String getDuracion() {

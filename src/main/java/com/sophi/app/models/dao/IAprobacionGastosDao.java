@@ -12,7 +12,7 @@ import org.springframework.data.repository.query.Param;
 
 public interface IAprobacionGastosDao extends CrudRepository<AprobacionGastos, Long> {
     
-	@Query("FROM AprobacionGastos Ap WHERE Ap.codProyecto = ?1")
+	@Query("FROM AprobacionGastos Ap WHERE Ap.codProyecto = ?1 AND Ap.codRecursoValidador IS NULL AND Ap.valImporteValidado IS NULL AND Ap.fecValidacion IS NULL ")
     List<AprobacionGastos> findAprobacionGastosBycodProyecto(Long codProyecto);
 	
 //	@Query("FROM AprobacionGastos Ap WHERE Ap.codRecursoValidador IS NULL ")
@@ -23,7 +23,7 @@ public interface IAprobacionGastosDao extends CrudRepository<AprobacionGastos, L
 	
 	
 	@Modifying
-	@Query("UPDATE AprobacionGastos Ag SET Ag.codRecursoValidador = :codValidador, Ag.fecValidacion = :fecValidacion, Ag.valImporteValidado = :valImporteValidado where Ag.codRecursoGasto = :codRecursoGasto")
-	void updateValidacion(@Param("codValidador") Long codValidador,@Param("fecValidacion") Date fecValidacion, @Param("valImporteValidado") Float valImporteValidado, @Param("codRecursoGasto") Long codRecursoGasto);
+	@Query("UPDATE AprobacionGastos Ag SET Ag.codRecursoValidador = :codValidador, Ag.fecValidacion = :fecValidacion, Ag.valImporteValidado = :valImporteValidado, Ag.valGastoPlaneado = :valGastoPlaneado where Ag.codRecursoGasto = :codRecursoGasto")
+	void updateValidacion(@Param("codValidador") Long codValidador,@Param("fecValidacion") Date fecValidacion, @Param("valImporteValidado") Float valImporteValidado, @Param("valGastoPlaneado") Long valGastoPlaneado, @Param("codRecursoGasto") Long codRecursoGasto);
 	
 }

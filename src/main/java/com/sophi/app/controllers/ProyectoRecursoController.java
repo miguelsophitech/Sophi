@@ -1,7 +1,10 @@
 package com.sophi.app.controllers;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -18,11 +21,16 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 
+import com.sophi.app.mail.dto.MailRequest;
+import com.sophi.app.mail.dto.MailResponse;
+import com.sophi.app.mail.service.EmailService;
 import com.sophi.app.models.entity.Proyecto;
 import com.sophi.app.models.entity.ProyectoRecurso;
 import com.sophi.app.models.entity.ProyectoRecursoDto;
 import com.sophi.app.models.entity.ProyectoRecursoId;
 import com.sophi.app.models.entity.Recurso;
+import com.sophi.app.models.service.ActividadServiceImpl;
+import com.sophi.app.models.service.IActividadService;
 import com.sophi.app.models.service.IProyectoRecursoService;
 import com.sophi.app.models.service.IProyectoService;
 import com.sophi.app.models.service.IRecursoService;
@@ -30,6 +38,12 @@ import com.sophi.app.models.service.IRecursoService;
 @Controller
 @SessionAttributes("formRecursosProyecto")
 public class ProyectoRecursoController {
+	
+	@Autowired
+	private EmailService service;
+	
+	@Autowired
+	private IActividadService actividadService;
 	
 	@Autowired
 	private IProyectoRecursoService proyectoRecursoService;
@@ -58,9 +72,45 @@ public class ProyectoRecursoController {
 	
 	@PostMapping("/formCostoRecursoProyecto")
 	public String guardaCostoRecurso(@ModelAttribute("formRecursosProyecto") ProyectoRecursoDto formRecursosProyecto, @ModelAttribute("codProyecto") Long codProyecto ,  Model model, SessionStatus status) {
+		List<ProyectoRecurso> listadoRecursos = new ArrayList<ProyectoRecurso>();
+		listadoRecursos = formRecursosProyecto.getListaRecursosProyecto();
+		
+		float costoProyecto = 0;
+		float totalHoras = 0;
+		
+		if(listadoRecursos.size() > 0) {
+			proyectoRecursoService.saveAll(listadoRecursos);
+			status.setComplete();
+			
+			for (ProyectoRecurso proyectoRecurso : listadoRecursos) {
 
-		proyectoRecursoService.saveAll(formRecursosProyecto.getListaRecursosProyecto());
-		status.setComplete();
+				Float horasRecurso = actividadService.sumTotalHorasProyecto(proyectoRecurso.getProyectoRecursoId().getCodRecurso(), codProyecto);
+				if (horasRecurso == null) {
+					horasRecurso = (float) 0;
+				}
+				Float costoRecurso = horasRecurso * proyectoRecurso.getImpCostoRecurso();
+				
+				totalHoras += horasRecurso;
+				costoProyecto += costoRecurso;
+			}
+		}
+		
+		//Set de costo y total de horas + guardado de proyecto
+		Proyecto proyecto = proyectoService.findByCodProyecto(codProyecto);
+//		proyecto.setImpCostoProyecto(String.format("%.2f", costoProyecto));
+		
+		
+        String pattern = "###,###,###.##";
+        //Si no le paso ningun Locale, toma el del sistema, que en mi caso es Locale("es","MX");
+        DecimalFormat myFormatter = new DecimalFormat(pattern);
+        String output = myFormatter.format(costoProyecto);
+        System.out.println(costoProyecto + " " + pattern + " " + output);
+        proyecto.setImpCostoProyecto(output);
+		
+		
+		proyecto.setValTotalHorasProyecto(String.format("%.2f", totalHoras));
+		proyectoService.save(proyecto)
+		;
 		return "redirect:/preventaProyectoContactoInfraestructura/"+ codProyecto; 
 	}
 	
@@ -69,7 +119,7 @@ public class ProyectoRecursoController {
 	public String recursosDispProyecto(@PathVariable Long codProyecto, Model model) {
 		String nombreProyecto = proyectoService.findOne(codProyecto).getDescProyecto();
 		List<Recurso> recursoList = new ArrayList<Recurso>();
-		recursoList = recursoService.findAll();
+		recursoList = recursoService.findListRecursosResponsables();
 		List<Recurso> recursoListAsignados = new ArrayList<Recurso>();
 		List<ProyectoRecurso> recursoListAsignadosTmp = new ArrayList<ProyectoRecurso>();
 		recursoListAsignadosTmp = proyectoRecursoService.findByProyectoRecursoIdCodProyecto(codProyecto);
@@ -107,7 +157,36 @@ public class ProyectoRecursoController {
 			proyectoRecursoService.delete(proyectoRecurso);
 			proyectoRecursoService.save(proyectoRecurso);
 			System.out.println(id);
+			try {
+				enviaNotificacionAsignacionRecurso(proyecto, id);
+			} catch (Exception e) {
+				System.out.println("NOTIFICACIONES : <Error> No se puede enviar notificacion al recurso de nueva asignación sin plan");
+			}
+			
 		}
 		return "Hecho : "+ codProyecto; 
 	}
+	
+	
+	//Asignación de recurso a proyecto 
+	public void enviaNotificacionAsignacionRecurso(Proyecto proy, Long codRecurso) {
+		Recurso recurso = recursoService.findOne(codRecurso);
+		//Aprobador INICIO 
+		MailRequest request = new MailRequest();
+		request.setName(recurso.getDescRecurso());
+		request.setSubject("Nueva asignación - Recurso");
+		request.setTo(recurso.getDescCorreoElectronico());
+		
+		Map<String, Object> model = new HashMap<String, Object>();
+		model.put("nombreRecurso", request.getName());
+		model.put("mensaje", "<h3>Has sido asignado al proyecto \""+ proy.getDescProyecto() + "\" sin plan de actividades.</h3>");
+		model.put("imagen","<img data-cfsrc=\"images/status.png\" alt=\"\" data-cfstyle=\"width: 200px; max-width: 400px; height: auto; margin: auto; display: block;\" style=\"width: 200px; max-width: 400px; height: auto; margin: auto; display: block;\" src=\"https://sophitech.herokuapp.com/img/img-status.png\">");
+		model.put("pie", "");
+		
+		MailResponse response = service.sendEmail(request, model);
+		System.out.println(response.getMessage());
+		//Aprobador FIN
+	}
+	
+	
 }

@@ -50,12 +50,19 @@ $(document).ready(function() {
 });
 
 function semanaInicioFin(fecha){
-var curr = new Date(fecha); 
+var curr = new Date(fecha);
+
 var first = curr.getDate() - curr.getDay(); // First day is the day of the month - the day of the week 
 var last = first + 6; // last day is the first day + 6 
 
-var firstday = new Date(curr.setDate(first)).toUTCString(); 
-var lastday = new Date(curr.setDate(last)).toUTCString(); 
+
+
+var firstday = new Date(curr.setDate(first)).toUTCString();
+var firstday2 = new Date(firstday);
+//var lastday = new Date(curr.setDate(last)).toUTCString(); 
+//var lastday2 = new Date(firstday2.setDate(firstday2.getDate() + 6)); 
+var lastday =  new Date(firstday2.setDate(firstday2.getDate() + 6)).toUTCString();; 
+
 
 $.ajax({
     type: "GET",

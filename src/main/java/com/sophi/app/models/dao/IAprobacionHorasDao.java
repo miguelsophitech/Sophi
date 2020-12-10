@@ -12,10 +12,10 @@ public interface IAprobacionHorasDao extends CrudRepository<AprobacionHoras, Lon
     @Query("FROM AprobacionHoras Ap WHERE Ap.codProyecto = ?1")
     List<AprobacionHoras> findAprobacionHorasBycodProyecto(Long codProyecto);
     
-//    @Query("FROM AprobacionHoras Ap WHERE Ap.codRecursoValidador IS NULL")
-//    List<AprobacionHoras> findAprobacionHorasGeneral();
+    @Query("FROM AprobacionHoras Ap WHERE Ap.codRecursoValidador IS NULL AND Ap.codProyecto = ?1 ")
+    List<AprobacionHoras> findAprobacionHorasGeneral(Long codProyecto);
     
-  @Query("FROM AprobacionHoras Ap INNER JOIN Proyecto Pr ON Ap.codProyecto = Pr.codProyecto WHERE Ap.codRecursoValidador IS NULL AND Pr.codEstatusProyecto = 2 ")
-  List<AprobacionHoras> findAprobacionHorasGeneral();
+//  @Query("FROM AprobacionHoras Ap INNER JOIN Proyecto Pr ON Ap.codProyecto = Pr.codProyecto WHERE Ap.codRecursoValidador IS NULL AND Pr.codEstatusProyecto = 2 ")
+//  List<AprobacionHoras> findAprobacionHorasGeneral();
     
 }

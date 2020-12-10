@@ -43,13 +43,27 @@ public class AgendaController {
 	@RequestMapping(value = "/agenda", method = RequestMethod.GET)
 	public String Agenda(Model model) {
 		List<Cliente> listaClientes = clienteService.findAll();
-		Agenda agenda = agendaService.findOne(1L);
-		List<Agenda> listaAgenda =  agendaService.findAll();
-		listaAgenda.remove(agenda);
+		Cliente cliente = clienteService.findOne(1L);
+		listaClientes.remove(cliente);
 		model.addAttribute("titulo", "Lista de Contactos");
-		model.addAttribute("contactos",listaAgenda);
 		model.addAttribute("clientes", listaClientes);
 		return "agenda";
+	}
+	
+	@RequestMapping(value = "/contactos/{codCliente}", method = RequestMethod.GET)
+	public String contactoListado(@PathVariable(value = "codCliente") Long codCliente,Model model) {
+		List<Agenda> listaAgenda = new ArrayList<Agenda>();
+		if (codCliente.equals(-1L)) {
+			listaAgenda = agendaService.findAll();
+		} else {
+			listaAgenda = agendaService.findContactosBycodCliente(codCliente);
+		}
+		
+		Agenda agenda = agendaService.findOne(1L);
+		listaAgenda.remove(agenda);
+
+		model.addAttribute("contactos",listaAgenda);
+		return "layout/plantilla-filtros :: contacto-listado";
 	}
 	
 	@RequestMapping(value = "/dataContacto/{id}")

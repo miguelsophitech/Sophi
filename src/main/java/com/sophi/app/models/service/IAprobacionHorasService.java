@@ -14,6 +14,6 @@ public interface IAprobacionHorasService {
 
 	public List<AprobacionHoras> findAprobacionHorasBycodProyecto(Long codProyecto);
 	
-	public List<AprobacionHoras> findAprobacionHorasGeneral();
+	public List<AprobacionHoras> findAprobacionHorasGeneral(Long codProyecto);
 
 }

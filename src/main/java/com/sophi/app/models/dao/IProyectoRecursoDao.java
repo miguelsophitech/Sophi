@@ -14,7 +14,7 @@ public interface IProyectoRecursoDao extends CrudRepository<ProyectoRecurso, Pro
 	
 	List<ProyectoRecurso> findByProyectoRecursoIdCodProyecto(Long codProyecto);
 	
-	@Query("FROM ProyectoRecurso PrR INNER JOIN Proyecto Pr ON PrR.proyectoRecursoId.codProyecto = Pr.codProyecto WHERE PrR.proyectoRecursoId.codRecurso = ?1 AND Pr.codEstatusProyecto = 2 ")
+	@Query("FROM ProyectoRecurso PrR INNER JOIN Proyecto Pr ON PrR.proyectoRecursoId.codProyecto = Pr.codProyecto WHERE PrR.proyectoRecursoId.codRecurso = ?1 AND (Pr.codEstatusProyecto = 1 OR Pr.codEstatusProyecto = 2) ")
 	List<ProyectoRecurso> findProyectoRecursoActivo(Long codRecurso);
 	
 }

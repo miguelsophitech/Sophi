@@ -68,6 +68,9 @@ public class RecursoGasto implements Serializable{
 	@Column(name = "cod_recurso_validador")
 	private Long codRecursoValidador;
 	
+	@Column(name = "val_importe_validado")
+	private Float valImporteValidado;
+	    
 	@Column(name = "fec_validacion")
 	@Temporal(TemporalType.DATE)
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
@@ -195,5 +198,14 @@ public class RecursoGasto implements Serializable{
 	public void setFecValidacion(Date fecValidacion) {
 		this.fecValidacion = fecValidacion;
 	}
+	
+	 public Float getValImporteValidado() {
+		return valImporteValidado;
+	}
+
+	public void setValImporteValidado(Float valImporteValidado) {
+		this.valImporteValidado = valImporteValidado;
+	}
+	
 	
 }

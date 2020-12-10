@@ -4,9 +4,11 @@ package com.sophi.app;
 //import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.scheduling.annotation.EnableScheduling;
 //import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @SpringBootApplication
+@EnableScheduling
 public class SophiApplication{
 
 //	@Autowired
@@ -18,10 +20,6 @@ public class SophiApplication{
 
 //	@Override
 //	public void run(String... args) throws Exception {
-//		String[ ] pass = {"WxtsUQTE", "xcUKTupT","pvNYWwrQ","BsnARXqe","YVmQkhps","yxZjmEma","dEbPJfQm","fSyFPwSr","SqKgSZdh","BapRQqer","NMtcqeBa","qZfwWqcZ"};
-//		for (String p : pass) {
-//			System.out.println(p + " - " + passwordEncoder.encode(p));
-//		}
 //	}
 	
 

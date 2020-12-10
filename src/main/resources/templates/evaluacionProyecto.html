@@ -1,0 +1,282 @@
+
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head th:replace="layout/layout::head"></head> 
+
+<body id="page-top">
+<input id="authGetName" type="hidden" th:value="${#authentication.getName()}"></input>
+<input id="codLid" type="hidden" th:value="${codLider}"></input>
+  <!-- Page Wrapper -->
+  <div id="wrapper">
+
+    <!-- Sidebar -->
+    <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+
+      <!-- Sidebar - Brand -->
+      <a class="sidebar-brand d-flex align-items-center justify-content-center" th:href="@{/}">
+        <div class="sidebar-brand-icon">
+          <!--<i class="fas fa-laugh-wink"></i>  rotate-n-15-->
+          <img th:src="@{/img/logo-img.png}" alt="">
+        </div> 
+        <div class="sidebar-brand-text mx-3"><img th:src="@{/img/logo-texto.png}" alt=""></div>
+      </a>
+
+      <!-- Divider -->
+      <hr class="sidebar-divider my-0">
+
+      <!-- Nav Item - Dashboard -->
+      <li class="nav-item">
+        <a class="nav-link" th:href="@{/}">
+          <i class="fa fa-home"></i>
+          <span>Inicio</span></a>
+      </li>
+      
+      <!-- Divider -->
+      <hr sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_APROB')" class="sidebar-divider">
+
+      <!-- Heading Proyecto -->
+      <div sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_APROB')" class="sidebar-heading">
+        Clientes
+      </div>
+
+      <!-- Nav Item - Gastos y tiempo Collapse Menu -->
+      <li class="nav-item" sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_APROB')">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseClientes" aria-expanded="true" aria-controls="collapseClientes">
+          <i class="fas fa-fw fa-address-book"></i>
+          <span>Gesti&oacute;n de clientes</span>
+        </a>
+        <div id="collapseClientes" class="collapse" aria-labelledby="menuClientes" data-parent="#accordionSidebar">
+          <div class="bg-white py-2 collapse-inner rounded">
+            <h6 class="collapse-header">Ver:</h6>
+            <a class="collapse-item" th:href="@{/listaClientes}">Mis clientes</a>
+            <a class="collapse-item" th:href="@{/agenda}">Mis contactos</a>
+          </div>
+        </div>
+      </li>
+      
+
+      <!-- Divider -->
+      <hr sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_LIDER','ROLE_APROB', 'ROLE_USER')"  class="sidebar-divider">
+
+      <!-- Heading Proyecto -->
+      <div sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_LIDER', 'ROLE_USER', 'ROLE_APROB')" class="sidebar-heading">
+        Proyectos
+      </div>
+      
+	  <!-- Nav Item - Actividades Collapse Menu -->
+      <li class="nav-item active">
+        <a sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_LIDER','ROLE_APROB', 'ROLE_USER')" class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseProyectos" aria-expanded="true" aria-controls="collapseProyectos">
+          <i class="fas fa-fw fa-wrench"></i>
+          <span>Gesti&oacute;n de proyectos</span>
+        </a>
+        <div id="collapseProyectos" class="collapse" aria-labelledby="menuProyectos" data-parent="#accordionSidebar">
+          <div class="bg-white py-2 collapse-inner rounded">
+            <h6 class="collapse-header">Ver:</h6>
+            <a sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_APROB')" class="collapse-item active"  th:href="@{/listaProyectosTodo}">Mis proyectos</a><!-- <a sec:authorize="hasRole('ROLE_LIDER')" class="collapse-item"  th:href="@{/listaMisProyectos/} + ${#authentication.getName()}">Mis proyectos</a> -->
+            <a sec:authorize="hasAnyRole('ROLE_APROB','ROLE_LIDER','ROLE_USER')" class="collapse-item" th:href="@{/misActividades/} + ${#authentication.getName()}">Mis actividades</a>
+          </div>
+        </div>
+      </li>
+
+      <!-- Nav Item - Gastos y tiempo Collapse Menu -->
+      <li class="nav-item">
+        <a sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_LIDER', 'ROLE_USER','ROLE_APROB')" class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseGastosTiempo" aria-expanded="true" aria-controls="collapseGastosTiempo">
+          <i class="fas fa-fw fa-calendar-alt"></i>
+          <span>Gesti&oacute;n de tiempo</span>
+        </a>
+        <div id="collapseGastosTiempo" class="collapse" aria-labelledby="menuGastosTiempo" data-parent="#accordionSidebar">
+          <div class="bg-white py-2 collapse-inner rounded">
+            <h6 class="collapse-header">Ver:</h6>
+            <a sec:authorize="hasAnyRole('ROLE_APROB','ROLE_LIDER','ROLE_USER' )" class="collapse-item" th:href="@{/capHoras/} + ${#authentication.getName()}">Mis horas</a>
+            <a sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_APROB')" class="collapse-item" th:href="@{/aprobacionHorasProyecto/}+${#authentication.getName()}">Aprobaci&oacute;n de horas</a>
+            <a sec:authorize="hasAnyRole('ROLE_APROB','ROLE_LIDER','ROLE_USER' )" class="collapse-item" th:href="@{/misGastos/} + ${#authentication.getName()}">Mis gastos</a>
+            <a sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_APROB')" class="collapse-item" th:href="@{/aprobaciongastos/}+ ${#authentication.getName()}">Aprobaci&oacute;n de gastos</a>
+          </div>
+        </div>
+      </li>
+
+ 
+      
+       <!-- Divider -->
+      <hr sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_RH')" class="sidebar-divider">
+
+      <!-- Heading Proyecto -->
+      <div sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_RH')" class="sidebar-heading">
+        Recursos
+      </div>
+
+      <!-- Nav Item - Recursos Collapse Menu -->
+      <li sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_RH')" class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseRecursos" aria-expanded="true" aria-controls="collapseRecursos">
+          <i class="fas fa-fw fa-id-card"></i>
+          <span>Gesti&oacute;n de recursos</span>
+        </a>
+        <div id="collapseRecursos" class="collapse" aria-labelledby="menuRecursos" data-parent="#accordionSidebar">
+          <div class="bg-white py-2 collapse-inner rounded">
+            <h6 class="collapse-header">Ver:</h6>
+            <a class="collapse-item" th:href="@{/listarRecursos}">Mis recursos</a>
+          </div>
+        </div>
+      </li>
+
+      <!-- Divider -->
+      <hr class="sidebar-divider d-none d-md-block">
+
+      <!-- Sidebar Toggler (Sidebar) -->
+      <div class="text-center d-none d-md-inline">
+        <button class="rounded-circle border-0" id="sidebarToggle"></button>
+      </div>
+
+    </ul>
+    <!-- End of Sidebar -->
+    
+    <!-- Content Wrapper -->
+    <div id="content-wrapper" class="d-flex flex-column">
+
+      <!-- Main Content -->
+      <div id="content">
+
+        <header th:replace="layout/layout :: header"></header>
+        
+        <!-- Begin Page Content -->
+        <div class="container-fluid">
+        
+		  <input id="codProyecto" type="hidden" th:value="${proyecto.codProyecto}"/>
+
+          <!-- Page Heading -->
+          <div class="d-sm-flex align-items-center justify-content-between mb-1">
+            <h4 class="text-gray-800" th:text="'Asignaci&oacute;n de conceptos al proyecto ' + ${proyecto.descProyecto}"></h4>
+            
+          </div>
+          <a style="font-size: 12px;" th:href="@{/evaluacionProyectoValidacion/}+${proyecto.codProyecto}" class="badge badge-info mb-2" ><i class="fas fa-chevron-circle-left"></i> regresar al seguimiento</a>
+			
+			  <div class="card shadow mb-1" th:each="etapa : ${etapas}">
+                <!-- Card Header - Accordion -->
+                <a th:href="'#etapa_'+${etapa.codEtapa}" class="d-block card-header py-3" data-toggle="collapse" role="button" aria-expanded="true" th:aria-controls="'etapa_'+${etapa.codEtapa}">
+                  <h6 class="m-0 font-weight-bold text-primary" th:text="${etapa.descEtapa}"></h6>
+                </a>
+                <!-- Card Content - Collapse -->
+                <div class="collapse" th:id="'etapa_'+${etapa.codEtapa}" >
+                  <div class="card-body">
+                  	<div class="form-group" th:each="concepto : ${etapa.conceptos}">
+                      <div class="custom-control custom-checkbox small">
+                        <input type="checkbox"class="custom-control-input" th:id="'concepto_' + ${concepto.codConcepto}">
+                        <label  class="custom-control-label" th:for="'concepto_' + ${concepto.codConcepto}" th:text="${concepto.descConcepto}"></label>
+                        <a th:if="${concepto.rutaTemplate != null}" th:href="${concepto.rutaTemplate}" target="_blank" class="badge badge-light"><i class="fa fa-link"></i> formato</a>
+<!--                         <i class="fa fa-file-alt" aria-hidden="true" style="padding-left: 5px;"></i> -->
+                      </div>
+                    </div>
+                    <a href="#" class="btn btn-primary " th:id="'acep_'+${etapa.codEtapa}" onclick="guardar(this.id); return false;">
+                    <span class="icon text-white-50">
+                      <i class="fas fa-check"></i>
+                    </span>
+                    <span class="text">Aplicar</span>
+                     
+                  </a>
+                  	<div th:id="'wait_'+${etapa.codEtapa}" class="spinner-grow text-muted"></div>
+                  </div>
+                </div>
+              </div>
+			
+			
+			
+
+
+        </div>
+        <!-- /.container-fluid -->
+
+      </div>
+      <!-- End of Main Content -->
+
+      <!-- Footer -->
+      <footer th:replace="layout/layout :: footer"></footer>
+      <!-- End of Footer -->
+
+    </div>
+    <!-- End of Content Wrapper -->
+
+  </div>
+  <!-- End of Page Wrapper -->
+
+  <!-- Scroll to Top Button--> <div class="st-actionContainer right-bottom" id="btnFlash"> <div class="st-btn-container right-bottom" onclick="flashSurvey(); return false;"> <div class="st-button-main"><i class="fa fa-bolt" aria-hidden="true"></i></div> </div> </div>
+  <a class="scroll-to-top rounded" href="#page-top">
+    <i class="fas fa-angle-up"></i>
+  </a>
+
+	<!-- ModalLogout -->
+	<footer th:replace="layout/layout :: modalLogout"></footer>
+	<!-- End ModalLogout -->
+
+	<!-- Bootstrap core JavaScript-->
+  <script th:src="@{/vendor/jquery/jquery.min.js}"></script>
+  <script th:src="@{/vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>
+
+  <!-- Core plugin JavaScript-->
+  <script th:src="@{/vendor/jquery-easing/jquery.easing.min.js}"></script>
+
+  <!-- Custom scripts for all pages-->
+  <script th:src="@{/js/sb-admin-2.min.js}"></script>
+
+  <script src="https://code.jquery.com/jquery-1.11.2.min.js"></script>
+  
+   <script th:src="@{/js/preventaProyectoListaTodo.js}"></script>
+  
+  <script th:src="@{/js/datosRecursoSesion.js}"></script>
+  
+  <script type="text/javascript">
+  $(document).ready(function() {
+	  $(".text-muted").hide();
+	  getConceptosActivos($("#codProyecto").val());
+  });
+  function getConceptosActivos(codProyecto){
+	  
+	  $.ajax({
+			url: "/conceptosActivos",
+			data: {codProyecto:codProyecto},
+			success: function(result){
+				result.forEach(ids);
+				function ids(value, index,array){
+					$('#concepto_'+ value).prop('checked', true);
+				}
+			}
+		});
+  }
+  
+  
+  function guardar(id){
+	  var idEtapa = id.substring(5);
+	  $("#acep_"+idEtapa).hide();
+	  $("#wait_"+idEtapa).show();
+	  var conceptosSelected = [];
+	  var conceptosUnselected = [];
+// 	  document.getElementById("id").disabled = true;
+	  var divEtapa = 'etapa_'+ idEtapa
+	  $('#'+divEtapa+' input:checked').each(function() {
+		  var idConcepto = $(this).attr('id').substring(9)
+	      conceptosSelected.push(idConcepto);
+	  });
+	  $('#'+divEtapa+' input:not(:checked)').each(function() {
+		  var idConceptoNot = $(this).attr('id').substring(9)
+	      conceptosUnselected.push(idConceptoNot);
+	  });
+	  
+	  console.log(conceptosUnselected);
+	  
+	  $.ajax({
+			url: "/guardaAsignacionConceptosProyecto",
+			data: {codProyecto:$("#codProyecto").val(),
+				   conceptos:JSON.stringify(conceptosSelected),
+				   conceptosNot:JSON.stringify(conceptosUnselected)},
+			success: function(result){
+				 $("#wait_"+idEtapa).hide();
+				 $("#acep_"+idEtapa).show();
+			}
+		});
+  }
+ 
+  </script>
+
+</body>
+
+</html>

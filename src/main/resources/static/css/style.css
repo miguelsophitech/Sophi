@@ -133,3 +133,50 @@ h1>span.tituloBN {
 .fz-12{
 	font-size: 12px;
 }
+
+.captura{
+	cursor: pointer; 
+	font-size: 16px; 
+	font-stretch: 700;
+}
+
+.noCaptura{
+	font-size: 16px; 
+	font-stretch: 500;
+}
+
+/* Flash flotante */
+.st-btn-container{
+	background: rgba(192, 44, 87, 0.5);
+	width: 2.75rem;
+  	height: 2.75rem;
+	border-radius:100%;
+	box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+}
+
+.st-btn-container:hover{
+	background:#c02c57;
+}
+
+.st-button-main{
+	color:#ffffff;
+	font-size:20px;
+	text-align:center;
+	line-height:50px;
+	cursor:pointer;
+	height: 100%;
+	width: 100%;
+	display: table;
+}
+
+.right-bottom {
+	bottom: 4em;
+	right: 1em;
+	float: right !important;
+}
+
+.st-actionContainer {
+	z-index: 9999;
+	position: fixed;
+	display: inline-block;
+}

@@ -11,5 +11,8 @@ public interface IRolDao extends CrudRepository<Rol, Long>{
 	
 	@Query("FROM Rol r WHERE r.descRol = 'ROLE_LIDER'")
     List<Rol> findListaRoles();
+	
+	@Query("FROM Rol r WHERE r.cod_recurso = ?1")
+	List<Rol> findByCodRecurso(Long cod_recurso);
 
 }

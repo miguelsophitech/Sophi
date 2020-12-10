@@ -26,20 +26,23 @@
       <!-- Nav Item - Dashboard -->
       <li class="nav-item active">
         <a class="nav-link" th:href="@{/}">
-          <i class="fas fa-fw fa-tachometer-alt"></i>
-          <span>Mi dashboard</span></a>
+          <i class="fa fa-home"></i>
+          <span>Inicio</span></a>
       </li>
       
       <!-- Divider -->
-      <hr sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_LIDER')" class="sidebar-divider">
+<!--       <hr sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_LIDER')" class="sidebar-divider"> -->
+      <hr sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_APROB')" class="sidebar-divider">
 
       <!-- Heading Proyecto -->
-      <div sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_LIDER')" class="sidebar-heading">
+<!--       <div sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_LIDER')" class="sidebar-heading"> -->
+      <div sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_APROB')" class="sidebar-heading">
         Clientes
       </div>
 
       <!-- Nav Item - Gastos y tiempo Collapse Menu -->
-      <li class="nav-item" sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_LIDER')">
+<!--       <li class="nav-item" sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_LIDER')"> -->
+      <li class="nav-item" sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_APROB')">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseClientes" aria-expanded="true" aria-controls="collapseClientes">
           <i class="fas fa-fw fa-address-book"></i>
           <span>Gesti&oacute;n de clientes</span>
@@ -55,42 +58,51 @@
       
 
       <!-- Divider -->
-      <hr sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_LIDER', 'ROLE_USER')"  class="sidebar-divider">
+      <hr sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_LIDER','ROLE_APROB', 'ROLE_USER')"  class="sidebar-divider">
+<!--       <hr sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_LIDER','ROLE_USER')"  class="sidebar-divider"> -->
 
       <!-- Heading Proyecto -->
-      <div sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_LIDER', 'ROLE_USER')" class="sidebar-heading">
+<!--       <div sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_LIDER', 'ROLE_USER')" class="sidebar-heading"> -->
+      <div sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_LIDER', 'ROLE_USER','ROLE_APROB')" class="sidebar-heading">
         Proyectos
       </div>
       
 	  <!-- Nav Item - Actividades Collapse Menu -->
       <li class="nav-item">
-        <a sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_LIDER', 'ROLE_USER')" class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseProyectos" aria-expanded="true" aria-controls="collapseProyectos">
+<!--         <a sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_LIDER', 'ROLE_USER')" class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseProyectos" aria-expanded="true" aria-controls="collapseProyectos"> -->
+        <a sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_LIDER','ROLE_APROB','ROLE_USER')" class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseProyectos" aria-expanded="true" aria-controls="collapseProyectos">
           <i class="fas fa-fw fa-wrench"></i>
           <span>Gesti&oacute;n de proyectos</span>
         </a>
         <div id="collapseProyectos" class="collapse" aria-labelledby="menuProyectos" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
             <h6 class="collapse-header">Ver:</h6>
-            <a sec:authorize="hasRole('ROLE_ADMIN')" class="collapse-item"  th:href="@{/listaProyectosTodo}">Mis proyectos</a>
-            <a sec:authorize="hasRole('ROLE_LIDER')" class="collapse-item"  th:href="@{/listaMisProyectos/} + ${#authentication.getName()}">Mis proyectos</a>
-            <a sec:authorize="hasAnyRole('ROLE_LIDER','ROLE_USER')" class="collapse-item" th:href="@{/misActividades/} + ${#authentication.getName()}">Mis actividades</a>
+<!--             <a sec:authorize="hasRole('ROLE_ADMIN')" class="collapse-item"  th:href="@{/listaProyectosTodo}">Mis proyectos</a> -->
+            <a sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_APROB', 'ROLE_LIDER')" class="collapse-item"  th:href="@{/listaProyectosTodo}">Mis proyectos</a>
+<!--             <a sec:authorize="hasRole('ROLE_LIDER')" class="collapse-item"  th:href="@{/listaMisProyectos/} + ${#authentication.getName()}">Mis proyectos</a> -->
+            <a sec:authorize="hasAnyRole('ROLE_LIDER','ROLE_USER','ROLE_APROB')" class="collapse-item" th:href="@{/misActividades/} + ${#authentication.getName()}">Mis actividades</a>
           </div>
         </div>
       </li>
 
       <!-- Nav Item - Gastos y tiempo Collapse Menu -->
       <li class="nav-item">
-        <a sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_LIDER', 'ROLE_USER')" class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseGastosTiempo" aria-expanded="true" aria-controls="collapseGastosTiempo">
+<!--         <a sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_LIDER', 'ROLE_USER')" class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseGastosTiempo" aria-expanded="true" aria-controls="collapseGastosTiempo"> -->
+        <a sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_LIDER', 'ROLE_USER','ROLE_APROB',)" class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseGastosTiempo" aria-expanded="true" aria-controls="collapseGastosTiempo">
           <i class="fas fa-fw fa-calendar-alt"></i>
           <span>Gesti&oacute;n de tiempo</span>
         </a>
         <div id="collapseGastosTiempo" class="collapse" aria-labelledby="menuGastosTiempo" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
             <h6 class="collapse-header">Ver:</h6>
-            <a sec:authorize="hasAnyRole('ROLE_LIDER','ROLE_USER' )" class="collapse-item" th:href="@{/capHoras/} + ${#authentication.getName()}">Mis horas</a>
-            <a sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_LIDER')" class="collapse-item" th:href="@{/aprobacionhoras/}+${#authentication.getName()}">Aprobaci&oacute;n de horas</a>
-            <a sec:authorize="hasAnyRole('ROLE_LIDER','ROLE_USER' )" class="collapse-item" th:href="@{/misGastos/} + ${#authentication.getName()}">Mis gastos</a>
-            <a sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_LIDER')" class="collapse-item" th:href="@{/aprobaciongastos/}+ ${#authentication.getName()}">Aprobaci&oacute;n de gastos</a>
+<!--             <a sec:authorize="hasAnyRole('ROLE_LIDER','ROLE_USER' )" class="collapse-item" th:href="@{/capHoras/} + ${#authentication.getName()}">Mis horas</a> -->
+<!--             <a sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_LIDER')" class="collapse-item" th:href="@{/aprobacionHorasProyecto/}+${#authentication.getName()}">Aprobaci&oacute;n de horas</a> -->
+<!--             <a sec:authorize="hasAnyRole('ROLE_LIDER','ROLE_USER' )" class="collapse-item" th:href="@{/misGastos/} + ${#authentication.getName()}">Mis gastos</a> -->
+<!--             <a sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_LIDER')" class="collapse-item" th:href="@{/aprobaciongastos/}+ ${#authentication.getName()}">Aprobaci&oacute;n de gastos</a> -->
+          	<a sec:authorize="hasAnyRole('ROLE_APROB','ROLE_LIDER','ROLE_USER' )" class="collapse-item" th:href="@{/capHoras/} + ${#authentication.getName()}">Mis horas</a>
+            <a sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_APROB')" class="collapse-item" th:href="@{/aprobacionHorasProyecto/}+${#authentication.getName()}">Aprobaci&oacute;n de horas</a>
+            <a sec:authorize="hasAnyRole('ROLE_APROB','ROLE_LIDER','ROLE_USER' )" class="collapse-item" th:href="@{/misGastos/} + ${#authentication.getName()}">Mis gastos</a>
+            <a sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_APROB')" class="collapse-item" th:href="@{/aprobaciongastos/}+ ${#authentication.getName()}">Aprobaci&oacute;n de gastos</a>
           </div>
         </div>
       </li>
@@ -115,6 +127,28 @@
           <div class="bg-white py-2 collapse-inner rounded">
             <h6 class="collapse-header">Ver:</h6>
             <a class="collapse-item" th:href="@{/listarRecursos}">Mis recursos</a>
+          </div>
+        </div>
+      </li>
+      
+      <!-- Divider -->
+      <hr sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_RH')" class="sidebar-divider">
+
+      <!-- Heading Proyecto -->
+      <div sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_RH')" class="sidebar-heading">
+        Encuestas
+      </div>
+
+      <!-- Nav Item - Recursos Collapse Menu -->
+      <li sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_RH')" class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseEncuestas" aria-expanded="true" aria-controls="collapseEncuestas">
+          <i class="fas fa-fw fa-id-card"></i>
+          <span>Gesti&oacute;n de encuestas</span>
+        </a>
+        <div id="collapseEncuestas" class="collapse" aria-labelledby="menuEncuestas" data-parent="#accordionSidebar">
+          <div class="bg-white py-2 collapse-inner rounded">
+            <h6 class="collapse-header">Ver:</h6>
+            <a class="collapse-item" th:href="@{/flashClima}">Flash clima</a>
           </div>
         </div>
       </li>
@@ -149,10 +183,42 @@
               <!-- Illustrations -->
               <div class="card shadow mb-4">
                 <div class="card-body">
-                  <div class="text-center">
-                    <img class="img-fluid px-3 px-sm-4 mt-3 mb-4" style="width: 25rem;" src="img/img-dashboard.png" alt="">
+                <h3 style="color: #000111; font-weight: 500;" >Bienvenido</h3>
+                 <div class="row">
+                  <div class="col-sm-6">
+                  
+                  <iframe src="https://calendar.google.com/calendar/embed?height=600&amp;wkst=1&amp;bgcolor=%23ffffff&amp;ctz=America%2FMexico_City&amp;src=ZXMubWV4aWNhbiNob2xpZGF5QGdyb3VwLnYuY2FsZW5kYXIuZ29vZ2xlLmNvbQ&amp;color=%230B8043&amp;showTabs=1&amp;showPrint=0&amp;showNav=1&amp;showCalendars=0&amp;showTz=0" style="border-width:0" width="100%" height="300" frameborder="0" scrolling="no"></iframe>
+                  <a class="twitter-timeline" href="https://twitter.com/El_Universal_Mx?ref_src=twsrc%5Etfw">Tweets by El_Universal_Mx</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
                   </div>
-                  <p class="text-center">Bienvenido, en esta plataforma podr&aacute;s gestionar tus clientes, proyectos y recursos dentro de <b>Sophitech.</b></p>
+                   <div class="col-sm-6">
+                   
+                   <div class="card mb-4">
+<!--                 		<div class="card-header" th:text=${titulo}> -->
+<!--                 		</div> -->
+                		<div class="card-body"  style="text-align: center;">
+                  			<p style="font-weight: 600;">As&iacute; estuvimos la semana pasada</p>
+                  			<div class="sv__point-wrapper">
+								<div class="sv__smiley-scale">
+									<table style="width: 100%;">
+									<tr>
+										<td th:each="emoji : ${respuestasFlash}">
+											<img class="img_emoji_resultado" th:src="${emoji.valImagenRespuesta}">
+											<p style="font-size: 14px; font-weight: 600;" th:text="${emoji.porcentaje}+'%'"></p>
+										</td>
+									</tr>
+									</table>
+								</div>
+							</div>
+							<p th:text="'Participaci&oacute;n ' + ${participacion} + ' de ' + ${totalActivos}" style="font-size: 12px;"></p>
+	     	 			</div>
+              		</div>
+                   
+                   
+                   
+                   
+					<a class="twitter-timeline" href="https://twitter.com/MicroStrategy?ref_src=twsrc%5Etfw">Tweets by MicroStrategy</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+                  </div>
+                </div>
                 </div>
               </div>
 
@@ -176,6 +242,14 @@
   <!-- End of Page Wrapper -->
 
   <!-- Scroll to Top Button-->
+  <div class="st-actionContainer right-bottom" id="btnFlash">
+	<div class="st-btn-container right-bottom" onclick="flashSurvey(); return false;">
+		<div class="st-button-main"><i class="fa fa-bolt" aria-hidden="true"></i></div>
+	</div>
+  </div>
+  
+  
+  
   <a class="scroll-to-top rounded" href="#page-top">
     <i class="fas fa-angle-up"></i>
   </a>
@@ -195,6 +269,9 @@
   <script th:src="@{/js/sb-admin-2.min.js}"></script>
   
   <script th:src="@{/js/datosRecursoSesion.js}"></script>
+  
+  
+
 
 </body>
 

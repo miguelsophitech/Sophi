@@ -103,6 +103,7 @@
 						<span th:text="' - ' + ${horaCapturada.descActividadSecundaria}"></span></b><br>
 						<i class='fas fa-align-left'></i><span th:text="' ' + ${horaCapturada.descComentarioDetalle}"></span><br>
 						<i class='far fa-clock'></i><b><span th:text="'&nbsp;' + ${horaCapturada.valDuracionReportada+ '&nbsp;&nbsp;&nbsp;'}"></span></b>  <i class='far fa-check-circle'></i><b><span th:text="'&nbsp;'+${horaCapturada.valDuracionValidad} "></span></b><br>
+						<span th:if="${horaCapturada.valRechazo == 1}" th:title="${horaCapturada.descRechazo}" style="cursor: help;" class="badge badge-warning" >Rechazada <i class='fas fa-exclamation-triangle'></i></span>
 						<a th:if="${horaCapturada.fecValidacion == null}" href="#!" th:onclick="'editCaptura(\'' + ${horaCapturada.codCapHora} + '\');'" class="badge badge-primary">Editar  <i class="far fa-edit"></i></a>
 						<a th:if="${horaCapturada.fecValidacion == null}" href="#!" th:onclick="'delCaptura(\'' + ${horaCapturada.codCapHora} + '\');'" class="badge badge-danger borrar">Eliminar  <i class="fas fa-trash-alt"></i></a>
 						<span th:if="${horaCapturada.fecValidacion != null}" class="badge badge-success">Validada  <i class="far fa-check-circle"></i></span>
