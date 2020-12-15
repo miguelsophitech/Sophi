@@ -5,9 +5,12 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -25,8 +28,10 @@ public class DetalleSolicitud implements Serializable {
 	@Column(name = "cod_detalle_solicitudes")
 	private Long codDetalleSolicitud;
 
-	@Column(name = "cod_solicitud")
-	private Long codSolicitud;
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "cod_solicitud")
+	private SolicitudVacaciones solicitudVacaciones;
 	
 	@Column(name = "fec_solicitado")
 	@Temporal(TemporalType.DATE)
@@ -41,12 +46,12 @@ public class DetalleSolicitud implements Serializable {
 		this.codDetalleSolicitud = codDetalleSolicitud;
 	}
 
-	public Long getCodSolicitud() {
-		return codSolicitud;
+	public SolicitudVacaciones getSolicitudVacaciones() {
+		return solicitudVacaciones;
 	}
 
-	public void setCodSolicitud(Long codSolicitud) {
-		this.codSolicitud = codSolicitud;
+	public void setSolicitudVacaciones(SolicitudVacaciones solicitudVacaciones) {
+		this.solicitudVacaciones = solicitudVacaciones;
 	}
 
 	public Date getFecDiaSolicitado() {
@@ -56,5 +61,6 @@ public class DetalleSolicitud implements Serializable {
 	public void setFecDiaSolicitado(Date fecDiaSolicitado) {
 		this.fecDiaSolicitado = fecDiaSolicitado;
 	}
+
 
 }

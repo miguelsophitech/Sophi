@@ -1,6 +1,29 @@
 <!DOCTYPE html>
 <html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
-<head th:replace="layout/layout::head"></head>
+<head >
+
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <title>Sophitech</title>
+
+  <!-- Custom fonts for this template-->
+  <link th:href="@{/vendor/fontawesome-free/css/all.min.css}" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+
+  <!-- Custom styles for this template-->
+  <link  th:href="@{/css/sb-admin-2.css}" rel="stylesheet">
+  <link  th:href="@{/css/jquery-ui.min.css}" rel="stylesheet">
+  
+  <link  th:href="@{/css/style.css}" rel="stylesheet">
+  
+  <link  th:href="@{/css/calendario.css}" rel="stylesheet">
+  
+  
+</head>
 
 <body id="page-top">
   <input id="authGetName" type="hidden" th:value="${#authentication.getName()}"></input>
@@ -165,21 +188,18 @@
 
           <!-- Page Heading -->
           <div class="d-sm-flex align-items-center justify-content-between mb-1">
-			<h1 class="h3 text-gray-800">Mis Vacaciones</h1>
-			<a th:href="@{'/solicitudVacaciones/'+ ${codRecurso}}" class="btn btn-primary">
-				<i class="fas fa-plus fa-sm text-white-50"></i> Nueva solicitud
-			</a>
+			<h1 class="h3 text-gray-800">Solicitud de vacaciones</h1>
           </div>
           
 			<!-- Content Row -->
 			<div class="row">
 	            <!-- Earnings (Monthly) Card Example -->
-	            <div class="col-xl-4 col-md-4 mb-4">
+	            <div class="col-xl-3 col-md-3 mb-3">
 	              <div class="card border-left-success  shadow h-100 py-2">
 	                <div class="card-body">
 	                  <div class="row no-gutters align-items-center">
 	                    <div class="col mr-2">
-	                      <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Dias disponibles para vacaciones</div>
+	                      <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Dias disponibles</div>
 	                      <div class="h5 mb-0 font-weight-bold text-gray-800" th:text="${recursoVacaciones.valDisponibles}"></div>
 	                    </div>
 	                    <div class="col-auto">
@@ -189,41 +209,23 @@
 	                </div>
 	              </div>
 	            </div>
-	
 	            <!-- Earnings (Monthly) Card Example -->
-	            <div class="col-xl-4 col-md-4 mb-4">
-	              <div class="card border-left-warning shadow h-100 py-2">
+	            <div class="col-xl-3 col-md-3 mb-3">
+	              <div class="card border-left-warning  shadow h-100 py-2">
 	                <div class="card-body">
 	                  <div class="row no-gutters align-items-center">
 	                    <div class="col mr-2">
-	                      <div class="text-xs font-weight-bold text-warning text-uppercase mb-1" th:text="'Dias totales del ' + ${recursoVacaciones.valPeriodo}"></div>
-	                      <div class="h5 mb-0 font-weight-bold text-gray-800" th:text="${recursoVacaciones.valTotal}"></div>
+	                      <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Dias seleccionados</div>
+	                      <div class="h5 mb-0 font-weight-bold text-gray-800" id="conteoSolicitados">0</div>
 	                    </div>
 	                    <div class="col-auto">
-	                      <i class="far fa-calendar-alt fa-2x text-gray-300"></i>
+	                      <i class="far fa-calendar-plus fa-2x text-gray-300"></i>
 	                    </div>
 	                  </div>
 	                </div>
 	              </div>
 	            </div>
-	
-	
-	            <!-- Pending Requests Card Example -->
-	            <div class="col-xl-4 col-md-4 mb-4">
-	              <div class="card border-left-warning shadow h-100 py-2">
-	                <div class="card-body">
-	                  <div class="row no-gutters align-items-center">
-	                    <div class="col mr-2">
-	                      <div class="text-xs font-weight-bold text-warning text-uppercase mb-1" th:text="'Dias aprobados del periodo ' + ${recursoVacaciones.valPeriodo}" ></div>
-	                      <div class="h5 mb-0 font-weight-bold text-gray-800" th:text="${recursoVacaciones.valAprobado}"></div>
-	                    </div>
-	                    <div class="col-auto">
-	                      <i class="far fa-calendar-check fa-2x text-gray-300"></i>
-	                    </div>
-	                  </div>
-	                </div>
-	              </div>
-	            </div>
+	            
 	          </div>
           
           
@@ -231,40 +233,11 @@
 
           <!-- DataTales Example -->
           <div class="card shadow mb-4">
-            <div class="card-body" id="contenidoTabla">
-              <div class="table-responsive fz-12">
-                <table class="table" id="dataTable" width="100%" cellspacing="0">
-	                 <thead>
-	                   <tr>
-	                   	  <th># Solicitud</th>
-	                      <th>Fecha de solicitud</th>
-                          <th>Dias solicitados</th>
-                          <th>Periodo</th>
-                          <th>Estatus</th>
-                          <th>Opciones</th>
-	                   </tr>
-	                 </thead>
-	                 <tbody>
-	                 	<tr th:each="solicitud: ${listaSolicitudes}">
-	                 		<td th:text="${solicitud.contador}"></td>
-	                 		<td th:text="${#dates.format(solicitud.fecSolicitud,'dd/MM/yyyy')}"></td>
-                            <td th:text="${solicitud.valDiasSolicitados}"></td>
-                            <td th:text="${solicitud.valPeriodo}"></td>
-                            <td>
-	                            <span th:if="${solicitud.fecAprobacion != null}" class="badge badge-pill badge-success">Aprobada <i class="far fa-check-circle"></i></span>
-	                            <span th:if="${solicitud.fecRechazo != null}" class="badge badge-pill badge-danger">Rechazada <i class="far fa-times-circle"></i></span>
-	                            <span th:if="${solicitud.fecCancelacion != null}" class="badge badge-pill badge-warning">Cancelada <i class="fas fa-times-circle"></i></span>
-	                            <span th:if="${solicitud.fecAprobacion == null and solicitud.fecRechazo == null and solicitud.fecCancelacion == null}" class="badge badge-pill badge-info">Pendiente <i class="fas fa-hourglass-half"></i></span>
-                            </td>
-                            <td>
-                            	<a href="#" th:id="'ver_'+${solicitud.codSolicitud}" onclick="verDetalleSolicitud(this.id); return false;"  class="badge badge-info">Ver <i class="far fa-calendar"></i></a>
-<!--                             	<a th:href="@{/detalleSolicitud/} + ${solicitud.codSolicitud}" class="badge badge-success">Editar <i class="far fa-edit"></i></a> -->
-                            	<a th:href="@{/detalleSolicitud/} + ${solicitud.codSolicitud}" class="badge badge-danger">Cancelar <i class="far fa-calendar-times"></i></a>
-                            </td>
-						</tr>
-	                 </tbody>
-                </table>
-              </div>
+            <div class="card-body">
+				<div id="app">
+				
+				
+				</div>
             </div>
           </div>
 
@@ -285,24 +258,24 @@
   <!-- End of Page Wrapper -->
   
   
-  <div class="modal fade" id="modalDetalleSolicitud" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="modalDetalleSolicitudLabel" aria-hidden="true">
+  <div class="modal fade" id="modalConfirmSolicitud" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="modalConfirmSolicitudLabel" aria-hidden="true">
 		<div class="modal-dialog modal-sm" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h6 class="modal-title" id="modalDetalleSolicitudLabel">Detalle de la solicitud</h6>
+					<h6 class="modal-title" id="modalConfirmSolicitudLabel">Confirmar solicitud</h6>
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 						<span aria-hidden="true">&times;</span>
 					</button>
  				</div>
 				<div class="modal-body" style="text-align: center;">
-					<i class="far fa-calendar-alt fa-2x text-gray-300"></i>
-					<div id="detalleSolicitud">
-						<!-- DETALLE DE VACACIONES -->
-					</div>
+					<i class="far fa-calendar-alt fa-2x text-gray-300"></i><br><br>
+					<p id="confirmacionSolicitud">
+						<!-- texto de confirmacion -->
+					</p>
 				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-secondary" data-dismiss="modal">Aceptar</button>
-<!-- 					<button type="button" class="btn btn-primary" onclick="enviarMailCalidad(); return false;">Aceptar</button> -->
+				<div class="modal-footer" id="btn-control">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+					<button type="button" class="btn btn-primary" onclick="enviarConfirmacion(); return false;">Aceptar</button>
 				</div>
     		</div>
   		</div>
@@ -333,20 +306,16 @@
 
   <!-- Custom scripts for all pages-->
   <script th:src="@{/js/sb-admin-2.min.js}"></script>
-
-  <!-- Page level plugins -->
-  <script th:src="@{/vendor/datatables/jquery.dataTables.min.js}"></script>
-  <script th:src="@{/vendor/datatables/dataTables.bootstrap4.min.js}"></script>
-
-  <!-- Page level custom scripts -->
-  <script th:src="@{/js/demo/datatables-demo.js}"></script>
   
   <script th:src="@{/js/datosRecursoSesion.js}"></script>
+  
+  <script th:src="@{/js/calendario.js}"></script>
   
 <script type="text/javascript">
   $(document).ready(function() {
 	  
   });
+  
   
   function verDetalleSolicitud(verId){
 	  var idSolicitud = verId.substring(4);
@@ -360,7 +329,30 @@
 		});
   }
   
- 
+  function enviarConfirmacion(){
+	  $("#btn-control").html('<div class="spinner-grow text-muted"></div>');
+	  let dias = [];
+		$('.remove-event').each(function(){
+			dias.push($(this).attr('id'));
+		});
+		 $.ajax({
+				url: "/confirmarSolicitud",
+				data: {codRecurso:$("#codRecurso").val(),
+						diasSelec:JSON.stringify(dias),
+						usr:$("#authGetName").val(),
+				},
+				success: function(result){
+// 					window.location.href = "https://sophitech.herokuapp.com/"; alert(result);
+					window.location.href = "http://localhost:8080" + result;
+						}
+			});
+  }
+  
+  //Modal para solicitud ?
+  function solicitar(){
+	$("#confirmacionSolicitud").html("¿Confirmar la solicitud de " + $("#conteoSolicitados").text() + " día(s) de vacaciones?")
+	$("#modalConfirmSolicitud").modal('show');
+  }  
   </script>
   
 

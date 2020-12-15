@@ -27,4 +27,10 @@ public class SolicitudVacacionesServiceImpl implements ISolicitudVacacionesServi
 		return solicitudVacacionesDao.findByCodRecurso(codRecurso);
 	}
 
+	@Override
+	@Transactional
+	public void save(SolicitudVacaciones solicitud) {
+		solicitudVacacionesDao.save(solicitud);
+	}
+
 }

@@ -9,5 +9,7 @@ public interface ISolicitudVacacionesService {
 	public SolicitudVacaciones findById(Long codSolicitudVacaciones);
 	
 	public List<SolicitudVacaciones> findByCodRecurso(Long codRecurso);
+	
+	public void save(SolicitudVacaciones solicitud);
 
 }
