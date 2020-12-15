@@ -37,9 +37,12 @@ public class Proyecto implements Serializable  {
 	
 	@NotEmpty
 	@Column(name = "desc_proyecto")
-	private String 	descProyecto;
+	private String descProyecto;
 	
-//	@Range(min=0, max=99999999, message="Ingresa un monto positivo válido")
+	@Column(name = "desc_proyecto_texto")
+	private String descProyectoTexto;	
+
+	//	@Range(min=0, max=99999999, message="Ingresa un monto positivo válido")
 	@Column(name = "imp_presupuesto")
 	private String impPresupuesto;
 	
@@ -152,6 +155,14 @@ public class Proyecto implements Serializable  {
 
 	public void setDescProyecto(String descProyecto) {
 		this.descProyecto = descProyecto;
+	}
+	
+	public String getDescProyectoTexto() {
+		return descProyectoTexto;
+	}
+
+	public void setDescProyectoTexto(String descProyectoTexto) {
+		this.descProyectoTexto = descProyectoTexto;
 	}
 
 	public String getImpPresupuesto() {

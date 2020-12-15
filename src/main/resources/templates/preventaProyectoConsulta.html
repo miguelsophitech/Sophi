@@ -241,12 +241,23 @@
                 <input type="hidden" th:value="${proyecto.fecRegistro}" th:attr="name='fecRegistro'"/>
                 <input type="hidden" th:value="${proyecto.fecCambioEstatus}" th:attr="name='fecCambioEstatus'"/>
 <!--                 <input th:field="*{fecRegistro}" type="hidden"> -->
-                <p class="tituloC">Completa la informaci&oacute;n del proyecto.</p>
-                <div class="form-group row">
+				<div class="card shadow mb-4">
+					<div class="card-header py-3">
+	                  <h6 class="m-0 font-weight-bold text-primary">Completa la informaci&oacute;n del proyecto</h6>
+	                </div>
+	                <div class="card-body">
+	                	<div class="form-group row">
                   <div class="col-sm-4 mb-3 mb-sm-0">
                      <label for="nombreProyecto">Nombre del proyecto</label>
                     <input th:attr="readonly=${proyecto.codEstatusProyecto == 3}? 'true' : 'false'"  type="text" th:field="*{descProyecto}" class="form-control" id="nombreProyecto" placeholder="Nombre de proyecto" oninvalid="setCustomValidity('Campo inválido')" onchange="try{setCustomValidity('')}catch(e){}" maxlength="100" required>
                   </div>
+                  <div class="col-sm-4 mb-3 mb-sm-0">
+                  	<label for="descripcionProyecto">Descripci&oacute;n </label>
+                  	<br>
+                  	<textarea th:attr="readonly=${proyecto.codEstatusProyecto == 3}? 'true' : 'false'" th:field="*{descProyectoTexto}" class="form-control" rows="5" id="descripcionProyecto" placeholder="Descripci&oacute;n del proyecto" oninvalid="setCustomValidity('Campo inválido')" onchange="try{setCustomValidity('')}catch(e){}" maxlength="500" required></textarea>
+                  </div>
+                </div>
+                <div class="form-group row">
                   <div class="col-sm-4" id="fi">
                     <label for="fechaInicio">Fecha inicio</label>
                     <input th:attr="readonly=${proyecto.codEstatusProyecto == 3}? 'true' : 'false'" th:field="*{fecIncioProyecto}" type="date" class="form-control" id="fechaInicio">
@@ -345,6 +356,8 @@
                   	</div>
 
                 </div>
+	                </div>
+				</div>
                 <div class="form-group row">
                 	<div class="col-sm-4" id="complementoProyecto"> 
                        <a class="btn btn-primary" data-toggle="modal" data-target="#modalComplemento" href="#" role="button">Informaci&oacute;n de contacto e infraestructura</a>

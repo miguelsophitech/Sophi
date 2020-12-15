@@ -68,7 +68,10 @@
             <h4 class="text-gray-800" th:text="'Evaluaci&oacute;n del proyecto ' + ${proyecto.descProyecto}"></h4>
             <span th:if="${proyecto.valEvaluacion == 1 and #authentication.getName() == 'juan.cardona@sophitech.mx'}" id="validacionCierreEvaluacion"><a style="font-size: 12px;" class="badge badge-info mb-2" href="#modalCierreFinal" data-toggle="modal"><i class="fas fa-user-check"></i> cerrar evaluaci&oacute;n</a></span>
             <span th:unless="${proyecto.valEvaluacion == 1 and #authentication.getName() == 'juan.cardona@sophitech.mx'}" id="validacionEnvioCalidad"><a style="font-size: 12px;" href="#" class="badge badge-info mb-2" onclick="enviarCalidad(); return false;"><i class="fas fa-user-check"></i> enviar a calidad</a></span>
-            
+          </div>
+          <div class="form-group">
+          	<h6 class="text-gray-800">Descripci&oacute;n del proyecto: </h6>
+          	<h6 th:text ="${proyecto.descProyectoTexto}"></h6>
           </div>
           <!-- DataTales Example -->
           <div class="card shadow mb-4">
