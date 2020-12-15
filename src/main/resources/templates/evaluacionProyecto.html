@@ -149,6 +149,10 @@
             <h4 class="text-gray-800" th:text="'Asignaci&oacute;n de conceptos al proyecto ' + ${proyecto.descProyecto}"></h4>
             
           </div>
+          <div class="form-group">
+          	<h6 class="text-gray-800">Descripci&oacute;n del proyecto: </h6>
+          	<h6 th:text ="${proyecto.descProyectoTexto}"></h6>
+          </div>
           <a style="font-size: 12px;" th:href="@{/evaluacionProyectoValidacion/}+${proyecto.codProyecto}" class="badge badge-info mb-2" ><i class="fas fa-chevron-circle-left"></i> regresar al seguimiento</a>
 			
 			  <div class="card shadow mb-1" th:each="etapa : ${etapas}">
