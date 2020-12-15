@@ -17,5 +17,11 @@ public interface IRecursoService {
 	public List<Recurso> findByNombreApellido(String descRecurso, String descApellidoPaterno);
 	
 	public Recurso findByDescCorreoElectronico(String correoElectronico);
+	
+	public List<Recurso> findRecursosActivos();
+	
+	public List<Recurso> findListRecursosResponsables();
+	
+	public List<Recurso> findListRecursosAprobadores();
 
 }

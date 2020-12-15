@@ -68,6 +68,15 @@ $(document).ready(function() {
 
 });
 
+function enviarCostoRecurso(){
+	$('#costoRecursoProyectoForm').submit();
+}
+
+function cargaformRecursosProyecto(){
+	var url="/recursosProyecto/"+$('#codProyecto').val();
+	$("#contentFormRecursoProyecto").load(url);
+}
+
 function guardarCom() {
 		var codCliente=$('#codCliente').val();
 		var codPRoyecto=$('#codProyecto').val();

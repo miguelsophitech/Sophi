@@ -56,6 +56,12 @@ public class Recurso implements Serializable  {
 	@Column(name = "desc_apellido_materno")
 	private String descApellidoMaterno;
 	
+	@Column(name = "val_aprobador")
+	private Long valAprobador;
+	
+	@Column(name = "val_responsable")
+	private Long valResponsable;
+	
 	@NotEmpty(message = "Este dato no debe estar vacío")
 	@Email(message = "No es un email correcto")
 	@Column(name = "desc_correo_electronico")
@@ -130,6 +136,9 @@ public class Recurso implements Serializable  {
 	
 	@Column(name = "desc_activo")
 	private Long descActivo;
+	
+	@Column(name = "desc_consultor")
+	private Long descConsultor;
 	
 	@Temporal(TemporalType.DATE)
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
@@ -427,6 +436,14 @@ public class Recurso implements Serializable  {
 		this.descActivo = descActivo;
 	}
 
+	public Long getDescConsultor() {
+		return descConsultor;
+	}
+
+	public void setDescConsultor(Long descConsultor) {
+		this.descConsultor = descConsultor;
+	}
+
 	public Date getFecSalidaEmpresa() {
 		return fecSalidaEmpresa;
 	}
@@ -651,6 +668,22 @@ public class Recurso implements Serializable  {
 
 	public void setFotoCv(byte[] fotoCv) {
 		this.fotoCv = fotoCv;
+	}
+
+	public Long getValAprobador() {
+		return valAprobador;
+	}
+
+	public void setValAprobador(Long valAprobador) {
+		this.valAprobador = valAprobador;
+	}
+
+	public Long getValResponsable() {
+		return valResponsable;
+	}
+
+	public void setValResponsable(Long valResponsable) {
+		this.valResponsable = valResponsable;
 	}
 
 	public Puesto getPuesto() {

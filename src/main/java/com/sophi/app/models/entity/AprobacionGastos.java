@@ -75,6 +75,9 @@ public class AprobacionGastos implements Serializable {
     @Column(name = "cod_recurso_validador")
 	private Long codRecursoValidador;
     
+    @Column(name = "val_gasto_planeado")
+    private Long valGastoPlaneado;
+    
     @Lob
     @Column(name = "desc_comprobante", columnDefinition="BLOB", insertable = false, updatable=false)
 	private byte[] foto;
@@ -225,5 +228,14 @@ public class AprobacionGastos implements Serializable {
 	public void setRecurso(Recurso recurso) {
 		this.recurso = recurso;
 	}
+
+	public Long getValGastoPlaneado() {
+		return valGastoPlaneado;
+	}
+
+	public void setValGastoPlaneado(Long valGastoPlaneado) {
+		this.valGastoPlaneado = valGastoPlaneado;
+	}
+
     
 }

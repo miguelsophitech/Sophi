@@ -50,12 +50,19 @@ $(document).ready(function() {
 });
 
 function semanaInicioFin(fecha){
-var curr = new Date(fecha); 
+var curr = new Date(fecha);
+
 var first = curr.getDate() - curr.getDay(); // First day is the day of the month - the day of the week 
 var last = first + 6; // last day is the first day + 6 
 
-var firstday = new Date(curr.setDate(first)).toUTCString(); 
-var lastday = new Date(curr.setDate(last)).toUTCString(); 
+
+
+var firstday = new Date(curr.setDate(first)).toUTCString();
+var firstday2 = new Date(firstday);
+//var lastday = new Date(curr.setDate(last)).toUTCString(); 
+//var lastday2 = new Date(firstday2.setDate(firstday2.getDate() + 6)); 
+var lastday =  new Date(firstday2.setDate(firstday2.getDate() + 6)).toUTCString();; 
+
 
 $.ajax({
     type: "GET",
@@ -121,7 +128,7 @@ function handleChange(input) {
 function validaForm(){
 	if(!$("#descDetalleHora").val()){
 		$("#descDetalleHora").addClass("alert-danger");
-		$("#divDescDetalleHora").html("<small class='form-text text-danger'>Est&eacute; dato es requerido</small>");
+		$("#divDescDetalleHora").html("<small class='form-text text-danger'>Este dato es requerido</small>");
 	} else if ($("#valHoraCap").val() > 0 && $("#valHoraCap").val() <= 24 ){
 		document.getElementById('capHorasForm').submit();
 	} else {
@@ -136,7 +143,7 @@ function validaForm(){
 function validaFormEdit(){
 	if(!$("#descDetalleHoraEdit").val()){
 		$("#descDetalleHoraEdit").addClass("alert-danger");
-		$("#divDescDetalleHoraEdit").html("<small class='form-text text-danger'>Est&eacute; dato es requerido</small>");
+		$("#divDescDetalleHoraEdit").html("<small class='form-text text-danger'>Este dato es requerido</small>");
 	} else if ($("#valHoraCapEdit").val() > 0 && $("#valHoraCapEdit").val() <= 24 ){
 		document.getElementById('formEditCapHoraActividad').submit();
 	} else {

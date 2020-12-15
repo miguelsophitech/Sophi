@@ -30,7 +30,8 @@ public class RecursoServiceImpl implements IRecursoService {
 	@Override
 	@Transactional(readOnly = true)
 	public Recurso findOne(Long codRecurso) {
-		return recursoDao.findById(codRecurso).orElse(null);
+//		return recursoDao.findById(codRecurso).orElse(null);
+		return recursoDao.findByCodRecurso(codRecurso);
 	}
 
 	@Override
@@ -49,6 +50,24 @@ public class RecursoServiceImpl implements IRecursoService {
 	@Transactional(readOnly = true)
 	public Recurso findByDescCorreoElectronico(String correoElectronico) {
 		return recursoDao.findByDescCorreoElectronico(correoElectronico);
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public List<Recurso> findRecursosActivos() {
+		return recursoDao.findRecursosActivos();
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public List<Recurso> findListRecursosResponsables() {
+		return recursoDao.findListRecursosResponsables();
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public List<Recurso> findListRecursosAprobadores() {
+		return recursoDao.findListRecursosAprobadores();
 	}
 
 	

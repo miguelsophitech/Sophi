@@ -44,6 +44,9 @@ public class CapHora implements Serializable{
 	@Column(name = "cod_estatus_proyecto")
 	private Long codEstatusProyecto;
 	
+	@Column(name = "val_rechazo")
+	private Long valRechazo;
+	
 	@NotEmpty(message = "Este dato no debe estar vacío")
 	@Column(name = "desc_comentario_detalle")
 	private String descComentarioDetalle;
@@ -53,6 +56,9 @@ public class CapHora implements Serializable{
 	
 	@Transient
 	private String descProyecto;
+	
+	@Transient
+	private Float horasPlaneadas;
 	
 	@Column(name = "fec_inicio_actividad")
 	@Temporal(TemporalType.DATE)
@@ -71,6 +77,9 @@ public class CapHora implements Serializable{
 	@Column(name = "val_duracion_validada")
 	private float valDuracionValidad;
 	
+	@Column(name = "val_duracion_rechazada")
+	private float valDuracionRechazada;
+	
 	@Column(name = "cod_recurso_validador")
 	private Long codRecursoValidador;
 	
@@ -87,9 +96,20 @@ public class CapHora implements Serializable{
 	@DateTimeFormat(pattern = "yyyy-MM-dd hh:mm:ss")
 	private Date fecRegistro;
 	
+	@Column(name = "desc_rechazo")
+	private String descRechazo;
+	
 	@PrePersist
 	public void prePersist() {
 		fecRegistro = new Date();
+	}
+
+	public Long getValRechazo() {
+		return valRechazo;
+	}
+
+	public void setValRechazo(Long valRechazo) {
+		this.valRechazo = valRechazo;
 	}
 
 	public String getDescComentarioDetalle() {
@@ -231,5 +251,31 @@ public class CapHora implements Serializable{
 	public void setDescProyecto(String descProyecto) {
 		this.descProyecto = descProyecto;
 	}
+
+	public Float getHorasPlaneadas() {
+		return horasPlaneadas;
+	}
+
+	public void setHorasPlaneadas(Float horasPlaneadas) {
+		this.horasPlaneadas = horasPlaneadas;
+	}
+
+	public float getValDuracionRechazada() {
+		return valDuracionRechazada;
+	}
+
+	public void setValDuracionRechazada(float valDuracionRechazada) {
+		this.valDuracionRechazada = valDuracionRechazada;
+	}
+
+	public String getDescRechazo() {
+		return descRechazo;
+	}
+
+	public void setDescRechazo(String descRechazo) {
+		this.descRechazo = descRechazo;
+	}
+	
+	
 
 }

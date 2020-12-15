@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org"  xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head th:replace="layout/layout::head"></head>
+
+<body id="page-top">
+  <input id="authGetName" type="hidden" th:value="${#authentication.getName()}"></input>
+  <!-- Page Wrapper -->
+  <div id="wrapper">
+
+    <!-- Sidebar -->
+    <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+
+      <!-- Sidebar - Brand -->
+      <a class="sidebar-brand d-flex align-items-center justify-content-center" th:href="@{/}">
+        <div class="sidebar-brand-icon">
+          <img th:src="@{/img/logo-img.png}" alt="">
+        </div> 
+        <div class="sidebar-brand-text mx-3"><img th:src="@{/img/logo-texto.png}" alt=""></div>
+      </a>
+
+      <!-- Divider -->
+      <hr class="sidebar-divider my-0">
+
+      <!-- Nav Item - Dashboard -->
+      <li class="nav-item active">
+        <a class="nav-link" th:href="@{/}">
+          <i class="fa fa-home"></i>
+          <span>Inicio</span></a>
+      </li>
+      
+      <hr sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_APROB')" class="sidebar-divider">
+
+      <div sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_APROB')" class="sidebar-heading">
+        Clientes
+      </div>
+
+      <li class="nav-item" sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_APROB')">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseClientes" aria-expanded="true" aria-controls="collapseClientes">
+          <i class="fas fa-fw fa-address-book"></i>
+          <span>Gesti&oacute;n de clientes</span>
+        </a>
+        <div id="collapseClientes" class="collapse" aria-labelledby="menuClientes" data-parent="#accordionSidebar">
+          <div class="bg-white py-2 collapse-inner rounded">
+            <h6 class="collapse-header">Ver:</h6>
+            <a class="collapse-item" th:href="@{/listaClientes}">Mis clientes</a>
+            <a class="collapse-item" th:href="@{/agenda}">Mis contactos</a>
+          </div>
+        </div>
+      </li>
+      
+
+      <!-- Divider -->
+      <hr sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_LIDER','ROLE_APROB', 'ROLE_USER')"  class="sidebar-divider">
+
+      <!-- Heading Proyecto -->
+      <div sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_LIDER', 'ROLE_USER','ROLE_APROB')" class="sidebar-heading">
+        Proyectos
+      </div>
+      
+	  <!-- Nav Item - Actividades Collapse Menu -->
+      <li class="nav-item">
+        <a sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_LIDER','ROLE_APROB','ROLE_USER')" class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseProyectos" aria-expanded="true" aria-controls="collapseProyectos">
+          <i class="fas fa-fw fa-wrench"></i>
+          <span>Gesti&oacute;n de proyectos</span>
+        </a>
+        <div id="collapseProyectos" class="collapse" aria-labelledby="menuProyectos" data-parent="#accordionSidebar">
+          <div class="bg-white py-2 collapse-inner rounded">
+            <h6 class="collapse-header">Ver:</h6>
+            <a sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_APROB', 'ROLE_LIDER')" class="collapse-item"  th:href="@{/listaProyectosTodo}">Mis proyectos</a>
+            <a sec:authorize="hasAnyRole('ROLE_LIDER','ROLE_USER','ROLE_APROB')" class="collapse-item" th:href="@{/misActividades/} + ${#authentication.getName()}">Mis actividades</a>
+          </div>
+        </div>
+      </li>
+
+      <!-- Nav Item - Gastos y tiempo Collapse Menu -->
+      <li class="nav-item">
+        <a sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_LIDER', 'ROLE_USER','ROLE_APROB',)" class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseGastosTiempo" aria-expanded="true" aria-controls="collapseGastosTiempo">
+          <i class="fas fa-fw fa-calendar-alt"></i>
+          <span>Gesti&oacute;n de tiempo</span>
+        </a>
+        <div id="collapseGastosTiempo" class="collapse" aria-labelledby="menuGastosTiempo" data-parent="#accordionSidebar">
+          <div class="bg-white py-2 collapse-inner rounded">
+            <h6 class="collapse-header">Ver:</h6>
+          	<a sec:authorize="hasAnyRole('ROLE_APROB','ROLE_LIDER','ROLE_USER' )" class="collapse-item" th:href="@{/capHoras/} + ${#authentication.getName()}">Mis horas</a>
+            <a sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_APROB')" class="collapse-item" th:href="@{/aprobacionHorasProyecto/}+${#authentication.getName()}">Aprobaci&oacute;n de horas</a>
+            <a sec:authorize="hasAnyRole('ROLE_APROB','ROLE_LIDER','ROLE_USER' )" class="collapse-item" th:href="@{/misGastos/} + ${#authentication.getName()}">Mis gastos</a>
+            <a sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_APROB')" class="collapse-item" th:href="@{/aprobaciongastos/}+ ${#authentication.getName()}">Aprobaci&oacute;n de gastos</a>
+          </div>
+        </div>
+      </li>
+
+      <!-- Divider -->
+      <hr sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_RH')" class="sidebar-divider">
+
+      <!-- Heading Proyecto -->
+      <div sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_RH')" class="sidebar-heading">
+        Recursos
+      </div>
+
+      <!-- Nav Item - Recursos Collapse Menu -->
+      <li sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_RH')" class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseRecursos" aria-expanded="true" aria-controls="collapseRecursos">
+          <i class="fas fa-fw fa-id-card"></i>
+          <span>Gesti&oacute;n de recursos</span>
+        </a>
+        <div id="collapseRecursos" class="collapse" aria-labelledby="menuRecursos" data-parent="#accordionSidebar">
+          <div class="bg-white py-2 collapse-inner rounded">
+            <h6 class="collapse-header">Ver:</h6>
+            <a class="collapse-item" th:href="@{/listarRecursos}">Mis recursos</a>
+          </div>
+        </div>
+      </li>
+      
+      <!-- Divider -->
+      <hr sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_RH')" class="sidebar-divider">
+
+      <!-- Heading Proyecto -->
+      <div sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_RH')" class="sidebar-heading">
+        Encuestas
+      </div>
+
+      <!-- Nav Item - Recursos Collapse Menu -->
+      <li sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_RH')" class="nav-item">
+        <a class="nav-link collapsed active" href="#" data-toggle="collapse" data-target="#collapseEncuestas" aria-expanded="true" aria-controls="collapseEncuestas">
+          <i class="fas fa-fw fa-id-card"></i>
+          <span>Gesti&oacute;n de encuestas</span>
+        </a>
+        <div id="collapseEncuestas" class="collapse" aria-labelledby="menuEncuestas" data-parent="#accordionSidebar">
+          <div class="bg-white py-2 collapse-inner rounded">
+            <h6 class="collapse-header">Ver:</h6>
+            <a class="collapse-item active" th:href="@{/flashClima}">Flash clima</a>
+          </div>
+        </div>
+      </li>
+
+      <!-- Divider -->
+      <hr class="sidebar-divider d-none d-md-block">
+
+      <!-- Sidebar Toggler (Sidebar) -->
+      <div class="text-center d-none d-md-inline">
+        <button class="rounded-circle border-0" id="sidebarToggle"></button>
+      </div>
+
+    </ul>
+    <!-- End of Sidebar -->
+
+    <!-- Content Wrapper -->
+    <div id="content-wrapper" class="d-flex flex-column">
+
+      <!-- Main Content -->
+      <div id="content">
+
+		<header th:replace="layout/layout :: header"></header>
+
+        <!-- Begin Page Content -->
+        <div class="container-fluid">
+		
+			<!-- Page Heading -->
+			<h1 class="h3 mb-1 text-gray-800">Flash clima</h1>
+			
+			<!-- Content Row -->
+			<div class="row">
+
+				<!-- Border Left Utilities -->
+				<div class="col-lg-12">
+					<div class="card mb-3 py-0 border-left-success" style="padding: 10px 20px;">
+						<div class="card-body">
+							<div class="form-group row">
+    							<label for="inputPreguntaFlash" class="col-form-label">Pregunta:</label>
+								<input type="text" maxlength="200" class="form-control" id="inputPreguntaFlash" th:value="${preguntaFlash.descPreguntaClima}">
+  							</div>
+  							<div class="form-group row">
+  							<button type="button" class="btn btn-primary" id="btnActualizarFlash" disabled>Actualizar</button>
+  							</div>
+	                	</div>
+					</div>
+				</div>
+			
+			</div>	
+			<div class="row">
+				<!-- Border Left Utilities -->
+				<div class="col-lg-12">
+					<div class="card mb-3 py-0 border-left-success" style="padding: 10px 20px;">
+						<div class="card-body">
+							<div class="form-group row">
+			                  Respuestas:
+			                </div>
+			                
+			                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 text-center">
+
+					          <div class="list-group list-group-horizontal">
+<!-- 					              <a href="#" class="list-group-item">Item One</a> -->
+<!-- 					              <a href="#" class="list-group-item">Item Two</a> -->
+<!-- 					              <a href="#" class="list-group-item">Item Three</a> -->
+<!-- 					              <a href="#" class="list-group-item">Item Four</a> -->
+					              <img class="img_emoji" src="../img/emoji/emoji_1.png">
+					              <img class="img_emoji" src="../img/emoji/emoji_2.png">
+					              <img class="img_emoji" src="../img/emoji/emoji_3.png">
+					              <img class="img_emoji" src="../img/emoji/emoji_4.png">
+					              <img class="img_emoji" src="../img/emoji/emoji_5.png">
+					              <img class="img_emoji" src="../img/emoji/emoji_6.png">
+					              <img class="img_emoji" src="../img/emoji/emoji_7.png">
+					          </div>
+
+        					</div>
+						</div>
+					</div>	
+				</div>
+			</div>
+			
+			
+
+        </div>
+        <!-- /.container-fluid -->
+        
+      </div>
+      <!-- End of Main Content -->
+
+       <!-- Footer -->
+      <footer th:replace="layout/layout :: footer"></footer>
+      <!-- End of Footer -->
+
+    </div>
+    <!-- End of Content Wrapper -->
+
+  </div>
+  <!-- End of Page Wrapper -->
+
+  <!-- Scroll to Top Button--> <div class="st-actionContainer right-bottom" id="btnFlash"> <div class="st-btn-container right-bottom" onclick="flashSurvey(); return false;"> <div class="st-button-main"><i class="fa fa-bolt" aria-hidden="true"></i></div> </div> </div>
+  <a class="scroll-to-top rounded" href="#page-top">
+    <i class="fas fa-angle-up"></i>
+  </a>
+
+	  <!-- ModalLogout -->
+      <footer th:replace="layout/layout :: modalLogout"></footer>
+      <!-- End ModalLogout -->
+
+  <!-- Bootstrap core JavaScript-->
+  <script th:src="@{/vendor/jquery/jquery.min.js}"></script>
+  <script th:src="@{/vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>
+ 
+  <!-- Core plugin JavaScript-->
+  <script th:src="@{/vendor/jquery-easing/jquery.easing.min.js}"></script>
+
+  <!-- Custom scripts for all pages-->
+  <script th:src="@{/js/sb-admin-2.min.js}"></script>
+  
+  <script th:src="@{/js/datosRecursoSesion.js}"></script>
+  
+  <script type="text/javascript">
+  $(document).ready(function() {
+  	$("#inputPreguntaFlash").on('change keydown paste input', function(){
+  		$("#btnActualizarFlash").prop( "disabled", false );
+	});
+  	
+  	$("#btnActualizarFlash").on('click', function(){
+  		actualizaPreguntaFlash();
+	});
+  	
+  	
+  });
+  function actualizaPreguntaFlash(){
+	  var pregunta = $("#inputPreguntaFlash").val();
+	  if(pregunta.length > 0){
+		  $.ajax({
+				url: '/guardaPreguntaFlash',
+				data: { pregunta: pregunta},
+				success: function(succ){
+					$("#btnActualizarFlash").prop( "disabled", true );
+				}
+			})  
+	  } else {
+		  $("#btnActualizarFlash").prop( "disabled", true );
+	  }
+  }
+  </script>
+
+</body>
+
+</html>

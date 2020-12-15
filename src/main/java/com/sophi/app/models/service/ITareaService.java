@@ -9,5 +9,7 @@ public interface ITareaService {
 	public List<Tarea> findAll();
 	
 	public Tarea findOne(Long codTarea);
+	
+	public List<Tarea> findTareaFueraPlan();
 
 }

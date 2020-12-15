@@ -8,7 +8,7 @@
   <!-- Page Wrapper -->
   <div id="wrapper">
 
-   <!-- Sidebar -->
+    <!-- Sidebar -->
     <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
       <!-- Sidebar - Brand -->
@@ -17,7 +17,7 @@
           <!--<i class="fas fa-laugh-wink"></i>  rotate-n-15-->
           <img th:src="@{/img/logo-img.png}" alt="">
         </div> 
-        <div class="sidebar-brand-text mx-3"><img th:src="@{/img/logo-texto.png}"alt=""></div>
+        <div class="sidebar-brand-text mx-3"><img th:src="@{/img/logo-texto.png}" alt=""></div>
       </a>
 
       <!-- Divider -->
@@ -26,20 +26,20 @@
       <!-- Nav Item - Dashboard -->
       <li class="nav-item">
         <a class="nav-link" th:href="@{/}">
-          <i class="fas fa-fw fa-tachometer-alt"></i>
-          <span>Mi dashboard</span></a>
+          <i class="fa fa-home"></i>
+          <span>Inicio</span></a>
       </li>
       
       <!-- Divider -->
-      <hr class="sidebar-divider">
+      <hr sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_APROB')" class="sidebar-divider">
 
       <!-- Heading Proyecto -->
-      <div class="sidebar-heading">
+      <div sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_APROB')" class="sidebar-heading">
         Clientes
       </div>
 
       <!-- Nav Item - Gastos y tiempo Collapse Menu -->
-      <li class="nav-item ">
+      <li class="nav-item" sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_APROB')">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseClientes" aria-expanded="true" aria-controls="collapseClientes">
           <i class="fas fa-fw fa-address-book"></i>
           <span>Gesti&oacute;n de clientes</span>
@@ -55,42 +55,41 @@
       
 
       <!-- Divider -->
-      <hr class="sidebar-divider">
+      <hr sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_LIDER','ROLE_APROB', 'ROLE_USER')"  class="sidebar-divider">
 
       <!-- Heading Proyecto -->
-      <div class="sidebar-heading">
+      <div sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_LIDER', 'ROLE_USER', 'ROLE_APROB')" class="sidebar-heading">
         Proyectos
       </div>
       
-      
 	  <!-- Nav Item - Actividades Collapse Menu -->
       <li class="nav-item active">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseProyectos" aria-expanded="true" aria-controls="collapseProyectos">
+        <a sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_LIDER','ROLE_APROB', 'ROLE_USER')" class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseProyectos" aria-expanded="true" aria-controls="collapseProyectos">
           <i class="fas fa-fw fa-wrench"></i>
           <span>Gesti&oacute;n de proyectos</span>
         </a>
         <div id="collapseProyectos" class="collapse" aria-labelledby="menuProyectos" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
             <h6 class="collapse-header">Ver:</h6>
-            <a class="collapse-item active"  th:href="@{/listaProyectosTodo}">Mis proyectos</a>
-            <a class="collapse-item" th:href="@{/misActividades/} + ${#authentication.getName()}">Mis actividades</a>
+            <a sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_APROB')" class="collapse-item"  th:href="@{/listaProyectosTodo}">Mis proyectos</a><!-- <a sec:authorize="hasRole('ROLE_LIDER')" class="collapse-item"  th:href="@{/listaMisProyectos/} + ${#authentication.getName()}">Mis proyectos</a> -->
+            <a sec:authorize="hasAnyRole('ROLE_APROB','ROLE_LIDER','ROLE_USER')" class="collapse-item" th:href="@{/misActividades/} + ${#authentication.getName()}">Mis actividades</a>
           </div>
         </div>
       </li>
 
       <!-- Nav Item - Gastos y tiempo Collapse Menu -->
       <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseGastosTiempo" aria-expanded="true" aria-controls="collapseGastosTiempo">
+        <a sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_LIDER', 'ROLE_USER','ROLE_APROB')" class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseGastosTiempo" aria-expanded="true" aria-controls="collapseGastosTiempo">
           <i class="fas fa-fw fa-calendar-alt"></i>
-          <span>Gastos y tiempo</span>
+          <span>Gesti&oacute;n de tiempo</span>
         </a>
         <div id="collapseGastosTiempo" class="collapse" aria-labelledby="menuGastosTiempo" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
             <h6 class="collapse-header">Ver:</h6>
-            <a class="collapse-item" th:href="@{/capHoras/} + ${#authentication.getName()}">Mis horas</a>
-            <a class="collapse-item" th:href="@{/aprobacionhoras/}+${#authentication.getName()}">Aprobaci&oacute;n de horas</a>
-            <a class="collapse-item" th:href="@{/misGastos/} + ${#authentication.getName()}">Mis gastos</a>
-            <a class="collapse-item" th:href="@{/aprobaciongastos/}+ ${#authentication.getName()}">Aprobaci&oacute;n de gastos</a>
+            <a sec:authorize="hasAnyRole('ROLE_APROB','ROLE_LIDER','ROLE_USER' )" class="collapse-item" th:href="@{/capHoras/} + ${#authentication.getName()}">Mis horas</a>
+            <a sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_APROB')" class="collapse-item" th:href="@{/aprobacionHorasProyecto/}+${#authentication.getName()}">Aprobaci&oacute;n de horas</a>
+            <a sec:authorize="hasAnyRole('ROLE_APROB','ROLE_LIDER','ROLE_USER' )" class="collapse-item" th:href="@{/misGastos/} + ${#authentication.getName()}">Mis gastos</a>
+            <a sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_APROB')" class="collapse-item" th:href="@{/aprobaciongastos/}+ ${#authentication.getName()}">Aprobaci&oacute;n de gastos</a>
           </div>
         </div>
       </li>
@@ -98,15 +97,15 @@
  
       
        <!-- Divider -->
-      <hr class="sidebar-divider">
+      <hr sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_RH')" class="sidebar-divider">
 
       <!-- Heading Proyecto -->
-      <div class="sidebar-heading">
+      <div sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_RH')" class="sidebar-heading">
         Recursos
       </div>
 
-      <!-- Nav Item - Gastos y tiempo Collapse Menu -->
-      <li class="nav-item">
+      <!-- Nav Item - Recursos Collapse Menu -->
+      <li sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_RH')" class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseRecursos" aria-expanded="true" aria-controls="collapseRecursos">
           <i class="fas fa-fw fa-id-card"></i>
           <span>Gesti&oacute;n de recursos</span>
@@ -142,7 +141,7 @@
         <div class="container-fluid">
 
           <!-- Page Heading -->
-          <div class="d-sm-flex align-items-center justify-content-between mb-4">
+          <div class="d-sm-flex align-items-center justify-content-between mb-1">
             <h1 class="h3 mb-0 text-gray-800"><span class="tituloA">Registrar preventa o proyecto</span>
 <!--             </br><span class="tituloBN">Enhorabuena, tienes un nuevo proyecto que registrar</span> -->
             </h1>
@@ -210,48 +209,64 @@
                 <div class="form-group row">
                   <div class="col-sm-4 mb-3 mb-sm-0">
                     <label for="codigoProyecto">C&oacute;digo de proyecto</label>
-                    <input th:field="*{descCodigoProyecto}" type="text" class="form-control" id="codigoProyecto" placeholder="C&oacute;digo de proyecto" oninvalid="setCustomValidity('Campo inv&aacute;lido')" onchange="try{setCustomValidity('')}catch(e){}" maxlength="100" required>
+                    <input th:field="*{descCodigoProyecto}" type="text" class="form-control" id="codigoProyecto" placeholder="C&oacute;digo de proyecto" oninvalid="setCustomValidity('Campo inv&aacute;lido')" onchange="try{setCustomValidity('')}catch(e){}" maxlength="100" readonly="readonly" required>
                   </div>
                   <div class="col-sm-4">
                     <label for="presupuesto">Presupuesto</label>
-                    <input th:field="*{impPresupuesto}" type="number" class="form-control" id="presupuesto" placeholder="Presupuesto" oninvalid="setCustomValidity('Presupuesto inv&aacute;lido')" onchange="try{setCustomValidity('')}catch(e){}" min="0" max="99999999" step="any">
+                    <div class="input-group">
+                    	<div class="input-group-prepend">
+							<span class="input-group-text">$</span>
+						</div>
+                    <input th:field="*{impPresupuesto}" type="text" maxlength="15" onkeypress="return event.charCode >= 46 && event.charCode <= 57" class="form-control" id="presupuesto" placeholder="Presupuesto" oninvalid="setCustomValidity('Presupuesto inv&aacute;lido')" onchange="try{setCustomValidity('')}catch(e){}" step="any">
+                    </div>
                     <small class="form-text text-danger" th:if="${#fields.hasErrors('impPresupuesto')}" th:errors="*{impPresupuesto}"></small>
                   </div>
                   <div class="col-sm-4" id="pr">
-                    <label for="riesgo">Porcentaje de riesgo</label>
-                    <input th:field="*{valPorcentajeRiesgo}" type="number" class="form-control" id="riesgo" placeholder="Porcentaje %">
+                  <label for="riesgo">Porcentaje de riesgo</label>
+                  <div class="input-group">
+                    	<div class="input-group-prepend">
+							<span class="input-group-text">%</span>
+						</div>
+						<input th:field="*{valPorcentajeRiesgo}" type="number" class="form-control" id="riesgo" placeholder="Porcentaje %">
+						</div>
                   </div>
                 </div>
                 <div class="form-group row">
-                  <div class="col-sm-4 mb-3 mb-sm-0">
-                     <label for="tipoFacturacion">Tipo de proyecto</label>
-                     <select th:field="*{codTipoProyecto}" class="form-control " id="tipoProyecto">
-                        <option th:each="tipoProyecto : ${tiposProyecto}" th:value="${tipoProyecto.codTipoProyecto}" th:text="${tipoProyecto.descTipoProyecto}" th:selected="false"/>
-                      </select>
-                  </div>
-                  <div class="col-sm-4" id="thv">
-                    <label for="totalHoras">Total de horas vendidas</label>
-                    <input th:field="*{valTotalHorasVendidas}" type="number" class="form-control" id="totalHoras" placeholder="Total de horas vendidas">
-                  </div>
-                  <div class="col-sm-4" id="thp">
-                    <label for="thorasProyecto">Total de horas proyecto</label>
-                    <input th:field="*{valTotalHorasProyecto}" type="number" class="form-control" id="thorasProyecto" placeholder="Total de horas proyecto" disabled>
-                  </div>
-                </div>
-                <div class="form-group row">
-                  <div class="col-sm-4 mb-3 mb-sm-0" id="tp">
+<!--                   <div class="col-sm-4 mb-3 mb-sm-0"> -->
+<!--                      <label for="tipoFacturacion">Tipo de proyecto</label> -->
+<!--                      <select th:field="*{codTipoProyecto}" class="form-control " id="tipoProyecto"> -->
+<!--                         <option th:each="tipoProyecto : ${tiposProyecto}" th:value="${tipoProyecto.codTipoProyecto}" th:text="${tipoProyecto.descTipoProyecto}" th:selected="false"/> -->
+<!--                       </select> -->
+<!--                   </div> -->
+				  <div class="col-sm-4 mb-3 mb-sm-0" id="tp">
                   	<label for="tipoFacturacion">Tipo de facturacion</label>
                      <select th:field="*{codTipoFacturacion}" class="form-control " id="tipoFacturacion">
                         <option th:each="tipoFacturacion : ${tiposFacturacion}" th:value="${tipoFacturacion.codTipoFacturacion}" th:text="${tipoFacturacion.descTipoFacturacion}" th:selected="false"/>
                       </select>
                   </div>
+                  <div class="col-sm-4" id="thv">
+                    <label for="totalHoras">Total de horas vendidas</label>
+                    <input th:field="*{valTotalHorasVendidas}" type="text" maxlength="10" onkeypress="return event.charCode >= 46 && event.charCode <= 57" class="form-control" id="totalHoras" placeholder="Total de horas vendidas">
+                  </div>
+                  <div class="col-sm-4" id="thp">
+                    <label for="thorasProyecto">Total de horas proyecto</label>
+                    <input th:field="*{valTotalHorasProyecto}" type="text" maxlength="10" onkeypress="return event.charCode >= 46 && event.charCode <= 57" class="form-control" id="thorasProyecto" placeholder="Total de horas proyecto" disabled>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  
                   <div class="col-sm-4" id="pp">
                     <label for="precio">Precio del proyecto</label>
-                    <input th:field="*{impPrecioPropuesta}" type="number" class="form-control" id="precio" placeholder="Precio del proyecto">
+                    <input th:field="*{impPrecioPropuesta}" type="text" maxlength="10" onkeypress="return event.charCode >= 46 && event.charCode <= 57" class="form-control" id="precio" placeholder="Precio del proyecto">
                   </div>
                   <div class="col-sm-4" id="cp">
                     <label for="costoProyecto">Costo de proyecto</label>
-                    <input th:field="*{impCostoProyecto}" type="number" class="form-control" id="costoProyecto" placeholder="Costo de proyecto" disabled>
+                    <div class="input-group">
+                    	<div class="input-group-prepend">
+							<span class="input-group-text">$</span>
+						</div>
+                    <input th:field="*{impCostoProyecto}" type="text" maxlength="10" onkeypress="return event.charCode >= 46 && event.charCode <= 57" class="form-control" id="costoProyecto" placeholder="Costo de proyecto" disabled>
+                  	</div>
                   </div>
                 </div>
                 <div class="form-group row">
@@ -264,11 +279,14 @@
                   	<div class="col-sm-4">
                     	<label for="clasificacion">L&iacute;der de proyecto</label>
                       <select th:field="*{codRecursoLider}" class="form-control " id="liderProyecto">
-                        	<option th:each="recurso : ${recursos}" th:value="${recurso.codRecurso}" th:text="${recurso.descRecurso}" th:selected="false"/>
+                        	<option th:each="recurso : ${recursosLider}" th:value="${recurso.codRecurso}" th:text="${recurso.descRecurso}" th:selected="false"/>
                       </select>
                   	</div>
-                  	<div class="col-sm-4"> 
-                       
+                  	<div class="col-sm-4">
+                    	<label for="aprobador">Aprobador de proyecto</label>
+                      <select th:field="*{codRecursoAprobador}" class="form-control " id="aprobadorProyecto">
+                        	<option th:each="recurso : ${recursosAprobador}" th:value="${recurso.codRecurso}" th:text="${recurso.descRecurso}" th:selected="false"/>
+                      </select>
                   	</div>
                 </div>
                  <div class="form-group row">
@@ -295,29 +313,14 @@
   </div>
   <!-- End of Page Wrapper -->
 
-  <!-- Scroll to Top Button-->
+  <!-- Scroll to Top Button--> <div class="st-actionContainer right-bottom" id="btnFlash"> <div class="st-btn-container right-bottom" onclick="flashSurvey(); return false;"> <div class="st-button-main"><i class="fa fa-bolt" aria-hidden="true"></i></div> </div> </div>
   <a class="scroll-to-top rounded" href="#page-top">
     <i class="fas fa-angle-up"></i>
   </a>
 
-  <!-- Logout Modal-->
-  <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
-          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">Ã—</span>
-          </button>
-        </div>
-        <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
-        <div class="modal-footer">
-          <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-          <a class="btn btn-primary" href="login.html">Logout</a>
-        </div>
-      </div>
-    </div>
-  </div>
+	<!-- ModalLogout -->
+	<footer th:replace="layout/layout :: modalLogout"></footer>
+	<!-- End ModalLogout -->
 
   <!-- Modal Preventa-->
   <div class="modal fade" id="modalPreventaAProyecto" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">

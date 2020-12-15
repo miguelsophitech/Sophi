@@ -6,8 +6,10 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -22,6 +24,9 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.opencsv.bean.CsvToBean;
 import com.opencsv.bean.CsvToBeanBuilder;
+import com.sophi.app.mail.dto.MailRequest;
+import com.sophi.app.mail.dto.MailResponse;
+import com.sophi.app.mail.service.EmailService;
 import com.sophi.app.models.entity.Actividad;
 import com.sophi.app.models.entity.ActividadDto;
 import com.sophi.app.models.entity.ActividadPlan;
@@ -33,10 +38,12 @@ import com.sophi.app.models.service.IActividadService;
 import com.sophi.app.models.service.IProyectoRecursoService;
 import com.sophi.app.models.service.IProyectoService;
 import com.sophi.app.models.service.IRecursoService;
-import com.sophi.app.models.service.ProyectoServiceImpl;
 
 @Controller
 public class PlaneacionController {
+	
+	@Autowired
+	private EmailService service;
 	
 	@Autowired
 	private IActividadService actividadService;
@@ -71,6 +78,16 @@ public class PlaneacionController {
 				}
 			}
 			proyectoRecursoService.saveAll(listaRecursosAsignados);
+			
+			//Envio de noificacion al recurso de nueva asignacion a proyecto
+			for (ProyectoRecurso proyectoRecurso : listaRecursosAsignados) {
+				Recurso recurso = recursoService.findOne(proyectoRecurso.getProyectoRecursoId().getCodRecurso());
+				Proyecto proyecto = proyectoService.findOne(proyectoRecurso.getProyectoRecursoId().getCodProyecto());
+				
+				
+			}
+			
+			
 			flash.addFlashAttribute("success", "Plan cargado con éxito");
 			return "redirect:/preventaProyectoContactoInfraestructura/"+codProyecto;
 		} else {
@@ -115,18 +132,16 @@ public class PlaneacionController {
                 	
                 	String actividadSecundaria ="";
                 	
+                	// Se identifica al primer renglon para obtener nombre y duracion del proyecto
                 	if (i == 1) {
 						fechaInicioPlan = actividadesPlanStg.get(i).getInicio().substring(0, 10);
 						fechaFinPlan = actividadesPlanStg.get(i).getFin().substring(0, 10);
-					}
-                	
-                	
-                	if (i > 1) {
+					} else if (i > 1) { // Se itera el listado de CSV posterior al nombre y duracion general del proyecto.
 	                	ActividadPlan ap = new ActividadPlan();
 	                	ap =actividadesPlanStg.get(i);
 	                	ap.setSerie(i);
 	                	actividadesPlan.add(ap);
-	                	
+	                	//Identificar si la columna RECURSO esta vacia, lo cual indica que es una actividad PADRE
 	                	if(actividadesPlanStg.get(i).getRecursos().isEmpty()) {
 	                		actividadPrimariaAux = (actividadPrimariaAux + " > " + actividadesPlanStg.get(i).getNombre()).trim();
 	                		actividadPrimaria = actividadPrimariaAux;
@@ -150,7 +165,7 @@ public class PlaneacionController {
 	    	                	actividad.setCodCliente(proy.getCodCliente());
 	    	                	actividad.setCodEstatusProyecto(proy.getCodEstatusProyecto());
 	    	                	actividad.setCodProyecto(proy.getCodProyecto());
-	    	                	actividad.setValDuracionActividad(Float.parseFloat(actividadesPlanStg.get(i).getEsfuerzo().replaceAll("hora","").replaceAll("s",""))/listaRecursos.length);
+	    	                	actividad.setValDuracionActividad(String.format("%.2f", Float.parseFloat(actividadesPlanStg.get(i).getEsfuerzo().replaceAll("hora","").replaceAll("s",""))/listaRecursos.length));
 	    	                	actividad.setValNuevaActividad(0L);
 	    	                	actividad.setFecInicioActividad(format.parse(actividadesPlanStg.get(i).getInicio().substring(0, 10)));
 	    	                	actividad.setFecFinActividad(format.parse(actividadesPlanStg.get(i).getFin().substring(0, 10)));
@@ -186,6 +201,8 @@ public class PlaneacionController {
 				}
                 
                 List<Long> listCodRecursosUnicos = new ArrayList<>(new HashSet<>(listCodRecursos));
+                Proyecto proyecto = proyectoService.findByCodProyecto(codProyecto);
+                
                 
                 model.addAttribute("actividadesPlan", actividadesPlan);
                 ActividadDto actividadesCargarDto = new ActividadDto();
@@ -194,6 +211,7 @@ public class PlaneacionController {
                 model.addAttribute("fechaInicioPlan",fechaInicioPlan);
                 model.addAttribute("fechaFinPlan",fechaFinPlan);
                 model.addAttribute("actividadesCargarDto", actividadesCargarDto);
+                model.addAttribute("proyecto", proyecto);
                 model.addAttribute("status", true);
 
             } catch (Exception ex) {
@@ -202,9 +220,40 @@ public class PlaneacionController {
             }
         	
         }
-		
 		return "listaActividadesPlan";
 	}
 	
+	
+	@GetMapping("/verPlanActividades/{codProyecto}")
+	public String verPlanActividades(@PathVariable Long codProyecto, Model model) {
+		List<Actividad> listaActividades =  actividadService.findByCodProyecto(codProyecto);
+		String nombreProyecto = proyectoService.findOne(codProyecto).getDescProyecto();
+		
+		model.addAttribute("listaActividades", listaActividades);
+		model.addAttribute("nombreProyecto", nombreProyecto);
+		return "listaActividadesProyecto";
+	}
+	
+	
+	//Asignación de proyecto (aprobador y lider)
+	public void enviaNotificacionAsignacionRecurso(Proyecto proy, Recurso recurso) {
+		
+		//Aprobador INICIO 
+		MailRequest request = new MailRequest();
+		request.setName(recurso.getDescRecurso());
+		request.setSubject("Nueva asignación - Recurso");
+		request.setTo(recurso.getDescCorreoElectronico());
+		
+		Map<String, Object> model = new HashMap<String, Object>();
+		model.put("nombreRecurso", request.getName());
+		model.put("mensaje", "<h3>Has sido asignado al proyecto \""+ proy.getDescProyecto() + "\", puedes revisar tus actividades en la plataforma en la seccion \"Mis actividades\".</h3>");
+		model.put("imagen","<img data-cfsrc=\"images/status.png\" alt=\"\" data-cfstyle=\"width: 200px; max-width: 400px; height: auto; margin: auto; display: block;\" style=\"width: 200px; max-width: 400px; height: auto; margin: auto; display: block;\" src=\"https://sophitech.herokuapp.com/img/img-status.png\">");
+		model.put("pie", "");
+		
+		MailResponse response = service.sendEmail(request, model);
+		System.out.println(response.getMessage());
+		//Aprobador FIN
+	}
+
 
 }

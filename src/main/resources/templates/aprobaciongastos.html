@@ -17,7 +17,7 @@
           <!--<i class="fas fa-laugh-wink"></i>  rotate-n-15-->
           <img th:src="@{/img/logo-img.png}" alt="">
         </div> 
-        <div class="sidebar-brand-text mx-3"><img th:src="@{/img/logo-texto.png}"alt=""></div>
+        <div class="sidebar-brand-text mx-3"><img th:src="@{/img/logo-texto.png}" alt=""></div>
       </a>
 
       <!-- Divider -->
@@ -26,20 +26,20 @@
       <!-- Nav Item - Dashboard -->
       <li class="nav-item">
         <a class="nav-link" th:href="@{/}">
-          <i class="fas fa-fw fa-tachometer-alt"></i>
-          <span>Mi dashboard</span></a>
+          <i class="fa fa-home"></i>
+          <span>Inicio</span></a>
       </li>
       
       <!-- Divider -->
-      <hr class="sidebar-divider">
+      <hr sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_APROB')" class="sidebar-divider">
 
       <!-- Heading Proyecto -->
-      <div class="sidebar-heading">
+      <div sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_APROB')" class="sidebar-heading">
         Clientes
       </div>
 
       <!-- Nav Item - Gastos y tiempo Collapse Menu -->
-      <li class="nav-item ">
+      <li class="nav-item" sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_APROB')">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseClientes" aria-expanded="true" aria-controls="collapseClientes">
           <i class="fas fa-fw fa-address-book"></i>
           <span>Gesti&oacute;n de clientes</span>
@@ -55,42 +55,41 @@
       
 
       <!-- Divider -->
-      <hr class="sidebar-divider">
+      <hr sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_LIDER','ROLE_APROB', 'ROLE_USER')"  class="sidebar-divider">
 
       <!-- Heading Proyecto -->
-      <div class="sidebar-heading">
+      <div sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_LIDER', 'ROLE_USER', 'ROLE_APROB')" class="sidebar-heading">
         Proyectos
       </div>
       
-      
 	  <!-- Nav Item - Actividades Collapse Menu -->
       <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseProyectos" aria-expanded="true" aria-controls="collapseProyectos">
+        <a sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_LIDER','ROLE_APROB', 'ROLE_USER')" class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseProyectos" aria-expanded="true" aria-controls="collapseProyectos">
           <i class="fas fa-fw fa-wrench"></i>
           <span>Gesti&oacute;n de proyectos</span>
         </a>
         <div id="collapseProyectos" class="collapse" aria-labelledby="menuProyectos" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
             <h6 class="collapse-header">Ver:</h6>
-            <a class="collapse-item"  th:href="@{/listaProyectosTodo}">Mis proyectos</a>
-            <a class="collapse-item" th:href="@{/misActividades/} + ${#authentication.getName()}">Mis actividades</a>
+            <a sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_APROB')" class="collapse-item"  th:href="@{/listaProyectosTodo}">Mis proyectos</a><!-- <a sec:authorize="hasRole('ROLE_LIDER')" class="collapse-item"  th:href="@{/listaMisProyectos/} + ${#authentication.getName()}">Mis proyectos</a> -->
+            <a sec:authorize="hasAnyRole('ROLE_APROB','ROLE_LIDER','ROLE_USER')" class="collapse-item" th:href="@{/misActividades/} + ${#authentication.getName()}">Mis actividades</a>
           </div>
         </div>
       </li>
 
       <!-- Nav Item - Gastos y tiempo Collapse Menu -->
       <li class="nav-item active">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseGastosTiempo" aria-expanded="true" aria-controls="collapseGastosTiempo">
+        <a sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_LIDER', 'ROLE_USER','ROLE_APROB')" class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseGastosTiempo" aria-expanded="true" aria-controls="collapseGastosTiempo">
           <i class="fas fa-fw fa-calendar-alt"></i>
-          <span>Gastos y tiempo</span>
+          <span>Gesti&oacute;n de tiempo</span>
         </a>
         <div id="collapseGastosTiempo" class="collapse" aria-labelledby="menuGastosTiempo" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
             <h6 class="collapse-header">Ver:</h6>
-            <a class="collapse-item" th:href="@{/capHoras/} + ${#authentication.getName()}">Mis horas</a>
-            <a class="collapse-item" th:href="@{/aprobacionhoras/}+${#authentication.getName()}">Aprobaci&oacute;n de horas</a>
-            <a class="collapse-item" th:href="@{/misGastos/} + ${#authentication.getName()}">Mis gastos</a>
-            <a class="collapse-item active" th:href="@{/aprobaciongastos/}+ ${#authentication.getName()}">Aprobaci&oacute;n de gastos</a>
+            <a sec:authorize="hasAnyRole('ROLE_APROB','ROLE_LIDER','ROLE_USER' )" class="collapse-item" th:href="@{/capHoras/} + ${#authentication.getName()}">Mis horas</a>
+            <a sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_APROB')" class="collapse-item" th:href="@{/aprobacionHorasProyecto/}+${#authentication.getName()}">Aprobaci&oacute;n de horas</a>
+            <a sec:authorize="hasAnyRole('ROLE_APROB','ROLE_LIDER','ROLE_USER' )" class="collapse-item" th:href="@{/misGastos/} + ${#authentication.getName()}">Mis gastos</a>
+            <a sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_APROB')" class="collapse-item active" th:href="@{/aprobaciongastos/}+ ${#authentication.getName()}">Aprobaci&oacute;n de gastos</a>
           </div>
         </div>
       </li>
@@ -98,15 +97,15 @@
  
       
        <!-- Divider -->
-      <hr class="sidebar-divider">
+      <hr sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_RH')" class="sidebar-divider">
 
       <!-- Heading Proyecto -->
-      <div class="sidebar-heading">
+      <div sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_RH')" class="sidebar-heading">
         Recursos
       </div>
 
-      <!-- Nav Item - Gastos y tiempo Collapse Menu -->
-      <li class="nav-item">
+      <!-- Nav Item - Recursos Collapse Menu -->
+      <li sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_RH')" class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseRecursos" aria-expanded="true" aria-controls="collapseRecursos">
           <i class="fas fa-fw fa-id-card"></i>
           <span>Gesti&oacute;n de recursos</span>
@@ -115,6 +114,28 @@
           <div class="bg-white py-2 collapse-inner rounded">
             <h6 class="collapse-header">Ver:</h6>
             <a class="collapse-item" th:href="@{/listarRecursos}">Mis recursos</a>
+          </div>
+        </div>
+      </li>
+      
+      <!-- Divider -->
+      <hr sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_RH')" class="sidebar-divider">
+
+      <!-- Heading Proyecto -->
+      <div sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_RH')" class="sidebar-heading">
+        Encuestas
+      </div>
+
+      <!-- Nav Item - Recursos Collapse Menu -->
+      <li sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_RH')" class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseEncuestas" aria-expanded="true" aria-controls="collapseEncuestas">
+          <i class="fas fa-fw fa-id-card"></i>
+          <span>Gesti&oacute;n de encuestas</span>
+        </a>
+        <div id="collapseEncuestas" class="collapse" aria-labelledby="menuEncuestas" data-parent="#accordionSidebar">
+          <div class="bg-white py-2 collapse-inner rounded">
+            <h6 class="collapse-header">Ver:</h6>
+            <a class="collapse-item" th:href="@{/flashClima}">Flash clima</a>
           </div>
         </div>
       </li>
@@ -142,7 +163,7 @@
                 <div class="container-fluid">
 
                     <!-- Page Heading -->
-                    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                    <div class="d-sm-flex align-items-center justify-content-between mb-1">
                         <h1 class="h3 mb-2 text-gray-800">Aprobaci&oacute;n de gastos</h1>
                     </div>
                     <form th:action="@{/validar}" th:Object="${aprobaciongastoslista}" method="POST">
@@ -164,36 +185,49 @@
 
                     <!-- DataTales Example -->
                     <div class="card shadow mb-4">
-                        <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary">Detalle de gastos de la semana</h6>
-                        </div>
+<!--                         <div class="card-header py-3"> -->
+<!--                             <h6 class="m-0 font-weight-bold text-primary">Detalle de gastos de la semana</h6> -->
+<!--                         </div> -->
                         <div class="card-body" id="contenidoTabla">
-                            <div class="table-responsive">
-                                <table class="table" id="dataTable" width="100%" cellspacing="0" style="font-size: 12px;">
+                            <div class="table-responsive fz-12">
+                                <table class="table" id="dataTable" width="100%" cellspacing="0">
                                     <thead>
                                         <tr>
                                             <th></th>
-                                            <th>Tipo de gasto</th>
                                             <th>Proyecto</th>
-                                            <th>Fecha</th>
+                                            <th>Tipo de gasto</th>
+                                             <th>Fecha</th>
                                             <th>Colaborador</th>
                                             <th>Descripci&oacute;n</th>
+                                            <th>Comprobante</th>
                                             <th>Importe</th>
-                                            <th>Importe validado</th>
+                                            <th>Importe aprobado</th>
+                                            <th>Planeado</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <tr th:each="aprobaciongastosunico, item : ${aprobaciongastoslista.aprobaciongastos}" th:if="${aprobaciongastosunico.getFecValidacion() == null AND aprobaciongastosunico.getCodRecursoValidador() == null}">
                                         	<td><input id="check" type="checkbox" th:name="|aprobaciongastos[${item.index}].fecValidacion|" th:value="${aprobaciongastosunico.getFecValidacion()}" onclick="validacion();">
                                         	<input id="RecVal" type="hidden" th:name="|aprobaciongastos[${item.index}].codRecursoValidador|" th:value="${aprobaciongastosunico.getCodRecursoValidador()}">
-                                        	<input class="codProyecto" type="hidden" th:value="${aprobaciongastosunico.codProyecto}"/></td>
-                                            <td><span th:text="${aprobaciongastosunico.tipogasto.descTipoGasto}"></span></td>
+                                        	<input class="codProyecto" type="hidden" th:value="${aprobaciongastosunico.codProyecto}"/>
+                                        	<input type="hidden" th:name="|aprobaciongastos[${item.index}].descComprobante|" th:value="${aprobaciongastosunico.getDescComprobante()}"/>
+                                        	</td>
                                             <td><span th:text="${aprobaciongastosunico.Proyecto.descProyecto}"></span></td>
-                                            <td><span th:text="${aprobaciongastosunico.fecRegistro}"></span></td>
+                                            <td><span th:text="${aprobaciongastosunico.tipogasto.descTipoGasto}"></span></td>
+                                            <td><span th:text="${#dates.format(aprobaciongastosunico.fecRegistro,'dd/MM/yy')}"></span></td>
                                             <td><span th:text="${aprobaciongastosunico.recurso.descRecurso}"></span></td>
                                             <td><span th:text="${aprobaciongastosunico.descComentario}"></span></td>
+                                            <td><a data-toggle="modal" href="#modalComprobante" th:id="${aprobaciongastosunico.codRecursoGasto}" class="badge badge-info" onclick="verComprobante(this.id); return false;">Comprobante <i class="fas fa-ticket-alt"></i></a></td>
                                             <td>$<span th:text="${aprobaciongastosunico.impGasto}"></span></td>
-                                            <td><input id="validar" step="any" type="number" style="height:20px; width:40px;" th:name="|aprobaciongastos[${item.index}].valImporteValidado|" th:value="${aprobaciongastosunico.getValImporteValidado()}" onchange="handleChange(this);" disabled></td>
+                                            <td><input id="validar" step="any" type="number" style="height:20px; width:60px;" th:name="|aprobaciongastos[${item.index}].valImporteValidado|" th:value="${aprobaciongastosunico.getValImporteValidado()}" onchange="handleChange(this);" disabled></td>
+<!--                                             <td><input type="text" th:name="|aprobaciongastos[${item.index}].valGastoPlaneado|" th:value="${aprobaciongastosunico.getValGastoPlaneado()}"/></td> -->
+<!--                                             <td><input type="text" th:field="*{aprobaciongastosunico.valGastoPlaneado}"/></td> -->
+                                            <td>
+	                                            <select id="planeado" th:field="*{aprobaciongastos[__${item.index}__].valGastoPlaneado}" disabled="disabled">
+												    <option th:value="0" th:text="No"></option>
+												    <option th:value="1" th:text="Si"></option>
+												</select>
+                                            </td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -229,7 +263,7 @@
     </div>
     <!-- End of Page Wrapper -->
 
-    <!-- Scroll to Top Button-->
+    <!-- Scroll to Top Button--> <div class="st-actionContainer right-bottom" id="btnFlash"> <div class="st-btn-container right-bottom" onclick="flashSurvey(); return false;"> <div class="st-button-main"><i class="fa fa-bolt" aria-hidden="true"></i></div> </div> </div>
     <a class="scroll-to-top rounded" href="#page-top">
         <i class="fas fa-angle-up"></i>
     </a>
@@ -238,7 +272,43 @@
     <footer th:replace="layout/layout :: modalLogout"></footer>
     <!-- End ModalLogout -->
 
-    <!-- Bootstrap core JavaScript-->
+
+	<!-- Logout Modal-->
+	<div class="modal fade" id="modalComprobante" tabindex="-1"
+		role="dialog" aria-labelledby="capHoraModalLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="capHoraModalLabel">
+						Comprobante<br>
+					</h5>
+					<button class="close" type="button" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">x</span>
+					</button>
+				</div>
+				<div class="modal-body">
+
+					<div class="row">
+						<div class="form-group col-12 col-md-12">
+							<div id="verComprobante" class="text-center">
+                    			<img id="imgComprobante" class="img-thumbnail rounded" style="max-height: 300px;" src="" alt="imagen">
+							</div>
+						</div>
+					</div>
+
+				</div>
+				<div class="modal-footer">
+					<button class="btn btn-primary" type="button"
+						data-dismiss="modal">Aceptar</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+
+	<!-- Bootstrap core JavaScript-->
     <script th:src="@{/vendor/jquery/jquery.min.js}"></script>
     <script th:src="@{/vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>
 

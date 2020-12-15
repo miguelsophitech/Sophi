@@ -17,7 +17,7 @@
           <!--<i class="fas fa-laugh-wink"></i>  rotate-n-15-->
           <img th:src="@{/img/logo-img.png}" alt="">
         </div> 
-        <div class="sidebar-brand-text mx-3"><img th:src="@{/img/logo-texto.png}"alt=""></div>
+        <div class="sidebar-brand-text mx-3"><img th:src="@{/img/logo-texto.png}" alt=""></div>
       </a>
 
       <!-- Divider -->
@@ -26,20 +26,20 @@
       <!-- Nav Item - Dashboard -->
       <li class="nav-item">
         <a class="nav-link" th:href="@{/}">
-          <i class="fas fa-fw fa-tachometer-alt"></i>
-          <span>Mi dashboard</span></a>
+          <i class="fa fa-home"></i>
+          <span>Inicio</span></a>
       </li>
       
       <!-- Divider -->
-      <hr class="sidebar-divider">
+      <hr sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_APROB')" class="sidebar-divider">
 
       <!-- Heading Proyecto -->
-      <div class="sidebar-heading">
+      <div sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_APROB')" class="sidebar-heading">
         Clientes
       </div>
 
       <!-- Nav Item - Gastos y tiempo Collapse Menu -->
-      <li class="nav-item ">
+      <li class="nav-item" sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_APROB')">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseClientes" aria-expanded="true" aria-controls="collapseClientes">
           <i class="fas fa-fw fa-address-book"></i>
           <span>Gesti&oacute;n de clientes</span>
@@ -55,42 +55,41 @@
       
 
       <!-- Divider -->
-      <hr class="sidebar-divider">
+      <hr sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_LIDER','ROLE_APROB', 'ROLE_USER')"  class="sidebar-divider">
 
       <!-- Heading Proyecto -->
-      <div class="sidebar-heading">
+      <div sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_LIDER', 'ROLE_USER', 'ROLE_APROB')" class="sidebar-heading">
         Proyectos
       </div>
       
-      
 	  <!-- Nav Item - Actividades Collapse Menu -->
       <li class="nav-item active">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseProyectos" aria-expanded="true" aria-controls="collapseProyectos">
+        <a sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_LIDER','ROLE_APROB', 'ROLE_USER')" class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseProyectos" aria-expanded="true" aria-controls="collapseProyectos">
           <i class="fas fa-fw fa-wrench"></i>
           <span>Gesti&oacute;n de proyectos</span>
         </a>
         <div id="collapseProyectos" class="collapse" aria-labelledby="menuProyectos" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
             <h6 class="collapse-header">Ver:</h6>
-            <a class="collapse-item active"  th:href="@{/listaProyectosTodo}">Mis proyectos</a>
-            <a class="collapse-item" th:href="@{/misActividades/} + ${#authentication.getName()}">Mis actividades</a>
+            <a sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_APROB')" class="collapse-item"  th:href="@{/listaProyectosTodo}">Mis proyectos</a><!-- <a sec:authorize="hasRole('ROLE_LIDER')" class="collapse-item"  th:href="@{/listaMisProyectos/} + ${#authentication.getName()}">Mis proyectos</a> -->
+            <a sec:authorize="hasAnyRole('ROLE_APROB','ROLE_LIDER','ROLE_USER')" class="collapse-item" th:href="@{/misActividades/} + ${#authentication.getName()}">Mis actividades</a>
           </div>
         </div>
       </li>
 
       <!-- Nav Item - Gastos y tiempo Collapse Menu -->
       <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseGastosTiempo" aria-expanded="true" aria-controls="collapseGastosTiempo">
+        <a sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_LIDER', 'ROLE_USER','ROLE_APROB')" class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseGastosTiempo" aria-expanded="true" aria-controls="collapseGastosTiempo">
           <i class="fas fa-fw fa-calendar-alt"></i>
-          <span>Gastos y tiempo</span>
+          <span>Gesti&oacute;n de tiempo</span>
         </a>
         <div id="collapseGastosTiempo" class="collapse" aria-labelledby="menuGastosTiempo" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
             <h6 class="collapse-header">Ver:</h6>
-            <a class="collapse-item" th:href="@{/capHoras/} + ${#authentication.getName()}">Mis horas</a>
-            <a class="collapse-item" th:href="@{/aprobacionhoras/}+${#authentication.getName()}">Aprobaci&oacute;n de horas</a>
-            <a class="collapse-item" th:href="@{/misGastos/} + ${#authentication.getName()}">Mis gastos</a>
-            <a class="collapse-item" th:href="@{/aprobaciongastos/}+ ${#authentication.getName()}">Aprobaci&oacute;n de gastos</a>
+            <a sec:authorize="hasAnyRole('ROLE_APROB','ROLE_LIDER','ROLE_USER' )" class="collapse-item" th:href="@{/capHoras/} + ${#authentication.getName()}">Mis horas</a>
+            <a sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_APROB')" class="collapse-item" th:href="@{/aprobacionHorasProyecto/}+${#authentication.getName()}">Aprobaci&oacute;n de horas</a>
+            <a sec:authorize="hasAnyRole('ROLE_APROB','ROLE_LIDER','ROLE_USER' )" class="collapse-item" th:href="@{/misGastos/} + ${#authentication.getName()}">Mis gastos</a>
+            <a sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_APROB')" class="collapse-item" th:href="@{/aprobaciongastos/}+ ${#authentication.getName()}">Aprobaci&oacute;n de gastos</a>
           </div>
         </div>
       </li>
@@ -98,15 +97,15 @@
  
       
        <!-- Divider -->
-      <hr class="sidebar-divider">
+      <hr sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_RH')" class="sidebar-divider">
 
       <!-- Heading Proyecto -->
-      <div class="sidebar-heading">
+      <div sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_RH')" class="sidebar-heading">
         Recursos
       </div>
 
-      <!-- Nav Item - Gastos y tiempo Collapse Menu -->
-      <li class="nav-item">
+      <!-- Nav Item - Recursos Collapse Menu -->
+      <li sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_RH')" class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseRecursos" aria-expanded="true" aria-controls="collapseRecursos">
           <i class="fas fa-fw fa-id-card"></i>
           <span>Gesti&oacute;n de recursos</span>
@@ -115,6 +114,28 @@
           <div class="bg-white py-2 collapse-inner rounded">
             <h6 class="collapse-header">Ver:</h6>
             <a class="collapse-item" th:href="@{/listarRecursos}">Mis recursos</a>
+          </div>
+        </div>
+      </li>
+      
+                  <!-- Divider -->
+      <hr sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_RH')" class="sidebar-divider">
+
+      <!-- Heading Proyecto -->
+      <div sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_RH')" class="sidebar-heading">
+        Encuestas
+      </div>
+
+      <!-- Nav Item - Recursos Collapse Menu -->
+      <li sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_RH')" class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseEncuestas" aria-expanded="true" aria-controls="collapseEncuestas">
+          <i class="fas fa-fw fa-id-card"></i>
+          <span>Gesti&oacute;n de encuestas</span>
+        </a>
+        <div id="collapseEncuestas" class="collapse" aria-labelledby="menuEncuestas" data-parent="#accordionSidebar">
+          <div class="bg-white py-2 collapse-inner rounded">
+            <h6 class="collapse-header">Ver:</h6>
+            <a class="collapse-item" th:href="@{/flashClima}">Flash clima</a>
           </div>
         </div>
       </li>
@@ -205,7 +226,7 @@
 					 
 					<p class="mb-4">Verifica que la informaci&oacute;n sea correcta antes de cargar la planeaci&oacute;n.</p>
 
-					<p><a th:href="@{'/'}" th:text="'&laquo; volver'"></a></p>
+					<p><a th:href="@{'/planeacionProyecto/'} + ${proyecto.codProyecto}" th:text="'&laquo; volver'"></a></p>
 					
 					<!-- DataTales Example -->
 					<div class="card shadow mb-4">
@@ -213,8 +234,8 @@
 							<h6 class="m-0 font-weight-bold text-primary">Listado de actividades origen</h6>
 						</div>
 						<div class="card-body">
-							<div class="table-responsive">
-								<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0" style="font-size: 10px;">
+							<div class="table-responsive fz-12">
+								<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
 									<thead>
 										<tr>
 											<th>id</th>
@@ -228,19 +249,7 @@
 											<th>recursos</th>
 										</tr>
 									</thead>
-									<tfoot>
-										<tr>
-											<th>id</th>
-											<th>nombre</th>
-											<th>duraci&oacute;n</th>
-											<th>esfuerzo</th>
-											<th>% completado</th>
-											<th>inicio</th>
-											<th>fin</th>
-											<th>predecesora</th>
-											<th>recursos</th>	
-										</tr>
-									</tfoot>
+									
 									<tbody>
 										<tr th:each="actividad : ${actividadesPlan}">
 											<td th:text="${actividad.serie}"></td>
@@ -266,8 +275,8 @@
 							<h6 class="m-0 font-weight-bold text-primary">Listado detallado de actividades por recurso a cargar</h6>
 						</div>
 						<div class="card-body">
-							<div class="table-responsive">
-								<table class="table table-bordered" id="dataTable2" width="100%" cellspacing="0" style="font-size: 10px;">
+							<div class="table-responsive fz-12">
+								<table class="table table-bordered" id="dataTable2" width="100%" cellspacing="0">
 									<thead>
 										<tr>
 											<th># Actividad</th>
@@ -280,25 +289,13 @@
 											<th>Recurso</th>
 										</tr>
 									</thead>
-									<tfoot>
-										<tr>
-											<th># Actividad</th>
-											<th>Act. primaria</th>
-											<th>Act. secundaria</th>
-											<th>Fecha inicio</th>
-											<th>Fecha fin</th>
-											<th># Act. dependiente</th>
-											<th>Duraci&oacute;n</th>
-											<th>Recurso</th>	
-										</tr>
-									</tfoot>
 									<tbody>
 										<tr th:each="actividadCarga : ${actividadesCargarDto.actividades}">
 											<td th:text="${actividadCarga.valNumActividad}"></td>
 											<td th:text="${actividadCarga.descActividadPrimaria}"></td>
 											<td th:text="${actividadCarga.descActividadSecundaria}"></td>
-											<td th:text="${#dates.format(actividadCarga.fecInicioActividad, 'dd/ MM/yyyy')}"></td>
-											<td th:text="${#dates.format(actividadCarga.fecFinActividad, 'dd/MM/yyyy')}"></td>
+											<td th:text="${#dates.format(actividadCarga.fecInicioActividad, 'dd/MM/yy')}"></td>
+											<td th:text="${#dates.format(actividadCarga.fecFinActividad, 'dd/MM/yy')}"></td>
 											<td th:text="${actividadCarga.codActividadDependiente}"></td>
 											<td th:text="${actividadCarga.valDuracionActividad}"></td>
 											<td th:text="${actividadCarga.nombreRecurso}"></td>
@@ -331,7 +328,7 @@
 						<div class="row">
 							<div class="col-sm-6">
 								<input type="submit" value="Cargar planeaci&oacute;n" class="btn btn-primary"/>
-<!-- 								<a class="btn btn-secondary" type="button" th:href="@{/preventaProyectoContactoInfraestructura/} + " >Cancelar</a> -->
+								<a class="btn btn-secondary" type="button" th:href="@{/preventaProyectoContactoInfraestructura/} + ${proyecto.codProyecto}" >Cancelar</a>
 							</div>
 						</div>
 					</form>

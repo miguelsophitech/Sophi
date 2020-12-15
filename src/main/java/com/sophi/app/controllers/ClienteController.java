@@ -1,5 +1,6 @@
 package com.sophi.app.controllers;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -35,7 +36,11 @@ public class ClienteController {
 	@RequestMapping(value = "/listaClientes", method = RequestMethod.GET)
 	public String clientes(Model model) {
 		model.addAttribute("titulo", "Lista de clientes");
-		model.addAttribute("clientes", clienteService.findAll());
+		List<Cliente> listaClientes = new ArrayList<Cliente>();
+		listaClientes = clienteService.findAll();
+		Cliente cliente = clienteService.findOne(1L);
+		listaClientes.remove(cliente);
+		model.addAttribute("clientes", listaClientes);
 		return "listaClientes";
 	}
 	

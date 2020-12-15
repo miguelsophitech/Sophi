@@ -1,34 +1,26 @@
 $(document).ready(function() {
-
-	//cargaTodos();
-
-	$( "#filterCliente" ).change(function() {
-		var cliente=$("#filterCliente").val();
-		//alert("cliente "+cliente);
-		$.ajax({ 
-					url: "/cargaProyectosTodo/"+cliente,
-        			success: function(res){
-        				//alert(res);
-        				
-        				document.getElementById("contenidoTabla").innerHTML = "";
-        				document.getElementById("contenidoTabla").innerHTML = res;
-        				 $('#dataTable').DataTable();
-        				 //alert("llega hasta aca");
-        			}
-    	});
-	});
+	
+	cargaProyectos();
+	
 });
 
-function cargaTodos() {
-  $.ajax({ 
-					url: "/cargaProyectosTodo/-1",
-        			success: function(res){
-        				//alert(res);
-        				
-        				document.getElementById("contenidoTabla").innerHTML = "";
-        				document.getElementById("contenidoTabla").innerHTML = res;
-        				$('#dataTable').DataTable();
-        				//alert("llega hasta aca");
-        			}
-    	});
+function cargaInfo(){
+	$("#contenidoTabla").html('<div class="spinner-grow text-muted"></div>');
+	var session = $("#authGetName").val();
+	var codCliente = $("#filterCliente").val();
+	var url = "/proyecto/" + codCliente + "/" + session;
+	$("#contenidoTabla").load(url);
 }
+
+function cargaProyectos(){
+	$("#proyectosFiltro").html('<div class="spinner-grow text-muted"></div>');
+	var session = $("#authGetName").val();
+	var url = "/proyectoFiltro/" + session;
+	$("#proyectosFiltro").load(url, function(){
+		cargaInfo();
+	}); 
+}
+
+
+
+

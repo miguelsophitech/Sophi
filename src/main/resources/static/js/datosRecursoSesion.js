@@ -1,6 +1,50 @@
 $(document).ready(function() {
-	console.log("entra en layout");
+	$('#btnFlash').hide();
+	
 	var url="/datosRecursoLogin/"+$("#authGetName").val();
-	console.log(url);
 	$("#encabezado").load(url);
+	
+	validaFlash();
+	
+	var url="/datosOpcionesRecursoLogin/"+$("#authGetName").val();
+	$("#opciones").load(url);
+	
+
 });
+
+function validaFlash(){
+	$.ajax({
+		url: '/validaRespuestaFlash',
+		data: { recurso: $("#authGetName").val()},
+		success: function(succ){
+			if(succ == '1'){
+				muestraFlash();
+				$('#btnFlash').show();
+			}
+		}
+	})
+}
+
+function muestraFlash(){
+	var urlFlash="/datosRecursoLoginFlash/"+$("#authGetName").val();
+	$("#suveyFlashSophi").load(urlFlash, function(){
+		flashSurvey();
+	});
+}
+
+function flashSurvey(){
+	$('#modalClima').modal('show'); 
+}
+
+function saveRespuesta(objRespuesta){
+	var resp = $(objRespuesta).attr("id").substring(4);
+	$.ajax({
+		url: '/guardaRespuestaFlash',
+		data: { recurso: $("#authGetName").val(), 
+				respuesta: resp},
+		success: function(succ){
+			$('#modalClima').modal('hide');
+			$('#btnFlash').hide();
+		}
+	})
+}

@@ -2,6 +2,7 @@ package com.sophi.app.controllers;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -12,14 +13,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.sophi.app.Utiles;
+import com.sophi.app.mail.dto.MailRequest;
+import com.sophi.app.mail.dto.MailResponse;
+import com.sophi.app.mail.service.EmailService;
 import com.sophi.app.models.entity.Agenda;
 import com.sophi.app.models.entity.AreaComercial;
 import com.sophi.app.models.entity.Cliente;
@@ -33,6 +40,9 @@ import com.sophi.app.models.entity.DetalleProyectoContactoId;
 import com.sophi.app.models.entity.DetalleProyectoInfraestructura;
 import com.sophi.app.models.entity.DetalleProyectoInfraestructuraId;
 import com.sophi.app.models.entity.Proyecto;
+import com.sophi.app.models.entity.ProyectoRecurso;
+import com.sophi.app.models.entity.Recurso;
+import com.sophi.app.models.entity.Rol;
 import com.sophi.app.models.service.IActividadService;
 import com.sophi.app.models.service.IAgendaService;
 import com.sophi.app.models.service.IAreaComercialService;
@@ -43,8 +53,10 @@ import com.sophi.app.models.service.IDetalleClienteInfraestructuraService;
 import com.sophi.app.models.service.IDetalleInfraestructuraService;
 import com.sophi.app.models.service.IDetalleProyectoContactoService;
 import com.sophi.app.models.service.IDetalleProyectoInfraestructuraService;
+import com.sophi.app.models.service.IProyectoRecursoService;
 import com.sophi.app.models.service.IProyectoService;
 import com.sophi.app.models.service.IRecursoService;
+import com.sophi.app.models.service.IRolService;
 import com.sophi.app.models.service.ITipoFacturacionService;
 import com.sophi.app.models.service.ITipoProyectoService;
 
@@ -53,7 +65,13 @@ import com.sophi.app.models.service.ITipoProyectoService;
 public class PreventaProyectoController {
 	
 	@Autowired
+	private EmailService service;
+	
+	@Autowired
 	private IClienteService clienteService;
+	
+	@Autowired
+	private IProyectoRecursoService proyectoRecursoService;
 	
 	@Autowired
 	private IAreaComercialService areaComercialService;
@@ -92,6 +110,9 @@ public class PreventaProyectoController {
 	private IRecursoService recursoService;
 	
 	@Autowired
+	private IRolService rolService;
+	
+	@Autowired
 	private IActividadService actividadService;
 	
 	@RequestMapping(value = "/preventaProyecto", method = RequestMethod.GET)
@@ -120,7 +141,7 @@ public class PreventaProyectoController {
 		if(result.hasErrors()) {
 			return "preventaProyecto";
 		}
-		Date fechaHoy = new Date(); 
+		Date fechaHoy = new Utiles().getFechaActual(); 
 		proyecto.setFecRegistro(fechaHoy);
 		
 		//agrego el arrea comercial al cliente
@@ -137,7 +158,8 @@ public class PreventaProyectoController {
 		
 		System.out.println("Proyeto buscado "+proyecto.getDescProyecto()+" "+proyecto.getCodCliente()+" "+proyecto.getCodEstatusProyecto()+" "+ proyecto.getFecRegistro());
 		//obtengo el proyecto guardado
-		Proyecto proyectoN = proyectoService.findByDescProyectoAndCodClienteAndCodEstatusProyectoAndFecRegistro(proyecto.getDescProyecto(), proyecto.getCodCliente(), proyecto.getCodEstatusProyecto(), proyecto.getFecRegistro());
+//		Proyecto proyectoN = proyectoService.findByDescProyectoAndCodClienteAndCodEstatusProyectoAndFecRegistro(proyecto.getDescProyecto(), proyecto.getCodCliente(), proyecto.getCodEstatusProyecto(), proyecto.getFecRegistro());
+		Proyecto proyectoN = proyectoService.findByDescProyectoAndCodClienteAndCodEstatusProyecto(proyecto.getDescProyecto(), proyecto.getCodCliente(), proyecto.getCodEstatusProyecto());
 		model.addAttribute("contactos", agendaService.findContactosBycodCliente(proyecto.getCodCliente()));
 		model.addAttribute("tecnologias", detalleInfraestructuraService.findAll());
 //		DetalleInfraestructura di= detalleInfraestructuraService.findAll().get(0);
@@ -380,25 +402,184 @@ public class PreventaProyectoController {
 		model.addAttribute("titulo", "Proyecto");
 		Proyecto proyecto = new Proyecto();
 		modelP.put("proyecto", proyecto);
+//		List<Rol> listaRolesLider = rolService.findListaRoles();
+		List<Recurso> listaRecursosLider = new ArrayList<Recurso>();
+		List<Recurso> listaRecursosAprobador = new ArrayList<Recurso>();
+		
+		listaRecursosLider = recursoService.findListRecursosResponsables();
+		listaRecursosAprobador = recursoService.findListRecursosAprobadores();
+//		for (Rol rol : listaRolesLider) {
+//			Recurso recursoLider = recursoService.findOne(rol.getCod_recurso());
+//			if(recursoLider != null) {
+//				listaRecursosLider.add(recursoLider);
+//			}
+//		}
+		
 		model.addAttribute("clientes", clienteService.findAll());
 		model.addAttribute("areasComerciales", areaComercialService.findAll());
 		model.addAttribute("tiposProyecto", tipoProyectoService.findAll());
 		model.addAttribute("tiposFacturacion", tipoFacturacionService.findAll());
 		model.addAttribute("clasificacionesProyecto", clasificacionproyectoService.findAll());
-		model.addAttribute("recursos", recursoService.findAll());
+		model.addAttribute("recursosLider", listaRecursosLider);
+		model.addAttribute("recursosAprobador", listaRecursosAprobador);
 		return "preventaProyectoAlta";
 	}
 	
 	@RequestMapping(value = "/listaProyectosTodo", method = RequestMethod.GET)
 	public String listaProyectos(Model model) {
-		List<Proyecto> listaProyectoTodo = proyectoService.findAll();
+		model.addAttribute("titulo", "Proyecto");
+		System.out.println("Carga vista proyectos");
+		return "preventaProyectoListaTodo";
+	}
+	
+	@RequestMapping(value = "/proyectoFiltro/{sesion}", method = RequestMethod.GET)
+	public String proyectoFiltro(@PathVariable(value = "sesion") String mail, Model model) {
+		Recurso recurso = new Recurso();
+		recurso = recursoService.findByDescCorreoElectronico(mail);
+		List<Rol> roles = new ArrayList<Rol>();
+		List<Cliente> clientes = new ArrayList<Cliente>();
+		if (recurso != null) {
+			roles = rolService.findByCodRecurso(recurso.getCodRecurso());
+			if(roles.size() > 0) {
+				for (Rol rol : roles) {
+					System.out.println("rol: " + rol.getDescRol());
+					if(rol.getDescRol().equalsIgnoreCase("ROLE_ADMIN")){
+						System.out.println("Carga ROLE ADMIN");
+						clientes = clienteService.findAll();
+					} else if(rol.getDescRol().equalsIgnoreCase("ROLE_APROB")) {
+						System.out.println("Carga ROLE APROB");
+						List<Long> listaClientes = new ArrayList<Long>();
+						listaClientes = proyectoService.findListaClientesRecursoAprobador(recurso.getCodRecurso());
+						if (listaClientes.size()>0) {
+							for (Long codCliente : listaClientes) {
+								clientes.add(clienteService.findOne(codCliente));
+							}
+						}
+					} else if(rol.getDescRol().equalsIgnoreCase("ROLE_LIDER")) {
+						System.out.println("Carga ROLE LIDER");
+						List<Long> listaClientes = new ArrayList<Long>();
+						listaClientes = proyectoService.findListaClientesRecursoLider(recurso.getCodRecurso());
+						if (listaClientes.size()>0) {
+							for (Long codCliente : listaClientes) {
+								clientes.add(clienteService.findOne(codCliente));
+							}
+						}
+					}
+				}
+			}
+		}
+		
+		model.addAttribute("clientes", clientes);
+		
+		return "layout/plantilla-filtros :: proyectos-filtro";
+	}
+	
+	@RequestMapping(value = "/proyecto/{codCliente}/{session}", method = RequestMethod.GET)
+	public String listado(@PathVariable(value = "codCliente") Long codCliente, @PathVariable(value = "session") String mail,  Model model) {
+		System.out.println("codigo de proyecto: " +  codCliente);
+		Recurso recurso = recursoService.findByDescCorreoElectronico(mail);
+		List<Proyecto> listaProyectoTodo = new ArrayList<Proyecto>();
+		
+		List<Rol> roles = new ArrayList<Rol>();
+		if (recurso != null) {
+			roles = rolService.findByCodRecurso(recurso.getCodRecurso());
+			if(roles.size() > 0) {
+				for (Rol rol : roles) {
+					System.out.println("rol: " + rol.getDescRol());
+					if(rol.getDescRol().equalsIgnoreCase("ROLE_ADMIN")){
+						System.out.println("Carga ROLE ADMIN");
+						if(codCliente.equals(-1L)) {
+							listaProyectoTodo = proyectoService.findAll();
+						} else {
+							listaProyectoTodo = proyectoService.findByCodCliente(codCliente);
+						}
+					} else if(rol.getDescRol().equalsIgnoreCase("ROLE_APROB")) {
+						System.out.println("Carga ROLE APROB");
+						if(codCliente.equals(-1L)) {
+							listaProyectoTodo = proyectoService.findListaProyectosRecursoAprobadorTodos(recurso.getCodRecurso());
+						} else {
+							listaProyectoTodo = proyectoService.findListaProyectosRecursoAprobador(recurso.getCodRecurso(), codCliente);
+						}
+					} else if(rol.getDescRol().equalsIgnoreCase("ROLE_LIDER")) {
+						System.out.println("Carga ROLE LIDER");
+						if(codCliente.equals(-1L)) {
+							listaProyectoTodo = proyectoService.findListaProyectosRecursoLiderTodos(recurso.getCodRecurso());
+						} else {
+							listaProyectoTodo = proyectoService.findListaProyectosRecursoLider(recurso.getCodRecurso(), codCliente);
+						}
+					}
+				}
+			}
+		}
+		
 		Proyecto proyectoSophi= proyectoService.findByCodProyecto(1L);
 		listaProyectoTodo.remove(proyectoSophi);
-		model.addAttribute("titulo", "Proyecto");
-		model.addAttribute("clientes", clienteService.findAll());
+		
+		for (Proyecto proyecto : listaProyectoTodo) {
+			Recurso recursoLider = new Recurso();
+			recursoLider = recursoService.findOne(proyecto.getCodRecursoLider());
+			Recurso recursoAprobador = new Recurso();
+			recursoAprobador = recursoService.findOne(proyecto.getCodRecursoAprobador());
+			if (recursoLider != null) {
+				proyecto.setNombreRecursoLider(recursoLider.getDescRecurso() + " " + recursoLider.getDescApellidoPaterno());
+			}
+			if (recursoAprobador != null) {
+				proyecto.setNombreRecursoAprobador(recursoAprobador.getDescRecurso() + " " + recursoAprobador.getDescApellidoPaterno());
+			}
+		}
+		
+		for (Proyecto proyecto2 : listaProyectoTodo) {
+			proyecto2.setNumAct(actividadService.countByCodProyecto(proyecto2.getCodProyecto()));
+		}
+		
+		model.addAttribute("proyectos", listaProyectoTodo);
+		return "layout/plantilla-filtros :: proyectos-listado";
+	}
+	
+	
+	@RequestMapping(value = "/listaMisProyectos/{codCliente}/{codLider}", method = RequestMethod.GET)
+	public String listaPorLider(@PathVariable(value = "codCliente") Long codCliente, @PathVariable(value = "codLider") Long codLider, Model model) {
+		
+		List<Proyecto> listaProyectoTodo = proyectoService.findByCodRecursoLider(codLider);
+		
+		Proyecto proyectoSophi = proyectoService.findOne(1L);
+		listaProyectoTodo.remove(proyectoSophi);
+		
+		List<Cliente> listaClientesLider = new ArrayList<Cliente>();
+		for (Proyecto proyecto2 : listaProyectoTodo) {
+			proyecto2.setNumAct(actividadService.countByCodProyecto(proyecto2.getCodProyecto()));
+			Cliente clienteLider = clienteService.findOne(proyecto2.getCodCliente());
+			listaClientesLider.remove(clienteLider);
+			listaClientesLider.add(clienteLider);
+		}
+
 		model.addAttribute("proyectos", listaProyectoTodo);
 		return "preventaProyectoListaTodo";
 	}
+	
+	@RequestMapping(value = "/listaMisProyectos/{email}", method = RequestMethod.GET)
+	public String listaProyectosPorLider(@PathVariable(value = "email") String email, Model model) {
+		Long codLider = recursoService.findByDescCorreoElectronico(email).getCodRecurso();
+		List<Proyecto> listaProyectoTodo = proyectoService.findByCodRecursoLider(codLider);
+		Proyecto proyectoSophi = proyectoService.findOne(1L);
+		listaProyectoTodo.remove(proyectoSophi);
+		
+		List<Cliente> listaClientesLider = new ArrayList<Cliente>();
+		for (Proyecto proyecto2 : listaProyectoTodo) {
+			proyecto2.setNumAct(actividadService.countByCodProyecto(proyecto2.getCodProyecto()));
+			Cliente clienteLider = clienteService.findOne(proyecto2.getCodCliente());
+			listaClientesLider.remove(clienteLider);
+			listaClientesLider.add(clienteLider);
+		}
+		model.addAttribute("titulo", "Proyecto");
+		model.addAttribute("clientes", listaClientesLider);
+//		model.addAttribute("proyectos", listaProyectoTodo);
+		model.addAttribute("codLider",codLider);
+		return "preventaProyectoListaTodo";
+	}
+	
+
+	
 	
 	@RequestMapping(value = "/cargaProyectosTodo/{codCliente}", method = RequestMethod.GET)
 	@ResponseBody
@@ -475,6 +656,7 @@ public class PreventaProyectoController {
     public String preventaProyectoConsulta (Map<String, Object> modelM, Model model,@PathVariable(value = "codProyecto") long codProyecto, @PathVariable(value = "codEstatusProyecto") long codEstatusProyecto, @PathVariable(value = "codCliente") long codCliente) {
 		model.addAttribute("titulo", "Proyecto");
 		Proyecto proyecto = proyectoService.findByCodProyectoAndCodEstatusProyectoAndCodCliente(codProyecto, codEstatusProyecto, codCliente);
+		
 		List<DetalleInfraestructura> listaDI= detalleInfraestructuraService.findAll();
 		List<DetalleProyectoInfraestructura> listaDPI=detalleProyectoInfraestructuraService.findByDetalleProyectoInfraestructuraIdCodProyectoAndDetalleProyectoInfraestructuraIdCodEstatusProyectoAndDetalleProyectoInfraestructuraIdCodCliente(codProyecto, codEstatusProyecto, codCliente);
 		List<DetalleInfraestructura> listaDISel= new ArrayList<DetalleInfraestructura>();
@@ -527,6 +709,19 @@ public class PreventaProyectoController {
 			}
 		}
 		
+//		List<Rol> listaRolesLider = rolService.findListaRoles();
+		List<Recurso> listaRecursosLider = new ArrayList<Recurso>();
+		List<Recurso> listaRecursosAprobador = new ArrayList<Recurso>();
+		listaRecursosLider = recursoService.findListRecursosResponsables();
+		listaRecursosAprobador = recursoService.findListRecursosAprobadores();
+		
+//		for (Rol rol : listaRolesLider) {
+//			Recurso recursoLider = recursoService.findOne(rol.getCod_recurso());
+//			if(recursoLider != null) {
+//				listaRecursosLider.add(recursoLider);
+//			}
+//		}
+		
 		Cliente cp = clienteService.findOne(proyecto.getCodCliente());
 		modelM.put("proyecto", proyecto);
 		model.addAttribute("clienteProyecto", cp);
@@ -541,7 +736,8 @@ public class PreventaProyectoController {
 		model.addAttribute("textoTec", texto);
 		model.addAttribute("codCon", codCon);
 		model.addAttribute("contactoVista", agendaService.findOne(codCon));
-		model.addAttribute("recursos", recursoService.findAll());
+		model.addAttribute("recursosLider", listaRecursosLider);
+		model.addAttribute("recursosAprobador", listaRecursosAprobador);
 		model.addAttribute("tecTam", listaDISel.size());
 			
 		model.addAttribute("clasificacionesProyecto", clasificacionproyectoService.findAll());
@@ -562,8 +758,8 @@ public class PreventaProyectoController {
 			return "redirect:/preventaProyectoAlta";
 		}
 		
-		Date fechaHoy = new Date(); 
-		proyecto.setFecRegistro(fechaHoy);
+		Date fechaHoy = new Utiles().getFechaActual(); 
+		
 		
 		//agrego el arrea comercial al cliente
 		DetalleClienteAreaComercialId dcacId = new DetalleClienteAreaComercialId();
@@ -577,16 +773,25 @@ public class PreventaProyectoController {
 		detalleClienteAreaComercialService.save(dcac);
 		proyectoService.save(proyecto);
 		
+		//Se envía notificacion de asignacion al responsable y aprobador
+		try {
+			enviaNotificacionAsignacionAprobadorResponsable(proyecto);
+		} catch (Exception e) {
+			System.out.println("NOTIFICACIONES : <Error> al enviar notificacion a responsable y aprobador de nuevo proyecto");
+			System.out.println(e);
+		}
+		
 		System.out.println("Proyeto buscado "+proyecto.getDescProyecto()+" "+proyecto.getCodCliente()+" "+proyecto.getCodEstatusProyecto()+" "+ proyecto.getFecRegistro());
 		//obtengo el proyecto guardado
-		Proyecto proyectoN = proyectoService.findByDescProyectoAndCodClienteAndCodEstatusProyectoAndFecRegistro(proyecto.getDescProyecto(), proyecto.getCodCliente(), proyecto.getCodEstatusProyecto(), proyecto.getFecRegistro());
+//		Proyecto proyectoN = proyectoService.findByDescProyectoAndCodClienteAndCodEstatusProyectoAndFecRegistro(proyecto.getDescProyecto(), proyecto.getCodCliente(), proyecto.getCodEstatusProyecto(), proyecto.getFecRegistro());
+		Proyecto proyectoN = proyectoService.findByDescProyectoAndCodClienteAndCodEstatusProyecto(proyecto.getDescProyecto(), proyecto.getCodCliente(), proyecto.getCodEstatusProyecto());
 		model.addAttribute("contactos", agendaService.findContactosBycodCliente(proyecto.getCodCliente()));
 		model.addAttribute("tecnologias", detalleInfraestructuraService.findAll());
 
 		modelM.put("proyecto", proyectoN);
 		
 		if(proyectoN.getCodEstatusProyecto()==1) {
-			flash.addFlashAttribute("success", "Preventa/Proyecto guardado con éxito");
+			flash.addFlashAttribute("success", "Información guardada con éxito");
 			model.addAttribute("proyectos", proyectoService.findAll());
 			return "redirect:/listaProyectosTodo";
 		}else {
@@ -596,7 +801,7 @@ public class PreventaProyectoController {
 	}
 	
 	@RequestMapping(value="/preventaProyectoActualizar", method = RequestMethod.POST)
-	public String preventaProyectoContactoInfraestructura(Map<String, Object> modelM,@Valid Proyecto proyecto, BindingResult result, Model model,RedirectAttributes flash,SessionStatus status) {
+	public String preventaProyectoContactoInfraestructura(Map<String, Object> modelM,@ModelAttribute("proyecto") Proyecto proyecto,@RequestParam("fecRegistro") String fecRegistro, BindingResult result, Model model,RedirectAttributes flash,SessionStatus status) {
 		model.addAttribute("clientes", clienteService.findAll());
 		model.addAttribute("areasComerciales", areaComercialService.findAll());
 		model.addAttribute("tiposProyecto", tipoProyectoService.findAll());
@@ -615,7 +820,7 @@ public class PreventaProyectoController {
 		System.out.println("codAreaComercial "+proyecto.getCodAreaComercial()+" codCliente "+(proyecto.getCodCliente()));
 		
 		//agrego el area comercial al cliente
-		Date fechaHoy = new Date(); 
+//		Date fechaHoy = new Date(); 
 		//agrego el arrea comercial al cliente
 		DetalleClienteAreaComercialId dcacId = new DetalleClienteAreaComercialId();
 		DetalleClienteAreaComercial dcac = new DetalleClienteAreaComercial();
@@ -623,26 +828,38 @@ public class PreventaProyectoController {
 		dcacId.setCodCliente(proyecto.getCodCliente());
 		
 		dcac.setDetalleClienteAreaComercialId(dcacId);
-		dcac.setFecRegistro(fechaHoy);
+//		dcac.setFecRegistro(fechaHoy);
 				
 		detalleClienteAreaComercialService.save(dcac);
-		System.out.println("codAreaComercial "+proyecto.getCodAreaComercial()+" codCliente "+(proyecto.getCodCliente()));
 		
+		System.out.println(proyecto.getValTotalHorasProyecto());
+		System.out.println(proyecto.getImpCostoProyecto());
+		
+//		proyecto.setValTotalHorasProyecto((proyecto.getValTotalHorasProyecto() == "" || proyecto.getValTotalHorasProyecto() == null) ? "0" : proyecto.getValTotalHorasProyecto());
 		
 		//guardo proyecto
+		
+		if(proyecto.getCodEstatusProyecto().equals(2L) && proyecto.getFecCambioEstatus() == null) {
+			proyecto.setFecCambioEstatus(new Utiles().getFechaActual());
+		}
+		
+		if(proyecto.getCodEstatusProyecto().equals(3L) && proyecto.getFecCambioEstatus() != null) {
+			proyecto.setFecCambioEstatus(new Utiles().getFechaActual());
+		}
+		
 		proyectoService.save(proyecto);
 		
 		System.out.println("guarda proyecto "+proyecto.getCodProyecto()+" "+proyecto.getDescProyecto() +" cliente "+proyecto.getCodCliente()+" codStatus "+proyecto.getCodEstatusProyecto());
 		flash.addFlashAttribute("success", "Recurso guardado con éxito");
 		
 		//redirijo dependiendo
-		if(proyecto.getCodEstatusProyecto()==1) {
+		if(proyecto.getCodEstatusProyecto() == 3) {
 			List<Proyecto> listaProyectoTodo = proyectoService.findAll();
-			flash.addFlashAttribute("success", "Preventa/Proyecto actualizado con éxito");
+			flash.addFlashAttribute("success", "Información actualizada con éxito");
 			model.addAttribute("proyectos", listaProyectoTodo);
 			return "redirect:/listaProyectosTodo";
 		}else {
-			flash.addFlashAttribute("success", "Proyecto actualizado con éxito");
+			flash.addFlashAttribute("success", "Información actualizada con éxito");
 			return "redirect:/preventaProyectoContactoInfraestructura/"+proyecto.getCodProyecto();
 		}
 	}
@@ -677,6 +894,11 @@ public class PreventaProyectoController {
 		
 		Long numActividades = actividadService.countByCodProyecto(proyecto.getCodProyecto());
 		
+		List<ProyectoRecurso> listProyectoRecurso = new ArrayList<ProyectoRecurso>();
+		listProyectoRecurso = proyectoRecursoService.findByProyectoRecursoIdCodProyecto(codProyecto);
+		Long numRecursosAsignados = 0L;
+		numRecursosAsignados = (long) listProyectoRecurso.size();
+		
 		model.addAttribute("titulo", "Proyecto");
 		model.addAttribute("proyecto", proyecto);
 		model.addAttribute("tecnologias", listaDI);
@@ -684,6 +906,7 @@ public class PreventaProyectoController {
 		model.addAttribute("textoTec", texto);
 		model.addAttribute("codCon", codCon);
 		model.addAttribute("numAct",numActividades);
+		model.addAttribute("numAsignados", numRecursosAsignados);
 		model.addAttribute("contactos", agendaService.findContactosBycodCliente(proyecto.getCodCliente()));
 		return "preventaProyectoContactoInfraestructura";
 	}
@@ -699,7 +922,7 @@ public class PreventaProyectoController {
 		if(result.hasErrors()) {
 			return "preventaProyecto";
 		}
-		Date fechaHoy = new Date(); 
+		Date fechaHoy = new Utiles().getFechaActual(); 
 		proyecto.setFecRegistro(fechaHoy);
 		
 		//agrego el arrea comercial al cliente
@@ -716,7 +939,8 @@ public class PreventaProyectoController {
 		
 		System.out.println("Proyeto buscado "+proyecto.getDescProyecto()+" "+proyecto.getCodCliente()+" "+proyecto.getCodEstatusProyecto()+" "+ proyecto.getFecRegistro());
 		//obtengo el proyecto guardado
-		Proyecto proyectoN = proyectoService.findByDescProyectoAndCodClienteAndCodEstatusProyectoAndFecRegistro(proyecto.getDescProyecto(), proyecto.getCodCliente(), proyecto.getCodEstatusProyecto(), proyecto.getFecRegistro());
+//		Proyecto proyectoN = proyectoService.findByDescProyectoAndCodClienteAndCodEstatusProyectoAndFecRegistro(proyecto.getDescProyecto(), proyecto.getCodCliente(), proyecto.getCodEstatusProyecto(), proyecto.getFecRegistro());
+		Proyecto proyectoN = proyectoService.findByDescProyectoAndCodClienteAndCodEstatusProyecto(proyecto.getDescProyecto(), proyecto.getCodCliente(), proyecto.getCodEstatusProyecto());
 		model.addAttribute("contactos", agendaService.findContactosBycodCliente(proyecto.getCodCliente()));
 		model.addAttribute("tecnologias", detalleInfraestructuraService.findAll());
 
@@ -733,6 +957,54 @@ public class PreventaProyectoController {
 		model.addAttribute("codCon", codCon);
 		flash.addFlashAttribute("success", "Recurso guardado con éxito");
 		return "preventaProyectoContactoInfraestructura";
+	}
+	
+	
+	//Asignación de proyecto (aprobador y lider)
+	public void enviaNotificacionAsignacionAprobadorResponsable(Proyecto proy) {
+		System.out.println(proy.getCodRecursoAprobador());
+		System.out.println(proy.getCodRecursoLider());
+		System.out.println(proy.getDescProyecto());
+		
+		
+		Recurso aprobador = recursoService.findOne(proy.getCodRecursoAprobador());
+		Recurso responsable = recursoService.findOne(proy.getCodRecursoLider());
+		
+		System.out.println(aprobador);
+		System.out.println(responsable);
+		
+		//Aprobador INICIO 
+		MailRequest request = new MailRequest();
+		request.setName(aprobador.getDescRecurso());
+		request.setSubject("Nueva asignación - Aprobador");
+		request.setTo(aprobador.getDescCorreoElectronico());
+		
+		Map<String, Object> model = new HashMap<String, Object>();
+		model.put("nombreRecurso", request.getName());
+		model.put("mensaje", "<h3>Has sido asignado como aprobador del proyecto \""+ proy.getDescProyecto() + "\"</h3>.");
+		model.put("imagen","<img data-cfsrc=\"images/status.png\" alt=\"\" data-cfstyle=\"width: 200px; max-width: 400px; height: auto; margin: auto; display: block;\" style=\"width: 200px; max-width: 400px; height: auto; margin: auto; display: block;\" src=\"https://sophitech.herokuapp.com/img/img-status.png\">");
+		model.put("pie", "");
+		
+		MailResponse response = service.sendEmail(request, model);
+		System.out.println(response.getMessage());
+		//Aprobador FIN
+		
+		//Responsable INICIO
+		MailRequest request2 = new MailRequest();
+		request2.setName(responsable.getDescRecurso());
+		request2.setSubject("Nueva asignación - Responsable");
+		request2.setTo(responsable.getDescCorreoElectronico());
+		
+		Map<String, Object> model2 = new HashMap<String, Object>();
+		model2.put("nombreRecurso", request2.getName());
+		model2.put("mensaje", "<h3>Has sido asignado como responsable del proyecto \""+ proy.getDescProyecto() + "\".</h3>");
+		model2.put("imagen","<img data-cfsrc=\"images/status.png\" alt=\"\" data-cfstyle=\"width: 200px; max-width: 400px; height: auto; margin: auto; display: block;\" style=\"width: 200px; max-width: 400px; height: auto; margin: auto; display: block;\" src=\"https://sophitech.herokuapp.com/img/img-status.png\">");
+		model2.put("pie", "");
+		
+		MailResponse response2 = service.sendEmail(request2, model2);
+		System.out.println(response2.getMessage());
+		//Responsable FIN
+		
 	}
 
 }

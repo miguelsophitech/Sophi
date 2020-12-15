@@ -50,7 +50,7 @@ public class Actividad   implements Serializable {
 	private String codActividadDependiente;
 	
 	@Column(name = "val_duracion_actividad")
-	private Float valDuracionActividad;
+	private String valDuracionActividad;
 	
 	@Column(name = "val_nueva_actividad")
 	private Long valNuevaActividad;
@@ -139,11 +139,11 @@ public class Actividad   implements Serializable {
 		this.codActividadDependiente = codActividadDependiente;
 	}
 
-	public Float getValDuracionActividad() {
+	public String getValDuracionActividad() {
 		return valDuracionActividad;
 	}
 
-	public void setValDuracionActividad(Float valDuracionActividad) {
+	public void setValDuracionActividad(String valDuracionActividad) {
 		this.valDuracionActividad = valDuracionActividad;
 	}
 
@@ -217,7 +217,7 @@ public class Actividad   implements Serializable {
 	
 	public Actividad(Long codActividad, String descActividadPrimaria, String descActividadSecundaria,
 			Long valNumActividad, Date fecInicioActividad, Date fecFinActividad, String codActividadDependiente,
-			Float valDuracionActividad, Long valNuevaActividad, Date fecRegistro, Long codRecurso, Long codProyecto,
+			String valDuracionActividad, Long valNuevaActividad, Date fecRegistro, Long codRecurso, Long codProyecto,
 			Long codEstatusProyecto, Long codCliente) {
 		super();
 		this.codActividad = codActividad;

@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.sophi.app.models.dao.ICapHoraDao;
 import com.sophi.app.models.entity.CapHora;
+import com.sophi.app.models.entity.DetalleRecursoHoras;
 
 @Service
 public class CapHoraServiceImpl implements ICapHoraService {
@@ -50,6 +51,48 @@ public class CapHoraServiceImpl implements ICapHoraService {
 	@Transactional(readOnly = true)
 	public Float findSumHorasReportadasSemana(Long codRecurso, Date fechaInicio, Date fechaFin) {
 		return capHoraDao.findSumHorasReportadasSemana(codRecurso, fechaInicio, fechaFin);
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public DetalleRecursoHoras findDetalleRecursoHoras(Long codRecurso, Long codProyecto, Date fecInicial, Date fecFinal) {
+		return capHoraDao.findDetalleRecursoHoras(codRecurso, codProyecto, fecInicial, fecFinal);
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public DetalleRecursoHoras findDetalleRecursoHorasTodos(Long codRecurso, Date fecInicial, Date fecFinal) {
+		return  capHoraDao.findDetalleRecursoHorasTodos(codRecurso, fecInicial, fecFinal);
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public List<DetalleRecursoHoras> findRecursoHorasRechazo(Date fecInicial, Date fecFinal) {
+		return capHoraDao.findRecursoHorasRechazo(fecInicial, fecFinal);
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public List<Long> findProyectosCapturadosSemana(Date fecInicial, Date fecFinal) {
+		return capHoraDao.findProyectosCapturadosSemana(fecInicial, fecFinal);
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public List<Long> findRecursoCapturadosSemana(Date fecInicial, Date fecFinal) {
+		return capHoraDao.findRecursoCapturadosSemana(fecInicial, fecFinal);
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public List<CapHora> findListCapHoraByPeriodoFechaRecurso(Long codRecurso, Date fecInicial, Date fecFinal) {
+		return capHoraDao.findListCapHoraByPeriodoFechaRecurso(codRecurso, fecInicial, fecFinal);
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public List<DetalleRecursoHoras> findProyectoRecursosResumenSemanal(Long codProyecto, Date fecInicial, Date fecFinal) {
+		return capHoraDao.findProyectoRecursosResumenSemanal(codProyecto, fecInicial, fecFinal);
 	}
 	
 	

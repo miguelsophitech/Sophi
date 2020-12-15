@@ -24,6 +24,8 @@ function validacion(){
 	var validar = document.querySelectorAll("#validar");
 	console.log(input.length);
 	
+	var planeado = document.querySelectorAll("#planeado");
+	
 	var RecVal = document.getElementById("codRecVal").value;
 	var target = document.querySelectorAll("#RecVal");
 	console.log(RecVal);
@@ -32,17 +34,19 @@ function validacion(){
 		console.log(RecVal);
 		if(input[i].checked){
 			validar[i].disabled = false;
+			planeado[i].disabled = false;
 			input[i].value = fecha;
 			target[i].value = RecVal;
 		}
 		
 		else{
 			validar[i].disabled = true;
+			planeado[i].disabled = true;
 			input[i].value = "";
 			target[i].value = "";
 		}
 		
-		console.log(target[i]);
+//		console.log(target[i]);
 	}
 	
 }

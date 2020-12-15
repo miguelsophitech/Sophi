@@ -10090,6 +10090,45 @@ a:focus {
   width: 2rem;
 }
 
+.imgPrevCircle{
+	border-radius: 50%; 
+	width: 40px; 
+	height: 40px; 
+	object-fit: cover;
+}
+
+.img_emoji{
+	border-radius: 50%; 
+	width: 80px; 
+	height: 80px; 
+	padding: 10px;
+	object-fit: cover;
+	filter: drop-shadow(0 3px 10px #5b5b5e);
+	cursor: pointer;
+}
+
+.img_emoji_resultado{
+	border-radius: 50%; 
+	width: 60px; 
+	height: 60px; 
+	padding: 10px;
+	object-fit: cover;
+	filter: drop-shadow(0 3px 10px #DEDEF1);
+}
+
+.img_emoji:hover{
+	-webkit-transform:scale(1.080);
+	-ms-transform:scale(1.080);
+	transform:scale(1.080)
+}
+
+.imgPrevCircle20{
+	border-radius: 50%; 
+	width: 30px; 
+	height: 30px; 
+	object-fit: cover;
+}
+
 .topbar {
   height: 4.375rem;
 }

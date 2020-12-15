@@ -24,5 +24,10 @@ public interface IActividadDao extends CrudRepository<Actividad, Long>{
 	List<Actividad> findByCodRecurso(Long codRecurso);
 	
 	long countByCodProyecto(Long codProyecto);
-
+	
+	List<Actividad> findByCodProyecto(Long codProyecto);
+	
+	@Query("SELECT SUM(A.valDuracionActividad) FROM Actividad A WHERE A.codRecurso = ?1 AND A.codProyecto = ?2")
+	Float sumTotalHorasProyecto(Long codRecurso, Long codProyecto);
+	
 }

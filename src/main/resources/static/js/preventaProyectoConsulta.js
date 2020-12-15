@@ -1,4 +1,30 @@
 $(document).ready(function() {
+	
+	$("#presupuesto").on({
+		"focus": function(event) {
+					$(event.target).select();
+				},
+		"keyup": function(event) {
+					$(event.target).val(function(index, value) {
+						return value.replace(/\D/g, "")
+						.replace(/([0-9])([0-9]{2})$/, '$1.$2')
+						.replace(/\B(?=(\d{3})+(?!\d)\.?)/g, ",");
+					});
+		  		}
+	});
+	
+	$("#precio").on({
+		"focus": function(event) {
+					$(event.target).select();
+				},
+		"keyup": function(event) {
+					$(event.target).val(function(index, value) {
+						return value.replace(/\D/g, "")
+						.replace(/([0-9])([0-9]{2})$/, '$1.$2')
+						.replace(/\B(?=(\d{3})+(?!\d)\.?)/g, ",");
+					});
+		  		}
+	});
 
 	$('#undo_redo').multiselect();
 	
@@ -14,6 +40,25 @@ $(document).ready(function() {
 		$('#ff').hide();
 		$('#complementoProyecto').hide();
 	} 
+	
+	var checkBoxCierre = document.getElementById("cierre");
+	
+	if (checkBoxCierre.checked == true){
+		$('#btnRegresarCierre').show('500');
+		$('#pr').show();
+		$('#thp').show();
+		$('#cp').show();
+		$('#pp').show();
+		$('#thv').show();
+		$('#fi').show();
+		$('#ff').show();
+		document.getElementById("fi").disabled = true;
+		$('#complementoProyecto').show('500');
+	} else {
+		$('#btnRegresarCierre').hide();
+	}
+	
+	
   
 	$( "#aceptarProyecto" ).click(function() {
 		$( "#preventa" ).prop( "disabled", true );
@@ -28,9 +73,22 @@ $(document).ready(function() {
 		$('#codEstatusProyecto').val(2);
 		$('#btnEnviar').val("Guardar y continuar");
  	});
+	
+	$( "#aceptarCierre" ).click(function() {
+		$( "#proyecto" ).prop( "disabled", true );
+		//$('#complementoProyecto').show('500');
+		$('#codEstatusProyecto').val(3);
+		$('#btnEnviar').hide();
+		$('#btnRegresarProyecto').hide();
+		$('#btnRegresarCierre').show('500');
+ 	});
   
 	$( "#cancelarProyecto" ).click(function() {
 		$( "#preventa" ).prop( "checked", true );
+	});
+	
+	$( "#cancelarCierre" ).click(function() {
+		$( "#proyecto" ).prop( "checked", true );
 	});
 	
 	$("#fechaInicio").change(function(){
@@ -176,7 +234,7 @@ function guardarTodo(){
 			clasificacionProyecto:clasificacionProyecto
 		},
 		success: function(data){
-			alert("Todo chido");
+			alert("Todo ok");
 		}
 	});
 }

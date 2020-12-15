@@ -24,16 +24,24 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter{
 	
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http.authorizeRequests().antMatchers("/css/**","/js/**","/img/**","/scss/**","/vendor/**").permitAll()
+		http.authorizeRequests().antMatchers("/css/**","/js/**","/img/**","/scss/**","/vendor/**","/sendingEmail").permitAll()
 //		.antMatchers("/**").hasAnyRole("USER")
-//		.antMatchers("/formRecurso/**").hasAnyRole("USER")
+//		.antMatchers("/listaClientes/**").hasAnyRole("ROLE_ADMIN","ROLE_LIDER")
+//		.antMatchers("/agenda").hasAnyRole("ROLE_ADMIN","ROLE_LIDER")
+//		.antMatchers("/listaProyectosTodo").hasAnyRole("ROLE_ADMIN")
+//		.antMatchers("/listaMisProyectos/**").hasAnyRole("ROLE_LIDER")
+//		.antMatchers("/misActividades/**").hasAnyRole("ROLE_LIDER","ROLE_USER")
+//		.antMatchers("/aprobacionhoras/**").hasAnyRole("ROLE_LIDER","ROLE_ADMIN")
+//		.antMatchers("/aprobaciongastos/**").hasAnyRole("ROLE_LIDER","ROLE_ADMIN")
 		.anyRequest().authenticated()
 		.and()
 			.formLogin()
 				.loginPage("/login")
 			.permitAll()
 		.and()
-		.logout().permitAll();
+			.logout().permitAll()
+		.and()
+			.exceptionHandling().accessDeniedPage("/accessDenied");
 	}
 
 
@@ -46,7 +54,10 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter{
 	@Autowired
 	public void configurerGlobal(AuthenticationManagerBuilder builder) throws Exception {
 		builder.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder);
-		
+//		String[ ] pass = {"dNCsJUxb"};
+//		for (String p : pass) {
+//			System.out.println(p + " - " + passwordEncoder.encode(p));
+//		}
 	}
 	
 }

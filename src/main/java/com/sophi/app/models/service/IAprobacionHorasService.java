@@ -13,5 +13,7 @@ public interface IAprobacionHorasService {
 	public void saveAll(List<AprobacionHoras> aprobacionhoras);
 
 	public List<AprobacionHoras> findAprobacionHorasBycodProyecto(Long codProyecto);
+	
+	public List<AprobacionHoras> findAprobacionHorasGeneral(Long codProyecto);
 
 }

@@ -53,16 +53,16 @@
 											<input type="password" class="form-control form-control-user"
 												name="password" id="password" placeholder="Contraseña" required>
 										</div>
-										<div class="form-group">
-											<div class="custom-control custom-checkbox small">
-												<input type="checkbox" class="custom-control-input"
-													id="customCheck"> <label
-													class="custom-control-label" for="customCheck">Recordar mi cuenta</label>
-											</div>
-										</div>
+<!-- 										<div class="form-group"> -->
+<!-- 											<div class="custom-control custom-checkbox small"> -->
+<!-- 												<input type="checkbox" class="custom-control-input" -->
+<!-- 													id="customCheck"> <label -->
+<!-- 													class="custom-control-label" for="customCheck">Recordar mi cuenta</label> -->
+<!-- 											</div> -->
+<!-- 										</div> -->
 										
-										<div class="alert alert-success" th:if="${success != null}" th:text="${success}"></div>
-        								<div class="alert alert-danger" th:if="${error != null}" th:text="${error}"></div>
+										<div style="font-size: 12px; padding: 5px; text-align: center;" class="alert alert-success" th:if="${success != null}" th:text="${success}"></div>
+        								<div style="font-size: 12px; padding: 5px; text-align: center;" class="alert alert-danger" th:if="${error != null}" th:text="${error}"></div>
         								<div class="alert alert-warning" th:if="${warning != null}" th:text="${warning}"></div>
         								<div class="alert alert-info" th:if="${info != null}" th:text="${info}"></div>
         
@@ -72,7 +72,7 @@
 									</form>
 									<!-- <hr> -->
 									<div class="text-center">
-										<a class="small" href="#">&iquest;Olvidaste tu contrase	&ntilde;a?</a>
+										<a class="small" href="#">&iquest;Olvidaste tu contrase&ntilde;a?</a>
 									</div>
 								</div>
 							</div>

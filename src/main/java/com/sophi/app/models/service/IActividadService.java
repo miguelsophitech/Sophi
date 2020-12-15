@@ -28,4 +28,8 @@ public interface IActividadService {
 	
 	public long countByCodProyecto(Long codProyecto);
 	
+	public  List<Actividad> findByCodProyecto(Long codProyecto);
+	
+	public Float sumTotalHorasProyecto(Long codRecurso, Long codProyecto);
+	
 }
