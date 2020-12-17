@@ -25,7 +25,7 @@
 
           <!-- Page Heading -->
           <div class="d-sm-flex align-items-center justify-content-between mb-1">
-            <h1 class="h3 mb-0 text-gray-800"><span class="tituloA">Registrar preventa o proyecto</span>
+            <h1 class="h3 mb-0 text-gray-800"><span class="tituloA">Registrar proyecto</span>
 <!--             </br><span class="tituloBN">Enhorabuena, tienes un nuevo proyecto que registrar</span> -->
             </h1>
           </div>
@@ -74,11 +74,23 @@
                   <div class="col-sm-4">
                   </div>
                 </div>
-                <p class="tituloC">Completa la informaci&oacute;n del proyecto.</p>
-                <div class="form-group row">
+                <div class="card shadow mb-4">
+                	<div class="card-header py-3">
+                		<h6 class="m-0 font-weight-bold text-primary">Completa la informaci&oacute;n del proyecto</h6>
+                	</div>
+                	<div class="card-body">
+                		<div class="form-group row">
                   <div class="col-sm-4 mb-3 mb-sm-0">
                      <label for="nombreProyecto">Nombre del proyecto</label>
                     <input type="text" th:field="*{descProyecto}" class="form-control" id="nombreProyecto" placeholder="Nombre de proyecto"  oninvalid="setCustomValidity('Campo invÃ¡lido')" onchange="try{setCustomValidity('')}catch(e){}" maxlength="35" required>
+                    <br>
+                    <label for="codigoProyecto">C&oacute;digo de proyecto</label>
+                    <input th:field="*{descCodigoProyecto}" type="text" class="form-control" id="codigoProyecto" placeholder="C&oacute;digo de proyecto" oninvalid="setCustomValidity('Campo inv&aacute;lido')" onchange="try{setCustomValidity('')}catch(e){}" maxlength="100" readonly="readonly" required>
+                  </div>
+                  <div class="col-sm-4 mb-3 mb-sm-0">
+                  	<label for="descripcionProyecto">Descripci&oacute;n </label>
+                  	<br>
+                  	<textarea th:field="*{descProyectoTexto}" class="form-control" rows="5" id="descripcionProyecto" placeholder="Descripci&oacute;n del proyecto" maxlength="500" required></textarea>
                   </div>
                   <div class="col-sm-4" id="fi">
                     <label for="fechaInicio">Fecha inicio</label>
@@ -90,20 +102,6 @@
                   </div>
                 </div>
                 <div class="form-group row">
-                  <div class="col-sm-4 mb-3 mb-sm-0">
-                    <label for="codigoProyecto">C&oacute;digo de proyecto</label>
-                    <input th:field="*{descCodigoProyecto}" type="text" class="form-control" id="codigoProyecto" placeholder="C&oacute;digo de proyecto" oninvalid="setCustomValidity('Campo inv&aacute;lido')" onchange="try{setCustomValidity('')}catch(e){}" maxlength="100" readonly="readonly" required>
-                  </div>
-                  <div class="col-sm-4">
-                    <label for="presupuesto">Presupuesto</label>
-                    <div class="input-group">
-                    	<div class="input-group-prepend">
-							<span class="input-group-text">$</span>
-						</div>
-                    <input th:field="*{impPresupuesto}" type="text" maxlength="15" onkeypress="return event.charCode >= 46 && event.charCode <= 57" class="form-control" id="presupuesto" placeholder="Presupuesto" oninvalid="setCustomValidity('Presupuesto inv&aacute;lido')" onchange="try{setCustomValidity('')}catch(e){}" step="any">
-                    </div>
-                    <small class="form-text text-danger" th:if="${#fields.hasErrors('impPresupuesto')}" th:errors="*{impPresupuesto}"></small>
-                  </div>
                   <div class="col-sm-4" id="pr">
                   <label for="riesgo">Porcentaje de riesgo</label>
                   <div class="input-group">
@@ -121,6 +119,16 @@
 <!--                         <option th:each="tipoProyecto : ${tiposProyecto}" th:value="${tipoProyecto.codTipoProyecto}" th:text="${tipoProyecto.descTipoProyecto}" th:selected="false"/> -->
 <!--                       </select> -->
 <!--                   </div> -->
+				<div class="col-sm-4">
+                    <label for="presupuesto">Presupuesto</label>
+                    <div class="input-group">
+                    	<div class="input-group-prepend">
+							<span class="input-group-text"><i class="fas fa-dollar-sign"></i></span>
+						</div>
+                    <input th:field="*{impPresupuesto}" type="text" maxlength="15" onkeypress="return event.charCode >= 46 && event.charCode <= 57" class="form-control" id="presupuesto" placeholder="Presupuesto" oninvalid="setCustomValidity('Presupuesto inv&aacute;lido')" onchange="try{setCustomValidity('')}catch(e){}" step="any">
+                    </div>
+                    <small class="form-text text-danger" th:if="${#fields.hasErrors('impPresupuesto')}" th:errors="*{impPresupuesto}"></small>
+                  </div>
 				  <div class="col-sm-4 mb-3 mb-sm-0" id="tp">
                   	<label for="tipoFacturacion">Tipo de facturacion</label>
                      <select th:field="*{codTipoFacturacion}" class="form-control " id="tipoFacturacion">
@@ -161,17 +169,30 @@
                   	</div>
                   	<div class="col-sm-4">
                     	<label for="clasificacion">L&iacute;der de proyecto</label>
-                      <select th:field="*{codRecursoLider}" class="form-control " id="liderProyecto">
-                        	<option th:each="recurso : ${recursosLider}" th:value="${recurso.codRecurso}" th:text="${recurso.descRecurso}" th:selected="false"/>
-                      </select>
+                    	<div class="input-group">
+                    		<div class="input-group-prepend">
+                    			<span class="input-group-text"><i class="fas fa-user-tag"></i></span>
+                    		</div>
+                    		<select th:field="*{codRecursoLider}" class="form-control " id="liderProyecto">
+		                        <option th:each="recurso : ${recursosLider}" th:value="${recurso.codRecurso}" th:text="${recurso.descRecurso}" th:selected="false"/>
+		                    </select>
+                    	</div>
                   	</div>
                   	<div class="col-sm-4">
                     	<label for="aprobador">Aprobador de proyecto</label>
-                      <select th:field="*{codRecursoAprobador}" class="form-control " id="aprobadorProyecto">
-                        	<option th:each="recurso : ${recursosAprobador}" th:value="${recurso.codRecurso}" th:text="${recurso.descRecurso}" th:selected="false"/>
-                      </select>
+                    	<div class="input-group">
+                    		<div class="input-group-prepend">
+                    			<span class="input-group-text"><i class="fas fa-user-check"></i></span>
+                    		</div>
+                    		<select th:field="*{codRecursoAprobador}" class="form-control " id="aprobadorProyecto">
+	                        	<option th:each="recurso : ${recursosAprobador}" th:value="${recurso.codRecurso}" th:text="${recurso.descRecurso}" th:selected="false"/>
+	                      	</select>
+                    	</div>
                   	</div>
                 </div>
+                	</div>
+                </div>
+                
                  <div class="form-group row">
                   <div class="col-sm-4 mb-3 mb-sm-0">
                   	 <input type="submit" value="Guardar" class="btn btn-primary"/>

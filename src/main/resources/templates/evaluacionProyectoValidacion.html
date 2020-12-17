@@ -29,6 +29,10 @@
             <h4 class="text-gray-800" th:text="'Seguimiento de evaluaci&oacute;n del proyecto ' + ${proyecto.descProyecto}"></h4>
             
           </div>
+          <div class="form-group">
+          	<h6 class="text-gray-800">Descripci&oacute;n del proyecto: </h6>
+          	<h6 th:text ="${proyecto.descProyectoTexto}"></h6>
+          </div>
           <a style="font-size: 12px;" th:href="@{/evaluacionProyecto/}+${proyecto.codProyecto}" class="badge badge-info mb-2" ><i class="fas fa-tasks"></i> Asignar conceptos</a>
           <a style="font-size: 12px;" href="#modalEvaluador" data-toggle="modal" class="badge badge-success mb-2" ><i class="fas fa-user-check"></i> Asignar evaluador</a>
           <!-- DataTales Example -->

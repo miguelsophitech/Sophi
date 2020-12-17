@@ -25,7 +25,7 @@
 
           <!-- Page Heading -->
           <div class="d-sm-flex align-items-center justify-content-between mb-1">
-            <h1 class="h3 mb-0 text-gray-800"><span class="tituloA">Preventa o proyecto</span>
+            <h1 class="h3 mb-0 text-gray-800"><span class="tituloA" th:text="'Consulta del proyecto ' + ${proyecto.descProyecto}"></span>
 <!--             </br><span class="tituloBN">Enhorabuena, tienes un nuevo proyecto que registrar</span> -->
             </h1>
           </div>
@@ -124,12 +124,24 @@
                 <input type="hidden" th:value="${proyecto.fecRegistro}" th:attr="name='fecRegistro'"/>
                 <input type="hidden" th:value="${proyecto.fecCambioEstatus}" th:attr="name='fecCambioEstatus'"/>
 <!--                 <input th:field="*{fecRegistro}" type="hidden"> -->
-                <p class="tituloC">Completa la informaci&oacute;n del proyecto.</p>
-                <div class="form-group row">
+				<div class="card shadow mb-1">
+					<a href="#collapseProyecto" class="d-block card-header py-3" data-toggle="collapse" role="button" aria-expanded="true">
+	                  <h6 class="m-0 font-weight-bold text-primary">Completa la informaci&oacute;n del proyecto</h6>
+	                </a>
+	                <div class="collapse" id="collapseProyecto">
+	                	<div class="card-body">
+	                	<div class="form-group row">
                   <div class="col-sm-4 mb-3 mb-sm-0">
                      <label for="nombreProyecto">Nombre del proyecto</label>
                     <input th:attr="readonly=${proyecto.codEstatusProyecto == 3}? 'true' : 'false'"  type="text" th:field="*{descProyecto}" class="form-control" id="nombreProyecto" placeholder="Nombre de proyecto" oninvalid="setCustomValidity('Campo inválido')" onchange="try{setCustomValidity('')}catch(e){}" maxlength="100" required>
                   </div>
+                  <div class="col-sm-4 mb-3 mb-sm-0">
+                  	<label for="descripcionProyecto">Descripci&oacute;n </label>
+                  	<br>
+                  	<textarea th:attr="readonly=${proyecto.codEstatusProyecto == 3}? 'true' : 'false'" th:field="*{descProyectoTexto}" class="form-control" rows="5" id="descripcionProyecto" placeholder="Descripci&oacute;n del proyecto" oninvalid="setCustomValidity('Campo inválido')" onchange="try{setCustomValidity('')}catch(e){}" maxlength="500" required></textarea>
+                  </div>
+                </div>
+                <div class="form-group row">
                   <div class="col-sm-4" id="fi">
                     <label for="fechaInicio">Fecha inicio</label>
                     <input th:attr="readonly=${proyecto.codEstatusProyecto == 3}? 'true' : 'false'" th:field="*{fecIncioProyecto}" type="date" class="form-control" id="fechaInicio">
@@ -148,7 +160,7 @@
                     <label for="presupuesto">Presupuesto</label>
                     <div class="input-group">
                     	<div class="input-group-prepend">
-							<span class="input-group-text">$</span>
+							<span class="input-group-text"><i class="fas fa-dollar-sign"></i></span>
 						</div>
                     <input th:attr="readonly=${proyecto.codEstatusProyecto == 3}? 'true' : 'false'" th:field="*{impPresupuesto}" type="text" maxlength="15" onkeypress="return event.charCode >= 46 && event.charCode <= 57" class="form-control" id="presupuesto" placeholder="Presupuesto" oninvalid="setCustomValidity('Presupuesto inv&aacute;lido')" onchange="try{setCustomValidity('')}catch(e){}" min=0 max=9999999 step="any">
                   </div>
@@ -157,7 +169,7 @@
                    <label for="riesgo">Porcentaje de riesgo</label>
                   <div class="input-group">
                     	<div class="input-group-prepend">
-							<span class="input-group-text">%</span>
+							<span class="input-group-text"><b>%</b></span>
 						</div>
                    
                     <input th:attr="readonly=${proyecto.codEstatusProyecto == 3}? 'true' : 'false'" th:field="*{valPorcentajeRiesgo}" type="number" class="form-control" id="riesgo" placeholder="Porcentaje" oninvalid="setCustomValidity('Porcentaje inv&aacute;lido')" onchange="try{setCustomValidity('')}catch(e){}" min=0 max=100>
@@ -179,11 +191,21 @@
                   </div>
                   <div class="col-sm-4" id="thv">
                     <label for="totalHoras">Total de horas vendidas</label>
-                    <input th:attr="readonly=${proyecto.codEstatusProyecto == 3}? 'true' : 'false'" th:field="*{valTotalHorasVendidas}" type="text" maxlength="10" onkeypress="return event.charCode >= 46 && event.charCode <= 57" class="form-control" id="totalHoras" placeholder="Total de horas vendidas" oninvalid="setCustomValidity('Horas vendidas invÃ¡lidas')" onchange="try{setCustomValidity('')}catch(e){}" min="0" max="99999999">
+                    <div class="input-group">
+                    	<div class="input-group-prepend">
+							<span class="input-group-text"><i class="far fa-clock"></i></span>
+						</div>
+	                    <input th:attr="readonly=${proyecto.codEstatusProyecto == 3}? 'true' : 'false'" th:field="*{valTotalHorasVendidas}" type="text" maxlength="10" onkeypress="return event.charCode >= 46 && event.charCode <= 57" class="form-control" id="totalHoras" placeholder="Total de horas vendidas" oninvalid="setCustomValidity('Horas vendidas invÃ¡lidas')" onchange="try{setCustomValidity('')}catch(e){}" min="0" max="99999999">
+                    </div>
                   </div>
                   <div class="col-sm-4" id="thp">
                     <label for="thorasProyecto">Total de horas proyecto</label>
-                    <input th:field="*{valTotalHorasProyecto}" type="text" maxlength="10" class="form-control" id="thorasProyecto" placeholder="Total de horas proyecto" readonly>
+                    <div class="input-group">
+                    	<div class="input-group-prepend">
+							<span class="input-group-text"><i class="far fa-clock"></i></span>
+						</div>
+						<input th:field="*{valTotalHorasProyecto}" type="text" maxlength="10" class="form-control" id="thorasProyecto" placeholder="Total de horas proyecto" readonly>
+                    </div>
                   </div>
                 </div>
                 <div class="form-group row">
@@ -192,7 +214,7 @@
                     <label for="precio">Precio del proyecto</label>
                     <div class="input-group">
                     	<div class="input-group-prepend">
-							<span class="input-group-text">$</span>
+							<span class="input-group-text"><i class="fas fa-dollar-sign"></i></span>
 						</div>
                     <input th:attr="readonly=${proyecto.codEstatusProyecto == 3}? 'true' : 'false'" th:field="*{impPrecioPropuesta}" type="text" maxlength="15" onkeypress="return event.charCode >= 46 && event.charCode <= 57" class="form-control" id="precio" placeholder="Precio del proyecto" oninvalid="setCustomValidity('Precio inválido')" onchange="try{setCustomValidity('')}catch(e){}" min=0 max=9999999 step="any">
                   </div>
@@ -201,9 +223,9 @@
                     <label for="costoProyecto">Costo de proyecto</label>
                     <div class="input-group">
                     	<div class="input-group-prepend">
-							<span class="input-group-text">$</span>
+							<span class="input-group-text"><i class="fas fa-dollar-sign"></i></span>
 						</div>
-                    <input th:field="*{impCostoProyecto}" type="text" maxlength="10" class="form-control" id="costoProyecto" placeholder="Costo de proyecto" readonly>
+                    	<input th:field="*{impCostoProyecto}" type="text" maxlength="10" class="form-control" id="costoProyecto" placeholder="Costo de proyecto" readonly>
                   	</div>
                   </div>
                 </div>
@@ -216,18 +238,32 @@
                   	</div>
                   	<div class="col-sm-4">
                     	<label for="clasificacion">L&iacute;der de proyecto</label>
-                      <select th:attr="readonly=${proyecto.codEstatusProyecto == 3}? 'true' : 'false'" th:field="*{codRecursoLider}" class="form-control " id="liderProyecto">
-                        	<option th:each="recurso : ${recursosLider}" th:value="${recurso.codRecurso}" th:text="${recurso.descRecurso}" th:selected="${recurso.codRecurso==proyecto.codRecursoLider}"/>
-                      </select>
+                    	<div class="input-group">
+                    		<div class="input-group-prepend">
+                    			<span class="input-group-text"><i class="fas fa-user-tag"></i></span>
+                    		</div>
+                    		<select th:attr="readonly=${proyecto.codEstatusProyecto == 3}? 'true' : 'false'" th:field="*{codRecursoLider}" class="form-control " id="liderProyecto">
+	                        	<option th:each="recurso : ${recursosLider}" th:value="${recurso.codRecurso}" th:text="${recurso.descRecurso}" th:selected="${recurso.codRecurso==proyecto.codRecursoLider}"/>
+	                      </select>
+                    	</div>
                   	</div>
                   	<div class="col-sm-4">
                     	<label for="aprobador">Aprobador de proyecto</label>
-                      <select th:attr="readonly=${proyecto.codEstatusProyecto == 3}? 'true' : 'false'" th:field="*{codRecursoAprobador}" class="form-control " id="aprobadorProyecto">
-                        	<option th:each="recurso : ${recursosAprobador}" th:value="${recurso.codRecurso}" th:text="${recurso.descRecurso}" th:selected="false"/>
-                      </select>
+                    	<div class="input-group">
+                    		<div class="input-group-prepend">
+                    			<span class="input-group-text"><i class="fas fa-user-check"></i></span>
+                    		</div>
+                    		<select th:attr="readonly=${proyecto.codEstatusProyecto == 3}? 'true' : 'false'" th:field="*{codRecursoAprobador}" class="form-control " id="aprobadorProyecto">
+	                        	<option th:each="recurso : ${recursosAprobador}" th:value="${recurso.codRecurso}" th:text="${recurso.descRecurso}" th:selected="false"/>
+	                      </select>
+                    	</div>
                   	</div>
 
                 </div>
+	                </div>
+	                </div>
+				</div>
+				<br>
                 <div class="form-group row">
                 	<div class="col-sm-4" id="complementoProyecto"> 
                        <a class="btn btn-primary" data-toggle="modal" data-target="#modalComplemento" href="#" role="button">Informaci&oacute;n de contacto e infraestructura</a>
