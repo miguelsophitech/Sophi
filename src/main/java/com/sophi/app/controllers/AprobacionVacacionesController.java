@@ -11,7 +11,10 @@ import java.util.List;
 //import javax.validation.Valid;
 
 import com.sophi.app.models.entity.Recurso;
+import com.sophi.app.models.entity.RecursoVacaciones;
 import com.sophi.app.models.entity.Rol;
+import com.sophi.app.models.entity.SolicitudVacaciones;
+import com.sophi.app.Utiles;
 import com.sophi.app.models.entity.AprobacionHoras;
 import com.sophi.app.models.entity.AprobacionHorasDto;
 import com.sophi.app.models.entity.AuxActividadHorasRecurso;
@@ -25,9 +28,14 @@ import com.sophi.app.models.service.ICapHoraService;
 import com.sophi.app.models.service.IProyectoRecursoService;
 import com.sophi.app.models.service.IProyectoService;
 import com.sophi.app.models.service.IRecursoService;
+import com.sophi.app.models.service.IRecursoVacacionesService;
 import com.sophi.app.models.service.IRolService;
+import com.sophi.app.models.service.ISolicitudVacacionesService;
 import com.sophi.app.models.service.ISubtareaService;
+import com.sophi.app.models.service.RecursoVacacionesServiceImpl;
 import com.sophi.app.models.service.RolServiceImpl;
+
+import javassist.bytecode.analysis.Util;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -47,7 +55,13 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 
 @Controller
-public class AprobacionHorasProyectoController {
+public class AprobacionVacacionesController {
+	
+	@Autowired
+	private IRecursoVacacionesService recursoVacacionesService;
+	
+	@Autowired
+	private ISolicitudVacacionesService solicitudVacacionesService;
 
     @Autowired
     private IAprobacionHorasService aprobacionHorasService;
@@ -73,8 +87,8 @@ public class AprobacionHorasProyectoController {
     @Autowired
     private IRolService rolService;
     
-    @RequestMapping(value = "/aprobacionHorasProyecto/{email}", method = RequestMethod.GET)
-    public String aprobacionHorasProyecto(Model model, @PathVariable(value = "email") String email){
+    @RequestMapping(value = "/aprobacionVacaciones/{email}", method = RequestMethod.GET)
+    public String aprobacionVacaciones(Model model, @PathVariable(value = "email") String email){
     	//Obtiene el codigo del recurso solicitante
     	Long codRecurso = null;
     	codRecurso = recursoService.findByDescCorreoElectronico(email).getCodRecurso();
@@ -125,25 +139,17 @@ public class AprobacionHorasProyectoController {
 
         
         model.addAttribute("proyectos", listaProyecto);
-        return "aprobacionHorasProyecto";
+        return "aprobacionVacaciones";
     }
     
     
-    @RequestMapping(value = "/capturaHorasPeriodo/{from}/{to}/{codProyecto}", method = RequestMethod.GET)
-    public String listadoRecursosCaptura(Model model, @PathVariable(value = "from") String desde, @PathVariable(value = "to") String hasta, @PathVariable(value = "codProyecto") String codProyecto){
-    	Date inicio = new Date();
-    	Date fin = new Date();
+    @RequestMapping(value = "/listadoRecursos/{codProyecto}", method = RequestMethod.GET)
+    public String listadoRecursosCaptura(Model model, @PathVariable(value = "codProyecto") String codProyecto){
     	String todos = "no";
-    	try {
-			inicio =new SimpleDateFormat("MM-dd-yyyy").parse(desde);
-			fin =new SimpleDateFormat("MM-dd-yyyy").parse(hasta);
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}  
     	//Listas temporales para almacenar info
     	List<Long> proyectos = new ArrayList<Long>();
     	List<ProyectoRecurso> listProyectoRecurso = new ArrayList<ProyectoRecurso>();
-    	List<DetalleRecursoHoras> listaDetalle = new ArrayList<DetalleRecursoHoras>();
+    	List<RecursoVacaciones> listaDetalle = new ArrayList<RecursoVacaciones>();
     
     	//Se obtienen los codigos de proyectos del recurso solicitante (-1 es todos)
     	for(String codPro : codProyecto.split(",")) {
@@ -169,26 +175,43 @@ public class AprobacionHorasProyectoController {
 				}
 				if(recursosUnicos.size()>0) {
 					for (Long codR : recursosUnicos) {
-					Recurso recursoTmp = recursoService.findOne(codR);
-					DetalleRecursoHoras detalle = capHoraService.findDetalleRecursoHorasTodos(codR, inicio, fin);
-					detalle.setNombreRecurso(recursoTmp.getDescRecurso() + ' ' + recursoTmp.getDescApellidoPaterno());
-					detalle.setLink(recursoTmp.getCodRecurso());
-					detalle.setAprobadas(detalle.getAprobadas()== null ? 0 : detalle.getAprobadas());
-					detalle.setCapturadas(detalle.getCapturadas()== null ? 0 : detalle.getCapturadas());
-					detalle.setRechazadas(detalle.getRechazadas()== null ? 0 : detalle.getRechazadas());
-					listaDetalle.add(detalle);
+					RecursoVacaciones recursoVacaciones = recursoVacacionesService.findById(codR);
+					Recurso recurso = recursoService.findOne(recursoVacaciones.getCodRecurso());
+					recursoVacaciones.setNombreRecurso(recurso.getDescRecurso() + " " + recurso.getDescApellidoPaterno());
+					
+					List<SolicitudVacaciones> listaSolicitudes = new ArrayList<>();
+					listaSolicitudes = solicitudVacacionesService.findByCodRecurso(recursoVacaciones.getCodRecurso());
+					Long diasPendientes = 0L;
+					if (listaSolicitudes.size()>0) {
+						for (SolicitudVacaciones solicitud : listaSolicitudes) {
+							if(solicitud.getFecAprobacion() == null && solicitud.getFecCancelacion() == null && solicitud.getFecRechazo() == null) {
+								diasPendientes += solicitud.getValDiasSolicitados();
+							}
+						}
+					}
+					recursoVacaciones.setValPendientes(diasPendientes);
+					
+					listaDetalle.add(recursoVacaciones);
 					}
 				}
 			} else {
 				for (ProyectoRecurso proyectoRecurso : listProyectoRecurso) {
-					Recurso recursoTmp = recursoService.findOne(proyectoRecurso.getProyectoRecursoId().getCodRecurso());
-					DetalleRecursoHoras detalle = capHoraService.findDetalleRecursoHoras(proyectoRecurso.getProyectoRecursoId().getCodRecurso(), proyectoRecurso.getProyectoRecursoId().getCodProyecto(), inicio, fin);
-					detalle.setNombreRecurso(recursoTmp.getDescRecurso() + ' ' + recursoTmp.getDescApellidoPaterno());
-					detalle.setLink(recursoTmp.getCodRecurso());
-					detalle.setAprobadas(detalle.getAprobadas()== null ? 0 : detalle.getAprobadas());
-					detalle.setCapturadas(detalle.getCapturadas()== null ? 0 : detalle.getCapturadas());
-					detalle.setRechazadas(detalle.getRechazadas()== null ? 0 : detalle.getRechazadas());
-					listaDetalle.add(detalle);
+					RecursoVacaciones recursoVacaciones = recursoVacacionesService.findById(proyectoRecurso.getProyectoRecursoId().getCodRecurso());
+					Recurso recurso = recursoService.findOne(recursoVacaciones.getCodRecurso());
+					recursoVacaciones.setNombreRecurso(recurso.getDescRecurso() + " " + recurso.getDescApellidoPaterno());
+					
+					List<SolicitudVacaciones> listaSolicitudes = new ArrayList<>();
+					listaSolicitudes = solicitudVacacionesService.findByCodRecurso(recursoVacaciones.getCodRecurso());
+					Long diasPendientes = 0L;
+					if (listaSolicitudes.size()>0) {
+						for (SolicitudVacaciones solicitud : listaSolicitudes) {
+							if(solicitud.getFecAprobacion() == null && solicitud.getFecCancelacion() == null && solicitud.getFecRechazo() == null) {
+								diasPendientes += solicitud.getValDiasSolicitados();
+							}
+						}
+					}
+					recursoVacaciones.setValPendientes(diasPendientes);
+					listaDetalle.add(recursoVacaciones);
 				}
 			}
 			
@@ -197,74 +220,25 @@ public class AprobacionHorasProyectoController {
     	
 		model.addAttribute("listRecursos", listaDetalle);
     	
-    	return "layout/plantilla-caphora :: recursos-caphoras";
+    	return "layout/plantilla-caphora :: recursos-vacaciones";
     }
     
     
-    @RequestMapping(value = "/aprobacionHorasProyecto/detalle", method = RequestMethod.GET)
-    public String detalleAprobacionHorasProyecto(@RequestParam(value = "r") Long codRecurso, 
-    											@RequestParam(value = "p") String proyectos,  
-    											@RequestParam(value = "s") String semana, 
-    											@RequestParam(value = "f") String desde, 
-    											@RequestParam(value = "t") String hasta, 
+    @RequestMapping(value = "/aprobacionVacaciones/detalle", method = RequestMethod.GET)
+    public String detalleAprobacionHorasProyecto(@RequestParam(value = "r") Long codRecurso,
     											Model model){
-    	System.out.println(codRecurso);
-    	System.out.println(proyectos);
-    	System.out.println(semana);
     	
-    	Date inicio = new Date();
-    	Date fin = new Date();
-    	try {
-			inicio =new SimpleDateFormat("MM-dd-yyyy").parse(desde);
-			fin =new SimpleDateFormat("MM-dd-yyyy").parse(hasta);
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}  
-    	
-    	List<Date> fechasPeriodo = new ArrayList<Date>();
-    	List<AuxActividadHorasRecurso> listaActividades = new ArrayList<AuxActividadHorasRecurso>();
-    	
-    	for (int i = 0; i < 7; i++) {
-    		Date tmp = sumarDia(inicio,i);
-    		fechasPeriodo.add(tmp);
-    		//solicitar info de horas capturadas
-    		List<CapHora> detalleCapturadas = new ArrayList<CapHora>();
-    		detalleCapturadas.addAll(actividadesCapturadas(codRecurso, tmp, proyectos));
-    		
-    		if (detalleCapturadas.size() > 0) {
-    			for (CapHora capHora : detalleCapturadas) {
-    				AuxActividadHorasRecurso aux = new AuxActividadHorasRecurso();
-        			aux.setIdCapHora(capHora.getCodCapHora());
-        			aux.setIdProyecto(capHora.getCodProyecto());
-        			aux.setDescProyecto(capHora.getDescProyecto());
-        			aux.setIdActividad(capHora.getCodActividad());
-        			aux.setDescActividad(capHora.getDescActividadSecundaria());
-        			aux.setDescComentario(capHora.getDescComentarioDetalle());
-        			aux.setHorasCapturadas(capHora.getValDuracionReportada());
-        			aux.setFechaActividad(capHora.getFecInicioActividad());
-        			aux.setFechaValidada(capHora.getFecValidacion());
-        			aux.setHorasPlaneadas(capHora.getHorasPlaneadas());
-        			aux.setHorasAprobadas(capHora.getValDuracionValidad());
-        			aux.setValRechazo(capHora.getValRechazo());
-        			aux.setDia(i+1);
-        			listaActividades.add(aux);
-				}
-    			
-    		}
-
-    		
-		}
+    	List<SolicitudVacaciones> listaSolicitudes = new ArrayList<>();
+		listaSolicitudes = solicitudVacacionesService.findByCodRecurso(codRecurso);
     	
     	Recurso recurso = recursoService.findOne(codRecurso);
-    	String nombre = recurso.getDescRecurso() + " " + recurso.getDescApellidoPaterno();
-    	model.addAttribute("listActHoraCapturadas",listaActividades);
-    	model.addAttribute("fechas",fechasPeriodo);
-    	model.addAttribute("nombre", nombre);
-    	return "layout/plantilla-caphora :: detalle-recursos-caphoras";
+    	model.addAttribute("nombre", recurso.getDescRecurso() + " " + recurso.getDescApellidoPaterno());
+    	model.addAttribute("listaSolicitudes",listaSolicitudes);
+    	
+    	return "layout/plantilla-caphora :: detalle-recursos-vacaciones";
     }
     
     
-//    @PathVariable @DateTimeFormat(pattern = "dd-MM-yyyy") 
 	public List<CapHora> actividadesCapturadas(Long codRecurso,Date fecCaptura, String proyectos){
 		
 		String[] listaProyectos = proyectos.split(",");
@@ -304,47 +278,85 @@ public class AprobacionHorasProyectoController {
     	return calendar.getTime();
     }
     
-    @RequestMapping(value = "/updAprobacion", method = RequestMethod.GET)
+    @RequestMapping(value = "/updAprobacionSolicitud", method = RequestMethod.GET)
     @ResponseBody
-    public String updAprobacion(@RequestParam(value = "codCapHora") Long codCapHora, 
-			@RequestParam(value = "hrAprobada") Float hora,
+    public String updAprobacionSolicitud(@RequestParam(value = "codSolicitud") Long codSolicitud, 
     	@RequestParam(value = "aprobador") String mail ) {
     	Long codRecurso = recursoService.findByDescCorreoElectronico(mail).getCodRecurso();
-    	CapHora capHora = capHoraService.findOne(codCapHora);
-    	if (capHora != null) {
-    		System.out.println(hora +" "+ codRecurso +" "+ new Date() );
-    		capHora.setValDuracionValidad(hora);
-    		capHora.setCodRecursoValidador(codRecurso);
-    		capHora.setFecValidacion(new Date());
-    		capHora.setValRechazo(0L);
-    		capHora.setValDuracionRechazada(0L);
-    		capHoraService.save(capHora);
+    	SolicitudVacaciones solicitud = null;
+    	solicitud = solicitudVacacionesService.findById(codSolicitud);
+    	if (solicitud != null) {
+    		solicitud.setFecRechazo(null);
+    		solicitud.setFecCancelacion(null);
+    		solicitud.setFecAprobacion(new Utiles().getFechaActual());
+    		solicitud.setCodRecursoAprobador(codRecurso);
+    		
+    		RecursoVacaciones recursoVacaciones = null;
+    		recursoVacaciones = recursoVacacionesService.findById(solicitud.getCodRecurso());
+    		if(recursoVacaciones != null) {
+    			recursoVacaciones.setValAprobado(recursoVacaciones.getValAprobado() + solicitud.getValDiasSolicitados());
+//    			recursoVacaciones.setValDisponibles(recursoVacaciones.getValDisponibles() - solicitud.getValDiasSolicitados());
+    			recursoVacacionesService.save(recursoVacaciones);
+    		}
+    		
+    		solicitudVacacionesService.save(solicitud);
     		return "ok";
     	} else {
-    		return "noOk";
+    		return "noOK";
     	}
     	
     }
     
-    @RequestMapping(value = "/updRechazar", method = RequestMethod.GET)
+    @RequestMapping(value = "/updRechazoSolicitud", method = RequestMethod.GET)
     @ResponseBody
-    public String updRechazar(@RequestParam(value = "codCapHora") Long codCapHora, 
-    	@RequestParam(value = "aprobador") String mail,
-    	@RequestParam(value = "comentario") String comentario) {
-    	Recurso recurso = recursoService.findByDescCorreoElectronico(mail);
-    	CapHora capHora = capHoraService.findOne(codCapHora);
-    	if (capHora != null) {
-    		capHora.setValRechazo(1L);
-    		capHora.setCodRecursoValidador(recurso.getCodRecurso());
-    		capHora.setValDuracionRechazada(capHora.getValDuracionReportada());
-    		capHora.setDescRechazo(recurso.getDescRecurso() + " dijo: "+ comentario);
-    		capHora.setFecValidacion(null);
-    		capHoraService.save(capHora);
+    public String updRechazoSolicitud(@RequestParam(value = "codSolicitud") Long codSolicitud, 
+    	@RequestParam(value = "aprobador") String mail ) {
+    	Long codRecurso = recursoService.findByDescCorreoElectronico(mail).getCodRecurso();
+    	SolicitudVacaciones solicitud = null;
+    	solicitud = solicitudVacacionesService.findById(codSolicitud);
+    	if (solicitud != null) {
+    		solicitud.setFecRechazo(new Utiles().getFechaActual());
+    		solicitud.setFecCancelacion(null);
+    		solicitud.setFecAprobacion(null);
+    		solicitud.setCodRecursoAprobador(codRecurso);
+    		
+    		RecursoVacaciones recursoVacaciones = null;
+    		recursoVacaciones = recursoVacacionesService.findById(solicitud.getCodRecurso());
+    		if(recursoVacaciones != null) {
+//    			recursoVacaciones.setValAprobado(recursoVacaciones.getValAprobado() + solicitud.getValDiasSolicitados());
+    			recursoVacaciones.setValDisponibles(recursoVacaciones.getValDisponibles() + solicitud.getValDiasSolicitados());
+    			recursoVacacionesService.save(recursoVacaciones);
+    		}
+    		
+    		solicitudVacacionesService.save(solicitud);
     		return "ok";
     	} else {
-    		return "noOk";
+    		return "noOK";
     	}
     	
     }
+    
+    @RequestMapping(value = "/cancelarSolicitud", method = RequestMethod.GET)
+    @ResponseBody
+    public String cancelarSolicitud(@RequestParam(value = "codSolicitud") Long codSolicitud) {
+    	SolicitudVacaciones solicitud = null;
+    	solicitud = solicitudVacacionesService.findById(codSolicitud);
+    	if (solicitud != null) {
+    		RecursoVacaciones recursoVacaciones = null;
+    		recursoVacaciones = recursoVacacionesService.findById(solicitud.getCodRecurso());
+    		if(recursoVacaciones != null) {
+    			recursoVacaciones.setValDisponibles(recursoVacaciones.getValDisponibles() + solicitud.getValDiasSolicitados());
+    			recursoVacacionesService.save(recursoVacaciones);
+    		}
+    		solicitudVacacionesService.delete(solicitud);
+    		return "ok";
+    	} else {
+    		return "noOK";
+    	}
+    	
+    }
+    
+    
+    
 
 }

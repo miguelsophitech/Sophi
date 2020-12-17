@@ -10,4 +10,6 @@ public interface IRecursoVacacionesService {
 	
 	public List<RecursoVacaciones> findAll();
 	
+	public void save(RecursoVacaciones recursoVacaciones);
+	
 }

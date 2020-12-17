@@ -33,4 +33,10 @@ public class SolicitudVacacionesServiceImpl implements ISolicitudVacacionesServi
 		solicitudVacacionesDao.save(solicitud);
 	}
 
+	@Override
+	@Transactional
+	public void delete(SolicitudVacaciones solicitud) {
+		solicitudVacacionesDao.delete(solicitud);
+	}
+
 }

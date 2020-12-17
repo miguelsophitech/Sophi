@@ -130,18 +130,25 @@ renderCalendar(month, year)
         function showEvent(fecSolicitud, id){
         	
         	var conteoDias = $("#conteoSolicitados").text();
-        	conteoDias++;
-        	$("#conteoSolicitados").html(conteoDias);
-        	$('.events-today').append('<div class="alert alert-info alert-dismissible fade show" style="font-size:12px; margin-bottom:5px; padding:5px;" role="alert">' +
-        			fecSolicitud +
-              '<button type="button" style="font-size:16px; padding:5px;" class="close remove-event" data-dismiss="alert" aria-label="Close" id=' + id + '>'+
-                '<span aria-hidden="true">&times;</span>'+
-              '</button>'+
-            '</div>');
-        	if(conteoDias == 0){
-        		$('#btn-solicitar').addClass('d-none');
+        	var conteoDiasDisponibles = $("#conteoDisponibles").text();
+        	if(conteoDiasDisponibles > 0){
+	        	conteoDias++;
+	        	conteoDiasDisponibles--;
+	        	$("#conteoSolicitados").html(conteoDias);
+	        	$("#conteoDisponibles").html(conteoDiasDisponibles);
+	        	$('.events-today').append('<div class="alert alert-info alert-dismissible fade show" style="font-size:12px; margin-bottom:5px; padding:5px;" role="alert">' +
+	        			fecSolicitud +
+	              '<button type="button" style="font-size:16px; padding:5px;" class="close remove-event" data-dismiss="alert" aria-label="Close" id=' + id + '>'+
+	                '<span aria-hidden="true">&times;</span>'+
+	              '</button>'+
+	            '</div>');
+	        	if(conteoDias == 0){
+	        		$('#btn-solicitar').addClass('d-none');
+	        	} else {
+	        		$('#btn-solicitar').removeClass('d-none');
+	        	}
         	} else {
-        		$('#btn-solicitar').removeClass('d-none');
+        		alert("No cuentas con días disponible.")
         	}
         }
         
@@ -168,7 +175,10 @@ renderCalendar(month, year)
         $(document).on('click', '.remove-event', function(){
             var conteoDias = $("#conteoSolicitados").text();
         	conteoDias--;
+        	var conteoDiasDisponibles = $("#conteoDisponibles").text();
+        	conteoDiasDisponibles++;
         	 $("#conteoSolicitados").html(conteoDias);
+        	 $("#conteoDisponibles").html(conteoDiasDisponibles);
         	 if(conteoDias == 0){
         		 $('#btn-solicitar').addClass('d-none');
         	 } else {
@@ -196,15 +206,21 @@ renderCalendar(month, year)
 //            let eventDate = completar($(this).text()) + completar((month + 1).toString()) + year;
             let eventDate = year + completar((month + 1).toString()) +  completar($(this).text());
 //            alert(eventDate);
-            if(agrega(eventDate)){
-            	if (!(eventDay == "Sabado" || eventDay == "Domingo")){
-                	showEvent(eventDay + ' ' +todaysDate, eventDate );
-                } else {
-                	alert("No disponible para vacaciones.");
-                }
-            } else {
-            	alert("Ya se encuentra seleccionado.");
-            }
+            var hoy = $("#hoy").val();
+            console.log("hoy: " + hoy +" - select: " + eventDate);
+            if (eventDate >= hoy){
+	            if(agrega(eventDate)){
+	            	if (!(eventDay == "Sabado" || eventDay == "Domingo")){
+	                	showEvent(eventDay + ' ' +todaysDate, eventDate );
+	                } else {
+	                	alert("No disponible para vacaciones.");
+	                }
+	            } else {
+	            	alert("Ya se encuentra seleccionado.");
+	            }
+        	} else {
+        		alert("No disponible para vacaciones.");
+        	}
             
         })
         $(document).on('click', '.hide', function(){

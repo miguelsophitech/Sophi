@@ -78,6 +78,180 @@
 		
 	</div>
 	
+	<div class="col-sm-12" th:fragment="recursos-vacaciones">
+			<div class="table-responsive fz-12">
+				<table class="table" id="dataTable" width="100%" cellspacing="0">
+					<thead>
+						<tr>
+							<th>Recurso</th>
+							<th>Total d&iacute;as</th>
+							<th>D&iacute;as disponibles</th>
+							<th>D&iacute;as aprobados</th>
+							<th>D&iacute;as pendientes</th>
+							<th>Estatus</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="recursoVacaciones : ${listRecursos}">
+							<td class="refDetalle"><a th:text="${recursoVacaciones.nombreRecurso}" th:id="${recursoVacaciones.codRecurso}" href="#" onclick="detalleVacaciones(this.id); return false;"></a></td>
+							<td><span th:text="${recursoVacaciones.valTotal}" style="font-weight: 700;"></span></td>
+							<td><span th:text="${recursoVacaciones.valDisponibles}"></span></td>
+							<td><span th:text="${recursoVacaciones.valAprobado}"></span></td>
+							<td><span th:text="${recursoVacaciones.valPendientes}"></span></td>
+							<td>
+								<div class="progress"> 
+<!-- 									<div class="progress-bar bg-info" role="progressbar" th:text="${recursoVacaciones.valDisponibles}*1" th:style="'width:' + @{${recursoVacaciones.valDisponibles}*100/${recursoVacaciones.valTotal}} + '%;'"></div> -->
+									<div class="progress-bar bg-success" role="progressbar" th:text="${recursoVacaciones.valAprobado}*1" th:style="'width:' + @{${recursoVacaciones.valAprobado}*100/${recursoVacaciones.valTotal}} + '%;'"></div>
+									<div class="progress-bar bg-warning" role="progressbar" th:text="${recursoVacaciones.valPendientes}*1" th:style="'width:' + @{${recursoVacaciones.valPendientes}*100/${recursoVacaciones.valTotal}} + '%;'"></div>
+								</div>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+
+		<script type="text/javascript" charset="UTF-8">
+		$('#dataTable').DataTable( {
+	  	    language: {
+	  	    	sProcessing:     "Procesando...",
+	  	        sLengthMenu:     "Mostrar _MENU_ registros",
+	  	        sZeroRecords:    "No se encontraron resultados",
+	  	        sEmptyTable:     "Ning\u00FAn dato disponible en esta tabla",
+	  	        sInfo:           "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+	  	        sInfoEmpty:      "Mostrando registros del 0 al 0 de un total de 0 registros",
+	  	        sInfoFiltered:   "(filtrado de un total de _MAX_ registros)",
+	  	        sInfoPostFix:    "",
+	  	        sSearch:         "Buscar:",
+	  	        sUrl:            "",
+	  	        sInfoThousands:  ",",
+	  	        sLoadingRecords: "Cargando...",
+	  	        oPaginate: {
+	  	            sFirst:    "Primero",
+	  	            sLast:     "Último",
+	  	            sNext:     "Siguiente",
+	  	            sPrevious: "Anterior"
+	  	        },
+	  	        oAria: {
+	  	            sSortAscending:  ": Activar para ordenar la columna de manera ascendente",
+	  	            sSortDescending: ": Activar para ordenar la columna de manera descendente"
+	  	        },
+	  	        buttons: {
+	  	            copy: "Copiar",
+	  	            colvis: "Visibilidad"
+	  	        }
+	  	    },
+	  	  "searching": false,
+	  	  "paging": false,
+	  	  "columns": [
+	  		{ "width": "20%" },
+	  	    null,
+	  	    null,
+	  	    null,
+	  	    null,
+	  	  { "width": "40%" }
+	  	  ]
+	  	} );
+		
+		</script>
+		
+	</div>
+	
+	<div class="col-sm-12" th:fragment="detalle-recursos-vacaciones">
+			<a href="#" onclick="datosInicial(); return false;"><span class="fas fa-chevron-circle-left"></span> </a> <span style="font-size: 20px; font-stretch: 700;" th:text=" ${nombre}"></span></a>
+			<div class="table-responsive fz-12">
+				<table class="table" id="dataTableDetalleVacaciones" width="100%" cellspacing="0">
+					<thead>
+						<tr>
+							<th style="text-align: center;">Fecha de solicitud</th>
+							<th style="text-align: center;">Dias solicitados </th>
+							<th style="text-align: center;">Estatus </th>
+							<th style="text-align: center;">Opciones</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="solicitud : ${listaSolicitudes}">
+							<td style="text-align: center;"><span th:text="${#dates.format(solicitud.fecSolicitud,'dd/MM/yyyy')}"></span></td>
+							<td style="text-align: center;"><span th:text="${solicitud.valDiasSolicitados}" class="badge badge-info" style="font-weight: 700;"></span> <a href="#" th:id="'det_'+${solicitud.codSolicitud}" onclick="verDetalleSolicitud(this.id); return false;"> detalle..</a></td>
+							<td style="text-align: center;" th:id="'estat_'+${solicitud.codSolicitud}">
+	                            <span th:if="${solicitud.fecAprobacion != null}" class="badge badge-pill badge-success">Aprobada <i class="far fa-check-circle"></i></span>
+	                            <span th:if="${solicitud.fecRechazo != null}" class="badge badge-pill badge-danger">Rechazada <i class="far fa-times-circle"></i></span>
+	                            <span th:if="${solicitud.fecCancelacion != null}" class="badge badge-pill badge-danger">Cancelada <i class="fas fa-times-circle"></i></span>
+	                            <span th:if="${solicitud.fecAprobacion == null and solicitud.fecRechazo == null and solicitud.fecCancelacion == null}" class="badge badge-pill badge-warning">Pendiente <i class="fas fa-hourglass-half"></i></span>
+                            </td>
+							<td style="text-align: center;">
+								<a  th:if="${solicitud.fecAprobacion == null and solicitud.fecRechazo == null and solicitud.fecCancelacion == null}" th:id="'aprSol_'+${solicitud.codSolicitud}" th:onclick="aprobarSolicitud([[${solicitud.codSolicitud}]]); return false;" href="#" class="badge badge-success">Aprobar  <i class="far fa-check-circle"></i></a>
+								<a  th:if="${solicitud.fecAprobacion == null and solicitud.fecRechazo == null and solicitud.fecCancelacion == null}" th:id="'recSol_'+${solicitud.codSolicitud}" th:onclick="rechazarSolicitud([[${solicitud.codSolicitud}]]); return false;" href="#" class="badge badge-danger">Rechazar  <i class="far fa-times-circle"></i></a>
+							</td>
+						</tr>						
+					</tbody>
+				</table>
+			</div>
+
+		<script type="text/javascript" charset="UTF-8">
+		$('#dataTableDetalleVacaciones').DataTable( {
+	  	    language: {
+	  	    	sProcessing:     "Procesando...",
+	  	        sLengthMenu:     "Mostrar _MENU_ registros",
+	  	        sZeroRecords:    "No se encontraron resultados",
+	  	        sEmptyTable:     "Ning\u00FAn dato disponible en esta tabla",
+	  	        sInfo:           "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+	  	        sInfoEmpty:      "Mostrando registros del 0 al 0 de un total de 0 registros",
+	  	        sInfoFiltered:   "(filtrado de un total de _MAX_ registros)",
+	  	        sInfoPostFix:    "",
+	  	        sSearch:         "Buscar:",
+	  	        sUrl:            "",
+	  	        sInfoThousands:  ",",
+	  	        sLoadingRecords: "Cargando...",
+	  	        oPaginate: {
+	  	            sFirst:    "Primero",
+	  	            sLast:     "Último",
+	  	            sNext:     "Siguiente",
+	  	            sPrevious: "Anterior"
+	  	        },
+	  	        oAria: {
+	  	            sSortAscending:  ": Activar para ordenar la columna de manera ascendente",
+	  	            sSortDescending: ": Activar para ordenar la columna de manera descendente"
+	  	        },
+	  	        buttons: {
+	  	            copy: "Copiar",
+	  	            colvis: "Visibilidad"
+	  	        }
+	  	    },
+	  	  "searching": false,
+	  	  "paging": false,
+	  	  "columns": [
+	  		null,
+	  		{ "width": "25%" },
+	  		{ "width": "25%" },
+	  		{ "width": "25%" },
+	  	  	{ "width": "25%" }
+	  	  ]
+	  	} );
+		
+// 		$("span.captura").dblclick(function(){
+// 			var actual = $(this).text();
+// 			var cod= $(this).attr("id").substring(3);
+// 			  var num = prompt("Ingresa las horas a aprobar:", actual);
+// 			  if (!isNaN(num) && num != null && num != "") {
+// 				  if(num > 0 && num <=18){
+// 					  $(this).text(num);
+// 					  $("#aprA"+cod).html('Aprobar <i class="far fa-check-circle"></i>');
+// 					  totales();
+// 				  }else {
+// 					  $(this).text(actual);
+// 				  }
+				  
+// 			  } else {
+// 				  $(this).text(actual);
+// 			  }
+// 		});
+		
+		
+		</script>
+		
+	</div>
+	
+	
 	
 		<div class="col-sm-12" th:fragment="detalle-recursos-caphoras">
 			<a href="#" onclick="datosInicial(); return false;"><span class="fas fa-chevron-circle-left"></span> </a> <span style="font-size: 20px; font-stretch: 700;" th:text=" ${nombre}"></span> <span id="totalSemana"></span> </a>

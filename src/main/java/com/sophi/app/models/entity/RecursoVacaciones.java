@@ -9,6 +9,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 
 @Entity
 @Table(name = "RECURSO_VACACIONES")
@@ -40,6 +41,12 @@ public class RecursoVacaciones implements Serializable {
 
 	@Column(name = "val_periodo")
 	private Long valPeriodo;
+	
+	@Transient
+	private String nombreRecurso;
+	
+	@Transient
+	private Long valPendientes;
 	
 	public Long getCodRecurso() {
 		return codRecurso;
@@ -75,50 +82,58 @@ public class RecursoVacaciones implements Serializable {
 		return valContrato;
 	}
 
-
 	public void setValContrato(Long valContrato) {
 		this.valContrato = valContrato;
 	}
-
 
 	public Long getValTotal() {
 		return valTotal;
 	}
 
-
 	public void setValTotal(Long valTotal) {
 		this.valTotal = valTotal;
 	}
-
 
 	public Long getValAprobado() {
 		return valAprobado;
 	}
 
-
 	public void setValAprobado(Long valAprobado) {
 		this.valAprobado = valAprobado;
 	}
-
 
 	public Long getValDisponibles() {
 		return valDisponibles;
 	}
 
-
 	public void setValDisponibles(Long valDisponibles) {
 		this.valDisponibles = valDisponibles;
 	}
-
 
 	public Long getValPeriodo() {
 		return valPeriodo;
 	}
 
-
 	public void setValPeriodo(Long valPeriodo) {
 		this.valPeriodo = valPeriodo;
 	}
+
+	public String getNombreRecurso() {
+		return nombreRecurso;
+	}
+
+	public void setNombreRecurso(String nombreRecurso) {
+		this.nombreRecurso = nombreRecurso;
+	}
+
+	public Long getValPendientes() {
+		return valPendientes;
+	}
+
+	public void setValPendientes(Long valPendientes) {
+		this.valPendientes = valPendientes;
+	}
+	
 
 
 }

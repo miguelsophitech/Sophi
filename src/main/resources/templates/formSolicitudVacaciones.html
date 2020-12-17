@@ -31,146 +31,7 @@
   <div id="wrapper">
 
     <!-- Sidebar -->
-    <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
-
-      <!-- Sidebar - Brand -->
-      <a class="sidebar-brand d-flex align-items-center justify-content-center" th:href="@{/}">
-        <div class="sidebar-brand-icon">
-          <!--<i class="fas fa-laugh-wink"></i>  rotate-n-15-->
-          <img th:src="@{/img/logo-img.png}" alt="">
-        </div> 
-        <div class="sidebar-brand-text mx-3"><img th:src="@{/img/logo-texto.png}" alt=""></div>
-      </a>
-
-      <!-- Divider -->
-      <hr class="sidebar-divider my-0">
-
-      <!-- Nav Item - Dashboard -->
-      <li class="nav-item">
-        <a class="nav-link" th:href="@{/}">
-          <i class="fa fa-home"></i>
-          <span>Inicio</span></a>
-      </li>
-      
-      <!-- Divider -->
-      <hr sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_APROB')" class="sidebar-divider">
-
-      <!-- Heading Proyecto -->
-      <div sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_APROB')" class="sidebar-heading">
-        Clientes
-      </div>
-
-      <!-- Nav Item - Gastos y tiempo Collapse Menu -->
-      <li class="nav-item" sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_APROB')">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseClientes" aria-expanded="true" aria-controls="collapseClientes">
-          <i class="fas fa-fw fa-address-book"></i>
-          <span>Gesti&oacute;n de clientes</span>
-        </a>
-        <div id="collapseClientes" class="collapse" aria-labelledby="menuClientes" data-parent="#accordionSidebar">
-          <div class="bg-white py-2 collapse-inner rounded">
-            <h6 class="collapse-header">Ver:</h6>
-            <a class="collapse-item" th:href="@{/listaClientes}">Mis clientes</a>
-            <a class="collapse-item" th:href="@{/agenda}">Mis contactos</a>
-          </div>
-        </div>
-      </li>
-      
-
-      <!-- Divider -->
-      <hr sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_LIDER','ROLE_APROB', 'ROLE_USER')"  class="sidebar-divider">
-
-      <!-- Heading Proyecto -->
-      <div sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_LIDER', 'ROLE_USER', 'ROLE_APROB')" class="sidebar-heading">
-        Proyectos
-      </div>
-      
-	  <!-- Nav Item - Actividades Collapse Menu -->
-      <li class="nav-item active">
-        <a sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_LIDER','ROLE_APROB', 'ROLE_USER')" class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseProyectos" aria-expanded="true" aria-controls="collapseProyectos">
-          <i class="fas fa-fw fa-wrench"></i>
-          <span>Gesti&oacute;n de proyectos</span>
-        </a>
-        <div id="collapseProyectos" class="collapse" aria-labelledby="menuProyectos" data-parent="#accordionSidebar">
-          <div class="bg-white py-2 collapse-inner rounded">
-            <h6 class="collapse-header">Ver:</h6>
-            <a sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_APROB')" class="collapse-item"  th:href="@{/listaProyectosTodo}">Mis proyectos</a><!-- <a sec:authorize="hasRole('ROLE_LIDER')" class="collapse-item"  th:href="@{/listaMisProyectos/} + ${#authentication.getName()}">Mis proyectos</a> -->
-            <a sec:authorize="hasAnyRole('ROLE_LIDER','ROLE_USER','ROLE_APROB')" class="collapse-item active" th:href="@{/misActividades/} + ${#authentication.getName()}">Mis actividades</a>
-          </div>
-        </div>
-      </li>
-
-      <!-- Nav Item - Gastos y tiempo Collapse Menu -->
-      <li class="nav-item">
-        <a sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_LIDER', 'ROLE_USER','ROLE_APROB')" class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseGastosTiempo" aria-expanded="true" aria-controls="collapseGastosTiempo">
-          <i class="fas fa-fw fa-calendar-alt"></i>
-          <span>Gesti&oacute;n de tiempo</span>
-        </a>
-        <div id="collapseGastosTiempo" class="collapse" aria-labelledby="menuGastosTiempo" data-parent="#accordionSidebar">
-          <div class="bg-white py-2 collapse-inner rounded">
-            <h6 class="collapse-header">Ver:</h6>
-            <a sec:authorize="hasAnyRole('ROLE_APROB','ROLE_LIDER','ROLE_USER' )" class="collapse-item" th:href="@{/capHoras/} + ${#authentication.getName()}">Mis horas</a>
-            <a sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_APROB')" class="collapse-item" th:href="@{/aprobacionHorasProyecto/}+${#authentication.getName()}">Aprobaci&oacute;n de horas</a>
-            <a sec:authorize="hasAnyRole('ROLE_APROB','ROLE_LIDER','ROLE_USER' )" class="collapse-item" th:href="@{/misGastos/} + ${#authentication.getName()}">Mis gastos</a>
-            <a sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_APROB')" class="collapse-item" th:href="@{/aprobaciongastos/}+ ${#authentication.getName()}">Aprobaci&oacute;n de gastos</a>
-          </div>
-        </div>
-      </li>
-
- 
-      
-       <!-- Divider -->
-      <hr sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_RH')" class="sidebar-divider">
-
-      <!-- Heading Proyecto -->
-      <div sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_RH')" class="sidebar-heading">
-        Recursos
-      </div>
-
-      <!-- Nav Item - Recursos Collapse Menu -->
-      <li sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_RH')" class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseRecursos" aria-expanded="true" aria-controls="collapseRecursos">
-          <i class="fas fa-fw fa-id-card"></i>
-          <span>Gesti&oacute;n de recursos</span>
-        </a>
-        <div id="collapseRecursos" class="collapse" aria-labelledby="menuRecursos" data-parent="#accordionSidebar">
-          <div class="bg-white py-2 collapse-inner rounded">
-            <h6 class="collapse-header">Ver:</h6>
-            <a class="collapse-item" th:href="@{/listarRecursos}">Mis recursos</a>
-          </div>
-        </div>
-      </li>
-      
-                  <!-- Divider -->
-      <hr sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_RH')" class="sidebar-divider">
-
-      <!-- Heading Proyecto -->
-      <div sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_RH')" class="sidebar-heading">
-        Encuestas
-      </div>
-
-      <!-- Nav Item - Recursos Collapse Menu -->
-      <li sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_RH')" class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseEncuestas" aria-expanded="true" aria-controls="collapseEncuestas">
-          <i class="fas fa-fw fa-id-card"></i>
-          <span>Gesti&oacute;n de encuestas</span>
-        </a>
-        <div id="collapseEncuestas" class="collapse" aria-labelledby="menuEncuestas" data-parent="#accordionSidebar">
-          <div class="bg-white py-2 collapse-inner rounded">
-            <h6 class="collapse-header">Ver:</h6>
-            <a class="collapse-item" th:href="@{/flashClima}">Flash clima</a>
-          </div>
-        </div>
-      </li>
-
-      <!-- Divider -->
-      <hr class="sidebar-divider d-none d-md-block">
-
-      <!-- Sidebar Toggler (Sidebar) -->
-      <div class="text-center d-none d-md-inline">
-        <button class="rounded-circle border-0" id="sidebarToggle"></button>
-      </div>
-
-    </ul>
+    <ul th:replace="layout/layout::menu"> </ul>
     <!-- End of Sidebar -->
 
     <!-- Content Wrapper -->
@@ -185,22 +46,23 @@
         <div class="container-fluid">
         
         <input id="codRecurso" type="hidden" th:value="${codRecurso}"></input>
+        <input id="hoy" type="hidden" th:value="${hoyVal}"></input>
 
           <!-- Page Heading -->
           <div class="d-sm-flex align-items-center justify-content-between mb-1">
-			<h1 class="h3 text-gray-800">Solicitud de vacaciones</h1>
+			<h1 class="h3 text-gray-800"><a th:href="@{'/misVacaciones/' + ${#authentication.getName()}}"><i style="font-size: 14px;" class="fas fa-chevron-left"></i></a>  Solicitud de vacaciones</h1>
           </div>
           
 			<!-- Content Row -->
 			<div class="row">
 	            <!-- Earnings (Monthly) Card Example -->
-	            <div class="col-xl-3 col-md-3 mb-3">
+	            <div class="col-xl-3 col-md-3 mb-2">
 	              <div class="card border-left-success  shadow h-100 py-2">
 	                <div class="card-body">
 	                  <div class="row no-gutters align-items-center">
 	                    <div class="col mr-2">
 	                      <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Dias disponibles</div>
-	                      <div class="h5 mb-0 font-weight-bold text-gray-800" th:text="${recursoVacaciones.valDisponibles}"></div>
+	                      <div class="h5 mb-0 font-weight-bold text-gray-800" th:text="${recursoVacaciones.valDisponibles}" id="conteoDisponibles"></div>
 	                    </div>
 	                    <div class="col-auto">
 	                      <i class="fas fa-plane fa-2x text-gray-300"></i>
@@ -209,8 +71,8 @@
 	                </div>
 	              </div>
 	            </div>
-	            <!-- Earnings (Monthly) Card Example -->
-	            <div class="col-xl-3 col-md-3 mb-3">
+	            
+	            <div class="col-xl-3 col-md-3 mb-2">
 	              <div class="card border-left-warning  shadow h-100 py-2">
 	                <div class="card-body">
 	                  <div class="row no-gutters align-items-center">
@@ -226,9 +88,25 @@
 	              </div>
 	            </div>
 	            
+	            
+	            <!-- Earnings (Monthly) Card Example -->
+	            <div class="col-xl-6 col-md-6 mb-2">
+	              <div class="card border-left-info  shadow h-100 py-2">
+	                <div class="card-body">
+	                  <div class="row no-gutters align-items-center">
+	                    <div class="col mr-2">
+	                      <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Proyectos activos:</div>
+	                      <div class="mb-0 text-gray-800" id="mensajeInfo" th:text="${informacion}" style="font-size: 10px;"></div>
+	                    </div>
+	                    <div class="col-auto">
+	                      <i class="fas fa-tasks fa-2x text-gray-300"></i>
+	                    </div>
+	                  </div>
+	                </div>
+	              </div>
+	            </div>
+	            
 	          </div>
-          
-          
           
 
           <!-- DataTales Example -->
@@ -340,6 +218,7 @@
 				data: {codRecurso:$("#codRecurso").val(),
 						diasSelec:JSON.stringify(dias),
 						usr:$("#authGetName").val(),
+						totalSolicitud:$("#conteoSolicitados").text()
 				},
 				success: function(result){
 // 					window.location.href = "https://sophitech.herokuapp.com/"; alert(result);

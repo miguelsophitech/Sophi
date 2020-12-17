@@ -11,5 +11,7 @@ public interface ISolicitudVacacionesService {
 	public List<SolicitudVacaciones> findByCodRecurso(Long codRecurso);
 	
 	public void save(SolicitudVacaciones solicitud);
+	
+	public void delete(SolicitudVacaciones solicitud);
 
 }
