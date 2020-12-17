@@ -142,7 +142,7 @@
 
           <!-- Page Heading -->
           <div class="d-sm-flex align-items-center justify-content-between mb-1">
-            <h1 class="h3 mb-0 text-gray-800"><span class="tituloA">Registrar preventa o proyecto</span>
+            <h1 class="h3 mb-0 text-gray-800"><span class="tituloA">Registrar proyecto</span>
 <!--             </br><span class="tituloBN">Enhorabuena, tienes un nuevo proyecto que registrar</span> -->
             </h1>
           </div>
@@ -240,7 +240,7 @@
                     <label for="presupuesto">Presupuesto</label>
                     <div class="input-group">
                     	<div class="input-group-prepend">
-							<span class="input-group-text">$</span>
+							<span class="input-group-text"><i class="fas fa-dollar-sign"></i></span>
 						</div>
                     <input th:field="*{impPresupuesto}" type="text" maxlength="15" onkeypress="return event.charCode >= 46 && event.charCode <= 57" class="form-control" id="presupuesto" placeholder="Presupuesto" oninvalid="setCustomValidity('Presupuesto inv&aacute;lido')" onchange="try{setCustomValidity('')}catch(e){}" step="any">
                     </div>
@@ -286,15 +286,25 @@
                   	</div>
                   	<div class="col-sm-4">
                     	<label for="clasificacion">L&iacute;der de proyecto</label>
-                      <select th:field="*{codRecursoLider}" class="form-control " id="liderProyecto">
-                        	<option th:each="recurso : ${recursosLider}" th:value="${recurso.codRecurso}" th:text="${recurso.descRecurso}" th:selected="false"/>
-                      </select>
+                    	<div class="input-group">
+                    		<div class="input-group-prepend">
+                    			<span class="input-group-text"><i class="fas fa-user-tag"></i></span>
+                    		</div>
+                    		<select th:field="*{codRecursoLider}" class="form-control " id="liderProyecto">
+		                        <option th:each="recurso : ${recursosLider}" th:value="${recurso.codRecurso}" th:text="${recurso.descRecurso}" th:selected="false"/>
+		                    </select>
+                    	</div>
                   	</div>
                   	<div class="col-sm-4">
                     	<label for="aprobador">Aprobador de proyecto</label>
-                      <select th:field="*{codRecursoAprobador}" class="form-control " id="aprobadorProyecto">
-                        	<option th:each="recurso : ${recursosAprobador}" th:value="${recurso.codRecurso}" th:text="${recurso.descRecurso}" th:selected="false"/>
-                      </select>
+                    	<div class="input-group">
+                    		<div class="input-group-prepend">
+                    			<span class="input-group-text"><i class="fas fa-user-check"></i></span>
+                    		</div>
+                    		<select th:field="*{codRecursoAprobador}" class="form-control " id="aprobadorProyecto">
+	                        	<option th:each="recurso : ${recursosAprobador}" th:value="${recurso.codRecurso}" th:text="${recurso.descRecurso}" th:selected="false"/>
+	                      	</select>
+                    	</div>
                   	</div>
                 </div>
                 	</div>
