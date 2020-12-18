@@ -47,6 +47,7 @@
         
         <input id="codRecurso" type="hidden" th:value="${codRecurso}"></input>
         <input id="hoy" type="hidden" th:value="${hoyVal}"></input>
+        <input id="aprobadores" type="hidden" th:value="${aprobadores}"></input>
 
           <!-- Page Heading -->
           <div class="d-sm-flex align-items-center justify-content-between mb-1">
@@ -218,11 +219,11 @@
 				data: {codRecurso:$("#codRecurso").val(),
 						diasSelec:JSON.stringify(dias),
 						usr:$("#authGetName").val(),
-						totalSolicitud:$("#conteoSolicitados").text()
+						totalSolicitud:$("#conteoSolicitados").text(),
+						aprobadores:$("#aprobadores").val()
 				},
 				success: function(result){
-// 					window.location.href = "https://sophitech.herokuapp.com/"; alert(result);
-					window.location.href = "http://localhost:8080" + result;
+					window.location.href = "https://sophitech.herokuapp.com" + result;
 						}
 			});
   }

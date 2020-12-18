@@ -27,78 +27,6 @@ $(document).ready(function() {
 	
 });
 
-function totales(){
-	var total_lun = 0;
-	var total_mar = 0;
-	var total_mie = 0;
-	var total_jue = 0;
-	var total_vie = 0;
-	var total_sab = 0;
-	var total_dom = 0;
-	var total_lunR = 0;
-	var total_marR = 0;
-	var total_mieR = 0;
-	var total_jueR = 0;
-	var total_vieR = 0;
-	var total_sabR = 0;
-	var total_domR = 0;
-	var total_lunP = 0;
-	var total_marP = 0;
-	var total_mieP = 0;
-	var total_jueP = 0;
-	var total_vieP = 0;
-	var total_sabP = 0;
-	var total_domP = 0;
-	
-	var totalSemana = 0;
-	var totalSemanaR = 0;
-	var totalSemanaP = 0;
-	
-	$('#dataTableDetalle tbody').find('tr').each(function (i, el) {
-		est = $(this).find('td').eq(0).find('div').html();
-		if (esRechazada(est)){
-			total_lunR += parseFloat($(this).find('td').eq(1).text());
-			total_marR += parseFloat($(this).find('td').eq(2).text());
-			total_mieR += parseFloat($(this).find('td').eq(3).text());
-			total_jueR += parseFloat($(this).find('td').eq(4).text());
-			total_vieR += parseFloat($(this).find('td').eq(5).text());
-			total_sabR += parseFloat($(this).find('td').eq(6).text());
-			total_domR += parseFloat($(this).find('td').eq(7).text());
-		} else if (esPendiente(est)) {
-			total_lunP += parseFloat($(this).find('td').eq(1).text());
-			total_marP += parseFloat($(this).find('td').eq(2).text());
-			total_mieP += parseFloat($(this).find('td').eq(3).text());
-			total_jueP += parseFloat($(this).find('td').eq(4).text());
-			total_vieP += parseFloat($(this).find('td').eq(5).text());
-			total_sabP += parseFloat($(this).find('td').eq(6).text());
-			total_domP += parseFloat($(this).find('td').eq(7).text());
-			} else {
-				total_lun += parseFloat($(this).find('td').eq(1).text());
-				total_mar += parseFloat($(this).find('td').eq(2).text());
-				total_mie += parseFloat($(this).find('td').eq(3).text());
-				total_jue += parseFloat($(this).find('td').eq(4).text());
-				total_vie += parseFloat($(this).find('td').eq(5).text());
-				total_sab += parseFloat($(this).find('td').eq(6).text());
-				total_dom += parseFloat($(this).find('td').eq(7).text());
-			}
-	});
-	
-	$("#dia1").text((isNaN(total_lun) ? '0': total_lun) + ' hrs')
-	$("#dia2").text((isNaN(total_mar) ? '0': total_mar) + ' hrs')
-	$("#dia3").text((isNaN(total_mie) ? '0': total_mie) + ' hrs')
-	$("#dia4").text((isNaN(total_jue) ? '0': total_jue) + ' hrs')
-	$("#dia5").text((isNaN(total_vie) ? '0': total_vie) + ' hrs')
-	$("#dia6").text((isNaN(total_sab) ? '0': total_sab) + ' hrs')
-	$("#dia7").text((isNaN(total_dom) ? '0': total_dom) + ' hrs')
-	
-	totalSemana = total_lun + total_mar + total_mie + total_jue + total_vie + total_sab + total_dom;
-	totalSemanaR = total_lunR + total_marR + total_mieR + total_jueR + total_vieR + total_sabR + total_domR;
-	totalSemanaP = total_lunP + total_marP + total_mieP + total_jueP + total_vieP + total_sabP + total_domP;
-	
-	$("#totalSemana").text('('+ (isNaN(totalSemana) ? '0': totalSemana) + ' hrs aprobadas, ' + (isNaN(totalSemanaR) ? '0': totalSemanaR)  + ' hrs rechazadas, ' + (isNaN(totalSemanaP) ? '0': totalSemanaP)  + ' hrs pendientes)');
-	
-}
-
 
 function esRechazada(est) {
     var personRegExp = new RegExp('danger');
@@ -143,7 +71,8 @@ function aprobarSolicitud(cod){
 //	        	$("#aprSol_"+cod).html('<span>Aprobada <i class="far fa-check-circle"></i></span>');
 	        	$("#estat_"+cod).html('<span class="badge badge-success">Aprobada <i class="far fa-check-circle"></i></span>');
 	        	$("#aprSol_"+cod).hide();
-	        	$("#recSol_"+cod).show();
+//	        	$("#recSol_"+cod).show();
+	        	$("#opcs_"+cod).html('<a  id="canSol_'+ cod + '" onclick="cancelarSolicitud('+ cod + '); return false;" href="#" class="badge badge-danger">Cancelar  <i class="far fa-times-circle"></i></a>');
 	        } else {
 	        	alert("Hubo un problema al actualizar el registro, intente nuevamente.");
 	        }
@@ -166,7 +95,30 @@ function rechazarSolicitud(cod){
 //	        	$("#aprSol_"+cod).html('<span>Aprobada <i class="far fa-check-circle"></i></span>');
 	        	$("#estat_"+cod).html('<span class="badge badge-danger">Rechazada <i class="far fa-times-circle"></i></span>');
 	        	$("#recSol_"+cod).hide();
-	        	$("#aprSol_"+cod).show();
+//	        	$("#aprSol_"+cod).show();
+	        } else {
+	        	alert("Hubo un problema al actualizar el registro, intente nuevamente.");
+	        }
+			
+	    }
+	});
+}
+
+function cancelarSolicitud(cod){
+	$("#canSol_"+cod).html('<i class="spinner-border spinner-border-sm"></i>')
+//	$("#aprSol_"+cod).hide();
+	var aprobador = $("#authGetName").val();
+	$.ajax({
+	    type: "GET",
+	    url: "/updCancelarSolicitud",
+	    data: {codSolicitud: cod, 
+	    		aprobador: aprobador},
+		success: function(result){
+	        if(result == 'ok'){
+//	        	$("#aprSol_"+cod).html('<span>Aprobada <i class="far fa-check-circle"></i></span>');
+	        	$("#estat_"+cod).html('<span class="badge badge-danger">Cancelada <i class="far fa-times-circle"></i></span>');
+	        	$("#canSol_"+cod).hide();
+//	        	$("#aprSol_"+cod).show();
 	        } else {
 	        	alert("Hubo un problema al actualizar el registro, intente nuevamente.");
 	        }

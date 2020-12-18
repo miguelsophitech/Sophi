@@ -173,14 +173,15 @@
 							<td style="text-align: center;"><span th:text="${#dates.format(solicitud.fecSolicitud,'dd/MM/yyyy')}"></span></td>
 							<td style="text-align: center;"><span th:text="${solicitud.valDiasSolicitados}" class="badge badge-info" style="font-weight: 700;"></span> <a href="#" th:id="'det_'+${solicitud.codSolicitud}" onclick="verDetalleSolicitud(this.id); return false;"> detalle..</a></td>
 							<td style="text-align: center;" th:id="'estat_'+${solicitud.codSolicitud}">
-	                            <span th:if="${solicitud.fecAprobacion != null}" class="badge badge-pill badge-success">Aprobada <i class="far fa-check-circle"></i></span>
+	                            <span th:if="${solicitud.fecAprobacion != null and solicitud.fecCancelacion == null}" class="badge badge-pill badge-success">Aprobada <i class="far fa-check-circle"></i></span>
 	                            <span th:if="${solicitud.fecRechazo != null}" class="badge badge-pill badge-danger">Rechazada <i class="far fa-times-circle"></i></span>
-	                            <span th:if="${solicitud.fecCancelacion != null}" class="badge badge-pill badge-danger">Cancelada <i class="fas fa-times-circle"></i></span>
+	                            <span th:if="${solicitud.fecCancelacion != null and solicitud.fecAprobacion != null}" class="badge badge-pill badge-danger">Cancelada <i class="fas fa-times-circle"></i></span>
 	                            <span th:if="${solicitud.fecAprobacion == null and solicitud.fecRechazo == null and solicitud.fecCancelacion == null}" class="badge badge-pill badge-warning">Pendiente <i class="fas fa-hourglass-half"></i></span>
                             </td>
-							<td style="text-align: center;">
+							<td style="text-align: center;" th:id="'opcs_'+${solicitud.codSolicitud}">
 								<a  th:if="${solicitud.fecAprobacion == null and solicitud.fecRechazo == null and solicitud.fecCancelacion == null}" th:id="'aprSol_'+${solicitud.codSolicitud}" th:onclick="aprobarSolicitud([[${solicitud.codSolicitud}]]); return false;" href="#" class="badge badge-success">Aprobar  <i class="far fa-check-circle"></i></a>
 								<a  th:if="${solicitud.fecAprobacion == null and solicitud.fecRechazo == null and solicitud.fecCancelacion == null}" th:id="'recSol_'+${solicitud.codSolicitud}" th:onclick="rechazarSolicitud([[${solicitud.codSolicitud}]]); return false;" href="#" class="badge badge-danger">Rechazar  <i class="far fa-times-circle"></i></a>
+								<a  th:if="${solicitud.fecAprobacion != null and solicitud.fecCancelacion == null}" th:id="'canSol_'+${solicitud.codSolicitud}" th:onclick="cancelarSolicitud([[${solicitud.codSolicitud}]]); return false;" href="#" class="badge badge-danger">Cancelar  <i class="far fa-times-circle"></i></a>
 							</td>
 						</tr>						
 					</tbody>

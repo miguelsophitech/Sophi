@@ -112,9 +112,9 @@
                             <td th:text="${solicitud.valDiasSolicitados}"></td>
                             <td th:text="${solicitud.valPeriodo}"></td>
                             <td>
-	                            <span th:if="${solicitud.fecAprobacion != null}" class="badge badge-pill badge-success">Aprobada <i class="far fa-check-circle"></i></span>
+	                            <span th:if="${solicitud.fecAprobacion != null and solicitud.fecCancelacion == null}" class="badge badge-pill badge-success">Aprobada <i class="far fa-check-circle"></i></span>
 	                            <span th:if="${solicitud.fecRechazo != null}" class="badge badge-pill badge-danger">Rechazada <i class="far fa-times-circle"></i></span>
-	                            <span th:if="${solicitud.fecCancelacion != null}" class="badge badge-pill badge-danger">Cancelada <i class="fas fa-times-circle"></i></span>
+	                            <span th:if="${solicitud.fecCancelacion != null and solicitud.fecAprobacion != null}" class="badge badge-pill badge-danger">Cancelada <i class="fas fa-times-circle"></i></span>
 	                            <span th:if="${solicitud.fecAprobacion == null and solicitud.fecRechazo == null and solicitud.fecCancelacion == null}" class="badge badge-pill badge-warning">Pendiente <i class="fas fa-hourglass-half"></i></span>
                             </td>
                             <td>

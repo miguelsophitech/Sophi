@@ -5,8 +5,10 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 
 //import javax.validation.Valid;
 
@@ -15,6 +17,9 @@ import com.sophi.app.models.entity.RecursoVacaciones;
 import com.sophi.app.models.entity.Rol;
 import com.sophi.app.models.entity.SolicitudVacaciones;
 import com.sophi.app.Utiles;
+import com.sophi.app.mail.dto.MailRequest;
+import com.sophi.app.mail.dto.MailResponse;
+import com.sophi.app.mail.service.EmailService;
 import com.sophi.app.models.entity.AprobacionHoras;
 import com.sophi.app.models.entity.AprobacionHorasDto;
 import com.sophi.app.models.entity.AuxActividadHorasRecurso;
@@ -86,6 +91,9 @@ public class AprobacionVacacionesController {
     
     @Autowired
     private IRolService rolService;
+    
+    @Autowired
+	private EmailService service;
     
     @RequestMapping(value = "/aprobacionVacaciones/{email}", method = RequestMethod.GET)
     public String aprobacionVacaciones(Model model, @PathVariable(value = "email") String email){
@@ -300,6 +308,28 @@ public class AprobacionVacacionesController {
     		}
     		
     		solicitudVacacionesService.save(solicitud);
+    		
+    		
+    		//Mail Notificacion INICIO 
+    		Recurso recurso = recursoService.findOne(solicitud.getCodRecurso());
+    		Recurso recursoAprobador = recursoService.findOne(codRecurso);
+    		MailRequest request = new MailRequest();
+    		request.setName(recurso.getDescRecurso());
+    		request.setSubject("Respuesta de tu solicitud de vacaciones");
+    		request.setTo(recurso.getDescCorreoElectronico());
+    		
+    		Map<String, Object> modelM = new HashMap<String, Object>();
+    		modelM.put("nombreRecurso", request.getName());
+    		modelM.put("mensaje", "<h3>"+recursoAprobador.getDescRecurso() + " ha aceptado tu solicitud de vacaciones.</h3>.");
+    		modelM.put("imagen","<img data-cfsrc=\"images/status.png\" alt=\"\" data-cfstyle=\"width: 200px; max-width: 400px; height: auto; margin: auto; display: block;\" style=\"width: 200px; max-width: 400px; height: auto; margin: auto; display: block;\" src=\"https://sophitech.herokuapp.com/img/img-banca.png\">");
+    		modelM.put("btnLink", "<a href=\"https://sophitech.herokuapp.com/misVacaciones/" +recurso.getDescCorreoElectronico()+" \" style=\"text-align: center; border-radius: 5px; font-weight: bold; background-color: #C02C57; color: white; padding: 14px 25px; text-decoration: none; display: inline-block; \">Ver detalle</a>");
+    		modelM.put("pie", "");
+    		
+    		MailResponse response = service.sendEmailEvaluador(request, modelM);
+    		System.out.println(response.getMessage());
+    		//Mail Notificacion FIN 
+    		
+    		
     		return "ok";
     	} else {
     		return "noOK";
@@ -329,6 +359,78 @@ public class AprobacionVacacionesController {
     		}
     		
     		solicitudVacacionesService.save(solicitud);
+    		
+    		//Mail Notificacion INICIO 
+    		Recurso recurso = recursoService.findOne(solicitud.getCodRecurso());
+    		Recurso recursoAprobador = recursoService.findOne(codRecurso);
+    		MailRequest request = new MailRequest();
+    		request.setName(recurso.getDescRecurso());
+    		request.setSubject("Respuesta de tu solicitud de vacaciones");
+    		request.setTo(recurso.getDescCorreoElectronico());
+    		
+    		Map<String, Object> modelM = new HashMap<String, Object>();
+    		modelM.put("nombreRecurso", request.getName());
+    		modelM.put("mensaje", "<h3>"+recursoAprobador.getDescRecurso() + " ha rechazado tu solicitud de vacaciones.</h3>.");
+    		modelM.put("imagen","<img data-cfsrc=\"images/status.png\" alt=\"\" data-cfstyle=\"width: 200px; max-width: 400px; height: auto; margin: auto; display: block;\" style=\"width: 200px; max-width: 400px; height: auto; margin: auto; display: block;\" src=\"https://sophitech.herokuapp.com/img/img-banca.png\">");
+    		modelM.put("btnLink", "<a href=\"https://sophitech.herokuapp.com/misVacaciones/" +recurso.getDescCorreoElectronico()+" \" style=\"text-align: center; border-radius: 5px; font-weight: bold; background-color: #C02C57; color: white; padding: 14px 25px; text-decoration: none; display: inline-block; \">Ver detalle</a>");
+    		modelM.put("pie", "");
+    		
+    		MailResponse response = service.sendEmailEvaluador(request, modelM);
+    		System.out.println(response.getMessage());
+    		//Mail Notificacion FIN 
+    		
+    		
+    		
+    		return "ok";
+    	} else {
+    		return "noOK";
+    	}
+    	
+    }
+    
+    @RequestMapping(value = "/updCancelarSolicitud", method = RequestMethod.GET)
+    @ResponseBody
+    public String updCancelarSolicitud(@RequestParam(value = "codSolicitud") Long codSolicitud, 
+    	@RequestParam(value = "aprobador") String mail ) {
+    	Long codRecurso = recursoService.findByDescCorreoElectronico(mail).getCodRecurso();
+    	SolicitudVacaciones solicitud = null;
+    	solicitud = solicitudVacacionesService.findById(codSolicitud);
+    	if (solicitud != null) {
+    		solicitud.setFecCancelacion(new Utiles().getFechaActual());
+    		solicitud.setCodRecursoAprobador(codRecurso);
+    		
+    		RecursoVacaciones recursoVacaciones = null;
+    		recursoVacaciones = recursoVacacionesService.findById(solicitud.getCodRecurso());
+    		if(recursoVacaciones != null) {
+    			recursoVacaciones.setValAprobado(recursoVacaciones.getValAprobado() - solicitud.getValDiasSolicitados());
+    			recursoVacaciones.setValDisponibles(recursoVacaciones.getValDisponibles() + solicitud.getValDiasSolicitados());
+    			recursoVacacionesService.save(recursoVacaciones);
+    		}
+    		
+    		solicitudVacacionesService.save(solicitud);
+    		
+    		//Mail Notificacion INICIO 
+    		Recurso recurso = recursoService.findOne(solicitud.getCodRecurso());
+    		Recurso recursoAprobador = recursoService.findOne(codRecurso);
+    		MailRequest request = new MailRequest();
+    		request.setName(recurso.getDescRecurso());
+    		request.setSubject("Respuesta de tu solicitud de vacaciones");
+    		request.setTo(recurso.getDescCorreoElectronico());
+    		
+    		Map<String, Object> modelM = new HashMap<String, Object>();
+    		modelM.put("nombreRecurso", request.getName());
+    		modelM.put("mensaje", "<h3>"+recursoAprobador.getDescRecurso() + " ha cancelado tu solicitud de vacaciones.</h3>.");
+    		modelM.put("imagen","<img data-cfsrc=\"images/status.png\" alt=\"\" data-cfstyle=\"width: 200px; max-width: 400px; height: auto; margin: auto; display: block;\" style=\"width: 200px; max-width: 400px; height: auto; margin: auto; display: block;\" src=\"https://sophitech.herokuapp.com/img/img-banca.png\">");
+    		modelM.put("btnLink", "<a href=\"https://sophitech.herokuapp.com/misVacaciones/" +recurso.getDescCorreoElectronico()+" \" style=\"text-align: center; border-radius: 5px; font-weight: bold; background-color: #C02C57; color: white; padding: 14px 25px; text-decoration: none; display: inline-block; \">Ver detalle</a>");
+    		modelM.put("pie", "");
+    		
+    		MailResponse response = service.sendEmailEvaluador(request, modelM);
+    		System.out.println(response.getMessage());
+    		//Mail Notificacion FIN 
+    		
+    		
+    		
+    		
     		return "ok";
     	} else {
     		return "noOK";
