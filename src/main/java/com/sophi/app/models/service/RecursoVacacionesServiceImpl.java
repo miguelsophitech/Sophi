@@ -22,8 +22,15 @@ public class RecursoVacacionesServiceImpl implements IRecursoVacacionesService{
 	}
 
 	@Override
+	@Transactional(readOnly = true)
 	public List<RecursoVacaciones> findAll() {
 		return (List<RecursoVacaciones>) recursoVacacionesDao.findAll();
+	}
+
+	@Override
+	@Transactional
+	public void save(RecursoVacaciones recursoVacaciones) {
+		recursoVacacionesDao.save(recursoVacaciones);
 	}
 	
 

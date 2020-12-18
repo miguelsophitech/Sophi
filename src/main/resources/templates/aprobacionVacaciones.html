@@ -8,10 +8,10 @@
     <!-- Page Wrapper -->
     <div id="wrapper">
 
-	<!-- Sidebar -->
+    <!-- Sidebar -->
     <ul th:replace="layout/layout::menu"> </ul>
     <!-- End of Sidebar -->
-    
+
         <!-- Content Wrapper -->
         <div id="content-wrapper" class="d-flex flex-column">
 
@@ -24,30 +24,30 @@
                 <div class="container-fluid">
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-1">
-                        <h1 class="h3 mb-2 text-gray-800">Detalle aprobaci&oacute;n de horas</h1>
+                        <h1 class="h3 mb-2 text-gray-800">Aprobaci&oacute;n de vacaciones</h1>
                     </div>
 <!--                     <form th:action="@{/guardar}" th:object="${aprobacionhoraslista}" method="POST"> -->
                     <input id="codRecVal" type="hidden" th:value="${r}" name="codRecurso">
                     <!-- Filter -->
-<!--                     <div class="row"> -->
-<!-- 						<div class="input-group col-sm-8 col-md-4 mb-3"> -->
-<!-- 							<div class="input-group-prepend"> -->
-<!-- 								<label class="input-group-text" for="inputGroupSelectProyecto">Proyecto</label> -->
-<!-- 							</div> -->
-<!-- 							<select class="custom-select" id="proyecto" > -->
-<!-- 								<option selected value="-1">Todos</option> -->
-<!-- 								<option th:each="proyecto:${proyectos}" th:value="${proyecto.codProyecto}" th:text="${proyecto.descProyecto}"></option> -->
-<!-- 							</select> -->
-<!--                         </div> -->
-<!-- 					</div> -->
-					<div class="row">
+                    <div class="row">
 						<div class="input-group col-sm-8 col-md-4 mb-3">
-						<div class="input-group-prepend">
-								<label class="input-group-text" for="inputGroupSelectProyecto">Semana</label>
+							<div class="input-group-prepend">
+								<label class="input-group-text" for="inputGroupSelectProyecto">Proyecto</label>
 							</div>
-            				<input type="week" id="semana" class="form-control" th:value="${semana}" >
-						</div>
-                    </div>
+							<select class="custom-select" id="proyecto" >
+								<option selected value="-1">Todos</option>
+								<option th:each="proyecto:${proyectos}" th:value="${proyecto.codProyecto}" th:text="${proyecto.descProyecto}"></option>
+							</select>
+                        </div>
+					</div>
+<!-- 					<div class="row"> -->
+<!-- 						<div class="input-group col-sm-8 col-md-4 mb-3"> -->
+<!-- 						<div class="input-group-prepend"> -->
+<!-- 								<label class="input-group-text" for="inputGroupSelectProyecto">Semana</label> -->
+<!-- 							</div> -->
+<!--             				<input type="week" id="semana" class="form-control"> -->
+<!-- 						</div> -->
+<!--                     </div> -->
 
                     <!-- DataTales Example -->
                     <div class="card shadow mb-4">
@@ -59,6 +59,30 @@
                 
             </div>
             <!-- End of Main Content -->
+            
+            
+            <div class="modal fade" id="modalDetalleSolicitud" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="modalDetalleSolicitudLabel" aria-hidden="true">
+				<div class="modal-dialog modal-sm" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h6 class="modal-title" id="modalDetalleSolicitudLabel">Detalle de la solicitud</h6>
+							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+		 				</div>
+						<div class="modal-body" style="text-align: center;">
+							<i class="far fa-calendar-alt fa-2x text-gray-300"></i>
+							<div id="detalleSolicitud">
+								<!-- DETALLE DE VACACIONES -->
+							</div>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-secondary" data-dismiss="modal">Aceptar</button>
+						</div>
+		    		</div>
+		  		</div>
+			</div>
+  
 
             <!-- Footer -->
             <footer th:replace="layout/layout :: footer"></footer>
@@ -95,8 +119,23 @@
 
 
 	<!-- scripts aprobacion de horas proyecto -->
-    <script th:src="@{/js/detalleAprobacionHorasProyecto.js}"></script>
+    <script th:src="@{/js/aprobacionVacaciones.js}"></script>
     <script th:src="@{/js/datosRecursoSesion.js}"></script>
+    
+    <script type="text/javascript">
+	  function verDetalleSolicitud(verId){
+		  $("#detalleSolicitud").html("");
+		  var idSolicitud = verId.substring(4);
+		  $("#modalDetalleSolicitud").modal('show');
+		  $.ajax({
+				url: "/verDetalleSolicitud",
+				data: {idSolicitud:idSolicitud},
+				success: function(result){
+					$("#detalleSolicitud").html(result);
+				}
+			});
+	  }
+  	</script>
 
 </body>
 

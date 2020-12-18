@@ -1,9 +1,15 @@
 package com.sophi.app.controllers;
 
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,12 +20,17 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.sophi.app.Utiles;
-import com.sophi.app.models.entity.Concepto;
-import com.sophi.app.models.entity.DetalleEvaluacionProyecto;
+import com.sophi.app.mail.dto.MailRequest;
+import com.sophi.app.mail.dto.MailResponse;
+import com.sophi.app.mail.service.EmailService;
 import com.sophi.app.models.entity.DetalleSolicitud;
+import com.sophi.app.models.entity.Proyecto;
+import com.sophi.app.models.entity.ProyectoRecurso;
 import com.sophi.app.models.entity.Recurso;
 import com.sophi.app.models.entity.RecursoVacaciones;
 import com.sophi.app.models.entity.SolicitudVacaciones;
+import com.sophi.app.models.service.IProyectoRecursoService;
+import com.sophi.app.models.service.IProyectoService;
 import com.sophi.app.models.service.IRecursoService;
 import com.sophi.app.models.service.IRecursoVacacionesService;
 import com.sophi.app.models.service.ISolicitudVacacionesService;
@@ -35,6 +46,15 @@ public class VacacionesController {
 	
 	@Autowired
 	private ISolicitudVacacionesService solicitudVacacionesService;
+	
+	@Autowired
+	private IProyectoRecursoService proyectoRecursoService;
+	
+	@Autowired
+	private IProyectoService proyectoService;
+	
+	@Autowired
+	private EmailService service;
 
 	@GetMapping({"/misVacaciones/{mail}"})
 	public String listadoVacaciones(@PathVariable String mail, Model model) {
@@ -89,11 +109,54 @@ public class VacacionesController {
 	@GetMapping({"/solicitudVacaciones/{codRecurso}"})
 	public String solicitudVacaciones(@PathVariable Long codRecurso, Model model) {
 		
+		List<ProyectoRecurso> listaPR = new ArrayList<>();
+		StringBuilder strb = new StringBuilder();
+		strb.append("");
+		
 		RecursoVacaciones recursoVacaciones = null;
 		recursoVacaciones = recursoVacacionesService.findById(codRecurso);
+		
+		String pattern = "yyyyMMdd";
+		DateFormat df = new SimpleDateFormat(pattern);
+		String hoyVal = df.format(new Date(new Utiles().getFechaActual().getTime() + (1000 * 60 * 60 * 24 * 7) ));
+		
+		List<String> aprobadores = new ArrayList<String>();
+		
+		listaPR = proyectoRecursoService.findProyectoRecursoActivo(codRecurso);
+		for (ProyectoRecurso proyectoRecurso : listaPR) {
+			Proyecto proyecto = proyectoService.findByCodProyecto(proyectoRecurso.getProyectoRecursoId().getCodProyecto());
+			if(proyecto != null && proyecto.getCodProyecto() != 1) {
+				strb.append(proyecto.getDescProyecto());
+				strb.append(" del ");
+				SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+				strb.append(format.format(proyecto.getFecIncioProyecto()));
+				strb.append(" al ");
+				strb.append(format.format(proyecto.getFecFinProyecto()));
+				strb.append(". ");
+				aprobadores.add(recursoService.findOne(proyecto.getCodRecursoAprobador()).getDescCorreoElectronico());
+			}
+			
+		}
+		
+		 Set<String> hashSet = new HashSet<String>(aprobadores);
+		 aprobadores.clear();
+		 aprobadores.addAll(hashSet);
+		 
+		 StringBuilder aprob = new StringBuilder();
+		 
+		 for (String string : hashSet) {
+			 aprob.append(string + ",");
+		}
+		 
 
 		model.addAttribute("recursoVacaciones", recursoVacaciones);
+		model.addAttribute("hoyVal",hoyVal);
+		model.addAttribute("informacion",strb.toString());
+		model.addAttribute("aprobadores",aprob.toString());
 		return "formSolicitudVacaciones";
+		
+		
+		
 	}
 	
 	@GetMapping({"/confirmarSolicitud"})
@@ -101,6 +164,8 @@ public class VacacionesController {
 	public String confirmarSolicitud(@RequestParam Long codRecurso,
 										@RequestParam List<String> diasSelec,
 										@RequestParam String usr,
+										@RequestParam Long totalSolicitud,
+										@RequestParam String aprobadores,
 										Model model) {
 		
 		List<DetalleSolicitud> detallesSolicitud = new ArrayList<>();
@@ -125,17 +190,46 @@ public class VacacionesController {
 		}
 		
 		RecursoVacaciones recursoVacaciones = recursoVacacionesService.findById(codRecurso);
+		recursoVacaciones.setValDisponibles(recursoVacaciones.getValDisponibles() - totalSolicitud);
 		
 		SolicitudVacaciones solicitud = new SolicitudVacaciones();
 		solicitud.setCodRecurso(codRecurso);
+		solicitud.setValDiasSolicitados(totalSolicitud);
 		solicitud.setFecSolicitud(new Utiles().getFechaActual());
 		solicitud.setValPeriodo(recursoVacaciones.getValPeriodo());
 		solicitud.setDetallesSolicitud(detallesSolicitud);
 		
 		solicitudVacacionesService.save(solicitud);
-
+		
+		recursoVacacionesService.save(recursoVacaciones);
+		
+		System.out.println(aprobadores);
+		
+		for (String mailAprobador : aprobadores.split(",")) {
+		//Mail Notificacion INICIO 
+		Recurso recurso = recursoService.findOne(codRecurso);
+		Recurso recursoAprobador = recursoService.findByDescCorreoElectronico(mailAprobador);
+		MailRequest request = new MailRequest();
+		request.setName(recursoAprobador.getDescRecurso());
+		request.setSubject("Nueva solicitud de vacaciones");
+		request.setTo(recursoAprobador.getDescCorreoElectronico());
+		
+		Map<String, Object> modelM = new HashMap<String, Object>();
+		modelM.put("nombreRecurso", request.getName());
+		modelM.put("mensaje", "<h3>Nueva solicitud de vacaciones por responder de \""+ recurso.getDescRecurso() + " " + recurso.getDescApellidoPaterno() + "\"</h3>.");
+		modelM.put("imagen","<img data-cfsrc=\"images/status.png\" alt=\"\" data-cfstyle=\"width: 200px; max-width: 400px; height: auto; margin: auto; display: block;\" style=\"width: 200px; max-width: 400px; height: auto; margin: auto; display: block;\" src=\"https://sophitech.herokuapp.com/img/img-banca.png\">");
+		modelM.put("btnLink", "<a href=\"https://sophitech.herokuapp.com/aprobacionVacaciones/" +mailAprobador+" \" style=\"text-align: center; border-radius: 5px; font-weight: bold; background-color: #C02C57; color: white; padding: 14px 25px; text-decoration: none; display: inline-block; \">Ver detalle</a>");
+		modelM.put("pie", "");
+		
+		MailResponse response = service.sendEmailEvaluador(request, modelM);
+		System.out.println(response.getMessage());
+		//Mail Notificacion FIN 
+		}
+		
 		return "/misVacaciones/"+usr;
 	}
+	
+	
 	
 	
 	

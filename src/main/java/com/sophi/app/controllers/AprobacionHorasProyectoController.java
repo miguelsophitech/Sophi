@@ -46,7 +46,6 @@ import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 
-//@SessionAttributes("aprobacionhoraslista")
 @Controller
 public class AprobacionHorasProyectoController {
 
