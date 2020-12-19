@@ -57,7 +57,7 @@ public class Proyecto implements Serializable  {
 	private Long codAreaComercial;
 	
 	@Column(name = "val_total_horas_vendidas")
-	private Long valTotalHorasVendidas;
+	private String valTotalHorasVendidas;
 	
 	@Column(name = "imp_precio_propuesta")
 	private String impPrecioPropuesta;
@@ -76,7 +76,7 @@ public class Proyecto implements Serializable  {
 	private Long codTipoProyecto;
 	
 	@Column(name = "val_porcentaje_riesgo")
-	private Long valPorcentajeRiesgo;
+	private String valPorcentajeRiesgo;
 	
 	@Column(name = "val_total_horas_proyecto")
 	private String valTotalHorasProyecto;
@@ -197,11 +197,11 @@ public class Proyecto implements Serializable  {
 		this.codAreaComercial = codAreaComercial;
 	}
 
-	public Long getValTotalHorasVendidas() {
+	public String getValTotalHorasVendidas() {
 		return valTotalHorasVendidas;
 	}
 
-	public void setValTotalHorasVendidas(Long valTotalHorasVendidas) {
+	public void setValTotalHorasVendidas(String valTotalHorasVendidas) {
 		this.valTotalHorasVendidas = valTotalHorasVendidas;
 	}
 
@@ -237,11 +237,11 @@ public class Proyecto implements Serializable  {
 		this.codTipoProyecto = codTipoProyecto;
 	}
 
-	public Long getValPorcentajeRiesgo() {
+	public String getValPorcentajeRiesgo() {
 		return valPorcentajeRiesgo;
 	}
 
-	public void setValPorcentajeRiesgo(Long valPorcentajeRiesgo) {
+	public void setValPorcentajeRiesgo(String valPorcentajeRiesgo) {
 		this.valPorcentajeRiesgo = valPorcentajeRiesgo;
 	}
 
