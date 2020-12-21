@@ -134,7 +134,7 @@
 						<td th:text="${agenda.descContacto}"></td>
 						<td th:text="${agenda.descPuesto}"></td>
 						<td th:text="${agenda.descCorreoElectronico}"></td>
-						<td th:text="${agenda.descTelCelular}"></td>
+						<td th:text="${agenda.descTelCelular}" class="telefono"></td>
 						<td>
 							<a th:href="@{/dataContacto/} + ${agenda.codContacto}" class="badge badge-info">Ver  <i class="far fa-address-book"></i></a>
 							<a th:href="@{/formContacto/} + ${agenda.codContacto}" class="badge badge-success">Editar  <i class="far fa-edit"></i></a>
@@ -309,9 +309,8 @@
 	  	    }
 	  	});
 		</script>
+		
 	</div>
-	
-	
 
 </body>
 </html>

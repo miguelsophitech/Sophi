@@ -1,26 +1,7 @@
 <!DOCTYPE html>
 <html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
-<head>
-
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="">
-  <meta name="author" content="">
-
-  <title>Proyecto</title>
-
-  <!-- Custom fonts for this template-->
-  <link href="../../../vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
-  <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
-
-
-  <!-- Custom styles for this template-->
-  <link href="../../../css/sb-admin-2.css" rel="stylesheet">
-  <link href="../../../css/style.css" rel="stylesheet">
-
-</head>
+<head th:replace="layout/layout::head"></head>
 
 <body id="page-top">
 
@@ -148,7 +129,7 @@
                   </div>
                   <div class="font-weight-bold">
                     <div class="text-truncate">Hi there! I am wondering if you can help me with a problem I've been having.</div>
-                    <div class="small text-gray-500">Emily Fowler ¬∑ 58m</div>
+                    <div class="small text-gray-500">Emily Fowler ∑ 58m</div>
                   </div>
                 </a>
                 <a class="dropdown-item d-flex align-items-center" href="#">
@@ -158,7 +139,7 @@
                   </div>
                   <div>
                     <div class="text-truncate">I have the photos that you ordered last month, how would you like them sent to you?</div>
-                    <div class="small text-gray-500">Jae Chun ¬∑ 1d</div>
+                    <div class="small text-gray-500">Jae Chun ∑ 1d</div>
                   </div>
                 </a>
                 <a class="dropdown-item d-flex align-items-center" href="#">
@@ -168,7 +149,7 @@
                   </div>
                   <div>
                     <div class="text-truncate">Last month's report looks great, I am very happy with the progress so far, keep up the good work!</div>
-                    <div class="small text-gray-500">Morgan Alvarez ¬∑ 2d</div>
+                    <div class="small text-gray-500">Morgan Alvarez ∑ 2d</div>
                   </div>
                 </a>
                 <a class="dropdown-item d-flex align-items-center" href="#">
@@ -178,7 +159,7 @@
                   </div>
                   <div>
                     <div class="text-truncate">Am I a good boy? The reason I ask is because someone told me that people say this to all dogs, even if they aren't good...</div>
-                    <div class="small text-gray-500">Chicken the Dog ¬∑ 2w</div>
+                    <div class="small text-gray-500">Chicken the Dog ∑ 2w</div>
                   </div>
                 </a>
                 <a class="dropdown-item text-center small text-gray-500" href="#">Read More Messages</a>
@@ -197,11 +178,11 @@
               <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
                 <a class="dropdown-item" href="#">
                   <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-                  Perf√≠l
+                  PerfÌl
                 </a>
                 <a class="dropdown-item" href="#">
                   <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
-                  Configurai√≥n
+                  ConfiguraiÛn
                 </a>
                 <a class="dropdown-item" href="#">
                   <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
@@ -210,7 +191,7 @@
                 <div class="dropdown-divider"></div>
                 <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
                   <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                  Cerras sesi√≥n
+                  Cerras sesiÛn
                 </a>
               </div>
             </li>
@@ -278,7 +259,7 @@
                 </div>
                 <div class="form-group row">
                   <div class="col-sm-3 mb-3 mb-sm-0">
-                      <label for="areaComercial">√Årea comercial</label>
+                      <label for="areaComercial">¡rea comercial</label>
                   </div>
                   <div class="col-sm-5">
                     <select th:field="*{codAreaComercial}" class="form-control " id="areaComercial">
@@ -288,7 +269,7 @@
                   <div class="col-sm-4">
                   </div>
                 </div>
-                <p class="tituloC">Completa la informaci√≥n del proyecto.</p>
+                <p class="tituloC">Completa la informaciÛn del proyecto.</p>
                 <div class="form-group row">
                   <div class="col-sm-4 mb-3 mb-sm-0">
                      <label for="nombreProyecto">Nombre del proyecto</label>
@@ -305,8 +286,8 @@
                 </div>
                 <div class="form-group row">
                   <div class="col-sm-4 mb-3 mb-sm-0">
-                     <label for="codigoProyecto">C√≥digo de proyecto</label>
-                    <input th:field="*{descCodigoProyecto}" type="text" class="form-control" id="codigoProyecto" placeholder="C√≥digo de proyecto" >
+                     <label for="codigoProyecto">CÛdigo de proyecto</label>
+                    <input th:field="*{descCodigoProyecto}" type="text" class="form-control" id="codigoProyecto" placeholder="CÛdigo de proyecto" >
                   </div>
                   <div class="col-sm-4">
                     <label for="presupuesto">Presupuesto</label>
@@ -371,14 +352,14 @@
                       </select>
                   </div>
                   <div class="col-sm-8">
-                    <label class="comentario">En caso de no encontrarlo puedes agregarlo aqu√≠</label><br>
+                    <label class="comentario">En caso de no encontrarlo puedes agregarlo aquÌ</label><br>
                     <a class="btn btn-primary" href="#" role="button">Agregar contacto <i class="fas fa-plus-circle fa-sm text-white-50"></i></a>
                   </div>
                 </div>
-                 <p class="tituloC">Informaci√≥n complementaria.</p>
+                 <p class="tituloC">InformaciÛn complementaria.</p>
                 <div class="form-group row">
                   <div class="col-sm-4 mb-3 mb-sm-0">
-                      <label for="clasificacion">Clasificaci√≥n del proyecto</label>
+                      <label for="clasificacion">ClasificaciÛn del proyecto</label>
                   </div>
                   <div class="col-sm-4">
                     <select th:field="*{codClasificacionProyecto}" class="form-control " id="clasificacionProyecto">
@@ -386,15 +367,15 @@
                       </select>
                   </div>
                   <div class="col-sm-4"> 
-                       <a class="btn btn-primary" href="#" role="button">Cargar planificaci√≥n</a>
+                       <a class="btn btn-primary" href="#" role="button">Cargar planificaciÛn</a>
                   </div>
                 </div>
                 <div class="form-group row">
                   <div class="col-sm-4 mb-3 mb-sm-0">
-                      <label for="ecnologia">Tecnolog√≠a</label>
+                      <label for="ecnologia">TecnologÌa</label>
                   </div>
                   <div class="col-sm-4">
-                    <input type="text" th:value="${textoTec}" class="form-control" id="tecnologia" placeholder="Tecnolog√≠a">
+                    <input type="text" th:value="${textoTec}" class="form-control" id="tecnologia" placeholder="TecnologÌa">
                   </div>
                   <div class="col-sm-4"> 
                      <a class="btn btn-primary" href="#" data-toggle="modal" data-target="#modalTecnologia" role="button"><i class="fas fa-plus-circle fa-sm text-white-50"></i></a>
@@ -456,10 +437,10 @@
         <div class="modal-header">
           <h5 class="modal-title" id="exampleModalLabel">Cambio de preventa a proyecto</h5>
           <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">√ó</span>
+            <span aria-hidden="true">◊</span>
           </button>
         </div>
-        <div class="modal-body">Cambiaras el estatus de la preventa a proyecto, esta operaci√≥n no se podr√° recuperar. ¬øEst√°s de acuerdo?</div>
+        <div class="modal-body">Cambiaras el estatus de la preventa a proyecto, esta operaciÛn no se podr· recuperar. øEst·s de acuerdo?</div>
         <div class="modal-footer">
           <button class="btn btn-secondary" type="button" data-dismiss="modal" id="cancelarProyecto" >Cancelar</button>
           <a class="btn btn-primary" data-dismiss="modal" href="" id="aceptarProyecto">Aceptar</a>
@@ -473,13 +454,13 @@
     <div class="modal-dialog modal-lg" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Tecnolog√≠a del proyecto</h5>
+          <h5 class="modal-title" id="exampleModalLabel">TecnologÌa del proyecto</h5>
           <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">√ó</span>
+            <span aria-hidden="true">◊</span>
           </button>
         </div>
         <div class="modal-body">
-          Por favor, agrega las tecnolog√≠as del proyecto
+          Por favor, agrega las tecnologÌas del proyecto
   <div class="row">
         <div class="col-md-5">
           <select name="from" id="undo_redo" class="form-control" size="13" multiple="multiple">
