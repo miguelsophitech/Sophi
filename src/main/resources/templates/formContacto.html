@@ -25,7 +25,8 @@
         <div class="container-fluid">
 
           <!-- Page Heading -->
-          <h1 class="h3 mb-2 text-gray-800" th:text="${titulo}"></h1>
+          <!-- <h1 class="h3 mb-2 text-gray-800" th:text="${titulo}"></h1> -->
+          <a th:href="@{/agenda}" th:text="'&laquo; volver'"></a>
           <!-- <p class="mb-4">Completa la informaci&oacute;n del nuevo contacto.</p> -->
 
           <form th:action="@{/formContacto}" th:Object="${agenda}" method="POST">
@@ -108,7 +109,6 @@
             <div class="row">
               <div class="col-sm-6">
                 <input type="submit" value="Guardar" class="btn btn-primary"/>
-                <a th:href="@{/agenda}" class="btn btn-secondary">Cancelar</a>
               </div>
             </div>
             <input type="hidden" th:field="*{codContacto}"/>

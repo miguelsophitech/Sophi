@@ -25,7 +25,8 @@
                 <div class="container-fluid">
 
 					<!-- Page Heading -->
-					<h1 class="h3 mb-2 text-gray-800" th:text="${titulo}"></h1>
+					<!-- <h1 class="h3 mb-2 text-gray-800" th:text="${titulo}"></h1> -->
+					<a th:href="@{/listaClientes}" th:text="'&laquo; volver'"></a>
 					<!-- <p class="mb-4">Completa la informaci&oacute;n del nuevo cliente.</p> -->
 
 					<form th:action="@{/formCliente}" th:Object="${cliente}" method="POST" onSubmit="fecregact();">
@@ -103,7 +104,6 @@
                     <div class="row">
                         <div class="col-sm-6">
                             <input type="submit" value="Guardar" class="btn btn-primary"/>
-                            <a th:href="@{/listaClientes}" class="btn btn-secondary">Regresar</a>
                         </div>
 					</div>
 					

@@ -42,10 +42,9 @@
                 <table class="table" id="dataTable" width="100%" cellspacing="0">
 	                 <thead>
 	                   <tr>
+	                   	  <th>Grupo Empresarial</th>
 	                      <th>Cliente</th>
-                          <th>C&oacute;digo de cliente</th>
                           <th>Direcci&oacute;n fiscal</th>
-                          <th>Grupo Empresarial</th>
                           <th>R.F.C.</th>
                           <th>Sector</th>
                           <th>Acciones</th>
@@ -53,10 +52,9 @@
 	                 </thead>
 	                 <tbody>
 	                 	<tr th:each="cliente: ${clientes}">
+	                 		<td th:text="${cliente.descGrupoEmpresarial}"></td>
                             <td th:text="${cliente.descCliente}"></td>
-                            <td th:text="${cliente.descCodigoCliente}"></td>
                             <td th:text="${cliente.descDireccionFiscal}"></td>
-                            <td th:text="${cliente.descGrupoEmpresarial}"></td>
                             <td th:text="${cliente.descRFC}"></td>
                             <td th:text="${cliente.sector.descSector}"></td>
                             <td>
