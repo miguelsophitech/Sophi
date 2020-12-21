@@ -154,6 +154,7 @@ public class ProyectoRecursoController {
 			pryectoRecursoId.setCodRecurso(id);
 			pryectoRecursoId.setCodProyecto(codProyecto);
 			proyectoRecurso.setProyectoRecursoId(pryectoRecursoId);
+			//proyectoRecurso.setImpCostoRecurso();
 			proyectoRecursoService.delete(proyectoRecurso);
 			proyectoRecursoService.save(proyectoRecurso);
 			System.out.println(id);

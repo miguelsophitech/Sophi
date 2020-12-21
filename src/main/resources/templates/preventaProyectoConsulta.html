@@ -195,7 +195,7 @@
                     	<div class="input-group-prepend">
 							<span class="input-group-text"><i class="far fa-clock"></i></span>
 						</div>
-	                    <input th:attr="readonly=${proyecto.codEstatusProyecto == 3}? 'true' : 'false'" th:field="*{valTotalHorasVendidas}" type="text" maxlength="10" onkeypress="return event.charCode >= 46 && event.charCode <= 57" class="form-control" id="totalHoras" placeholder="Total de horas vendidas" oninvalid="setCustomValidity('Horas vendidas invÃ¡lidas')" onchange="try{setCustomValidity('')}catch(e){}" min="0" max="99999999">
+	                    <input th:attr="readonly=${proyecto.codEstatusProyecto == 3}? 'true' : 'false'" th:field="*{valTotalHorasVendidas}" type="text" maxlength="10" onkeypress="return event.charCode >= 46 && event.charCode <= 57" class="form-control" id="totalHoras" placeholder="Total de horas vendidas" oninvalid="setCustomValidity('Horas vendidas invÃ¡lidas')" onchange="try{setCustomValidity('')}catch(e){}" min="0" max="99999999" pattern="^-?\d+$">
                     </div>
                   </div>
                   <div class="col-sm-4" id="thp">
@@ -204,7 +204,7 @@
                     	<div class="input-group-prepend">
 							<span class="input-group-text"><i class="far fa-clock"></i></span>
 						</div>
-						<input th:field="*{valTotalHorasProyecto}" type="text" maxlength="10" class="form-control" id="thorasProyecto" placeholder="Total de horas proyecto" readonly>
+						<input th:field="*{valTotalHorasProyecto}" type="text" maxlength="10" class="form-control" id="thorasProyecto" placeholder="Total de horas proyecto" readonly pattern="^-?\d+$">
                     </div>
                   </div>
                 </div>
@@ -220,7 +220,7 @@
                   </div>
                   </div>
                   <div class="col-sm-4" id="cp">
-                    <label for="costoProyecto">Costo de proyecto</label>
+                    <label for="costoProyecto">Costo del proyecto</label>
                     <div class="input-group">
                     	<div class="input-group-prepend">
 							<span class="input-group-text"><i class="fas fa-dollar-sign"></i></span>
