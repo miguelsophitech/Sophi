@@ -91,8 +91,8 @@ public class AgendaController {
 		return "dataContacto";
 	}
 	
-	@RequestMapping(value = "/formContacto")
-	public String crearContacto(Map<String, Object> model) {
+	@RequestMapping(value = "/newContacto/{codCliente}")
+	public String crearContacto(Map<String, Object> model, @PathVariable(value = "codCliente") Long codcliente) {
 		Agenda agenda = new Agenda();
 		model.put("agenda", agenda);
 		List<Cargo> cargoList = new ArrayList<Cargo>();

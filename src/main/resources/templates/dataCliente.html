@@ -70,7 +70,7 @@
 										<div class="col"></div>
 										<div class="col">
 											<div class="d-sm-flex align-items-center justify-content-between mb-1">
-								      			<a th:href="@{/formContacto}" class="btn btn-primary">
+								      			<a th:href="@{/newContacto/} + ${cliente.codCliente}" class="btn btn-primary">
 								      				<i class="fas fa-plus fa-sm text-white-50"></i> Nuevo
 								      			</a>
 									        </div>
@@ -81,7 +81,6 @@
 			         					
 			      				</div>
 			      				<input id="filterCliente" type="hidden" th:value="${cliente.codCliente}">
-			      				<input id="clienteContacto" type="hidden" value="">
 			      				<input id="codigoContacto" type="hidden"></input>
 	                		</div>
 	            		</div>

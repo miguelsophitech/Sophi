@@ -40,14 +40,14 @@
                   <div class="card-body">
                   
                   <div class="row">
-                  	<div class="form-group col-12 col-md-4">
+                  	<!-- <div class="form-group col-12 col-md-4">
                   		<label class="col-form-label">Cliente</label>
                         <select th:field="*{codCliente}" class="custom-select">
                           <option th:each="cliente:${clienteList}" th:value="${cliente.codCliente}" th:text="${cliente.descCliente}"></option>
                         </select>
-                  	</div>
+                  	</div> -->
                   	<div class="form-group col-12 col-md-4">
-                        <!-- <input type="hidden" th:value="${agenda.codCliente}"> -->
+                        <input id="cliente_id" type="hidden" th:field="*{codCliente}">
                         <label class="col-form-label">Nombre</label>
 	                    <input type="text" th:field="*{descContacto}" class="form-control" th:errorClass="'form-control alert-danger'" />
 	                    <small class="form-text text-danger" th:if="${#fields.hasErrors('descContacto')}" th:errors="*{descContacto}"></small>
@@ -161,6 +161,7 @@
   <script th:src="@{/js/datosRecursoSesion.js}"></script>
   <script th:src="@{/js/fecNacContacto.js}"></script>
   <script th:src="@{/js/phone.js}"></script>
+  <script th:src="@{/js/url.js}"></script>
 
 </body>
 
