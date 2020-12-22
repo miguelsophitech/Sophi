@@ -118,33 +118,28 @@
 	
 	
 	<div class="col-sm-12" th:fragment="contacto-listado">
-		<div class="table-responsive fz-12">
-			<table class="table table-hover" id="dataTable" width="100%" cellspacing="0">
-				<thead>
-					<tr>
-						<th>Nombre</th>
-						<th>Puesto</th>
-						<th>Correo</th>
-						<th>Tel&eacute;fono Celular</th>
-						<th>Acciones</th>
-					</tr>
-				</thead>
+		<!-- <div class="table-responsive fz-12"> -->
+			<table class="table" id="dataTable" width="100%" cellspacing="0">
 				<tbody>
-					<tr th:each="agenda: ${contactos}">
-						<td th:text="${agenda.descContacto}"></td>
-						<td th:text="${agenda.descPuesto}"></td>
-						<td th:text="${agenda.descCorreoElectronico}"></td>
-						<td th:text="${agenda.descTelCelular}" class="telefono"></td>
-						<td>
-							<a th:href="@{/dataContacto/} + ${agenda.codContacto}" class="badge badge-info">Ver  <i class="far fa-address-book"></i></a>
-							<a th:href="@{/formContacto/} + ${agenda.codContacto}" class="badge badge-success">Editar  <i class="far fa-edit"></i></a>
-							<a th:onclick="eliminar([[${agenda.codContacto}]])" href="#" class="badge badge-danger">Eliminar  <i class="far fa-trash-alt"></i></a>
-							<input class="codCliente" type="hidden" th:value="${agenda.codCliente}"/>
+					<tr>
+						<td th:each="agenda: ${contactos}">
+							<ul class="list-group list-group-flush">
+								<li class="list-group-item"><h3 th:text="${agenda.descContacto}"></h3></li>
+								<li class="list-group-item">Puesto: <strong th:text="${agenda.descPuesto}"></strong></li>
+								<li class="list-group-item">Cantidad de recursos a cargo: <strong th:text="${agenda.valRecursosACargo}"></strong></li>
+								<li class="list-group-item">Correo electr&oacute;nico: <strong th:text="${agenda.descCorreoElectronico}"></strong></li>
+								<li class="list-group-item">Fecha de nacimiento: <strong th:text="${agenda.fecNacimiento}"></strong></li>
+								<li class="list-group-item">Tel&eacute;fono particular: <strong th:text="${agenda.descTelCelular}"></strong></li>
+								<li class="list-group-item">Tel&eacute;fono de empresa: <strong th:text="${agenda.descTelEmpresa}"></strong></li>
+								<li class="list-group-item">Extensi&oacute;n: <strong th:text="${agenda.descTelExt}"></strong></li>
+								<li class="list-group-item">Cargo que ocupa: <strong th:text="${agenda.nombreCargo}"></strong></li>
+								<li class="list-group-item"><a th:href="@{/formContacto/} + ${agenda.codContacto}" class="badge badge-success">Editar  <i class="far fa-edit"></i></a>	<a th:onclick="eliminar([[${agenda.codContacto}]])" href="#" class="badge badge-danger">Eliminar  <i class="far fa-trash-alt"></i></a><input class="codCliente" type="hidden" th:value="${agenda.codCliente}"/></li>
+							</ul>
 						</td>
 					</tr>
 				</tbody>
 			</table>
-		</div>	
+		<!-- </div> -->
 	
 		<script type="text/javascript" charset="UTF-8">
 		$('#dataTable').DataTable( {

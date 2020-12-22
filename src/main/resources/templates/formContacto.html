@@ -26,7 +26,7 @@
 
           <!-- Page Heading -->
           <!-- <h1 class="h3 mb-2 text-gray-800" th:text="${titulo}"></h1> -->
-          <a th:href="@{/agenda}" th:text="'&laquo; volver'"></a>
+          <a th:href="@{'/listaClientes'}" th:text="'&laquo; volver'"></a>
           <!-- <p class="mb-4">Completa la informaci&oacute;n del nuevo contacto.</p> -->
 
           <form th:action="@{/formContacto}" th:Object="${agenda}" method="POST">
@@ -41,21 +41,27 @@
                   
                   <div class="row">
                   	<div class="form-group col-12 col-md-4">
-                        <label class="col-form-label">Cliente</label>
+                  		<label class="col-form-label">Cliente</label>
                         <select th:field="*{codCliente}" class="custom-select">
                           <option th:each="cliente:${clienteList}" th:value="${cliente.codCliente}" th:text="${cliente.descCliente}"></option>
                         </select>
+                  	</div>
+                  	<div class="form-group col-12 col-md-4">
+                        <!-- <input type="hidden" th:value="${agenda.codCliente}"> -->
+                        <label class="col-form-label">Nombre</label>
+	                    <input type="text" th:field="*{descContacto}" class="form-control" th:errorClass="'form-control alert-danger'" />
+	                    <small class="form-text text-danger" th:if="${#fields.hasErrors('descContacto')}" th:errors="*{descContacto}"></small>
 					</div>
+					<div class="form-group col-12 col-md-2">
+                        <label class="col-form-label">Fecha de nacimiento</label>
+                        <input id="input_fec_nac" type="text" th:field="*{fecNacimiento}" class="form-control" th:errorClass="form-control alert-danger" oninvalid="setCustomValidity('Campo inv&aacute;lido')" onchange="try{setCustomValidity('')}catch(e){}"/>
+                        <small><label id="fec_nac" class="form-text text-danger"></label></small>
+				    </div>
                   </div>
                   
                   
                   
                   <div class="row">
-                    <div class="form-group col-12 col-md-4">
-                      <label class="col-form-label">Nombre</label>
-                      <input type="text" th:field="*{descContacto}" class="form-control" th:errorClass="'form-control alert-danger'" />
-                      <small class="form-text text-danger" th:if="${#fields.hasErrors('descContacto')}" th:errors="*{descContacto}"></small>
-                    </div>
                      <div class="form-group col-12 col-md-3">
                       <label class="col-form-label">Correo electr&oacute;nico</label>
                       <input type="text" th:field="*{descCorreoElectronico}" class="form-control" th:errorClass="'form-control alert-danger'"/>
@@ -97,11 +103,6 @@
                         <input type="tel" th:field="*{descTelExt}" class="form-control" oninvalid="setCustomValidity('Ext&eacute;nci&oacute;n inv&aacute;lida')"/>
                         <small class="form-text text-danger" th:if="${#fields.hasErrors('descTelExt')}" th:errors="*{descTelExt}"></small>
                       </div>
-                       <div class="form-group col-12 col-md-2">
-                        <label class="col-form-label">Fecha de nacimiento</label>
-                        <input id="input_fec_nac" type="text" th:field="*{fecNacimiento}" class="form-control" th:errorClass="form-control alert-danger" oninvalid="setCustomValidity('Campo inv&aacute;lido')" onchange="try{setCustomValidity('')}catch(e){}"/>
-                        <small><label id="fec_nac" class="form-text text-danger"></label></small>
-				      </div>
                     </div>
                   </div>
                 </div>

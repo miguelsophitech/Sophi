@@ -53,11 +53,15 @@ public class AgendaController {
 	@RequestMapping(value = "/contactos/{codCliente}", method = RequestMethod.GET)
 	public String contactoListado(@PathVariable(value = "codCliente") Long codCliente,Model model) {
 		List<Agenda> listaAgenda = new ArrayList<Agenda>();
+		/*
 		if (codCliente.equals(-1L)) {
 			listaAgenda = agendaService.findAll();
 		} else {
 			listaAgenda = agendaService.findContactosBycodCliente(codCliente);
 		}
+		 */
+		
+		listaAgenda = agendaService.findContactosBycodCliente(codCliente);
 		
 		Agenda agenda = agendaService.findOne(1L);
 		listaAgenda.remove(agenda);
@@ -116,7 +120,7 @@ public class AgendaController {
 		agendaService.save(agenda);
 		status.setComplete();
 		flash.addFlashAttribute("success", "Contacto guardado con éxito");
-		return "redirect:/agenda";
+		return "redirect:/listaClientes";
 	}
 	
 	@RequestMapping(value = "/formContacto/{id}")

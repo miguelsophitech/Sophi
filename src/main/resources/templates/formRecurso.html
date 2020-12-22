@@ -68,7 +68,7 @@
 								</div>
 								<div class="form-group col-12 col-md-3">
 									<label class="col-form-label">Tel. particular*</label>
-									<input type="tel" th:field="*{descTelCelular}" class="form-control" maxlength="10" th:errorclass="'form-control alert-danger'" oninvalid="setCustomValidity('N&uacute;mero inv&aacute;lido')" onchange="try{setCustomValidity('')}catch(e){}" pattern="[0-9]{10}"/>
+									<input type="tel" th:field="*{descTelCelular}" class="form-control telefono" maxlength="10" th:errorclass="'form-control alert-danger'" oninvalid="setCustomValidity('N&uacute;mero inv&aacute;lido')" onchange="try{setCustomValidity('')}catch(e){}" pattern="[0-9]{10}"/>
 									<small class="form-text text-danger" th:if="${#fields.hasErrors('descTelCelular')}" th:errors="*{descTelCelular}"></small>
 								</div>
 							</div>
@@ -86,7 +86,7 @@
 								</div>
 								<div class="form-group col-8 col-md-3">
 									<label class="col-form-label">Tel. empresa</label>
-									<input type="tel" th:field="*{descTelEmpresa}" class="form-control"  maxlength="10" th:errorclass="'form-control alert-danger'" oninvalid="setCustomValidity('N&uacute;mero inv&aacute;lido')" onchange="try{setCustomValidity('')}catch(e){}" pattern="[0-9]{10}"/>
+									<input type="tel" th:field="*{descTelEmpresa}" class="form-control telefono"  maxlength="10" th:errorclass="'form-control alert-danger'" oninvalid="setCustomValidity('N&uacute;mero inv&aacute;lido')" onchange="try{setCustomValidity('')}catch(e){}" pattern="[0-9]{10}"/>
 									<small class="form-text text-danger" th:if="${#fields.hasErrors('descTelEmpresa')}" th:errors="*{descTelEmpresa}"></small>
 								</div>
 								<div class="form-group col-4 col-md-2">
@@ -251,7 +251,7 @@
 						
 							<div class="row">
 								<div class="form-group col-12 col-md-4">
-									<label class="col-form-label">Costo minimo</label>
+									<label class="col-form-label">Costo m&iacute;nimo</label>
 									<input type="text" th:field="*{valCostoMinimo}" class="form-control"/>
 								</div>
 							</div>
@@ -276,7 +276,7 @@
 					
 					<!-- Card Header - Accordion -->
 					<a href="#collapseCardMedicos" class="d-block card-header py-3" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="collapseCardMedicos">
-						<h6 class="m-0 font-weight-bold text-primary">Antecedentes médicos</h6>
+						<h6 class="m-0 font-weight-bold text-primary">Antecedentes m&eacute;dicos</h6>
 					</a>
 					<!-- Card Content - Collapse -->
 					<div class="collapse show" id="collapseCardMedicos">
@@ -356,7 +356,7 @@
 							  <img th:src="@{/img/img-herramienta.png}" class="card-img-top" alt="Contactos de emergencia">
 							  <div class="card-body">
 							    <h5 class="card-title">Herramientas</h5>
-							     <p class="card-text">Informacion que describe este apartado.</p>
+							     <p class="card-text">Informaci&oacute;n que describe este apartado.</p>
 							    <a th:href="@{/listarHerramientas/} +  ${recurso.codRecurso}" class="btn btn-primary stretched-link">Ver</a>
 <!-- 							    <table> -->
 <!-- 							    <tr th:each="herramienta : ${recurso.herramientas}"> -->
@@ -373,7 +373,7 @@
 							  <img th:src="@{/img/img-sueldo-prestacion.png}" class="card-img-top" alt="Contactos de emergencia">
 							  <div class="card-body">
 							    <h5 class="card-title">Sueldos y prestaciones</h5>
-							     <p class="card-text">Informacion que describe este apartado.</p>
+							     <p class="card-text">Informaci&oacute;n que describe este apartado.</p>
 							    <a th:href="@{/listarSueldos/} +  ${recurso.codRecurso}" class="btn btn-primary stretched-link">Ver</a>
 							  </div>
 							</div>
@@ -383,7 +383,7 @@
 							  <img th:src="@{/img/img-dependientes-economicos.png}" class="card-img-top" alt="Contactos de emergencia">
 							  <div class="card-body">
 							    <h5 class="card-title">Dependientes econ&oacute;micos</h5>
-							     <p class="card-text">Informacion que describe este apartado.</p>
+							     <p class="card-text">Informaci&oacute;n que describe este apartado.</p>
 							    <a th:href="@{/listarDependientes/} +  ${recurso.codRecurso}" class="btn btn-primary stretched-link">Ver</a>
 							  </div>
 							</div>
@@ -452,6 +452,7 @@
   <script th:src="@{/js/demo/datatables-demo.js}"></script>
   
   <script th:src="@{/js/datosRecursoSesion.js}"></script>
+  <script th:src="@{/js/phone.js}"></script>
 
 </body>
 

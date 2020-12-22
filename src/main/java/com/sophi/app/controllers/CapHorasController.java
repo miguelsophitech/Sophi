@@ -64,7 +64,7 @@ public class CapHorasController {
 	private IProyectoRecursoService proyectoRecursoService;
 	
 	final String PREVENTA = "> Preventa (default)";
-	final String OTRA = "> Otra (fuera de plan)";
+	final String OTRA = "> Catálogo de actividades";
 	
 	@GetMapping("/capHoras/{email}")
 	public String capHoras(@PathVariable(value="email") String email, Model model) {
