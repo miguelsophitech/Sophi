@@ -28,7 +28,7 @@
             <h1 class="h3 mb-0 text-gray-800"><span class="tituloA" th:text="'Consulta del proyecto ' + ${proyecto.descProyecto}"></span></h1>
 <!--             </br><span class="tituloBN">Enhorabuena, tienes un nuevo proyecto que registrar</span> -->
           </div>
-          <a type="button" th:href="@{/listaProyectosTodo}" id="btnRegresarProyecto" th:text="'&laquo; volver'"></a>
+          <a type="button" th:href="@{/listaProyectosTodo}" id="btnRegresarProyecto" th:text="'&laquo; regresar'"></a>
 
             <!--form-->
               <form class="user" th:action="@{/preventaProyectoActualizar}" th:Object="${proyecto}" method="post">
