@@ -123,13 +123,18 @@ function limpiaActive() {
 function handleChange(input) {
     if (input.value < 0) input.value = 0;
     if (input.value > 24) input.value = 24;
+    if (!input.value.match(/(^\d*\.{0,1}\d{0,1})$/)) $("#divValHoraCap").html("<small class='form-text text-danger'>S&oacute;lo un decimal</small>");
   }
 
 function validaForm(){
+	var num = $("#valHoraCap").val();
+	var string = num.toString();
+	var match = string.match(/(^\d*\.{0,1}\d{0,1})$/);
+	
 	if(!$("#descDetalleHora").val()){
 		$("#descDetalleHora").addClass("alert-danger");
 		$("#divDescDetalleHora").html("<small class='form-text text-danger'>Este dato es requerido</small>");
-	} else if ($("#valHoraCap").val() > 0 && $("#valHoraCap").val() <= 24 ){
+	} else if ($("#valHoraCap").val() > 0 && $("#valHoraCap").val() <= 24 && match){
 		document.getElementById('capHorasForm').submit();
 	} else {
 		$("#descDetalleHora").removeClass("alert-danger");
@@ -141,10 +146,14 @@ function validaForm(){
 }
 
 function validaFormEdit(){
+	var num = $("#valHoraCap").val();
+	var string = num.toString();
+	var match = string.match(/(^\d*\.{0,1}\d{0,1})$/);
+
 	if(!$("#descDetalleHoraEdit").val()){
 		$("#descDetalleHoraEdit").addClass("alert-danger");
 		$("#divDescDetalleHoraEdit").html("<small class='form-text text-danger'>Este dato es requerido</small>");
-	} else if ($("#valHoraCapEdit").val() > 0 && $("#valHoraCapEdit").val() <= 24 ){
+	} else if ($("#valHoraCapEdit").val() > 0 && $("#valHoraCapEdit").val() <= 24 && match){
 		document.getElementById('formEditCapHoraActividad').submit();
 	} else {
 		$("#descDetalleHoraEdit").removeClass("alert-danger");
