@@ -106,7 +106,7 @@ public class AgendaController {
 	}
 	
 	@RequestMapping(value="/formContacto", method = RequestMethod.POST)
-	public String guardarContacto(@Valid Agenda agenda, BindingResult result, Model model,RedirectAttributes flash,SessionStatus status) {
+	public String guardarContacto(@Valid Agenda agenda, Long codCliente, BindingResult result, Model model,RedirectAttributes flash,SessionStatus status) {
 		if(result.hasErrors()) {
 			model.addAttribute("titulo", "Formulario de contactos");
 			List<Cargo> cargoList = new ArrayList<Cargo>();
@@ -120,7 +120,7 @@ public class AgendaController {
 		agendaService.save(agenda);
 		status.setComplete();
 		flash.addFlashAttribute("success", "Contacto guardado con éxito");
-		return "redirect:/listaClientes";
+		return "redirect:/dataCliente/"+codCliente;
 	}
 	
 	@RequestMapping(value = "/formContacto/{id}")
