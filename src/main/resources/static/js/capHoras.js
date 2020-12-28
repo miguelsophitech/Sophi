@@ -144,7 +144,7 @@ function validaFormEdit(){
 	if(!$("#descDetalleHoraEdit").val()){
 		$("#descDetalleHoraEdit").addClass("alert-danger");
 		$("#divDescDetalleHoraEdit").html("<small class='form-text text-danger'>Este dato es requerido</small>");
-	} else if ($("#valHoraCapEdit").val() > 0 && $("#valHoraCapEdit").val() <= 24 && $("#valHoraCap").val().match(/(^\d*\.{0,1}\d{0,1})$/)){
+	} else if ($("#valHoraCapEdit").val() > 0 && $("#valHoraCapEdit").val() <= 24 && $("#valHoraCapEdit").val().match(/(^\d*\.{0,1}\d{0,1})$/)){
 		document.getElementById('formEditCapHoraActividad').submit();
 	} else {
 		$("#descDetalleHoraEdit").removeClass("alert-danger");
