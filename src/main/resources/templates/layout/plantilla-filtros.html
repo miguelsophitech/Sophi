@@ -118,17 +118,17 @@
 	
 	<div class="col-sm-12" th:fragment="contacto-listado">
 		<!-- <div class="table-responsive fz-12"> -->
-			<table class="table" id="dataTable" width="100%" cellspacing="0">
+			<table class="table container" id="dataTable" width="100%" cellspacing="0">
 				<tbody>
-					<tr>
-						<td th:each="agenda: ${contactos}">
+					<tr class="row justify-content-md-center">
+						<td class="col" th:each="agenda: ${contactos}">
 							<ul class="list-group list-group-flush">
 								<li class="list-group-item"><h3 th:text="${agenda.descContacto}"></h3></li>
 								<li class="list-group-item">Puesto: <strong th:text="${agenda.descPuesto}"></strong></li>
 								<li class="list-group-item">Cantidad de recursos a cargo: <strong th:text="${agenda.valRecursosACargo}"></strong></li>
 								<li class="list-group-item">Correo electr&oacute;nico: <strong th:text="${agenda.descCorreoElectronico}"></strong></li>
 								<li class="list-group-item">Fecha de nacimiento: <strong th:text="${agenda.fecNacimiento}"></strong></li>
-								<li class="list-group-item">Tel&eacute;fono particular: <strong th:text="${agenda.descTelCelular}"></strong><img style="width: 14px; cursor: pointer;" th:src="@{/img/whapp.png}" th:attr="onclick=|loadWA('${agenda.descTelCelular}')|" ></li>
+								<li class="list-group-item">Tel&eacute;fono particular: <strong th:text="${agenda.descTelCelular}"></strong>&nbsp; <img style="width: 14px; cursor: pointer;" th:src="@{/img/whapp.png}" th:attr="onclick=|loadWA('${agenda.descTelCelular}')|" ></li>
 								<li class="list-group-item">Tel&eacute;fono de empresa: <strong th:text="${agenda.descTelEmpresa}"></strong></li>
 								<li class="list-group-item">Extensi&oacute;n: <strong th:text="${agenda.descTelExt}"></strong></li>
 								<li class="list-group-item">Cargo que ocupa: <strong th:text="${agenda.nombreCargo}"></strong></li>

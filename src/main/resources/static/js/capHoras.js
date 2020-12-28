@@ -123,8 +123,7 @@ function limpiaActive() {
 function handleChange(input) {
     if (input.value < 0) input.value = 0;
     if (input.value > 24) input.value = 24;
-    if (!input.value.match(/(^\d*\.{0,1}\d{0,1})$/)) $("#divValHoraCap").html("<small class='form-text text-danger'>S&oacute;lo un decimal</small>");
-  }
+}
 
 function validaForm(){
 	var num = $("#valHoraCap").val();
@@ -136,12 +135,18 @@ function validaForm(){
 		$("#divDescDetalleHora").html("<small class='form-text text-danger'>Este dato es requerido</small>");
 	} else if ($("#valHoraCap").val() > 0 && $("#valHoraCap").val() <= 24 && match){
 		document.getElementById('capHorasForm').submit();
-	} else {
+	} else if(input.value < 0 || input.value > 24) {
 		$("#descDetalleHora").removeClass("alert-danger");
 		$("#divDescDetalleHora").html("");
 		
 		$("#valHoraCap").addClass("alert-danger");
 		$("#divValHoraCap").html("<small class='form-text text-danger'>1-24 hrs</small>");
+	} else if(!input.value.match(/(^\d*\.{0,1}\d{0,1})$/)) {
+		$("#descDetalleHora").removeClass("alert-danger");
+		$("#divDescDetalleHora").html("");
+		
+		$("#valHoraCap").addClass("alert-danger");
+		$("#divValHoraCap").html("<small class='form-text text-danger'>S&oacute;lo un decimal</small>");
 	}
 }
 
@@ -155,12 +160,18 @@ function validaFormEdit(){
 		$("#divDescDetalleHoraEdit").html("<small class='form-text text-danger'>Este dato es requerido</small>");
 	} else if ($("#valHoraCapEdit").val() > 0 && $("#valHoraCapEdit").val() <= 24 && match){
 		document.getElementById('formEditCapHoraActividad').submit();
-	} else {
+	} else if(input.value < 0 || input.value > 24) {
 		$("#descDetalleHoraEdit").removeClass("alert-danger");
 		$("#divDescDetalleHoraEdit").html("");
 		
 		$("#valHoraCapEdit").addClass("alert-danger");
 		$("#divValHoraCapEdit").html("<small class='form-text text-danger'>1-24 hrs</small>");
+	} else if(!input.value.match(/(^\d*\.{0,1}\d{0,1})$/)) {
+		$("#descDetalleHora").removeClass("alert-danger");
+		$("#divDescDetalleHora").html("");
+		
+		$("#valHoraCap").addClass("alert-danger");
+		$("#divValHoraCap").html("<small class='form-text text-danger'>S&oacute;lo un decimal</small>");
 	}
 }
 
