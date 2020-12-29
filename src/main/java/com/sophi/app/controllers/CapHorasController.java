@@ -260,15 +260,18 @@ public class CapHorasController {
 		return "Borrado correcto";
 	}
 	
+	/*Aquí se tiene que agregar la lista de proyectos y actividades por recursos*/
 	@GetMapping(value="/editCaptura/{codCaptura}")
 	public String editCaptura(@PathVariable Long codCaptura, Model model) {
 		CapHora capHora = capHoraService.findOne(codCaptura);
 		capHora.setDescProyecto(proyectoService.findByCodProyecto(capHora.getCodProyecto()).getDescProyecto());
+		//List<Proyecto> proyectoList = proyectoService.findAll();
 		if(capHora.getValNuevaActividad()==0) {
 			capHora.setDescActividadSecundaria(actividadService.findOne(capHora.getCodActividad()).getDescActividadSecundaria());
 		} else {
 			capHora.setDescActividadSecundaria(subtareaService.findOne(capHora.getCodActividad()).getDescSubtarea());
 		}
+		//model.addAttribute("proyectoList", proyectoList);
 		model.addAttribute("capHora", capHora);
 		return "layout/capHora :: editDetActividades";
 	}

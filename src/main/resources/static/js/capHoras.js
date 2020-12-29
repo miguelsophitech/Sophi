@@ -1,9 +1,8 @@
 $(document).ready(function() {
-
 	var fh = new Date();
-	formatoFechaLarga(fh);
 	completaSemana(fh);
 	semanaInicioFin(fh);
+	console.log(fh);
 
 	$("#sigDia").click(function() {
 		limpiaActive();
@@ -50,6 +49,7 @@ $(document).ready(function() {
 });
 
 function semanaInicioFin(fecha){
+
 var curr = new Date(fecha);
 
 var first = curr.getDate() - curr.getDay(); // First day is the day of the month - the day of the week 
