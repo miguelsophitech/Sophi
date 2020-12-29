@@ -1,8 +1,8 @@
 $(document).ready(function() {
 	var fh = new Date();
+	formatoFechaLarga(fh);
 	completaSemana(fh);
 	semanaInicioFin(fh);
-	console.log(fh);
 
 	$("#sigDia").click(function() {
 		limpiaActive();
@@ -45,7 +45,6 @@ $(document).ready(function() {
 //	cargarActividadesPrimariasProyecto();
 //	filtraActPorFase();
 //	altaCapHoraActividad();
-
 });
 
 function semanaInicioFin(fecha){
@@ -138,6 +137,7 @@ function validaForm(){
 		$("#valHoraCap").addClass("alert-danger");
 		$("#divValHoraCap").html("<small class='form-text text-danger'>1-24 hrs</small>");
 	}
+	$('#capHoraModal').modal('hide');
 }
 
 function validaFormEdit(){
@@ -153,6 +153,7 @@ function validaFormEdit(){
 		$("#valHoraCapEdit").addClass("alert-danger");
 		$("#divValHoraCapEdit").html("<small class='form-text text-danger'>1-24 hrs</small>");
 	}
+	$('#capHoraModalEdit').modal('hide');
 }
 
 function formatoFechaLarga(fecha) {

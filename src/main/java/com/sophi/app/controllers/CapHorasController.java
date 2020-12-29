@@ -231,6 +231,7 @@ public class CapHorasController {
 
 	@RequestMapping(value="/formCapHoraActividad", method = RequestMethod.POST)
 	public String guardarCapHora(@Valid CapHora capHora, BindingResult result, Model model, RedirectAttributes flash ,SessionStatus status) {
+		System.out.println("Cargado");
 		if(result.hasErrors()) {
 
 			return "formCapHoras";
