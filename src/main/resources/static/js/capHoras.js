@@ -130,7 +130,7 @@ function validaForm(){
 		$("#divDescDetalleHora").html("<small class='form-text text-danger'>Este dato es requerido</small>");
 	} else if ($("#valHoraCap").val() > 0 && $("#valHoraCap").val() <= 24 && $("#valHoraCap").val().match(/(^\d*\.{0,1}\d{0,1})$/)){
 		$('#capHoraModal').modal('hide');
-		document.getElementById('capHorasForm').submit();
+	    $('#capHorasForm').submit();
 	} else {
 		$("#descDetalleHora").removeClass("alert-danger");
 		$("#divDescDetalleHora").html("");
@@ -146,7 +146,7 @@ function validaFormEdit(){
 		$("#divDescDetalleHoraEdit").html("<small class='form-text text-danger'>Este dato es requerido</small>");
 	} else if ($("#valHoraCapEdit").val() > 0 && $("#valHoraCapEdit").val() <= 24 && $("#valHoraCapEdit").val().match(/(^\d*\.{0,1}\d{0,1})$/)){
 		$('#capHoraModalEdit').modal('hide');
-		document.getElementById('formEditCapHoraActividad').submit();
+		$('#formEditCapHoraActividad').submit();
 	} else {
 		$("#descDetalleHoraEdit").removeClass("alert-danger");
 		$("#divDescDetalleHoraEdit").html("");

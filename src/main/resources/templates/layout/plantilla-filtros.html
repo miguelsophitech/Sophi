@@ -124,9 +124,8 @@
 					<tr class="row justify-content-md-center">
 						<td class="col" th:each="agenda: ${contactos}">
 							<ul class="list-group list-group-flush">
-								<li class="list-group-item"><h3 th:text="${agenda.descContacto}"></h3></li>
-								<li class="list-group-item">Activo: <i th:if="${agenda.valActivo} == 1" class="bi bi-person-fill">S&iacute;</i>
-								<i th:if="${agenda.valActivo} == 0" class="bi bi-person">No</i></li>
+								<li class="list-group-item"><i th:if="${agenda.valActivo} == 1" class='fas fa-user' style='font-size: 48px;'></i>
+								<i th:if="${agenda.valActivo} == 0" class='far fa-user' style='font-size:48px;'></i><br><h3 th:text="${agenda.descContacto}"></h3></li>
 								<li class="list-group-item">Puesto: <strong th:text="${agenda.descPuesto}"></strong></li>
 								<li class="list-group-item">Cantidad de recursos a cargo: <strong th:text="${agenda.valRecursosACargo}"></strong></li>
 								<li class="list-group-item">Correo electr&oacute;nico: <strong th:text="${agenda.descCorreoElectronico}"></strong></li>

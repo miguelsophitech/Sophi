@@ -243,6 +243,7 @@ public class CapHorasController {
 		status.setComplete();
 		flash.addFlashAttribute("success", mensajeFlash);
 		return "redirect:capHoras/"+recursoService.findOne(capHora.getCodRecurso()).getDescCorreoElectronico();
+		//return "redirect:formCapHoras";
 	}
 	
 	
