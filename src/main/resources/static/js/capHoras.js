@@ -129,6 +129,7 @@ function validaForm(){
 		$("#descDetalleHora").addClass("alert-danger");
 		$("#divDescDetalleHora").html("<small class='form-text text-danger'>Este dato es requerido</small>");
 	} else if ($("#valHoraCap").val() > 0 && $("#valHoraCap").val() <= 24 && $("#valHoraCap").val().match(/(^\d*\.{0,1}\d{0,1})$/)){
+		$('#capHoraModal').modal('hide');
 		document.getElementById('capHorasForm').submit();
 	} else {
 		$("#descDetalleHora").removeClass("alert-danger");
@@ -137,7 +138,6 @@ function validaForm(){
 		$("#valHoraCap").addClass("alert-danger");
 		$("#divValHoraCap").html("<small class='form-text text-danger'>1-24 hrs</small>");
 	}
-	$('#capHoraModal').modal('hide');
 }
 
 function validaFormEdit(){
@@ -145,6 +145,7 @@ function validaFormEdit(){
 		$("#descDetalleHoraEdit").addClass("alert-danger");
 		$("#divDescDetalleHoraEdit").html("<small class='form-text text-danger'>Este dato es requerido</small>");
 	} else if ($("#valHoraCapEdit").val() > 0 && $("#valHoraCapEdit").val() <= 24 && $("#valHoraCapEdit").val().match(/(^\d*\.{0,1}\d{0,1})$/)){
+		$('#capHoraModalEdit').modal('hide');
 		document.getElementById('formEditCapHoraActividad').submit();
 	} else {
 		$("#descDetalleHoraEdit").removeClass("alert-danger");
@@ -153,7 +154,6 @@ function validaFormEdit(){
 		$("#valHoraCapEdit").addClass("alert-danger");
 		$("#divValHoraCapEdit").html("<small class='form-text text-danger'>1-24 hrs</small>");
 	}
-	$('#capHoraModalEdit').modal('hide');
 }
 
 function formatoFechaLarga(fecha) {
