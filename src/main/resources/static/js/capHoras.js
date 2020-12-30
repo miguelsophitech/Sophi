@@ -146,6 +146,8 @@ function validaFormEdit(){
 		$("#divDescDetalleHoraEdit").html("<small class='form-text text-danger'>Este dato es requerido</small>");
 	} else if ($("#valHoraCapEdit").val() > 0 && $("#valHoraCapEdit").val() <= 24 && $("#valHoraCapEdit").val().match(/(^\d*\.{0,1}\d{0,1})$/)){
 		$('#capHoraModalEdit').modal('hide');
+		console.log($("#selectProyectoEdit").val());
+		console.log($("#selectActividadSecundariaEdit").val());
 		$('#formEditCapHoraActividad').submit();
 	} else {
 		$("#descDetalleHoraEdit").removeClass("alert-danger");
@@ -220,6 +222,8 @@ function editCaptura(codCaptura){
 	var url="/editCaptura/"+codCaptura;
 	$("#formEditCaptura").load(url);
 	$('#capHoraModalEdit').modal('show');
+	$('#selectProyectoEdit').prop('selected', false);
+	$('#selectActividadSecundariaEdit').prop('selected', false);
 }
 
 
