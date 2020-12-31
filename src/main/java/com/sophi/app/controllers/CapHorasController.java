@@ -68,6 +68,8 @@ public class CapHorasController {
 	final String PREVENTA = "> Preventa (default)";
 	final String OTRA = "> Catálogo de actividades";
 	
+	
+	
 	@GetMapping("/capHoras/{email}")
 	public String capHoras(@PathVariable(value="email") String email, Model model) {
 		Long codRecurso = recursoService.findByDescCorreoElectronico(email).getCodRecurso();
@@ -244,7 +246,6 @@ public class CapHorasController {
 		status.setComplete();
 		flash.addFlashAttribute("success", mensajeFlash);
 		return "redirect:capHoras/"+recursoService.findOne(capHora.getCodRecurso()).getDescCorreoElectronico();
-		//return "redirect:formCapHoras";
 	}
 	
 	
@@ -267,6 +268,13 @@ public class CapHorasController {
 	@GetMapping(value="/editCaptura/{codCaptura}")
 	public String editCaptura(@PathVariable Long codCaptura, Model model) {
 		CapHora capHora = capHoraService.findOne(codCaptura);
+		
+		Long codproyecto = capHora.getCodProyecto();
+		Long codActividad = capHora.getCodActividad();
+		String descComentarioDetalle = capHora.getDescComentarioDetalle();
+		float valDuracionReportada = capHora.getValDuracionReportada();
+		
+		System.out.println(codproyecto + " " + codActividad + " " + descComentarioDetalle + " " + valDuracionReportada);
 		
 		capHora.setDescProyecto(proyectoService.findByCodProyecto(capHora.getCodProyecto()).getDescProyecto());
 		
