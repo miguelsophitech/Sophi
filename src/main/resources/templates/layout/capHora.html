@@ -129,8 +129,8 @@
 				<div class="form-group col-12 col-md-9">
 					<label style="font-size: 14px;" class="col-form-label">Proyecto </label>
 					<!-- <h6 style="font-weight: 600; font-size: 14px;" th:text="${capHora.descProyecto}"></h6> -->
-					<select class="custom-select" id="selectProyectoEdit" style="font-size: 14px; padding: 0px 10px;">
-						<option th:each="entry : ${proyectoList}" th:value="${entry.key}" th:text="${entry.value}"></option>
+					<select th:field="*{codProyecto}" class="custom-select" id="selectProyectoEdit" style="font-size: 14px; padding: 0px 10px;">
+						<option th:each="entry : ${proyectoList}" th:value="${entry.key}" th:text="${entry.value}" th:selected="${entry.value == capHora.descProyecto}"></option>
 					</select>
 				</div>
 			</div>
@@ -138,8 +138,8 @@
 				<div class="form-group col-12 col-md-9">
 					<label style="font-size: 14px;" class="col-form-label">Actividad </label>
 					<!-- <h6 style="font-weight: 600; font-size: 14px;" th:text="${capHora.descActividadSecundaria}"></h6> -->
-					<select class="custom-select" id="selectActividadSecundariaEdit" style="font-size: 14px; padding: 0px 10px;">
-						<option th:each="lista : ${actividadesSecundariasList}" th:value="${lista.codSubtarea}" th:text="${lista.descSubtarea}"></option>
+					<select th:field="*{codActividad}" class="custom-select" id="selectActividadSecundariaEdit" style="font-size: 14px; padding: 0px 10px;">
+						<option th:each="lista : ${actividadesSecundariasList}" th:value="${lista.codSubtarea}" th:text="${lista.descSubtarea}" th:selected="${lista.descSubtarea == capHora.descActividadSecundaria}"></option>
 					</select>
 				</div>
 			</div>
