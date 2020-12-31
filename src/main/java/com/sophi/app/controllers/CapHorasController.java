@@ -68,7 +68,10 @@ public class CapHorasController {
 	final String PREVENTA = "> Preventa (default)";
 	final String OTRA = "> Catálogo de actividades";
 	
-	
+	Long codproyecto, codproyecto_u;
+	Long codActividad, codActividad_u;
+	String descComentarioDetalle, descComentarioDetalle_u;
+	float valDuracionReportada, valDuracionReportada_u;
 	
 	@GetMapping("/capHoras/{email}")
 	public String capHoras(@PathVariable(value="email") String email, Model model) {
@@ -235,9 +238,21 @@ public class CapHorasController {
 
 	@RequestMapping(value="/formCapHoraActividad", method = RequestMethod.POST)
 	public String guardarCapHora(@Valid CapHora capHora, BindingResult result, Model model, RedirectAttributes flash ,SessionStatus status) {
+		
+		codproyecto_u = capHora.getCodProyecto();
+		codActividad_u = capHora.getCodActividad();
+		descComentarioDetalle_u = capHora.getDescComentarioDetalle();
+		valDuracionReportada_u = capHora.getValDuracionReportada();
+		
+		System.out.println(codproyecto_u + " " + codActividad_u + " " + descComentarioDetalle_u + " " + valDuracionReportada_u);
+		
 		if(result.hasErrors()) {
 
 			return "formCapHoras";
+		}
+		
+		if(codproyecto != codproyecto_u || codActividad != codActividad_u || descComentarioDetalle != descComentarioDetalle_u || valDuracionReportada != valDuracionReportada_u) {
+			capHora.setValRechazo(0L);
 		}
 		
 		String mensajeFlash = "Registro guardado con éxito";
@@ -269,10 +284,10 @@ public class CapHorasController {
 	public String editCaptura(@PathVariable Long codCaptura, Model model) {
 		CapHora capHora = capHoraService.findOne(codCaptura);
 		
-		Long codproyecto = capHora.getCodProyecto();
-		Long codActividad = capHora.getCodActividad();
-		String descComentarioDetalle = capHora.getDescComentarioDetalle();
-		float valDuracionReportada = capHora.getValDuracionReportada();
+		codproyecto = capHora.getCodProyecto();
+		codActividad = capHora.getCodActividad();
+		descComentarioDetalle = capHora.getDescComentarioDetalle();
+		valDuracionReportada = capHora.getValDuracionReportada();
 		
 		System.out.println(codproyecto + " " + codActividad + " " + descComentarioDetalle + " " + valDuracionReportada);
 		
@@ -327,7 +342,6 @@ public class CapHorasController {
 		
 		List<Subtarea> actividadesSecundariasList = subtareaService.findAll();
 		model.addAttribute("actividadesSecundariasList", actividadesSecundariasList);
-		
 		model.addAttribute("capHora", capHora);
 		return "layout/capHora :: editDetActividades";
 	}
