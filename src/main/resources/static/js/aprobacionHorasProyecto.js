@@ -3,7 +3,8 @@ $(document).ready(function() {
 	var rangeIsFrom = "";
 	var rangeIsTo = "";
 	var semanaActual = new Date().getFullYear() + '-W' +getWeekNr();
-	document.getElementById("semana").defaultValue=semanaActual;
+	//$("#semana").val(semanaActual);
+	document.getElementById("semana").defaultValue = semanaActual;
 	
 	$("#proyecto").change(function(){
 		$("#recursosHoras").html('<div class="spinner-grow text-muted"></div>');
