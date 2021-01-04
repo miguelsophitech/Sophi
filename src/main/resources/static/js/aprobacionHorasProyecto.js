@@ -2,8 +2,16 @@ $(document).ready(function() {
 	
 	var rangeIsFrom = "";
 	var rangeIsTo = "";
-	var semanaActual = new Date().getFullYear() + '-W' +getWeekNr();
-	//$("#semana").val(semanaActual);
+	var semanaActual = "";
+	
+	if(getWeekNr() > 9){
+		semanaActual = new Date().getFullYear() + '-W' +getWeekNr();
+	}
+	
+	else{
+		semanaActual = new Date().getFullYear() + '-W0' +getWeekNr();
+	}
+	
 	document.getElementById("semana").defaultValue = semanaActual;
 	
 	$("#proyecto").change(function(){
