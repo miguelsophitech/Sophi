@@ -340,6 +340,9 @@ public class CapHorasController {
 		proyectoList.put(proyecto.getCodProyecto(),proyecto.getDescProyecto());
 		model.addAttribute("proyectoList", proyectoList);
 		
+		List<Tarea> actividadesPrimariasList = tareaService.findAll();
+		model.addAttribute("actividadesPrimariasList", actividadesPrimariasList);
+		
 		List<Subtarea> actividadesSecundariasList = subtareaService.findAll();
 		model.addAttribute("actividadesSecundariasList", actividadesSecundariasList);
 		model.addAttribute("capHora", capHora);

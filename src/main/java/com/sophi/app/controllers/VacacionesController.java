@@ -124,8 +124,9 @@ public class VacacionesController {
 		
 		listaPR = proyectoRecursoService.findProyectoRecursoActivo(codRecurso);
 		for (ProyectoRecurso proyectoRecurso : listaPR) {
-			Proyecto proyecto = proyectoService.findByCodProyecto(proyectoRecurso.getProyectoRecursoId().getCodProyecto());
-			if(proyecto != null && proyecto.getCodProyecto() != 1) {
+			Proyecto proyecto = proyectoService.findByCodProyectoAndCodEstatusProyecto(proyectoRecurso.getProyectoRecursoId().getCodProyecto(), 2L);
+			//Proyecto proyecto = proyectoService.findByCodProyecto(proyectoRecurso.getProyectoRecursoId().getCodProyecto());
+			if(proyecto != null && proyecto.getCodProyecto() != 1 && proyecto.getCodEstatusProyecto() == 2) {
 				strb.append(proyecto.getDescProyecto());
 				strb.append(" del ");
 				SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");

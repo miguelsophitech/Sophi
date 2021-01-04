@@ -122,7 +122,7 @@
 			<table class="table container" id="dataTable" width="100%" cellspacing="0">
 				<tbody>
 					<tr class="row justify-content-md-center">
-						<td class="col" th:each="agenda: ${contactos}">
+						<td class="col-6 col-md-4" th:each="agenda: ${contactos}">
 							<ul class="list-group list-group-flush">
 								<li class="list-group-item"><i th:if="${agenda.valActivo} == 1" class='fas fa-user' style='font-size: 48px;'></i>
 								<i th:if="${agenda.valActivo} == 0" class='far fa-user' style='font-size:48px;'></i><br><h3 th:text="${agenda.descContacto}"></h3></li>
