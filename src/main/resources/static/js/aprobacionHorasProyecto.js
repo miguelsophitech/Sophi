@@ -3,13 +3,16 @@ $(document).ready(function() {
 	var rangeIsFrom = "";
 	var rangeIsTo = "";
 	var semanaActual = "";
+	var WeekNumber = new Date().getWeekNumber();
 	
-	if(getWeekNr() > 9){
-		semanaActual = new Date().getFullYear() + '-W' +getWeekNr();
+	console.log(WeekNumber);
+	
+	if(WeekNumber < 10){
+		semanaActual = new Date().getFullYear() + '-W0' +WeekNumber;
 	}
 	
 	else{
-		semanaActual = new Date().getFullYear() + '-W0' +getWeekNr();
+		semanaActual = new Date().getFullYear() + '-W' +WeekNumber;
 	}
 	
 	document.getElementById("semana").defaultValue = semanaActual;
@@ -238,7 +241,7 @@ function codProyecto(){
 }
 
 //Obtiene el numero de la semana actual de inicio
-function getWeekNr() {
+/*function getWeekNr() {
 	var now = new Date(), i = 0, f, sem = (new Date(now.getFullYear(), 0, 1) .getDay() > 0) ? 1 : 0;
 	while ((f = new Date(now.getFullYear(), 0, ++i)) < now) {
 		if (!f.getDay()) {
@@ -246,7 +249,15 @@ function getWeekNr() {
 		}
 	}
 	return sem;
-}
+}*/
+
+Date.prototype.getWeekNumber = function () {
+  var d = new Date(+this);  //Creamos un nuevo Date con la fecha de "this".
+  d.setHours(0, 0, 0, 0);   //Nos aseguramos de limpiar la hora.
+  d.setDate(d.getDate() + 4 - (d.getDay() || 7)); // Recorremos los días para asegurarnos de estar "dentro de la semana"
+  //Finalmente, calculamos redondeando y ajustando por la naturaleza de los números en JS:
+  return Math.ceil((((d - new Date(d.getFullYear(), 0, 1)) / 8.64e7) + 1) / 7);
+};
 
 //Obtiene el numero de la semana seleccionado en la vista
 function semanaSeleccion(obj){//2020-W38
@@ -259,7 +270,7 @@ function getDateRangeOfWeek(weekNo){
     var d1 = new Date();
     numOfdaysPastSinceLastMonday = eval(d1.getDay()- 1);
     d1.setDate(d1.getDate() - numOfdaysPastSinceLastMonday);
-    var weekNoToday = getWeekNr();
+    var weekNoToday = new Date().getWeekNumber();
     var weeksInTheFuture = eval( weekNo - weekNoToday );
     d1.setDate(d1.getDate() + eval( 7 * weeksInTheFuture ));
     rangeIsFrom = eval(d1.getMonth()+1) +"-" + d1.getDate() + "-" + d1.getFullYear();

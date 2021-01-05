@@ -126,14 +126,13 @@
 							<ul class="list-group list-group-flush">
 								<li class="list-group-item"><i th:if="${agenda.valActivo} == 1" class='fas fa-user' style='font-size: 48px;'></i>
 								<i th:if="${agenda.valActivo} == 0" class='far fa-user' style='font-size:48px;'></i><br><h3 th:text="${agenda.descContacto}"></h3></li>
-								<li class="list-group-item">Puesto: <strong th:text="${agenda.descPuesto}"></strong></li>
-								<li class="list-group-item">Cantidad de recursos a cargo: <strong th:text="${agenda.valRecursosACargo}"></strong></li>
+								<li class="list-group-item">Clasificaci&oacute;n de puesto: <strong th:text="${agenda.descPuesto}"></strong></li>
 								<li class="list-group-item">Correo electr&oacute;nico: <strong th:text="${agenda.descCorreoElectronico}"></strong></li>
-								<li class="list-group-item">Fecha de nacimiento: <strong th:text="${agenda.fecNacimiento}"></strong></li>
+								<li class="list-group-item">Tel&eacute;fono de empresa: <strong th:text="${agenda.descTelEmpresa}"></strong>&nbsp;	Extensi&oacute;n: <strong th:text="${agenda.descTelExt}"></strong></li>
 								<li class="list-group-item">Tel&eacute;fono particular: <strong th:text="${agenda.descTelCelular}"></strong>&nbsp; <img style="width: 14px; cursor: pointer;" th:src="@{/img/whapp.png}" th:attr="onclick=|loadWA('${agenda.descTelCelular}')|" ></li>
-								<li class="list-group-item">Tel&eacute;fono de empresa: <strong th:text="${agenda.descTelEmpresa}"></strong></li>
-								<li class="list-group-item">Extensi&oacute;n: <strong th:text="${agenda.descTelExt}"></strong></li>
-								<li class="list-group-item">Cargo que ocupa: <strong th:text="${agenda.nombreCargo}"></strong></li>
+								<!-- <li class="list-group-item">Cargo que ocupa: <strong th:text="${agenda.nombreCargo}"></strong></li> -->
+								<li class="list-group-item">Recursos a cargo: <strong th:text="${agenda.valRecursosACargo}"></strong></li>
+								<li class="list-group-item">Fecha de nacimiento: <strong th:text="${agenda.fecNacimiento}"></strong></li>
 								<li class="list-group-item"><a th:href="@{/formContacto/} + ${agenda.codContacto}" class="badge badge-success">Editar  <i class="far fa-edit"></i></a>	<a th:onclick="eliminar([[${agenda.codContacto}]])" href="#" class="badge badge-danger">Eliminar  <i class="far fa-trash-alt"></i></a><input class="codCliente" type="hidden" th:value="${agenda.codCliente}"/></li>
 							</ul>
 						</td>
