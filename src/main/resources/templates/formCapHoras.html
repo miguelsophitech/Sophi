@@ -149,7 +149,7 @@
 		</div>
        <div class="modal-footer">
     		<button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
-          	<button onclick="validaForm();" type="button" class="btn btn-primary">Aceptar</button>
+          	<button id="enviar" onclick="validaForm();" type="submit" class="btn btn-primary">Aceptar</button>
   		</div>
           
         </div>
@@ -185,7 +185,7 @@
 		</div>
        <div class="modal-footer">
     		<button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
-          	<button onclick="validaFormEdit();" class="btn btn-primary" type="submit">Aceptar</button>
+          	<button onclick="validaFormEdit();" onsubmit="return false;" class="btn btn-primary" type="submit">Aceptar</button>
   		</div>
           
         </div>

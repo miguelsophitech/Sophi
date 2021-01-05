@@ -45,6 +45,31 @@ $(document).ready(function() {
 //	cargarActividadesPrimariasProyecto();
 //	filtraActPorFase();
 //	altaCapHoraActividad();
+
+	/*$(document).on('click', '#enviar', function () {
+		var data = {
+            'proyecto': $('#selectProyecto').val(),
+            'fase': $('#selectActividadesPrimarias').val(),
+            'actividad': $('#selectActividadesSecundarias').val(),
+            'comentario': $('#descDetalleHora').val(),
+            'horas_cap': $('#valHoraCap').val()
+        };
+        
+        console.log(data);
+        
+		$.ajax({
+		    type: "POST",
+		    url: "/formCapHoraActividad",
+		    data: data,
+			success: function(result){
+		        console.log(result);
+		        semanaInicioFin(fh);
+		    }
+		});
+		console.log("Enviado");
+		return false;
+    });*/
+
 });
 
 function semanaInicioFin(fecha){
@@ -129,8 +154,8 @@ function validaForm(){
 		$("#descDetalleHora").addClass("alert-danger");
 		$("#divDescDetalleHora").html("<small class='form-text text-danger'>Este dato es requerido</small>");
 	} else if ($("#valHoraCap").val() > 0 && $("#valHoraCap").val() <= 24 && $("#valHoraCap").val().match(/(^\d*\.{0,1}\d{0,1})$/)){
-		$('#capHoraModal').modal('hide');
 	    $('#capHorasForm').submit();
+	    $('#capHoraModal').modal('hide');
 	} else {
 		$("#descDetalleHora").removeClass("alert-danger");
 		$("#divDescDetalleHora").html("");
@@ -145,8 +170,8 @@ function validaFormEdit(){
 		$("#descDetalleHoraEdit").addClass("alert-danger");
 		$("#divDescDetalleHoraEdit").html("<small class='form-text text-danger'>Este dato es requerido</small>");
 	} else if ($("#valHoraCapEdit").val() > 0 && $("#valHoraCapEdit").val() <= 24 && $("#valHoraCapEdit").val().match(/(^\d*\.{0,1}\d{0,1})$/)){
-		$('#capHoraModalEdit').modal('hide');
 		$('#formEditCapHoraActividad').submit();
+		$('#capHoraModalEdit').modal('hide');
 	} else {
 		$("#descDetalleHoraEdit").removeClass("alert-danger");
 		$("#divDescDetalleHoraEdit").html("");
