@@ -124,8 +124,8 @@
 					<tr class="row justify-content-md-center">
 						<td class="col-6 col-md-4" th:each="agenda: ${contactos}">
 							<ul class="list-group list-group-flush">
-								<li class="list-group-item"><i th:if="${agenda.valActivo} == 1" class='fas fa-user' style='font-size: 48px;'></i>
-								<i th:if="${agenda.valActivo} == 0" class='far fa-user' style='font-size:48px;'></i><br><h3 th:text="${agenda.descContacto}"></h3></li>
+								<li class="list-group-item"><img th:if="${agenda.valActivo} == 1" alt="contact_active" src="/img/contact_active.png" witdh="48" height="48">
+								<img th:if="${agenda.valActivo} == 0" alt="contact_disabled" src="/img/contact_disabled.png" witdh="48" height="48"><br><h3 th:text="${agenda.descContacto}"></h3></li>
 								<li class="list-group-item">Clasificaci&oacute;n de puesto: <strong th:text="${agenda.descPuesto}"></strong></li>
 								<li class="list-group-item">Correo electr&oacute;nico: <strong th:text="${agenda.descCorreoElectronico}"></strong></li>
 								<li class="list-group-item">Tel&eacute;fono de empresa: <strong th:text="${agenda.descTelEmpresa}"></strong>&nbsp;	Extensi&oacute;n: <strong th:text="${agenda.descTelExt}"></strong></li>

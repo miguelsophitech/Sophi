@@ -81,7 +81,7 @@
 								</div>
 								<div class="form-group col-12 col-md-4">
 									<label class="col-form-label">Correo*</label>
-									<input type="text" th:field="*{descCorreoElectronico}" class="form-control" th:errorclass="'form-control alert-danger'" pattern="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?" required/>
+									<input type="text" th:field="*{descCorreoElectronico}" class="form-control" th:errorclass="'form-control alert-danger'" pattern="^\S{1,}@\S{2,}\.\S{2,}$" required/>
 									<small class="form-text text-danger" th:if="${#fields.hasErrors('descCorreoElectronico')}" th:errors="*{descCorreoElectronico}"></small>
 								</div>
 								<div class="form-group col-8 col-md-3">

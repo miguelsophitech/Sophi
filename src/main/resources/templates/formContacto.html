@@ -68,7 +68,7 @@
                   <div class="row">
                      <div class="form-group col-12 col-md-3">
                       <label class="col-form-label">Correo electr&oacute;nico:</label>
-                      <input type="text" th:field="*{descCorreoElectronico}" class="form-control" th:errorClass="form-control alert-danger" pattern="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?" required/>
+                      <input type="text" th:field="*{descCorreoElectronico}" class="form-control" th:errorClass="form-control alert-danger" pattern="^\S{1,}@\S{2,}\.\S{2,}$" required/>
                       <small class="form-text text-danger" th:if="${#fields.hasErrors('descCorreoElectronico')}" th:errors="*{descCorreoElectronico}"></small>
                     </div>
                      <div class="form-group col-12 col-md-3">
@@ -170,7 +170,7 @@
   <script th:src="@{/js/datosRecursoSesion.js}"></script>
   <script th:src="@{/js/fecNacContacto.js}"></script>
   <script th:src="@{/js/phone.js}"></script>
-  <script th:src="@{/js/url.js}"></script>
+  <!-- <script th:src="@{/js/url.js}"></script> -->
   <script th:src="@{/js/switch.js}"></script>
 
 </body>
