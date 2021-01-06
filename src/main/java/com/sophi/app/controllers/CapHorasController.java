@@ -18,6 +18,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -236,7 +237,8 @@ public class CapHorasController {
 	
 	
 
-	@RequestMapping(value="/formCapHoraActividad", method = RequestMethod.POST)
+	@PostMapping(value="/formCapHoraActividad", produces = MediaType.APPLICATION_JSON_VALUE)
+	@ResponseBody
 	public String guardarCapHora(@Valid CapHora capHora, BindingResult result, Model model, RedirectAttributes flash ,SessionStatus status) {
 		
 		codproyecto_u = capHora.getCodProyecto();
@@ -256,11 +258,11 @@ public class CapHorasController {
 		}
 		
 		String mensajeFlash = "Registro guardado con éxito";
-
+		
 		capHoraService.save(capHora);
 		status.setComplete();
 		flash.addFlashAttribute("success", mensajeFlash);
-		return "redirect:capHoras/"+recursoService.findOne(capHora.getCodRecurso()).getDescCorreoElectronico();
+		return "Registro guardado con éxito";
 	}
 	
 	

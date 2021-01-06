@@ -35,33 +35,6 @@ $(document).ready(function() {
 		semanaInicioFin(fh);
 	});
 	
-	//$('#enviar').on('click', function(){
-		/*var data = {
-			'proyecto': $('#selectProyecto').val(),
-			'fase': $('#selectActividadesPrimarias').val(),
-			'actividad': $('#selectActividadesSecundarias').val(),
-			'comentario': $('#descDetalleHora').val(),
-			'horas_cap': $('#valHoraCap').val()
-		};*/
-	        
-		/*$.ajax({
-		    type: 'POST',
-		    url: '/formCapHoraActividad',
-		    data: data,
-			success: function(result){
-		        console.log(result);
-		        semanaInicioFin(fh);
-		    }
-		});*/
-		
-		/*$.post( "/formCapHoraActividad", function() {
-		  //$( "#detalleHorasCapturadas" ).html(data);
-		  alert('enviado');
-		});*/
-		
-		//event.preventDefault();
-	//});
-	
 	$(document).on('click', '.borrar', function (event) {
 	    event.preventDefault();
 	    $(this).closest('tr').remove();
@@ -159,6 +132,11 @@ function validaForm(){
 	} else if ($("#valHoraCap").val() > 0 && $("#valHoraCap").val() <= 24 && $("#valHoraCap").val().match(/(^\d*\.{0,1}\d{0,1})$/)){
 	    $('#capHorasForm').submit();
 	    $('#capHoraModal').modal('hide');
+	    $('#selectProyecto').val("");
+		$('#selectActividadesPrimarias').val("");
+		$('#selectActividadesSecundarias').val("");
+		$('#descDetalleHora').val("");
+		$('#valHoraCap').val("");
 	} else {
 		$("#descDetalleHora").removeClass("alert-danger");
 		$("#divDescDetalleHora").html("");
@@ -175,6 +153,10 @@ function validaFormEdit(){
 	} else if ($("#valHoraCapEdit").val() > 0 && $("#valHoraCapEdit").val() <= 24 && $("#valHoraCapEdit").val().match(/(^\d*\.{0,1}\d{0,1})$/)){
 		$('#formEditCapHoraActividad').submit();
 		$('#capHoraModalEdit').modal('hide');
+		$('#selectProyectoEdit').val("");
+		$('#selectActividadSecundariaEdit').val("");
+		$('#descDetalleHoraEdit').val("");
+		$('#valHoraCapEdit').val("");
 	} else {
 		$("#descDetalleHoraEdit").removeClass("alert-danger");
 		$("#divDescDetalleHoraEdit").html("");
@@ -252,7 +234,16 @@ function editCaptura(codCaptura){
 	$('#selectActividadSecundariaEdit').prop('selected', false);
 }
 
-function no_refresh(){
-	console.log("formulario enviado");
+function no_refresh(capHora){	
+	console.log(capHora);
+	$.ajax({
+		type: 'POST',
+		url: '/formCapHoraActividad',
+		data: capHora,
+		success: function(result){
+			console.log(result);
+			$('.table').html(result);
+		}
+	});
 	return false;
 }
