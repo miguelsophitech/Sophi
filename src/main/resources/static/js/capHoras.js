@@ -35,31 +35,32 @@ $(document).ready(function() {
 		semanaInicioFin(fh);
 	});
 	
-	/*$(document).on('click', '#enviar', function(){
-		$("#capHorasForm").submit(function () {
-			var data = {
-	            'proyecto': $('#selectProyecto').val(),
-	            'fase': $('#selectActividadesPrimarias').val(),
-	            'actividad': $('#selectActividadesSecundarias').val(),
-	            'comentario': $('#descDetalleHora').val(),
-	            'horas_cap': $('#valHoraCap').val()
-	        };
+	//$('#enviar').on('click', function(){
+		/*var data = {
+			'proyecto': $('#selectProyecto').val(),
+			'fase': $('#selectActividadesPrimarias').val(),
+			'actividad': $('#selectActividadesSecundarias').val(),
+			'comentario': $('#descDetalleHora').val(),
+			'horas_cap': $('#valHoraCap').val()
+		};*/
 	        
-	        console.log(data);
-	        
-			$.ajax({
-			    type: "POST",
-			    url: "/formCapHoraActividad",
-			    data: data,
-				success: function(result){
-			        console.log(result);
-			        semanaInicioFin(fh);
-			    }
-			});
-			console.log("Enviado");
-			return false;
-	    });
-	});*/
+		/*$.ajax({
+		    type: 'POST',
+		    url: '/formCapHoraActividad',
+		    data: data,
+			success: function(result){
+		        console.log(result);
+		        semanaInicioFin(fh);
+		    }
+		});*/
+		
+		/*$.post( "/formCapHoraActividad", function() {
+		  //$( "#detalleHorasCapturadas" ).html(data);
+		  alert('enviado');
+		});*/
+		
+		//event.preventDefault();
+	//});
 	
 	$(document).on('click', '.borrar', function (event) {
 	    event.preventDefault();
@@ -251,4 +252,7 @@ function editCaptura(codCaptura){
 	$('#selectActividadSecundariaEdit').prop('selected', false);
 }
 
-
+function no_refresh(){
+	console.log("formulario enviado");
+	return false;
+}

@@ -74,7 +74,7 @@
 
 	<div th:fragment="detActividades">
 		<form id="capHorasForm" th:action="@{/formCapHoraActividad}"
-			th:Object="${capHora}" method="post">
+			th:Object="${capHora}" method="post" onsubmit="mostrar();">
 			<div class="row">
 				<div class="form-group col-12 col-md-9">
 					<label class="col-form-label">Detalle</label> <input type="text" id="descDetalleHora"
@@ -124,7 +124,7 @@
 	</div>
 	
 	<div th:fragment="editDetActividades">
-		<form id="formEditCapHoraActividad" th:action="@{/formCapHoraActividad}" th:Object="${capHora}" method="post">
+		<form id="formEditCapHoraActividad" th:action="@{/formCapHoraActividad}" th:Object="${capHora}" method="post" onsubmit="no_refresh();">
 			<div class="row">
 				<div class="form-group col-12 col-md-9">
 					<label style="font-size: 14px;" class="col-form-label">Proyecto </label>
