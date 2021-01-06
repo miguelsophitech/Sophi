@@ -35,6 +35,32 @@ $(document).ready(function() {
 		semanaInicioFin(fh);
 	});
 	
+	/*$(document).on('click', '#enviar', function(){
+		$("#capHorasForm").submit(function () {
+			var data = {
+	            'proyecto': $('#selectProyecto').val(),
+	            'fase': $('#selectActividadesPrimarias').val(),
+	            'actividad': $('#selectActividadesSecundarias').val(),
+	            'comentario': $('#descDetalleHora').val(),
+	            'horas_cap': $('#valHoraCap').val()
+	        };
+	        
+	        console.log(data);
+	        
+			$.ajax({
+			    type: "POST",
+			    url: "/formCapHoraActividad",
+			    data: data,
+				success: function(result){
+			        console.log(result);
+			        semanaInicioFin(fh);
+			    }
+			});
+			console.log("Enviado");
+			return false;
+	    });
+	});*/
+	
 	$(document).on('click', '.borrar', function (event) {
 	    event.preventDefault();
 	    $(this).closest('tr').remove();
@@ -45,30 +71,6 @@ $(document).ready(function() {
 //	cargarActividadesPrimariasProyecto();
 //	filtraActPorFase();
 //	altaCapHoraActividad();
-
-	/*$(document).on('click', '#enviar', function () {
-		var data = {
-            'proyecto': $('#selectProyecto').val(),
-            'fase': $('#selectActividadesPrimarias').val(),
-            'actividad': $('#selectActividadesSecundarias').val(),
-            'comentario': $('#descDetalleHora').val(),
-            'horas_cap': $('#valHoraCap').val()
-        };
-        
-        console.log(data);
-        
-		$.ajax({
-		    type: "POST",
-		    url: "/formCapHoraActividad",
-		    data: data,
-			success: function(result){
-		        console.log(result);
-		        semanaInicioFin(fh);
-		    }
-		});
-		console.log("Enviado");
-		return false;
-    });*/
 
 });
 
