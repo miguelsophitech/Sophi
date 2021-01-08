@@ -255,6 +255,8 @@ public class CapHorasController {
 		
 		if(codproyecto != codproyecto_u || codActividad != codActividad_u || descComentarioDetalle != descComentarioDetalle_u || valDuracionReportada != valDuracionReportada_u) {
 			capHora.setValRechazo(0L);
+			capHora.setValDuracionRechazada(0L);
+			capHora.setDescRechazo(null);
 		}
 		
 		String mensajeFlash = "Registro guardado con éxito";
