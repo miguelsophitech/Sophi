@@ -131,6 +131,7 @@ public class AprobacionHorasProyectoController {
     
     @RequestMapping(value = "/capturaHorasPeriodo/{from}/{to}/{codProyecto}", method = RequestMethod.GET)
     public String listadoRecursosCaptura(Model model, @PathVariable(value = "from") String desde, @PathVariable(value = "to") String hasta, @PathVariable(value = "codProyecto") String codProyecto){
+    	System.out.println(desde + " " + hasta);
     	Date inicio = new Date();
     	Date fin = new Date();
     	String todos = "no";
@@ -211,7 +212,6 @@ public class AprobacionHorasProyectoController {
     	System.out.println(codRecurso);
     	System.out.println(proyectos);
     	System.out.println(semana);
-    	
     	Date inicio = new Date();
     	Date fin = new Date();
     	try {
