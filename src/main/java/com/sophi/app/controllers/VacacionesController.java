@@ -118,7 +118,7 @@ public class VacacionesController {
 		
 		String pattern = "yyyyMMdd";
 		DateFormat df = new SimpleDateFormat(pattern);
-		String hoyVal = df.format(new Date(new Utiles().getFechaActual().getTime() + (1000 * 60 * 60 * 24 * 7) ));
+		String hoyVal = df.format(new Date(new Utiles().getFechaActual().getTime() + (1000 * 60 * 60 * 24 * 1) ));
 		
 		List<String> aprobadores = new ArrayList<String>();
 		

@@ -132,21 +132,25 @@ renderCalendar(month, year)
         	var conteoDias = $("#conteoSolicitados").text();
         	var conteoDiasDisponibles = $("#conteoDisponibles").text();
         	if(conteoDiasDisponibles > 0){
-	        	conteoDias++;
-	        	conteoDiasDisponibles--;
-	        	$("#conteoSolicitados").html(conteoDias);
-	        	$("#conteoDisponibles").html(conteoDiasDisponibles);
-	        	$('.events-today').append('<div class="alert alert-info alert-dismissible fade show" style="font-size:12px; margin-bottom:5px; padding:5px;" role="alert">' +
-	        			fecSolicitud +
-	              '<button type="button" style="font-size:16px; padding:5px;" class="close remove-event" data-dismiss="alert" aria-label="Close" id=' + id + '>'+
-	                '<span aria-hidden="true">&times;</span>'+
-	              '</button>'+
-	            '</div>');
-	        	if(conteoDias == 0){
-	        		$('#btn-solicitar').addClass('d-none');
-	        	} else {
-	        		$('#btn-solicitar').removeClass('d-none');
-	        	}
+        		if(conteoDias < 10){
+		        	conteoDias++;
+		        	conteoDiasDisponibles--;
+		        	$("#conteoSolicitados").html(conteoDias);
+		        	$("#conteoDisponibles").html(conteoDiasDisponibles);
+		        	$('.events-today').append('<div class="alert alert-info alert-dismissible fade show" style="font-size:12px; margin-bottom:5px; padding:5px;" role="alert">' +
+		        			fecSolicitud +
+		              '<button type="button" style="font-size:16px; padding:5px;" class="close remove-event" data-dismiss="alert" aria-label="Close" id=' + id + '>'+
+		                '<span aria-hidden="true">&times;</span>'+
+		              '</button>'+
+		            '</div>');
+		        	if(conteoDias == 0){
+		        		$('#btn-solicitar').addClass('d-none');
+		        	} else {
+		        		$('#btn-solicitar').removeClass('d-none');
+		        	}
+        		} else {
+        			alert("El número máximo de días solicitados es 10.")
+        		}
         	} else {
         		alert("No cuentas con días disponible.")
         	}
