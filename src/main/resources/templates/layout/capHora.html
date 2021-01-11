@@ -74,7 +74,7 @@
 
 	<div th:fragment="detActividades">
 		<form id="capHorasForm" th:action="@{/formCapHoraActividad}"
-			th:Object="${capHora}" method="post">
+			th:Object="${capHora}" method="post" onsubmit="return no_refresh(Object.values(this));">
 			<div class="row">
 				<div class="form-group col-12 col-md-9">
 					<label class="col-form-label">Detalle</label> <input type="text" id="descDetalleHora"
@@ -84,9 +84,9 @@
 				</div>
 				<div class="form-group col-12 col-md-3">
 
-					<label class="col-form-label">Horas</label> <input step="any" type="number" id="valHoraCap" min="0" max="24"
+					<label class="col-form-label">Horas</label> <input step="0.1" type="number" id="valHoraCap" min="0" max="24"
 						th:field="*{valDuracionReportada}" onchange="handleChange(this);"
-						class="form-control"  style="font-size: 14px; padding: 0px 10px;" /><div id="divValHoraCap"></div>
+						class="form-control"  style="font-size: 14px; padding: 0px 10px;" pattern="/(^\d*\.{0,1}\d{0,1})$/)"/><div id="divValHoraCap"></div>
 
 				</div>
 			</div>
@@ -124,17 +124,26 @@
 	</div>
 	
 	<div th:fragment="editDetActividades">
-		<form id="formEditCapHoraActividad" th:action="@{/formCapHoraActividad}" th:Object="${capHora}" method="post">
+		<form id="formEditCapHoraActividad" th:action="@{/formCapHoraActividad}" 
+			th:Object="${capHora}" method="post" onsubmit="return no_refresh(Object.values(this));">
 			<div class="row">
 				<div class="form-group col-12 col-md-9">
 					<label style="font-size: 14px;" class="col-form-label">Proyecto </label>
-					<h6 style="font-weight: 600; font-size: 14px;" th:text="${capHora.descProyecto}"></h6>
+					<!-- <h6 style="font-weight: 600; font-size: 14px;" th:text="${capHora.descProyecto}"></h6> -->
+					<select th:field="*{codProyecto}" class="custom-select" id="selectProyectoEdit" style="font-size: 14px; padding: 0px 10px;">
+						<option th:each="entry : ${proyectoList}" th:value="${entry.key}" th:text="${entry.value}" th:selected="${entry.value == capHora.descProyecto}"></option>
+					</select>
 				</div>
 			</div>
 			<div class="row">
 				<div class="form-group col-12 col-md-9">
 					<label style="font-size: 14px;" class="col-form-label">Actividad </label>
-					<h6 style="font-weight: 600; font-size: 14px;" th:text="${capHora.descActividadSecundaria}"></h6>
+					<!-- <h6 style="font-weight: 600; font-size: 14px;" th:text="${capHora.descActividadSecundaria}"></h6> -->
+					<select th:field="*{codActividad}" class="custom-select" id="selectActividadSecundariaEdit" style="font-size: 14px; padding: 0px 10px;">
+						<optgroup th:each="tarea: ${actividadesPrimariasList}" th:label="${tarea.descTarea}">
+						<option th:each="lista : ${actividadesSecundariasList}" th:value="${lista.codSubtarea}" th:text="${lista.descSubtarea}" th:selected="${lista.descSubtarea == capHora.descActividadSecundaria}"></option>
+						</optgroup>
+					</select>
 				</div>
 			</div>
 			<div class="row">
@@ -144,8 +153,8 @@
 				</div>
 				<div class="form-group col-6 col-md-3">
 					<label style="font-size: 14px;" class="col-form-label">Horas</label>
-						<input type="number" id="valHoraCapEdit" min="0" max="24" th:field="*{valDuracionReportada}" onchange="handleChange(this);" class="form-control"  style="font-size: 14px; padding: 0px 10px;"/>
-						<div id="divValHoraCapEdit"></div>
+					<input step="0.1" type="number" id="valHoraCapEdit" min="0" max="24" th:field="*{valDuracionReportada}" onchange="handleChange(this);" class="form-control"  style="font-size: 14px; padding: 0px 10px;" pattern="/(^\d*\.{0,1}\d{0,1})$/)"/>
+					<div id="divValHoraCapEdit"></div>
 				</div>
 			</div>
 			<div class="row">
@@ -156,10 +165,6 @@
 			</div>
 		</form>
 	</div>
-
-	
-	
-	
 
 </body>
 </html>

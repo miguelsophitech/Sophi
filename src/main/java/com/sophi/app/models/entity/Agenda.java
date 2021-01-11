@@ -76,6 +76,9 @@ public class Agenda implements Serializable {
 	@Column(name = "cod_cargo")
 	private Long codCargo;
 	
+	@Column(name = "val_activo")
+	private Long valActivo;
+	
 	@PrePersist
 	public void prePersist() {
 		fecRegistro = new Date();
@@ -197,7 +200,12 @@ public class Agenda implements Serializable {
 		this.nombreCargo = nombreCargo;
 	}
 
-	
+	public Long getValActivo() {
+		return valActivo;
+	}
 
+	public void setValActivo(Long valActivo) {
+		this.valActivo = valActivo;
+	}
 	
 }

@@ -1,5 +1,4 @@
 $(document).ready(function() {
-
 	var fh = new Date();
 	formatoFechaLarga(fh);
 	completaSemana(fh);
@@ -50,6 +49,7 @@ $(document).ready(function() {
 });
 
 function semanaInicioFin(fecha){
+
 var curr = new Date(fecha);
 
 var first = curr.getDate() - curr.getDay(); // First day is the day of the month - the day of the week 
@@ -123,14 +123,20 @@ function limpiaActive() {
 function handleChange(input) {
     if (input.value < 0) input.value = 0;
     if (input.value > 24) input.value = 24;
-  }
+}
 
 function validaForm(){
 	if(!$("#descDetalleHora").val()){
 		$("#descDetalleHora").addClass("alert-danger");
 		$("#divDescDetalleHora").html("<small class='form-text text-danger'>Este dato es requerido</small>");
-	} else if ($("#valHoraCap").val() > 0 && $("#valHoraCap").val() <= 24 ){
-		document.getElementById('capHorasForm').submit();
+	} else if ($("#valHoraCap").val() > 0 && $("#valHoraCap").val() <= 24 && $("#valHoraCap").val().match(/(^\d*\.{0,1}\d{0,1})$/)){
+	    $('#capHorasForm').submit();
+	    $('#capHoraModal').modal('hide');
+	    $('#selectProyecto').val("");
+		$('#selectActividadesPrimarias').val("");
+		$('#selectActividadesSecundarias').val("");
+		$('#descDetalleHora').val("");
+		$('#valHoraCap').val("");
 	} else {
 		$("#descDetalleHora").removeClass("alert-danger");
 		$("#divDescDetalleHora").html("");
@@ -144,8 +150,13 @@ function validaFormEdit(){
 	if(!$("#descDetalleHoraEdit").val()){
 		$("#descDetalleHoraEdit").addClass("alert-danger");
 		$("#divDescDetalleHoraEdit").html("<small class='form-text text-danger'>Este dato es requerido</small>");
-	} else if ($("#valHoraCapEdit").val() > 0 && $("#valHoraCapEdit").val() <= 24 ){
-		document.getElementById('formEditCapHoraActividad').submit();
+	} else if ($("#valHoraCapEdit").val() > 0 && $("#valHoraCapEdit").val() <= 24 && $("#valHoraCapEdit").val().match(/(^\d*\.{0,1}\d{0,1})$/)){
+		$('#formEditCapHoraActividad').submit();
+		$('#capHoraModalEdit').modal('hide');
+		$('#selectProyectoEdit').val("");
+		$('#selectActividadSecundariaEdit').val("");
+		$('#descDetalleHoraEdit').val("");
+		$('#valHoraCapEdit').val("");
 	} else {
 		$("#descDetalleHoraEdit").removeClass("alert-danger");
 		$("#divDescDetalleHoraEdit").html("");
@@ -219,6 +230,20 @@ function editCaptura(codCaptura){
 	var url="/editCaptura/"+codCaptura;
 	$("#formEditCaptura").load(url);
 	$('#capHoraModalEdit').modal('show');
+	$('#selectProyectoEdit').prop('selected', false);
+	$('#selectActividadSecundariaEdit').prop('selected', false);
 }
 
-
+function no_refresh(capHora){	
+	console.log(capHora);
+	$.ajax({
+		type: 'POST',
+		url: '/formCapHoraActividad',
+		data: capHora,
+		success: function(result){
+			console.log(result);
+			$('.table').html(result);
+		}
+	});
+	return false;
+}

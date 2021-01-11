@@ -1519,9 +1519,10 @@ pre code {
 
 .table th,
 .table td {
-  padding: 0.75rem;
+  padding: 8px;
   vertical-align: top;
   border-top: 1px solid #e3e6f0;
+  font-size: 13px;
 }
 
 .table thead th {

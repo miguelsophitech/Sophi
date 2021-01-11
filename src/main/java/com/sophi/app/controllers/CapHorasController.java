@@ -1,6 +1,7 @@
 package com.sophi.app.controllers;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -8,6 +9,7 @@ import java.util.Map;
 
 import javax.validation.Valid;
 
+import org.apache.commons.collections.ListUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.MediaType;
@@ -16,6 +18,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -64,7 +67,12 @@ public class CapHorasController {
 	private IProyectoRecursoService proyectoRecursoService;
 	
 	final String PREVENTA = "> Preventa (default)";
-	final String OTRA = "> Otra (fuera de plan)";
+	final String OTRA = "> Catálogo de actividades";
+	
+	Long codproyecto, codproyecto_u;
+	Long codActividad, codActividad_u;
+	String descComentarioDetalle, descComentarioDetalle_u;
+	float valDuracionReportada, valDuracionReportada_u;
 	
 	@GetMapping("/capHoras/{email}")
 	public String capHoras(@PathVariable(value="email") String email, Model model) {
@@ -150,8 +158,8 @@ public class CapHorasController {
 			model.addAttribute("actividadesSecundariasListFuera", tareaService.findTareaFueraPlan());
 			return "layout/capHora :: listActividadesSecundariasFueraOtra";
 		} else {
-		model.addAttribute("actividadesSecundariasList", actividadService.findListaActividadesByRecursoProyectoPrimaria(codRecurso, codProyecto, descPrimaria));
-		return "layout/capHora :: listActividadesSecundarias";
+			model.addAttribute("actividadesSecundariasList", actividadService.findListaActividadesByRecursoProyectoPrimaria(codRecurso, codProyecto, descPrimaria));
+			return "layout/capHora :: listActividadesSecundarias";
 		}
 	}
 	
@@ -229,19 +237,34 @@ public class CapHorasController {
 	
 	
 
-	@RequestMapping(value="/formCapHoraActividad", method = RequestMethod.POST)
+	@PostMapping(value="/formCapHoraActividad", produces = MediaType.APPLICATION_JSON_VALUE)
+	@ResponseBody
 	public String guardarCapHora(@Valid CapHora capHora, BindingResult result, Model model, RedirectAttributes flash ,SessionStatus status) {
+		
+		codproyecto_u = capHora.getCodProyecto();
+		codActividad_u = capHora.getCodActividad();
+		descComentarioDetalle_u = capHora.getDescComentarioDetalle();
+		valDuracionReportada_u = capHora.getValDuracionReportada();
+		
+		System.out.println(codproyecto_u + " " + codActividad_u + " " + descComentarioDetalle_u + " " + valDuracionReportada_u);
+		
 		if(result.hasErrors()) {
 
 			return "formCapHoras";
 		}
 		
+		if(codproyecto != codproyecto_u || codActividad != codActividad_u || descComentarioDetalle != descComentarioDetalle_u || valDuracionReportada != valDuracionReportada_u) {
+			capHora.setValRechazo(0L);
+			capHora.setValDuracionRechazada(0L);
+			capHora.setDescRechazo(null);
+		}
+		
 		String mensajeFlash = "Registro guardado con éxito";
-
+		
 		capHoraService.save(capHora);
 		status.setComplete();
 		flash.addFlashAttribute("success", mensajeFlash);
-		return "redirect:capHoras/"+recursoService.findOne(capHora.getCodRecurso()).getDescCorreoElectronico();
+		return "Registro guardado con éxito";
 	}
 	
 	
@@ -260,15 +283,72 @@ public class CapHorasController {
 		return "Borrado correcto";
 	}
 	
+	/*Aquí se tiene que agregar la lista de proyectos y actividades por recursos*/
 	@GetMapping(value="/editCaptura/{codCaptura}")
 	public String editCaptura(@PathVariable Long codCaptura, Model model) {
 		CapHora capHora = capHoraService.findOne(codCaptura);
+		
+		codproyecto = capHora.getCodProyecto();
+		codActividad = capHora.getCodActividad();
+		descComentarioDetalle = capHora.getDescComentarioDetalle();
+		valDuracionReportada = capHora.getValDuracionReportada();
+		
+		System.out.println(codproyecto + " " + codActividad + " " + descComentarioDetalle + " " + valDuracionReportada);
+		
 		capHora.setDescProyecto(proyectoService.findByCodProyecto(capHora.getCodProyecto()).getDescProyecto());
+		
 		if(capHora.getValNuevaActividad()==0) {
+			//capHora.setDescActividadPrimaria(actividadService.findOne(capHora.getCodActividad()).getDescActividadPrimaria());
 			capHora.setDescActividadSecundaria(actividadService.findOne(capHora.getCodActividad()).getDescActividadSecundaria());
 		} else {
+			//capHora.setDescActividadPrimaria(tareaService.findOne(capHora.getCodActividad()).getDescTarea());
 			capHora.setDescActividadSecundaria(subtareaService.findOne(capHora.getCodActividad()).getDescSubtarea());
 		}
+		
+		List<Long> proyectoListId = new ArrayList<Long>();
+		HashMap<Long, String> proyectoList = new HashMap<Long, String>(); 
+		proyectoListId = actividadService.findListaProyectoByRecurso(capHora.getCodRecurso());
+		if (proyectoListId.size() > 0) {
+			for (Long id : proyectoListId) {
+				Proyecto proyecto = proyectoService.findByCodProyectoAndCodEstatusProyecto(id, 2L);
+				if(proyecto == null) {
+					proyecto = proyectoService.findByCodProyectoAndCodEstatusProyecto(id, 1L);
+					if(proyecto != null){
+						proyectoList.put(id, proyecto.getDescProyecto());
+					}
+				} else if(proyecto != null){
+					proyectoList.put(id, proyecto.getDescProyecto());
+				}
+			}
+		} 
+		
+		List<ProyectoRecurso> proyectosRecurso = new ArrayList<ProyectoRecurso>();
+		proyectosRecurso = proyectoRecursoService.findByProyectoRecursoIdCodRecurso(capHora.getCodRecurso());
+		if (proyectosRecurso.size() > 0) {
+			for (ProyectoRecurso proyectoRecurso : proyectosRecurso) {
+				Long idProyect = proyectoRecurso.getProyectoRecursoId().getCodProyecto();
+				Proyecto proyecto = proyectoService.findByCodProyectoAndCodEstatusProyecto(idProyect, 2L);
+				if (proyecto == null) {
+					proyecto = proyectoService.findByCodProyectoAndCodEstatusProyecto(idProyect, 1L);
+					if (proyecto != null) {
+						proyectoList.put(idProyect,proyecto.getDescProyecto());
+					}
+				} else if (proyecto != null) {
+					proyectoList.put(idProyect,proyecto.getDescProyecto());
+				}
+				
+			}
+		}
+		
+		Proyecto proyecto = proyectoService.findByCodProyecto(1L);
+		proyectoList.put(proyecto.getCodProyecto(),proyecto.getDescProyecto());
+		model.addAttribute("proyectoList", proyectoList);
+		
+		List<Tarea> actividadesPrimariasList = tareaService.findAll();
+		model.addAttribute("actividadesPrimariasList", actividadesPrimariasList);
+		
+		List<Subtarea> actividadesSecundariasList = subtareaService.findAll();
+		model.addAttribute("actividadesSecundariasList", actividadesSecundariasList);
 		model.addAttribute("capHora", capHora);
 		return "layout/capHora :: editDetActividades";
 	}

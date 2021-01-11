@@ -25,9 +25,9 @@
 			<table class="table" id="dataTable" width="100%" cellspacing="0">
 				<thead>
 					<tr>
-						<th>C&oacute;digo</th>
 						<th>Proyecto</th>
 						<th>Fecha de inicio</th>
+						<th>Fecha fin</th>
 						<th>Responsable</th>
 						<th>Aprobador</th>
 						<th>Estatus</th>
@@ -37,9 +37,9 @@
 				<tbody>
 					<th:block th:each="proyecto : ${proyectos}">
 						<tr th:if="${proyecto.codEstatusProyecto == 3}">
-							<td th:text="${proyecto.descCodigoProyecto}"></td>
 							<td th:text="${proyecto.descProyecto}"></td>
-							<td th:text="${#dates.format(proyecto.fecIncioProyecto,'dd/MM/yy')}"></td>
+							<td th:text="${#dates.format(proyecto.fecIncioProyecto,'dd/MM/yyyy')}"></td>
+							<td th:text="${#dates.format(proyecto.fecFinProyecto,'dd/MM/yyyy')}"></td>
 							<td th:text="${proyecto.nombreRecursoLider}"></td>
 							<td th:text="${proyecto.nombreRecursoAprobador}"></td>
 							<td style="color: red; font-weight: bold;">Cerrado</td>
@@ -51,9 +51,9 @@
 							</td>
 						</tr>
 						<tr th:if="${proyecto.codEstatusProyecto == 2}">
-							<td th:text="${proyecto.descCodigoProyecto}"></td>
 							<td th:text="${proyecto.descProyecto}"></td>
-							<td th:text="${#dates.format(proyecto.fecIncioProyecto,'dd/MM/yy')}"></td>
+							<td th:text="${#dates.format(proyecto.fecIncioProyecto,'dd/MM/yyyy')}"></td>
+							<td th:text="${#dates.format(proyecto.fecFinProyecto,'dd/MM/yyyy')}"></td>
 							<td th:text="${proyecto.nombreRecursoLider}"></td>
 							<td th:text="${proyecto.nombreRecursoAprobador}"></td>
 							<td style="color: green; font-weight: bold;">Proyecto</td>
@@ -65,8 +65,8 @@
                       		</td>
 	                    </tr>
 						<tr th:if="${proyecto.codEstatusProyecto == 1}">
-							<td th:text="${proyecto.descCodigoProyecto}"></td>
 							<td th:text="${proyecto.descProyecto}"></td>
+							<td>N/A</td>
 							<td>N/A</td>
 							<td th:text="${proyecto.nombreRecursoLider}"></td>
 							<td th:text="${proyecto.nombreRecursoAprobador}"></td>
@@ -118,33 +118,28 @@
 	
 	
 	<div class="col-sm-12" th:fragment="contacto-listado">
-		<div class="table-responsive fz-12">
-			<table class="table table-hover" id="dataTable" width="100%" cellspacing="0">
-				<thead>
-					<tr>
-						<th>Nombre</th>
-						<th>Puesto</th>
-						<th>Correo</th>
-						<th>Tel&eacute;fono Celular</th>
-						<th>Acciones</th>
-					</tr>
-				</thead>
+		<!-- <div class="table-responsive fz-12"> -->
+			<table class="table container" id="dataTable" width="100%" cellspacing="0">
 				<tbody>
-					<tr th:each="agenda: ${contactos}">
-						<td th:text="${agenda.descContacto}"></td>
-						<td th:text="${agenda.descPuesto}"></td>
-						<td th:text="${agenda.descCorreoElectronico}"></td>
-						<td th:text="${agenda.descTelCelular}"></td>
-						<td>
-							<a th:href="@{/dataContacto/} + ${agenda.codContacto}" class="badge badge-info">Ver  <i class="far fa-address-book"></i></a>
-							<a th:href="@{/formContacto/} + ${agenda.codContacto}" class="badge badge-success">Editar  <i class="far fa-edit"></i></a>
-							<a th:onclick="eliminar([[${agenda.codContacto}]])" href="#" class="badge badge-danger">Eliminar  <i class="far fa-trash-alt"></i></a>
-							<input class="codCliente" type="hidden" th:value="${agenda.codCliente}"/>
+					<tr class="row justify-content-md-center">
+						<td class="col-6 col-md-4" th:each="agenda: ${contactos}">
+							<ul class="list-group list-group-flush">
+								<li class="list-group-item"><img th:if="${agenda.valActivo} == 1" alt="contact_active" src="/img/contact_active.png" witdh="48" height="48">
+								<img th:if="${agenda.valActivo} == 0" alt="contact_disabled" src="/img/contact_disabled.png" witdh="48" height="48"><br><h3 th:text="${agenda.descContacto}"></h3></li>
+								<li class="list-group-item">Clasificaci&oacute;n de puesto: <strong th:text="${agenda.descPuesto}"></strong></li>
+								<li class="list-group-item">Correo electr&oacute;nico: <strong th:text="${agenda.descCorreoElectronico}"></strong></li>
+								<li class="list-group-item">Tel&eacute;fono de empresa: <strong th:text="${agenda.descTelEmpresa}"></strong>&nbsp;	Extensi&oacute;n: <strong th:text="${agenda.descTelExt}"></strong></li>
+								<li class="list-group-item">Tel&eacute;fono particular: <strong th:text="${agenda.descTelCelular}"></strong>&nbsp; <img style="width: 14px; cursor: pointer;" th:src="@{/img/whapp.png}" th:attr="onclick=|loadWA('${agenda.descTelCelular}')|" ></li>
+								<!-- <li class="list-group-item">Cargo que ocupa: <strong th:text="${agenda.nombreCargo}"></strong></li> -->
+								<li class="list-group-item">Recursos a cargo: <strong th:text="${agenda.valRecursosACargo}"></strong></li>
+								<li class="list-group-item">Fecha de nacimiento: <strong th:text="${agenda.fecNacimiento}"></strong></li>
+								<li class="list-group-item"><a th:href="@{/formContacto/} + ${agenda.codContacto}" class="badge badge-success">Editar  <i class="far fa-edit"></i></a>	<a th:onclick="eliminar([[${agenda.codContacto}]])" href="#" class="badge badge-danger">Eliminar  <i class="far fa-trash-alt"></i></a><input class="codCliente" type="hidden" th:value="${agenda.codCliente}"/></li>
+							</ul>
 						</td>
 					</tr>
 				</tbody>
 			</table>
-		</div>	
+		<!-- </div> -->
 	
 		<script type="text/javascript" charset="UTF-8">
 		$('#dataTable').DataTable( {
@@ -177,6 +172,10 @@
 	  	        }
 	  	    }
 	  	});
+		
+		function loadWA(numero){
+			window.open('http://wppredirect.tk/go/?p=521'+numero+'&amp;m=');
+		}
 		</script>
 	</div>
 	
@@ -249,7 +248,7 @@
 			                <th></th>
 			                <th>Proyecto</th>
 			                <th>Tipo de gasto</th>
-			                 <th>Fecha</th>
+			                <th>Fecha</th>
 			                <th>Colaborador</th>
 			                <th>Descripci&oacute;n</th>
 			                <th>Comprobante</th>
@@ -309,9 +308,8 @@
 	  	    }
 	  	});
 		</script>
+		
 	</div>
-	
-	
 
 </body>
 </html>

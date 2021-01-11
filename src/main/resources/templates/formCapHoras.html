@@ -145,11 +145,11 @@
 <!-- 			</div> -->
 			
 		
-<!--    	</form> --> 
+<!--    	</form> onclick="validaForm();"--> 
 		</div>
        <div class="modal-footer">
     		<button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
-          	<button onclick="validaForm();" type="submit" class="btn btn-primary">Aceptar</button>
+          	<button type="submit" onclick="validaForm();" class="btn btn-primary">Aceptar</button>
   		</div>
           
         </div>
@@ -226,7 +226,6 @@
   
   <!-- Captura de horas scripts -->
   <script th:src="@{/js/capHoras.js}"></script>
-  
   <script th:src="@{/js/datosRecursoSesion.js}"></script>
 
 </body>

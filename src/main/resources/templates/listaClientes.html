@@ -42,10 +42,9 @@
                 <table class="table" id="dataTable" width="100%" cellspacing="0">
 	                 <thead>
 	                   <tr>
+	                   	  <th>Grupo Empresarial</th>
 	                      <th>Cliente</th>
-                          <th>C&oacute;digo de cliente</th>
                           <th>Direcci&oacute;n fiscal</th>
-                          <th>Grupo Empresarial</th>
                           <th>R.F.C.</th>
                           <th>Sector</th>
                           <th>Acciones</th>
@@ -53,19 +52,18 @@
 	                 </thead>
 	                 <tbody>
 	                 	<tr th:each="cliente: ${clientes}">
-                            <td th:text="${cliente.descCliente}"></td>
-                            <td th:text="${cliente.descCodigoCliente}"></td>
-                            <td th:text="${cliente.descDireccionFiscal}"></td>
-                            <td th:text="${cliente.descGrupoEmpresarial}"></td>
+	                 		<td th:text="${cliente.descGrupoEmpresarial}" style="width:12%;"></td>
+                            <td th:text="${cliente.descCliente}" style="width:12%;"></td>
+                            <td th:text="${cliente.descDireccionFiscal}" style="width:40%;"></td>
                             <td th:text="${cliente.descRFC}"></td>
                             <td th:text="${cliente.sector.descSector}"></td>
-                            <td>
-<!-- 								<div class="btn-group btn-group-sm" role="group" aria-label="Basic example"> -->
-<!-- 									<a type="button" class="btn btn-info" th:href="@{/dataCliente/} + ${cliente.codCliente}" data-toggle="tooltip" title="Ver"><i class="far fa-address-book"></i></a> -->
-<!-- 									<a type="button" class="btn btn-info" th:href="@{/formCliente/} + ${cliente.codCliente}" data-toggle="tooltip" title="Editar"><i class="far fa-edit"></i></a> -->
-									<a th:href="@{/dataCliente/} + ${cliente.codCliente}" class="badge badge-info">Ver  <i class="far fa-address-book"></i></a>
-									<a th:href="@{/formCliente/} + ${cliente.codCliente}" class="badge badge-success">Editar  <i class="far fa-edit"></i></a>
-<!-- 								</div> -->
+                            <td style="width:9%;">
+<!-- 						<div class="btn-group btn-group-sm" role="group" aria-label="Basic example"> -->
+<!-- 							<a type="button" class="btn btn-info" th:href="@{/dataCliente/} + ${cliente.codCliente}" data-toggle="tooltip" title="Ver"><i class="far fa-address-book"></i></a> -->
+<!-- 							<a type="button" class="btn btn-info" th:href="@{/formCliente/} + ${cliente.codCliente}" data-toggle="tooltip" title="Editar"><i class="far fa-edit"></i></a> -->
+								<a th:href="@{/dataCliente/} + ${cliente.codCliente}" class="badge badge-info">Ver  <i class="far fa-address-book"></i></a>
+								<a th:href="@{/formCliente/} + ${cliente.codCliente}" class="badge badge-success">Editar  <i class="far fa-edit"></i></a>
+<!-- 						</div> -->
 							</td>
                             
                             
@@ -125,7 +123,7 @@
   <!-- Page level custom scripts -->
   <script th:src="@{/js/demo/datatables-demo.js}"></script>
   
-    <script th:src="@{/js/datosRecursoSesion.js}"></script>
+  <script th:src="@{/js/datosRecursoSesion.js}"></script>
 
 </body>
 

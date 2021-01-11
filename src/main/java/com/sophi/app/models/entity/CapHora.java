@@ -52,6 +52,9 @@ public class CapHora implements Serializable{
 	private String descComentarioDetalle;
 	
 	@Transient
+	private String descActividadPrimaria;
+	
+	@Transient
 	private String descActividadSecundaria;
 	
 	@Transient
@@ -234,6 +237,14 @@ public class CapHora implements Serializable{
 
 	public static long getSerialversionuid() {
 		return serialVersionUID;
+	}
+	
+	public String getDescActividadPrimaria() {
+		return descActividadPrimaria;
+	}
+
+	public void setDescActividadPrimaria(String descActividadPrimaria) {
+		this.descActividadPrimaria = descActividadPrimaria;
 	}
 	
 	public String getDescActividadSecundaria() {

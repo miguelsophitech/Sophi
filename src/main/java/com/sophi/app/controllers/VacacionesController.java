@@ -108,7 +108,7 @@ public class VacacionesController {
 	
 	@GetMapping({"/solicitudVacaciones/{codRecurso}"})
 	public String solicitudVacaciones(@PathVariable Long codRecurso, Model model) {
-		
+		System.out.println(codRecurso);
 		List<ProyectoRecurso> listaPR = new ArrayList<>();
 		StringBuilder strb = new StringBuilder();
 		strb.append("");
@@ -124,14 +124,23 @@ public class VacacionesController {
 		
 		listaPR = proyectoRecursoService.findProyectoRecursoActivo(codRecurso);
 		for (ProyectoRecurso proyectoRecurso : listaPR) {
-			Proyecto proyecto = proyectoService.findByCodProyecto(proyectoRecurso.getProyectoRecursoId().getCodProyecto());
-			if(proyecto != null && proyecto.getCodProyecto() != 1) {
+			Proyecto proyecto = proyectoService.findByCodProyectoAndCodEstatusProyecto(proyectoRecurso.getProyectoRecursoId().getCodProyecto(), 2L);
+			//Proyecto proyecto = proyectoService.findByCodProyecto(proyectoRecurso.getProyectoRecursoId().getCodProyecto());
+			if(proyecto != null && proyecto.getCodProyecto() != 1 && proyecto.getCodEstatusProyecto() == 2) {
 				strb.append(proyecto.getDescProyecto());
 				strb.append(" del ");
 				SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
 				strb.append(format.format(proyecto.getFecIncioProyecto()));
 				strb.append(" al ");
-				strb.append(format.format(proyecto.getFecFinProyecto()));
+				//System.out.println("Proyecto: " +proyecto.getDescProyecto());
+				//System.out.println("Inicio: " +proyecto.getFecIncioProyecto());
+				//System.out.println("Fin: " +proyecto.getFecFinProyecto());
+				if(proyecto.getFecFinProyecto() != null) {
+					strb.append(format.format(proyecto.getFecFinProyecto()));
+				}
+				else {
+					strb.append("N/A");
+				}
 				strb.append(". ");
 				aprobadores.add(recursoService.findOne(proyecto.getCodRecursoAprobador()).getDescCorreoElectronico());
 			}
@@ -153,10 +162,7 @@ public class VacacionesController {
 		model.addAttribute("hoyVal",hoyVal);
 		model.addAttribute("informacion",strb.toString());
 		model.addAttribute("aprobadores",aprob.toString());
-		return "formSolicitudVacaciones";
-		
-		
-		
+		return "formSolicitudVacaciones";		
 	}
 	
 	@GetMapping({"/confirmarSolicitud"})
