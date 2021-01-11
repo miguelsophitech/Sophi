@@ -1,11 +1,10 @@
 $(document).ready(function() {
-	var URLactual = window.location;
-	var URLstring = URLactual.toString()
-	var URLid = URLstring.charAt(URLstring.length - 1);
-	
-	console.log(URLactual);
-	console.log(URLstring);
-	console.log(URLid);
-	
-	document.getElementById("cliente_id").value = URLid;
+	if($("#cliente_id").val() == ""){
+		var URLactual = window.location;
+		var URLstring = URLactual.toString();
+		var index = URLstring.lastIndexOf('/');
+		var URLid = URLstring.substring(index+1);
+		
+		$("#cliente_id").val(URLid);
+	}
 });

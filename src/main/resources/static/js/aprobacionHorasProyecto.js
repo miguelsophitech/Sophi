@@ -1,5 +1,4 @@
 $(document).ready(function() {
-	console.log(new Date().toISOString().slice(0,10));
 	var rangeIsFrom = "";
 	var rangeIsTo = "";
 	var from = "";

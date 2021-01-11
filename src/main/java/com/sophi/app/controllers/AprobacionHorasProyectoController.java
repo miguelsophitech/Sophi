@@ -318,6 +318,7 @@ public class AprobacionHorasProyectoController {
     		capHora.setFecValidacion(new Date());
     		capHora.setValRechazo(0L);
     		capHora.setValDuracionRechazada(0L);
+    		capHora.setDescRechazo(null);
     		capHoraService.save(capHora);
     		return "ok";
     	} else {
@@ -338,6 +339,7 @@ public class AprobacionHorasProyectoController {
     		capHora.setCodRecursoValidador(recurso.getCodRecurso());
     		capHora.setValDuracionRechazada(capHora.getValDuracionReportada());
     		capHora.setDescRechazo(recurso.getDescRecurso() + " dijo: "+ comentario);
+    		capHora.setValDuracionValidad((float) 0);
     		capHora.setFecValidacion(null);
     		capHoraService.save(capHora);
     		return "ok";

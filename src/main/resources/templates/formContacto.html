@@ -91,14 +91,14 @@
                    
                    <div class="row">
                    <div class="form-group col-12 col-md-3">
-                      <label class="col-form-label">Cargo:</label>
+                      <label class="col-form-label">Clasificaci&oacute;n de puesto:</label>
                       <select th:field="*{codCargo}" class="custom-select">
                       <option th:each="cargo : ${cargoList}" th:value="${cargo.codCargo}" th:text="${cargo.descCargo}">
                       </option>
                       </select>
                     </div>
                       <div class="form-group col-12 col-md-3">
-                        <label class="col-form-label">Clasificaci&oacute;n de puesto:</label>
+                        <label class="col-form-label">Cargo:</label>
                         <input type="text" th:field="*{descPuesto}" class="form-control" th:errorClass="'form-control alert-danger'"/>
                         <small class="form-text text-danger" th:if="${#fields.hasErrors('descPuesto')}" th:errors="*{descPuesto}"></small>
                       </div>
@@ -170,7 +170,7 @@
   <script th:src="@{/js/datosRecursoSesion.js}"></script>
   <script th:src="@{/js/fecNacContacto.js}"></script>
   <script th:src="@{/js/phone.js}"></script>
-  <!-- <script th:src="@{/js/url.js}"></script> -->
+  <script th:src="@{/js/url.js}"></script>
   <script th:src="@{/js/switch.js}"></script>
 
 </body>
