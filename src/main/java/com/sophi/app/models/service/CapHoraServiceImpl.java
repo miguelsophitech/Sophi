@@ -70,6 +70,12 @@ public class CapHoraServiceImpl implements ICapHoraService {
 	public List<DetalleRecursoHoras> findRecursoHorasRechazo(Date fecInicial, Date fecFinal) {
 		return capHoraDao.findRecursoHorasRechazo(fecInicial, fecFinal);
 	}
+	
+	@Override
+	@Transactional(readOnly = true)
+	public List<CapHora> findRecursoHorasRechazoCustom(Date fecInicial, Date fecFinal) {
+		return capHoraDao.findRecursoHorasRechazoCustom(fecInicial, fecFinal);
+	}
 
 	@Override
 	@Transactional(readOnly = true)

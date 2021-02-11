@@ -24,6 +24,7 @@ $(document).ready(function() {
 		cargarActividadesPrimariasProyecto();
 	});
 	
+	
 	$("a[id^='da']").click(function(){
 		limpiaActive();
 		$(this).addClass("active");
@@ -47,6 +48,11 @@ $(document).ready(function() {
 //	altaCapHoraActividad();
 
 });
+
+
+function clicProyectoEdit(){
+	cargarActividadesPrimariasProyectoEdit();
+}
 
 function semanaInicioFin(fecha){
 
@@ -76,6 +82,7 @@ $.ajax({
 }
 
 function cargaActividadDia(){
+	$("#detalleHorasCapturadas").html('<div class="spinner-grow text-muted"></div>');
 	var fech = $("#semanaDias .active span").text();
 	var url="/cargarActividadCapturadas/"+$("#valCodRecurso").val()+"/"+fech;
 	$("#detalleHorasCapturadas").load(url);
@@ -86,13 +93,29 @@ function cargarActividadesPrimariasProyecto(){
 	$("#resultListActividadesPrimarias").load(url);
 }
 
+function clicProyectoEdit(){
+	var url="/cargarActividadPrimariaEdit/"+$("#valCodRecurso").val()+"/"+$("#selectProyectoEdit").val();
+	console.log(url);
+	$("#resultListActividadesPrimariasEdit").load(url);
+}
+
+
 function filtraActPorFase(){
 	cargarActividadesSecundariasProyecto();
+}
+
+function filtraActPorFaseEdit(){
+	cargarActividadesSecundariasProyectoEdit();
 }
 
 function cargarActividadesSecundariasProyecto(){
 	var url="/cargarActividadSecundaria/"+$("#valCodRecurso").val()+"/"+$("#selectProyecto").val()+"/"+encodeURIComponent($("#selectActividadesPrimarias").val());
 	$("#resultListActividadesSecundarias").load(url);
+}
+
+function cargarActividadesSecundariasProyectoEdit(){
+	var url="/cargarActividadSecundariaEdit/"+$("#valCodRecurso").val()+"/"+$("#selectProyectoEdit").val()+"/"+encodeURIComponent($("#selectActividadPrimariaEdit").val());
+	$("#codActividad").load(url);
 }
 
 
@@ -125,18 +148,28 @@ function handleChange(input) {
     if (input.value > 24) input.value = 24;
 }
 
-function validaForm(){
+async function validaForm(){
 	if(!$("#descDetalleHora").val()){
 		$("#descDetalleHora").addClass("alert-danger");
 		$("#divDescDetalleHora").html("<small class='form-text text-danger'>Este dato es requerido</small>");
 	} else if ($("#valHoraCap").val() > 0 && $("#valHoraCap").val() <= 24 && $("#valHoraCap").val().match(/(^\d*\.{0,1}\d{0,1})$/)){
 	    $('#capHorasForm').submit();
 	    $('#capHoraModal').modal('hide');
+	    $("#detalleHorasCapturadas").html('<div class="spinner-grow text-muted"></div>');
+	    await sleep(1000);
+	    
+	    var fech = $("#semanaDias .active span").text().split("-");
+		fh = new Date(+fech[2], fech[1]-1, +fech[0]);
+		semanaInicioFin(fh);
+		cargaActividadDia();
 	    $('#selectProyecto').val("");
 		$('#selectActividadesPrimarias').val("");
 		$('#selectActividadesSecundarias').val("");
 		$('#descDetalleHora').val("");
 		$('#valHoraCap').val("");
+		$('#resultListActividadesPrimarias').html("");
+		$('#resultListActividadesSecundarias').html("");
+		$('#resultDetActividades').html("");
 	} else {
 		$("#descDetalleHora").removeClass("alert-danger");
 		$("#divDescDetalleHora").html("");
@@ -146,13 +179,22 @@ function validaForm(){
 	}
 }
 
-function validaFormEdit(){
+async function validaFormEdit(){
 	if(!$("#descDetalleHoraEdit").val()){
 		$("#descDetalleHoraEdit").addClass("alert-danger");
 		$("#divDescDetalleHoraEdit").html("<small class='form-text text-danger'>Este dato es requerido</small>");
 	} else if ($("#valHoraCapEdit").val() > 0 && $("#valHoraCapEdit").val() <= 24 && $("#valHoraCapEdit").val().match(/(^\d*\.{0,1}\d{0,1})$/)){
 		$('#formEditCapHoraActividad').submit();
 		$('#capHoraModalEdit').modal('hide');
+		
+		 $("#detalleHorasCapturadas").html('<div class="spinner-grow text-muted"></div>');
+		    await sleep(1000);
+		    
+		    var fech = $("#semanaDias .active span").text().split("-");
+			fh = new Date(+fech[2], fech[1]-1, +fech[0]);
+			semanaInicioFin(fh);
+			cargaActividadDia();
+		
 		$('#selectProyectoEdit').val("");
 		$('#selectActividadSecundariaEdit').val("");
 		$('#descDetalleHoraEdit').val("");
@@ -220,6 +262,8 @@ function delCaptura(codCaptura){
 	    data: {codCaptura: codCaptura},
 		success: function(result){
 	        console.log(result);
+			var fech = $("#semanaDias .active span").text().split("-");
+			fh = new Date(+fech[2], fech[1]-1, +fech[0]);
 	        semanaInicioFin(fh);
 	    }
 	});
@@ -228,22 +272,25 @@ function delCaptura(codCaptura){
 
 function editCaptura(codCaptura){
 	var url="/editCaptura/"+codCaptura;
+	$("#formEditCaptura").html('<div class="spinner-grow text-muted"></div>');
 	$("#formEditCaptura").load(url);
 	$('#capHoraModalEdit').modal('show');
-	$('#selectProyectoEdit').prop('selected', false);
-	$('#selectActividadSecundariaEdit').prop('selected', false);
+//	$('#selectProyectoEdit').prop('selected', false);
+//	$('#selectActividadSecundariaEdit').prop('selected', false);
 }
 
 function no_refresh(capHora){	
-	console.log(capHora);
 	$.ajax({
 		type: 'POST',
 		url: '/formCapHoraActividad',
 		data: capHora,
 		success: function(result){
-			console.log(result);
 			$('.table').html(result);
 		}
 	});
 	return false;
 }
+
+function sleep(ms) {
+	  return new Promise(resolve => setTimeout(resolve, ms));
+	}

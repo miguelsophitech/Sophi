@@ -141,6 +141,55 @@ public class EmailController {
 	}
 	
 	
+	
+	
+	//CRON Miercoles 13:15 hora mexico
+	@Scheduled(cron="0 22 18 * * WED", zone="America/Mexico_City")
+	public void enviaAvisoHrsRechazdasCustom() {
+		List<CapHora> listDetalle = new ArrayList<CapHora>();
+
+		Calendar calendar =  Calendar.getInstance();
+		calendar.setTime(new Date());
+		calendar.add(Calendar.DAY_OF_YEAR, (calendar.get(Calendar.DAY_OF_WEEK) - 1) * -1);
+		Date fecFinal = calendar.getTime();
+		
+		calendar.add(Calendar.DAY_OF_YEAR, -200);
+		Date fecInicial  = calendar.getTime();
+		System.out.println(fecInicial);
+		System.out.println(fecFinal);
+		
+		listDetalle = capHoraService.findRecursoHorasRechazoCustom(fecInicial, fecFinal);
+		if (listDetalle.size() > 0) {
+			for (CapHora detalleRecursoHoras : listDetalle) {
+				
+				System.out.println(recursoService.findOne(detalleRecursoHoras.getCodRecurso()).getDescRecurso() + " - Fecha: " + detalleRecursoHoras.getFecInicioActividad() + " Comentario: " + detalleRecursoHoras.getDescRechazo() + " Hrs rechazadas: " + detalleRecursoHoras.getValDuracionRechazada());
+						
+						
+						
+						
+				
+//				Recurso recurso = recursoService.findOne(detalleRecursoHoras.getLink());
+//				MailRequest request = new MailRequest();
+//				System.out.println(recurso.getDescRecurso());
+//				request.setName(recurso.getDescRecurso());
+//				request.setSubject("Aviso - horas rechazadas");
+//				request.setTo(recurso.getDescCorreoElectronico());
+//				
+//				Map<String, Object> model = new HashMap<String, Object>();
+//				model.put("nombreRecurso", request.getName());
+//				model.put("mensaje","<h3>" + detalleRecursoHoras.getRechazadas() + " horas fueron rechazadas la semana pasada, revisa tu captura en la plataforma</h3>");
+//				model.put("pie", "");
+//				model.put("imagen","<img data-cfsrc=\"images/rechazo.png\" alt=\"\" data-cfstyle=\"width: 200px; max-width: 400px; height: auto; margin: auto; display: block;\" style=\"width: 200px; max-width: 400px; height: auto; margin: auto; display: block;\" src=\"https://sophitech.herokuapp.com/img/img-rechazo.png\">");
+//				
+//				MailResponse response = service.sendEmail(request, model);
+//				System.out.println(response.getMessage());
+			}
+		}
+	}
+	
+	
+	
+	
 	@Scheduled(cron="0 0 10 * * MON", zone="America/Mexico_City")
 	public void enviaRecordatoriosParaAprobacion() {
 		List<Long> proyectos = new ArrayList<Long>();

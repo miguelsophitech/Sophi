@@ -94,6 +94,8 @@ public class AgendaController {
 	@RequestMapping(value = "/newContacto/{codCliente}")
 	public String crearContacto(Map<String, Object> model, @PathVariable(value = "codCliente") Long codcliente) {
 		Agenda agenda = new Agenda();
+		agenda.setValActivo(agenda.getValActivo() == null ? 1L : agenda.getValActivo());
+		
 		model.put("agenda", agenda);
 		List<Cargo> cargoList = new ArrayList<Cargo>();
 		List<Cliente> clienteList = new ArrayList<Cliente>();
@@ -117,6 +119,9 @@ public class AgendaController {
 			model.addAttribute("clienteList",clienteList);
 			return "formContacto";
 		}
+		if(agenda.getValActivo() == null) {
+			agenda.setValActivo(1L);
+		}
 		agendaService.save(agenda);
 		status.setComplete();
 		flash.addFlashAttribute("success", "Contacto guardado con éxito");
@@ -131,7 +136,7 @@ public class AgendaController {
 			if(agenda == null) {
 				flash.addFlashAttribute("error", "El codigo del contacto no existe en base de datos!");
 				return "redirect:/agenda";
-			}
+			} 
 		} else {
 			flash.addFlashAttribute("error", "El codigo del contacto no debe ser cero!");
 			return "redirect:/agenda";

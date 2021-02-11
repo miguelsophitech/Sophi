@@ -13,7 +13,7 @@
 			</select>
 		</div>
 	</div>
-	
+
 	<div th:fragment="listActividadesPrimariasNoPlan">
 		<label class="col-form-label">Fase</label>
 		<div class="input-group">
@@ -24,6 +24,26 @@
 			</select>
 		</div>
 	</div>
+	
+	
+	<div th:fragment="listActividadesPrimariasEdit">
+		<label style="font-size: 14px;" class="col-form-label">Fase </label>
+			<select class="custom-select" id="selectActividadPrimariaEdit" onclick="filtraActPorFaseEdit(); return false;" style="font-size: 14px; padding: 0px 10px;">
+				<option th:each="actividadPrimaria : ${actividadesPrimariasList}" th:value="${actividadPrimaria}" th:text="${actividadPrimaria}"
+					th:selected="${actividadPrimaria == actividadPrimariaSelec}">
+				</option>
+			</select>
+	</div>
+	
+	<div th:fragment="listActividadesPrimariasNoPlanEdit">
+		<label style="font-size: 14px;" class="col-form-label">Fase</label>
+			<select  class="custom-select" id="selectActividadPrimariaEdit" onclick="filtraActPorFaseEdit(); return false;"  style="font-size: 14px; padding: 0px 10px;">
+				<option th:each="entry : ${actividadesPrimariasNoPlan}" 
+					th:value="${entry.key}" th:text="${entry.value}">
+				</option>
+			</select>
+	</div>
+	
 
 	
 	<div th:fragment="listActividadesSecundarias">
@@ -71,6 +91,51 @@
 		</div>
 	</div>
 	
+<!-- 	INICIA retornos de informacion en mod edicion -->
+	<div>
+		<label class="col-form-label">Actividades</label>
+		<div class="input-group">
+			<select name="codActividad" class="custom-select" id="codActividad"  style="font-size: 14px; padding: 0px 10px;">
+				<option th:fragment="listActividadesSecundariasEdit" th:each="actividad : ${actividadesSecundariasList}" 
+					th:value="${actividad.codActividad}" th:text="${actividad.descActividadSecundaria} + ' (' + ${actividad.valDuracionActividad} + ' hrs)'">
+				</option>
+			</select>
+		</div>
+	</div>
+	
+	<div>
+		<label class="col-form-label">Actividades</label>
+		<div class="input-group">
+			<select name="codActividad" class="custom-select" id="codActividad"  style="font-size: 14px; padding: 0px 10px;">
+				<option th:fragment="listActividadesSecundariasFueraEdit" th:each="actividad : ${actividadesSecundariasListFuera}" 
+					th:value="${actividad.codSubtarea}" th:text="${actividad.descSubtarea}">
+				</option>
+			</select>
+		</div>
+	</div>
+	
+	<div>
+		<label class="col-form-label">Actividades</label>
+		<div class="input-group">
+			<select class="custom-select" id="selectActividadesSecundarias" style="font-size: 14px; padding: 0px 10px;">
+				<optgroup  th:fragment="listActividadesSecundariasFueraOtraEdit" th:each="tarea : ${actividadesSecundariasListFuera}" th:label="${tarea.descTarea}">
+				<option th:each="actividad : ${tarea.subtareas}" th:value="${actividad.codSubtarea}" th:text="${actividad.descSubtarea}"></option>
+				</optgroup>
+			</select>
+		</div>
+	</div>
+	
+	<div>
+		<label class="col-form-label">Actividades</label>
+		<div class="input-group">
+			<select class="custom-select" id="selectActividadesSecundarias" style="font-size: 14px; padding: 0px 10px;">
+				<option th:fragment="listActividadesSecundariasNoPlanEdit" th:each="actividad : ${actividadesSecundariasNoPlan}" 
+					th:value="${actividad.codSubtarea}" th:text="${actividad.descSubtarea}">
+				</option>
+			</select>
+		</div>
+	</div>
+<!-- 	TERMINA retornos de informacion en mod edicion -->	
 
 	<div th:fragment="detActividades">
 		<form id="capHorasForm" th:action="@{/formCapHoraActividad}"
@@ -127,27 +192,57 @@
 		<form id="formEditCapHoraActividad" th:action="@{/formCapHoraActividad}" 
 			th:Object="${capHora}" method="post" onsubmit="return no_refresh(Object.values(this));">
 			<div class="row">
-				<div class="form-group col-12 col-md-9">
+				<div class="form-group col-12 col-md-12">
 					<label style="font-size: 14px;" class="col-form-label">Proyecto </label>
 					<!-- <h6 style="font-weight: 600; font-size: 14px;" th:text="${capHora.descProyecto}"></h6> -->
-					<select th:field="*{codProyecto}" class="custom-select" id="selectProyectoEdit" style="font-size: 14px; padding: 0px 10px;">
+					<select th:field="*{codProyecto}" class="custom-select" id="selectProyectoEdit" onchange="clicProyectoEdit(); return false;" style="font-size: 14px; padding: 0px 10px;">
 						<option th:each="entry : ${proyectoList}" th:value="${entry.key}" th:text="${entry.value}" th:selected="${entry.value == capHora.descProyecto}"></option>
 					</select>
 				</div>
 			</div>
+			
 			<div class="row">
-				<div class="form-group col-12 col-md-9">
-					<label style="font-size: 14px;" class="col-form-label">Actividad </label>
+				<div class="form-group col-12 col-md-12">
+				<div id="resultListActividadesPrimariasEdit">
+					<label style="font-size: 14px;" class="col-form-label">Fase </label>
+					<select  class="custom-select" id="selectActividadPrimariaEdit" onclick="filtraActPorFaseEdit(); return false;" style="font-size: 14px; padding: 0px 10px;">
+						<option th:each="actividadPrimaria : ${actividadesPrimarias}" th:value="${actividadPrimaria}" th:text="${actividadPrimaria}" th:selected="${actividadPrimaria == actividadPrimariaSelec}"></option>
+					</select>
+				</div>
+				</div>
+			</div>
+			
+			
+			<div th:if="${otra == '1'}" class="row" >
+				<div class="form-group col-12 col-md-12" id="resultListActividadesSecundarioasEdit">
+					<label style="font-size: 14px;" class="col-form-label">Actividades </label>
 					<!-- <h6 style="font-weight: 600; font-size: 14px;" th:text="${capHora.descActividadSecundaria}"></h6> -->
-					<select th:field="*{codActividad}" class="custom-select" id="selectActividadSecundariaEdit" style="font-size: 14px; padding: 0px 10px;">
-						<optgroup th:each="tarea: ${actividadesPrimariasList}" th:label="${tarea.descTarea}">
-						<option th:each="lista : ${actividadesSecundariasList}" th:value="${lista.codSubtarea}" th:text="${lista.descSubtarea}" th:selected="${lista.descSubtarea == capHora.descActividadSecundaria}"></option>
+					<select th:field="*{codActividad}" class="custom-select"  style="font-size: 14px; padding: 0px 10px;">
+						<optgroup  th:each="tarea : ${actividadesSecundarias}" th:label="${tarea.descTarea}">
+							<option id="optActividades" th:each="actividad : ${tarea.subtareas}" th:value="${actividad.codSubtarea}" th:text="${actividad.descSubtarea}"></option>
 						</optgroup>
+<!-- 						<option th:each="entry : ${actividadesSecundarias}" th:value="${entry.key}" th:text="${entry.value}" th:selected="${entry.value == capHora.codActividad}"></option> -->
 					</select>
 				</div>
 			</div>
+			
+			<div th:unless="${otra == '1'}" class="row">
+				<div class="form-group col-12 col-md-12"  id="resultListActividadesSecundarioasEdit">
+					<label style="font-size: 14px;" class="col-form-label">Actividades </label>
+					<!-- <h6 style="font-weight: 600; font-size: 14px;" th:text="${capHora.descActividadSecundaria}"></h6> -->
+					<select th:field="*{codActividad}" class="custom-select" style="font-size: 14px; padding: 0px 10px;">
+<!-- 						<optgroup  th:each="tarea : ${actividadesSecundarias}" th:label="${tarea.descTarea}"> -->
+<!-- 							<option th:each="actividad : ${tarea.subtareas}" th:value="${actividad.codSubtarea}" th:text="${actividad.descSubtarea}"></option> -->
+<!-- 						</optgroup> -->
+						<option id="optActividades" th:each="entry : ${actividadesSecundarias}" th:value="${entry.key}" th:text="${entry.value}" th:selected="${entry.value == capHora.codActividad}"></option>
+					</select>
+				</div>
+			</div>
+			
+			
+			
 			<div class="row">
-				<div class="form-group col-6 col-md-5">
+				<div class="form-group col-6 col-md-6">
 					<label style="font-size: 14px;" class="col-form-label">Fecha</label> <input type="date" id="descFechaHora" th:field="*{fecInicioActividad}" class="form-control required"  style="font-size: 14px; padding: 0px 10px;"/>
 					<div id="divDescFechaHora"></div>
 				</div>

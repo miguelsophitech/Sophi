@@ -142,6 +142,29 @@ public class CapHorasController {
 		}
 	}
 	
+	@GetMapping(value="/cargarActividadPrimariaEdit/{codRecurso}/{codProyecto}")
+	public String cargarActividadPrimariaEdit(@PathVariable Long codRecurso, @PathVariable Long codProyecto, Model model){
+		if(codProyecto.equals(1L)) {
+			Tarea tarea = tareaService.findOne(1L);
+			HashMap<Long, String> actividadesPrimariasList = new HashMap<Long, String>(); 
+			actividadesPrimariasList.put(tarea.getCodTarea(), tarea.getDescTarea());
+			model.addAttribute("actividadesPrimariasNoPlan", actividadesPrimariasList);
+			return "layout/capHora :: listActividadesPrimariasNoPlanEdit";
+		}else {
+			List<String> listaActividadesPrimarias = new ArrayList<String>();
+			Proyecto proyecto = proyectoService.findByCodProyecto(codProyecto);
+			if(!proyecto.getCodEstatusProyecto().equals(2L)) {
+				listaActividadesPrimarias.add(PREVENTA);
+			}
+			listaActividadesPrimarias.addAll(actividadService.findListaActividadesPrimariasByRecursoProyecto(codRecurso, codProyecto));
+			listaActividadesPrimarias.add(OTRA);
+			model.addAttribute("actividadesPrimariasList", listaActividadesPrimarias);
+			return "layout/capHora :: listActividadesPrimariasEdit";
+		}
+	}
+	
+	
+	
 	@GetMapping(value="/cargarActividadSecundaria/{codRecurso}/{codProyecto}/{descPrimaria}")
 	public String cargarActividadSecundaria(@PathVariable Long codRecurso, @PathVariable Long codProyecto,@PathVariable String descPrimaria,  Model model){
 		if(codProyecto.equals(1L)) {
@@ -162,6 +185,28 @@ public class CapHorasController {
 			return "layout/capHora :: listActividadesSecundarias";
 		}
 	}
+	
+	@GetMapping(value="/cargarActividadSecundariaEdit/{codRecurso}/{codProyecto}/{descPrimaria}")
+	public String cargarActividadSecundariaEdit(@PathVariable Long codRecurso, @PathVariable Long codProyecto,@PathVariable String descPrimaria,  Model model){
+		if(codProyecto.equals(1L)) {
+			List<Subtarea> actividadesSecundariasList = subtareaService.findByCodTarea(1L);
+			model.addAttribute("actividadesSecundariasNoPlan", actividadesSecundariasList);
+			return "layout/capHora :: listActividadesSecundariasNoPlanEdit";
+		} else if (descPrimaria.equalsIgnoreCase(PREVENTA)) {
+			System.out.println("entra en preventa");
+			model.addAttribute("actividadesSecundariasListFuera", subtareaService.findByCodTarea(2L));
+			return "layout/capHora :: listActividadesSecundariasFueraEdit";
+		} else if (descPrimaria.equalsIgnoreCase(OTRA)){
+			System.out.println("entra en otra fuera de plan");
+//			model.addAttribute("actividadesSecundariasListFuera", subtareaService.findFueraDePlan());
+			model.addAttribute("actividadesSecundariasListFuera", tareaService.findTareaFueraPlan());
+			return "layout/capHora :: listActividadesSecundariasFueraOtraEdit";
+		} else {
+			model.addAttribute("actividadesSecundariasList", actividadService.findListaActividadesByRecursoProyectoPrimaria(codRecurso, codProyecto, descPrimaria));
+			return "layout/capHora :: listActividadesSecundariasEdit";
+		}
+	}
+	
 	
 	@GetMapping(value="/cargarDetActividad/{codActividad}/{fecCaptura}")
 	public String cargarDetActividad(@PathVariable Long codActividad, @PathVariable @DateTimeFormat(pattern = "dd-MM-yyyy") Date fecCaptura, Model model){
@@ -223,6 +268,7 @@ public class CapHorasController {
 		List<CapHora> listActHoraCapturadas = new ArrayList<CapHora>();
 		listActHoraCapturadas = capHoraService.findListCapHoraByFechaRecurso(fecCaptura, codRecurso);
 		for (CapHora capHora : listActHoraCapturadas) {
+			// 1 o 2 para actividad no plan CAT_SUBTAREAS  - 0 para actividades de plan RECURSOS_ACTIVIDADES
 			if(capHora.getValNuevaActividad().equals(1L) || capHora.getValNuevaActividad().equals(2L)) {
 				capHora.setDescProyecto(proyectoService.findByCodProyecto(capHora.getCodProyecto()).getDescProyecto());
 				capHora.setDescActividadSecundaria(subtareaService.findOne(capHora.getCodActividad()).getDescSubtarea());
@@ -261,6 +307,17 @@ public class CapHorasController {
 		
 		String mensajeFlash = "Registro guardado con éxito";
 		
+		Actividad actividad = actividadService.findOne(capHora.getCodActividad());
+		Subtarea subtarea = subtareaService.findOne(capHora.getCodActividad());
+		
+		if (subtarea != null) {
+			capHora.setValNuevaActividad(1L);
+		}
+		
+		if (actividad != null) {
+			capHora.setValNuevaActividad(0L);
+		}
+		
 		capHoraService.save(capHora);
 		status.setComplete();
 		flash.addFlashAttribute("success", mensajeFlash);
@@ -283,28 +340,15 @@ public class CapHorasController {
 		return "Borrado correcto";
 	}
 	
-	/*Aquí se tiene que agregar la lista de proyectos y actividades por recursos*/
 	@GetMapping(value="/editCaptura/{codCaptura}")
 	public String editCaptura(@PathVariable Long codCaptura, Model model) {
+		
 		CapHora capHora = capHoraService.findOne(codCaptura);
 		
-		codproyecto = capHora.getCodProyecto();
-		codActividad = capHora.getCodActividad();
-		descComentarioDetalle = capHora.getDescComentarioDetalle();
-		valDuracionReportada = capHora.getValDuracionReportada();
+		Long codProyecto = capHora.getCodProyecto();
+		Long codRecurso = capHora.getCodRecurso();
 		
-		System.out.println(codproyecto + " " + codActividad + " " + descComentarioDetalle + " " + valDuracionReportada);
-		
-		capHora.setDescProyecto(proyectoService.findByCodProyecto(capHora.getCodProyecto()).getDescProyecto());
-		
-		if(capHora.getValNuevaActividad()==0) {
-			//capHora.setDescActividadPrimaria(actividadService.findOne(capHora.getCodActividad()).getDescActividadPrimaria());
-			capHora.setDescActividadSecundaria(actividadService.findOne(capHora.getCodActividad()).getDescActividadSecundaria());
-		} else {
-			//capHora.setDescActividadPrimaria(tareaService.findOne(capHora.getCodActividad()).getDescTarea());
-			capHora.setDescActividadSecundaria(subtareaService.findOne(capHora.getCodActividad()).getDescSubtarea());
-		}
-		
+		//Carga proyectos del recurso
 		List<Long> proyectoListId = new ArrayList<Long>();
 		HashMap<Long, String> proyectoList = new HashMap<Long, String>(); 
 		proyectoListId = actividadService.findListaProyectoByRecurso(capHora.getCodRecurso());
@@ -342,14 +386,73 @@ public class CapHorasController {
 		
 		Proyecto proyecto = proyectoService.findByCodProyecto(1L);
 		proyectoList.put(proyecto.getCodProyecto(),proyecto.getDescProyecto());
+
+		
+		//carga fase o actividad primaria
+		if(codProyecto.equals(1L)) {
+			Tarea tarea = tareaService.findOne(1L);
+			List<String> actividadesPrimariasList = new ArrayList<String>();
+			actividadesPrimariasList.add(tarea.getDescTarea());
+			model.addAttribute("actividadesPrimarias", actividadesPrimariasList);
+		}else {
+			List<String> actividadesPrimariasList = new ArrayList<String>();
+			Proyecto proy = proyectoService.findByCodProyecto(codProyecto);
+			if(proy.getCodEstatusProyecto().equals(1L)) {
+				actividadesPrimariasList.add(PREVENTA);
+			}
+			actividadesPrimariasList.addAll(actividadService.findListaActividadesPrimariasByRecursoProyecto(codRecurso, codProyecto));
+			actividadesPrimariasList.add(OTRA);
+			model.addAttribute("actividadesPrimarias", actividadesPrimariasList);
+		}
+		
+		
+		//Carga actividad secundaria apartir de codActividad y valNuevaActividad
+		if(capHora.getValNuevaActividad().equals(0L)) {
+			List<Actividad> listaActividadesSecundarias = new ArrayList<>();
+			String actividadPrimaria = actividadService.findOne(capHora.getCodActividad()).getDescActividadPrimaria();
+			listaActividadesSecundarias = actividadService.findListaActividadesByRecursoProyectoPrimaria(capHora.getCodRecurso(), capHora.getCodProyecto(), actividadPrimaria);
+			HashMap<Long, String> listadoActividadesSecundarias = new HashMap<>();
+			for (Actividad actividad : listaActividadesSecundarias) {
+				listadoActividadesSecundarias.put(actividad.getCodActividad(), actividad.getDescActividadSecundaria());
+			}
+			model.addAttribute("actividadesSecundarias", listadoActividadesSecundarias);
+			model.addAttribute("actividadPrimariaSelec", actividadPrimaria);
+			model.addAttribute("otra","0");
+			System.out.println(actividadPrimaria);
+		} else {
+			if(codProyecto.equals(1L)) {
+				
+				Tarea tarea = tareaService.findOne(1L);
+				
+				model.addAttribute("actividadPrimariaSelec", tarea.getDescTarea());
+				
+				List<Tarea> listadoActividadesSecundarias = new ArrayList<>();
+				listadoActividadesSecundarias.add(tarea);
+				model.addAttribute("actividadesSecundarias", listadoActividadesSecundarias);
+				model.addAttribute("otra","1");
+				System.out.println(PREVENTA);
+			} else {
+				model.addAttribute("actividadPrimariaSelec", OTRA);
+				model.addAttribute("otra","1");
+//				List<Subtarea> listaActividadesSecundarias = new ArrayList<>();
+//				listaActividadesSecundarias = subtareaService.findFueraDePlan();
+//				HashMap<Long, String> listadoActividadesSecundarias = new HashMap<>();
+//				for (Subtarea subtarea : listaActividadesSecundarias) {
+//					listadoActividadesSecundarias.put(subtarea.getCodSubtarea(), subtarea.getDescSubtarea());
+//				}
+				List<Tarea> listadoActividadesSecundarias = new ArrayList<>();
+				listadoActividadesSecundarias = tareaService.findTareaFueraPlan();
+				model.addAttribute("actividadesSecundarias", listadoActividadesSecundarias);
+				
+				System.out.println(OTRA);
+			}
+	
+		}
+		
+		
 		model.addAttribute("proyectoList", proyectoList);
-		
-		List<Tarea> actividadesPrimariasList = tareaService.findAll();
-		model.addAttribute("actividadesPrimariasList", actividadesPrimariasList);
-		
-		List<Subtarea> actividadesSecundariasList = subtareaService.findAll();
-		model.addAttribute("actividadesSecundariasList", actividadesSecundariasList);
 		model.addAttribute("capHora", capHora);
+		
 		return "layout/capHora :: editDetActividades";
 	}
 

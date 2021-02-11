@@ -40,6 +40,9 @@ public class ProyectoRecurso implements Serializable{
 	@Column(name = "imp_costo_recurso")
 	private float impCostoRecurso;
 	
+	@Column(name = "val_horas_recurso")
+	private Float valHorasRecurso;
+	
 	@Transient
 	private String nombreRecurso;
 	
@@ -91,12 +94,20 @@ public class ProyectoRecurso implements Serializable{
 		this.impCostoRecurso = impCostoRecurso;
 	}
 
+	public Float getValHorasRecurso() {
+		return valHorasRecurso;
+	}
+
+	public void setValHorasRecurso(Float valHorasRecurso) {
+		this.valHorasRecurso = valHorasRecurso;
+	}
+
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
 
 	public ProyectoRecurso(ProyectoRecursoId id, Date fecInicioAsignacion, Date  fecFinAsignacion,
-			Date fecRegistro, float impCostoRecurso
+			Date fecRegistro, float impCostoRecurso, Float valHorasRecurso
 			) {
 		super();
 		proyectoRecursoId = id;
@@ -104,10 +115,13 @@ public class ProyectoRecurso implements Serializable{
 		this.fecFinAsignacion = fecFinAsignacion;
 		this.fecRegistro = fecRegistro;
 		this.impCostoRecurso = impCostoRecurso;
+		this.valHorasRecurso = valHorasRecurso;
 	}
 
 	public ProyectoRecurso() {
 		
 	}
+	
+	
 	
 }

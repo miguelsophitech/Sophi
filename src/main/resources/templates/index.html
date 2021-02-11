@@ -31,16 +31,65 @@
               <!-- Illustrations -->
               <div class="card shadow mb-4">
                 <div class="card-body">
-                <h3 style="color: #000111; font-weight: 500;" >Bienvenido</h3>
+                <div class="d-flex justify-content-between">
+                <h3 style="color: #292f33; font-weight: 500;" >Buen d&iacute;a</h3>
+<!--                 <a target="_blank" href="https://hotelmix.es/weather/mexico-city-18199"><img src="https://w.bookcdn.com/weather/picture/21_18199_1_4_ecf0f1_250_bdc3c7_9da2a6_ffffff_1_2071c9_ffffff_0_6.png?scode=124&domid=583&anc_id=27248" /></a> -->
+<!-- <div id="cont_db08042677fe06aa806202f89ab06a73"><script type="text/javascript" async src="https://www.theweather.com/wid_loader/db08042677fe06aa806202f89ab06a73"></script></div> -->
+                 
+                 <div class="crop">
+                 <img src="https://www.theweather.com/wimages/foto04074011a4f67154cb89c13f44f01321.png">
+                 </div>
+                 
+                 </div>
                  <div class="row">
                   <div class="col-sm-6">
                   
-                  <iframe src="https://calendar.google.com/calendar/embed?height=600&amp;wkst=1&amp;bgcolor=%23ffffff&amp;ctz=America%2FMexico_City&amp;src=ZXMubWV4aWNhbiNob2xpZGF5QGdyb3VwLnYuY2FsZW5kYXIuZ29vZ2xlLmNvbQ&amp;color=%230B8043&amp;showTabs=1&amp;showPrint=0&amp;showNav=1&amp;showCalendars=0&amp;showTz=0" style="border-width:0" width="100%" height="300" frameborder="0" scrolling="no"></iframe>
-                  <a class="twitter-timeline" href="https://twitter.com/El_Universal_Mx?ref_src=twsrc%5Etfw">Tweets by El_Universal_Mx</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+<!--                   	<iframe src="https://calendar.google.com/calendar/embed?height=280&amp;wkst=1&amp;bgcolor=%23ffffff&amp;ctz=America%2FMexico_City&amp;src=ZXMubWV4aWNhbiNob2xpZGF5QGdyb3VwLnYuY2FsZW5kYXIuZ29vZ2xlLmNvbQ&amp;color=%230B8043&amp;showTz=0&amp;showCalendars=0&amp;showTabs=0&amp;showPrint=0&amp;showDate=1&amp;showNav=1&amp;showTitle=0" style="border-width: 0" width="100%" height="280" frameborder="0" scrolling="no"></iframe> -->
+
+
+
+
+  <div>
+    <!-- <h1>Calendar Sophitech Plugin</h1>  -->
+    <!-- <p class="lead">A simple-to-use jQuery plugin to generate a clean-looking, HTML table based monthly calendar for data picking.</p> -->
+    <div >
+      <div class="d-flex justify-content-start">
+<!--       <h6><span class="prev-month" style="padding: 0px 15px 0px 0px; cursor:pointer;">&lt;</span></h6> -->
+      <h6><i class="prev-month fa fa-caret-left" style="padding: 0px 10px 0px 0px; cursor:pointer;"></i></h6>
+      <span style="font-size: 14px;" class="month-year"></span>
+      <h6><i class="next-month fa fa-caret-right" style="padding: 0px 10px; cursor:pointer;"></i> </h6>
+<!--       <h6><span class="next-month" style="padding: 0px 15px; cursor:pointer;">&gt;</span></h6> -->
+    </div>
+<div class="table-responsive">
+<table class="date_table table table-bordered table-striped">
+<tr>
+<th>Dom</th> <th>Lun</th> <th>Mar</th><th>Mie</th>
+<th>Jue</th> <th>Vie</th> <th>Sab</th>
+</tr>
+</table>
+</div>
+<!--  <div class="alert alert-info output mt-3">Selected Date: </div>  -->
+</div>
+  </div>
+  <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script th:src="@{/js/osmanli_calendar.js}"></script>
+<script>
+  var start_date_dialog = osmanli_calendar
+$('.prev-month').click(function () {start_date_dialog.pre_month()});
+$('.next-month').click(function () {start_date_dialog.next_month()});
+
+start_date_dialog.init();
+start_date_dialog.ON_SELECT_FUNC = function(){
+  $('.output').html(osmanli_calendar.SELECT_DATE);
+}
+</script>
+
+
                   </div>
-                   <div class="col-sm-6">
+				  
+				  <div class="col-sm-6">
                    
-                   <div class="card mb-4">
+                   <div class="card mb-4" style="margin-top: 27px;">
 <!--                 		<div class="card-header" th:text=${titulo}> -->
 <!--                 		</div> -->
                 		<div class="card-body"  style="text-align: center;">
@@ -64,8 +113,20 @@
                    
                    
                    
-					<a class="twitter-timeline" href="https://twitter.com/MicroStrategy?ref_src=twsrc%5Etfw">Tweets by MicroStrategy</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+					
                   </div>
+                </div>
+                <div class="row">
+                	<div class="col-sm-4">
+                		<a class="twitter-timeline" href="https://twitter.com/Reforma?ref_src=twsrc%5Etfw">Tweets by Reforma</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+                	</div>
+                	<div class="col-sm-4">
+                		<a class="twitter-timeline" href="https://twitter.com/MicroStrategy?ref_src=twsrc%5Etfw">Tweets by MicroStrategy</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+                	</div>
+                	<div class="col-sm-4">
+                		<a class="twitter-timeline" href="https://twitter.com/el_pais?ref_src=twsrc%5Etfw">Tweets by el_pais</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+<!--                 		<a class="twitter-timeline" href="https://twitter.com/NewYorkTimes_es?ref_src=twsrc%5Etfw">Tweets by NewYorkTimes_es</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script> -->
+                	</div>
                 </div>
                 </div>
               </div>
@@ -117,8 +178,6 @@
   <script th:src="@{/js/sb-admin-2.min.js}"></script>
   
   <script th:src="@{/js/datosRecursoSesion.js}"></script>
-  
-  
 
 
 </body>

@@ -31,19 +31,19 @@
 
 
 /* html body .card-header { */
-.card-header {
+.card-header-cal {
 	background: #1c1c31;
 	color: #fff;
 	font-size: 12px;
 }
 
 /* html body .card-header .prevMonth { */
-.card-header .prevMonth {
+.card-header-cal .prevMonth {
 	cursor: pointer
 }
 
 /* html body .card-header .nextMonth { */
-.card-header .nextMonth {
+.card-header-cal .nextMonth {
 	cursor: pointer
 }
 

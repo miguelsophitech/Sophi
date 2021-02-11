@@ -32,6 +32,7 @@ function verificarFecha(){
 	var dia;
 	var mes;
 	e.setMonth(e.getMonth() - 1);
+	e.setYear(e.getFullYear());
 	
 	if((e.getMonth()+1)<10){
 		mes="0"+(e.getMonth()+1);
@@ -64,7 +65,7 @@ function verificarFecha(){
 	
 	
 	document.getElementById('fechaGasto').setAttribute("min", e.getFullYear()+"-"+mes+"-"+dia);
-	document.getElementById('fechaGasto').setAttribute("max", e.getFullYear()+"-"+mesActual+"-"+diaPosterior);
+	document.getElementById('fechaGasto').setAttribute("max", d.getFullYear()+"-"+mesActual+"-"+diaPosterior);
 	
 }
 

@@ -1,5 +1,6 @@
 package com.sophi.app.controllers;
 
+import java.text.Format;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -25,11 +26,13 @@ import com.sophi.app.models.entity.AprobacionHorasDto;
 import com.sophi.app.models.entity.AuxActividadHorasRecurso;
 import com.sophi.app.models.entity.CapHora;
 import com.sophi.app.models.entity.DetalleRecursoHoras;
+import com.sophi.app.models.entity.DetalleSolicitud;
 import com.sophi.app.models.entity.Proyecto;
 import com.sophi.app.models.entity.ProyectoRecurso;
 import com.sophi.app.models.service.IActividadService;
 import com.sophi.app.models.service.IAprobacionHorasService;
 import com.sophi.app.models.service.ICapHoraService;
+import com.sophi.app.models.service.IDetalleSolicitudService;
 import com.sophi.app.models.service.IProyectoRecursoService;
 import com.sophi.app.models.service.IProyectoService;
 import com.sophi.app.models.service.IRecursoService;
@@ -94,6 +97,9 @@ public class AprobacionVacacionesController {
     
     @Autowired
 	private EmailService service;
+    
+    @Autowired
+    private IDetalleSolicitudService detalleSolicitudService;
     
     @RequestMapping(value = "/aprobacionVacaciones/{email}", method = RequestMethod.GET)
     public String aprobacionVacaciones(Model model, @PathVariable(value = "email") String email){
@@ -320,7 +326,23 @@ public class AprobacionVacacionesController {
     		
     		Map<String, Object> modelM = new HashMap<String, Object>();
     		modelM.put("nombreRecurso", request.getName());
-    		modelM.put("mensaje", "<h3>"+recursoAprobador.getDescRecurso() + " ha aceptado tu solicitud de vacaciones.</h3>.");
+    		StringBuffer strb = new StringBuffer();
+    		strb.append("<h3>");
+    		strb.append(recursoAprobador.getDescRecurso());
+    		strb.append(" ha aceptado tu solicitud de vacaciones para los días:</h3><br>");
+    		
+    		List<DetalleSolicitud> listaDetalleSolicitud = detalleSolicitudService.findByCodSolicitud(codSolicitud);
+    		if(listaDetalleSolicitud != null && listaDetalleSolicitud.size() > 0 ) {
+    			for (DetalleSolicitud detalleSolicitud : listaDetalleSolicitud) {
+    				strb.append("<h4>");
+    				Format f = new SimpleDateFormat("dd/MM/yy");
+    				String strDate = f.format(detalleSolicitud.getFecDiaSolicitado());
+    				strb.append(strDate);
+    	    		strb.append("</h4><br>");
+				}
+    		}
+    		
+    		modelM.put("mensaje",strb.toString());
     		modelM.put("imagen","<img data-cfsrc=\"images/status.png\" alt=\"\" data-cfstyle=\"width: 200px; max-width: 400px; height: auto; margin: auto; display: block;\" style=\"width: 200px; max-width: 400px; height: auto; margin: auto; display: block;\" src=\"https://sophitech.herokuapp.com/img/img-banca.png\">");
     		modelM.put("btnLink", "<a href=\"https://sophitech.herokuapp.com/misVacaciones/" +recurso.getDescCorreoElectronico()+" \" style=\"text-align: center; border-radius: 5px; font-weight: bold; background-color: #C02C57; color: white; padding: 14px 25px; text-decoration: none; display: inline-block; \">Ver detalle</a>");
     		modelM.put("pie", "");

@@ -92,7 +92,6 @@ public class AprobacionHorasProyectoController {
     		roles = rolService.findByCodRecurso(codRecurso);
     		for (Rol rol : roles) {
 				cadenaRol.add(rol.getDescRol());
-				System.out.println(rol.getDescRol());
 			}
     		
     		//Obtiene listado de proyectos donde el recurso es lider.
@@ -131,7 +130,6 @@ public class AprobacionHorasProyectoController {
     
     @RequestMapping(value = "/capturaHorasPeriodo/{from}/{to}/{codProyecto}", method = RequestMethod.GET)
     public String listadoRecursosCaptura(Model model, @PathVariable(value = "from") String desde, @PathVariable(value = "to") String hasta, @PathVariable(value = "codProyecto") String codProyecto){
-    	System.out.println(desde + " " + hasta);
     	Date inicio = new Date();
     	Date fin = new Date();
     	String todos = "no";
@@ -209,9 +207,6 @@ public class AprobacionHorasProyectoController {
     											@RequestParam(value = "f") String desde, 
     											@RequestParam(value = "t") String hasta, 
     											Model model){
-    	System.out.println(codRecurso);
-    	System.out.println(proyectos);
-    	System.out.println(semana);
     	Date inicio = new Date();
     	Date fin = new Date();
     	try {
@@ -312,7 +307,6 @@ public class AprobacionHorasProyectoController {
     	Long codRecurso = recursoService.findByDescCorreoElectronico(mail).getCodRecurso();
     	CapHora capHora = capHoraService.findOne(codCapHora);
     	if (capHora != null) {
-    		System.out.println(hora +" "+ codRecurso +" "+ new Date() );
     		capHora.setValDuracionValidad(hora);
     		capHora.setCodRecursoValidador(codRecurso);
     		capHora.setFecValidacion(new Date());

@@ -13,8 +13,11 @@ import javax.persistence.Table;
 public class DiaFestivo implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-
+	
 	@Id
+	@Column(name = "id")
+	private Long id;
+
 	@Column(name = "cod_dia_festivo")
 	private Long codDiaFestivo;
 	
@@ -29,6 +32,14 @@ public class DiaFestivo implements Serializable {
 	
 	@Column(name = "cod_tipo_dia_festivo")
 	private Long codTipoDiaFestivo;
+	
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
 
 	public Long getCodDiaFestivo() {
 		return codDiaFestivo;

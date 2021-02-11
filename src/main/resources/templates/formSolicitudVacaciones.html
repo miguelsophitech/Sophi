@@ -25,6 +25,7 @@
         <input id="codRecurso" type="hidden" th:value="${codRecurso}"></input>
         <input id="hoy" type="hidden" th:value="${hoyVal}"></input>
         <input id="aprobadores" type="hidden" th:value="${aprobadores}"></input>
+        <input id="infoProyectos" type="hidden" th:value="${informacion}"></input>
 
           <!-- Page Heading -->
           <div class="d-sm-flex align-items-center justify-content-between mb-1">
@@ -74,7 +75,7 @@
 	                  <div class="row no-gutters align-items-center">
 	                    <div class="col mr-2">
 	                      <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Proyectos activos:</div>
-	                      <div class="mb-0 text-gray-800" id="mensajeInfo" th:text="${informacion}" style="font-size: 10px;"></div>
+	                      <div class="mb-0 text-gray-800" id="mensajeInfo" style="font-size: 10px;"></div>
 	                    </div>
 	                    <div class="col-auto">
 	                      <i class="fas fa-tasks fa-2x text-gray-300"></i>
@@ -169,7 +170,7 @@
   
 <script type="text/javascript">
   $(document).ready(function() {
-	  
+	  $("#mensajeInfo").html($("#infoProyectos").val());
   });
   
   
@@ -207,7 +208,7 @@
   
   //Modal para solicitud ?
   function solicitar(){
-	$("#confirmacionSolicitud").html("¿Confirmar la solicitud de " + $("#conteoSolicitados").text() + " día(s) de vacaciones?")
+	$("#confirmacionSolicitud").html("&iquest;Confirmar la solicitud de " + $("#conteoSolicitados").text() + " d&iacute;a(s) de vacaciones?")
 	$("#modalConfirmSolicitud").modal('show');
   }  
   </script>

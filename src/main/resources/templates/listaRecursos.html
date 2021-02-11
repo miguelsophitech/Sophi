@@ -63,7 +63,7 @@
 <!-- 						<td th:text="${recurso.descApellidoMaterno}"></td> -->
 						<td th:text="${recurso.descCorreoElectronico}"></td>
 <!-- 						<td th:text="${recurso.descTelCelular}"></td> -->
-						<td><span th:text="${recurso.descTelCelular}"> </span> <img style="width: 14px; cursor: pointer;" th:src="@{/img/whapp.png}" th:attr="onclick=|loadWA('${recurso.descTelCelular}')|" ></td>
+						<td><span th:text="${recurso.descTelCelular}"> </span> <img style="width: 14px; cursor: pointer; padding-bottom: 2px;" th:src="@{/img/whapp.png}" th:attr="onclick=|loadWA('${recurso.descTelCelular}','${recurso.descRecurso}')|" ></td>
  						<td> 
 							<a th:href="@{/verRecurso/} + ${recurso.codRecurso}" class="badge badge-info">Ver  <i class="far fa-address-card"></i></a>
 							<a th:href="@{/formRecurso/} + ${recurso.codRecurso}" class="badge badge-success">Editar  <i class="far fa-edit"></i></a>	 
@@ -120,8 +120,8 @@
   <script th:src="@{/js/datosRecursoSesion.js}"></script>
   
   <script type="text/javascript">
-  function loadWA(numero){
-	  window.open('http://wppredirect.tk/go/?p=521'+numero+'&amp;m=');
+  function loadWA(numero, nombre){
+	  window.open('http://wppredirect.tk/go/?p=52'+numero+'&m=Hola '+nombre);
   }
   
   

@@ -237,9 +237,9 @@ function getWeekNr(fecha) {
    };
    
    fecha   =   fecha.split("-"); //Dividimos el string de fecha en trozos (dia,mes,año)
-   dia   =   eval(fecha[0]);
+   ano   =   eval(fecha[0]);
    mes   =   eval(fecha[1]);
-   ano   =   eval(fecha[2]);
+   dia   =   eval(fecha[2]);
    
    if (mes==1 || mes==2){
       //Cálculos si el mes es Enero o Febrero

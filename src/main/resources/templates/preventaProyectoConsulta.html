@@ -24,10 +24,11 @@
         <div class="container-fluid">
 
           <!-- Page Heading -->
-          <div class="d-sm-flex align-items-center justify-content-between mb-1">
-            <h1 class="h3 mb-0 text-gray-800"><span class="tituloA" th:text="'Consulta del proyecto ' + ${proyecto.descProyecto}"></span></h1>
-<!--             </br><span class="tituloBN">Enhorabuena, tienes un nuevo proyecto que registrar</span> -->
-          </div>
+<!--           <div class="d-sm-flex align-items-center justify-content-between mb-1"> -->
+<!--             <h1 class="h3 mb-0 text-gray-800"><span class="tituloA" th:text="'Consulta del proyecto ' + ${proyecto.descProyecto}"></span></h1> -->
+            
+            <h1 class="h3 mb-2 text-gray-800" th:text="'Registro de ' + ${proyecto.descProyecto}"></h1>
+<!--           </div> -->
           <a type="button" th:href="@{/listaProyectosTodo}" id="btnRegresarProyecto" th:text="'&laquo; regresar'"></a>
 
             <!--form-->
@@ -37,6 +38,9 @@
 
                 <div class="form-group row" th:if="${proyecto.codEstatusProyecto == 2}">
                   <div class="col-sm-5 mb-3 mb-sm-0">
+                  <div class="form-check form-check-inline">
+                  <label>Estatus: </label>
+                  </div>
                     <div class="form-check form-check-inline">
                       <input th:field="*{codEstatusProyecto}" class="form-check-input" type="radio" name="inlineRadioOptions" id="preventa" value="1" disabled>
                       <label class="form-check-label" for="preventa" >Preventa</label>
@@ -57,6 +61,9 @@
                 </div>
                 <div class="form-group row" th:if="${proyecto.codEstatusProyecto == 3}">
                   <div class="col-sm-5 mb-3 mb-sm-0">
+                  <div class="form-check form-check-inline">
+                  <label>Estatus: </label>
+                  </div>
                     <div class="form-check form-check-inline">
                       <input th:field="*{codEstatusProyecto}" class="form-check-input" type="radio" name="inlineRadioOptions" id="preventa" value="1" disabled>
                       <label class="form-check-label" for="preventa" >Preventa</label>
@@ -77,6 +84,9 @@
                 </div>
                  <div class="form-group row" th:if="${proyecto.codEstatusProyecto == 1}">
                   <div class="col-sm-5 mb-3 mb-sm-0">
+                  <div class="form-check form-check-inline">
+                  <label>Estatus: </label>
+                  </div>
                     <div class="form-check form-check-inline">
                       <input th:field="*{codEstatusProyecto}" class="form-check-input" type="radio" name="inlineRadioOptions" id="preventa" value="1" checked>
                       <label class="form-check-label" for="preventa" >Preventa</label>
@@ -194,7 +204,7 @@
                     	<div class="input-group-prepend">
 							<span class="input-group-text"><i class="far fa-clock"></i></span>
 						</div>
-	                    <input th:attr="readonly=${proyecto.codEstatusProyecto == 3}? 'true' : 'false'" th:field="*{valTotalHorasVendidas}" type="text" maxlength="10" onkeypress="return event.charCode >= 46 && event.charCode <= 57" class="form-control" id="totalHoras" placeholder="Total de horas vendidas" oninvalid="setCustomValidity('Horas vendidas invÃ¡lidas')" onchange="try{setCustomValidity('')}catch(e){}" min="0" max="99999999" pattern="^-?\d+$">
+	                    <input th:attr="readonly=${proyecto.codEstatusProyecto == 3}? 'true' : 'false'" th:field="*{valTotalHorasVendidas}" type="text" maxlength="10" onkeypress="return event.charCode >= 46 && event.charCode <= 57" class="form-control" id="totalHoras" placeholder="Total de horas vendidas" onchange="try{setCustomValidity('')}catch(e){}" min="0" max="99999999" >
                     </div>
                   </div>
                   <div class="col-sm-4" id="thp">
@@ -382,7 +392,7 @@
   			<li th:each="tec : ${tecAcept}" th:text="${tec.descDetalle}"></li>
 		  </ul>
 		  <ul th:unless="${tecAcept != null}">
-  			<li th:text="'TecnologÃ­a sin definir'"></li>
+  			<li th:text="'Tecnología sin definir'"></li>
   		  </ul>
         </div>
         <div class="modal-footer">

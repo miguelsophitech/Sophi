@@ -30,9 +30,12 @@ public class RespuestaRecursoClima implements Serializable {
 	@Column(name = "cod_respuesta_clima")
 	private Long codRespuestaRecursoClima;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "cod_pregunta_respuesta")
-	private PreguntaRespuestaClima preguntaRespuestaClima;
+	@Column(name = "cod_pregunta_respuesta")
+	private Long codPreguntaRespuesta;
+	
+//	@ManyToOne(fetch = FetchType.LAZY)
+//	@JoinColumn(name = "cod_pregunta_respuesta")
+//	private PreguntaRespuestaClima preguntaRespuestaClima;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "cod_recurso")
@@ -54,16 +57,24 @@ public class RespuestaRecursoClima implements Serializable {
 		this.codRespuestaRecursoClima = codRespuestaRecursoClima;
 	}
 
-	public PreguntaRespuestaClima getPreguntaRespuestaClima() {
-		return preguntaRespuestaClima;
-	}
-
-	public void setPreguntaRespuestaClima(PreguntaRespuestaClima preguntaRespuestaClima) {
-		this.preguntaRespuestaClima = preguntaRespuestaClima;
-	}
-
+//	public PreguntaRespuestaClima getPreguntaRespuestaClima() {
+//		return preguntaRespuestaClima;
+//	}
+//
+//	public void setPreguntaRespuestaClima(PreguntaRespuestaClima preguntaRespuestaClima) {
+//		this.preguntaRespuestaClima = preguntaRespuestaClima;
+//	}
+	
 	public Recurso getRecurso() {
 		return recurso;
+	}
+
+	public Long getCodPreguntaRespuesta() {
+		return codPreguntaRespuesta;
+	}
+
+	public void setCodPreguntaRespuesta(Long codPreguntaRespuesta) {
+		this.codPreguntaRespuesta = codPreguntaRespuesta;
 	}
 
 	public void setRecurso(Recurso recurso) {

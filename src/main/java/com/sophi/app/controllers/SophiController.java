@@ -21,6 +21,7 @@ import com.sophi.app.models.service.IHistoricoRespuestaClimaService;
 import com.sophi.app.models.service.IPreguntaClimaService;
 import com.sophi.app.models.service.IPreguntaRespuestaClimaService;
 import com.sophi.app.models.service.IRecursoService;
+import com.sophi.app.models.service.IRespuestaFlashService;
 
 import javassist.bytecode.analysis.Util;
 
@@ -37,6 +38,9 @@ public class SophiController {
 	private IPreguntaClimaService preguntaClimaService;
 	
 	@Autowired
+	private IRespuestaFlashService respuestaFlashService;
+	
+	@Autowired
 	private IHistoricoRespuestaClimaService historicoRespuestaClimaService;
 	
 	@GetMapping({"/index","/","","/home"})
@@ -50,7 +54,9 @@ public class SophiController {
 		
 		for (HistRespuestaAux histRespuestaAux : resultados) {
 			total += histRespuestaAux.getTotal();
-			histRespuestaAux.setValImagenRespuesta(preguntaRespuestaClimaService.findOne(histRespuestaAux.getIdPreguntaRespuesta()).getValImagenRespuesta());
+			histRespuestaAux.setValImagenRespuesta(respuestaFlashService.findByCodRespuesta(histRespuestaAux.getIdPreguntaRespuesta()).getRutaImagen());
+//			histRespuestaAux.setValImagenRespuesta(preguntaRespuestaClimaService.findOne(histRespuestaAux.getIdPreguntaRespuesta()).getValImagenRespuesta());
+			
 		}
 		
 		for (HistRespuestaAux histRespuestaAux : resultados) {

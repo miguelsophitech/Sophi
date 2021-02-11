@@ -10,6 +10,8 @@ public interface IPreguntaRespuestaClimaService {
 	
 	public PreguntaRespuestaClima findOne(Long codPreguntaRespuestaClima);
 	
+	public List<PreguntaRespuestaClima> findByCodPregunta(Long codPregunta);
+	
 	public void save(PreguntaRespuestaClima preguntaRespuestaClima);
 	
 	public void delete(Long codPreguntaRespuestaClima);

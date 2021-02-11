@@ -57,12 +57,12 @@
       </li>
       
       <!-- Divider -->
-      <hr sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_APROB')" class="sidebar-divider">
+      <hr sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_APROB')" class="sidebar-divider my-0">
 
       <!-- Heading Proyecto -->
-      <div sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_APROB')" class="sidebar-heading">
+      <!-- <div sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_APROB')" class="sidebar-heading">
         Clientes
-      </div>
+      </div> -->
 
       <!-- Nav Item - Gastos y tiempo Collapse Menu -->
       <li class="nav-item" sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_APROB')">
@@ -81,12 +81,12 @@
       
 
       <!-- Divider -->
-      <hr sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_LIDER','ROLE_APROB', 'ROLE_USER')"  class="sidebar-divider">
+      <hr sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_LIDER','ROLE_APROB', 'ROLE_USER')"  class="sidebar-divider my-0">
 
       <!-- Heading Proyecto -->
-      <div sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_LIDER', 'ROLE_USER','ROLE_APROB')" class="sidebar-heading">
+      <!-- <div sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_LIDER', 'ROLE_USER','ROLE_APROB')" class="sidebar-heading">
         Proyectos
-      </div>
+      </div>  -->
       
 	  <!-- Nav Item - Actividades Collapse Menu -->
       <li class="nav-item">
@@ -103,9 +103,11 @@
         </div>
       </li>
 
+      <hr sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_LIDER','ROLE_USER','ROLE_APROB')"  class="sidebar-divider my-0">
+
       <!-- Nav Item - Gastos y tiempo Collapse Menu -->
       <li class="nav-item">
-        <a sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_LIDER', 'ROLE_USER','ROLE_APROB',)" class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseGastosTiempo" aria-expanded="true" aria-controls="collapseGastosTiempo">
+        <a sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_LIDER', 'ROLE_USER','ROLE_APROB')" class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseGastosTiempo" aria-expanded="true" aria-controls="collapseGastosTiempo">
           <i class="fas fa-fw fa-calendar-alt"></i>
           <span>Gesti&oacute;n de tiempo</span>
         </a>
@@ -114,10 +116,27 @@
             <h6 class="collapse-header">Ver:</h6>
           	<a sec:authorize="hasAnyRole('ROLE_APROB','ROLE_LIDER','ROLE_USER' )" class="collapse-item" th:href="@{/capHoras/} + ${#authentication.getName()}">Mis horas</a>
             <a sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_APROB')" class="collapse-item" th:href="@{/aprobacionHorasProyecto/}+${#authentication.getName()}">Aprobaci&oacute;n de horas</a>
-            <a sec:authorize="hasAnyRole('ROLE_APROB','ROLE_LIDER','ROLE_USER' )" class="collapse-item" th:href="@{/misGastos/} + ${#authentication.getName()}">Mis gastos</a>
-            <a sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_APROB')" class="collapse-item" th:href="@{/aprobaciongastos/}+ ${#authentication.getName()}">Aprobaci&oacute;n de gastos</a>
 			<a sec:authorize="hasAnyRole('ROLE_APROB','ROLE_LIDER','ROLE_USER', 'ROLE_ADMIN' )" class="collapse-item" th:href="@{/misVacaciones/} + ${#authentication.getName()}">Mis vacaciones</a>
             <a sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_APROB')" class="collapse-item" th:href="@{/aprobacionVacaciones/}+ ${#authentication.getName()}">Aprobaci&oacute;n de vacaciones</a>
+          </div>
+        </div>
+      </li>
+      
+      
+      
+      <hr sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_LIDER','ROLE_USER','ROLE_APROB')"  class="sidebar-divider my-0">
+
+      <!-- Nav Item - Gastos y tiempo Collapse Menu -->
+      <li class="nav-item">
+        <a sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_LIDER', 'ROLE_USER','ROLE_APROB')" class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseGastosCompra" aria-expanded="true" aria-controls="collapseGastosCompra">
+          <i class="fas fa-comments-dollar"></i>
+          <span>Gesti&oacute;n de gastos</span>
+        </a>
+        <div id="collapseGastosCompra" class="collapse" aria-labelledby="menuGastosCompra" data-parent="#accordionSidebar">
+          <div class="bg-white py-2 collapse-inner rounded">
+            <h6 class="collapse-header">Ver:</h6>
+            <a sec:authorize="hasAnyRole('ROLE_APROB','ROLE_LIDER','ROLE_USER' )" class="collapse-item" th:href="@{/misGastos/} + ${#authentication.getName()}">Mis gastos</a>
+            <a sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_APROB')" class="collapse-item" th:href="@{/aprobaciongastos/}+ ${#authentication.getName()}">Aprobaci&oacute;n de gastos</a>
           </div>
         </div>
       </li>
@@ -125,12 +144,12 @@
  
       
        <!-- Divider -->
-      <hr sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_RH')" class="sidebar-divider">
+      <hr sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_RH')" class="sidebar-divider my-0">
 
       <!-- Heading Proyecto -->
-      <div sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_RH')" class="sidebar-heading">
+      <!-- <div sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_RH')" class="sidebar-heading">
         Recursos
-      </div>
+      </div> -->
 
       <!-- Nav Item - Recursos Collapse Menu -->
       <li sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_RH')" class="nav-item">
@@ -142,22 +161,24 @@
           <div class="bg-white py-2 collapse-inner rounded">
             <h6 class="collapse-header">Ver:</h6>
             <a class="collapse-item" th:href="@{/listarRecursos}">Mis recursos</a>
+            <a class="collapse-item" th:href="@{/controlVacaciones}">Control de vacaciones</a>
           </div>
         </div>
       </li>
       
       <!-- Divider -->
-      <hr sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_RH')" class="sidebar-divider">
+      <hr sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_RH')" class="sidebar-divider my-0">
 
       <!-- Heading Proyecto -->
-      <div sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_RH')" class="sidebar-heading">
+      <!-- <div sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_RH')" class="sidebar-heading">
         Encuestas
-      </div>
+      </div> -->
 
       <!-- Nav Item - Recursos Collapse Menu -->
       <li sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_RH')" class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseEncuestas" aria-expanded="true" aria-controls="collapseEncuestas">
-          <i class="fas fa-fw fa-id-card"></i>
+<!--           <i class="fas fa-fw fa-id-card"></i> -->
+          <i class="far fa-question-circle"></i>
           <span>Gesti&oacute;n de encuestas</span>
         </a>
         <div id="collapseEncuestas" class="collapse" aria-labelledby="menuEncuestas" data-parent="#accordionSidebar">
@@ -197,7 +218,6 @@
 
           <!-- Topbar Navbar -->
           <ul class="navbar-nav ml-auto">
-
             <!-- Nav Item - Alerts -->
             <li class="nav-item dropdown no-arrow mx-1">
               <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

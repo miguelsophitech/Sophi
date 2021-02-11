@@ -2,6 +2,7 @@ package com.sophi.app.controllers;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -24,6 +25,7 @@ import org.springframework.web.bind.support.SessionStatus;
 import com.sophi.app.mail.dto.MailRequest;
 import com.sophi.app.mail.dto.MailResponse;
 import com.sophi.app.mail.service.EmailService;
+import com.sophi.app.models.entity.Actividad;
 import com.sophi.app.models.entity.Proyecto;
 import com.sophi.app.models.entity.ProyectoRecurso;
 import com.sophi.app.models.entity.ProyectoRecursoDto;
@@ -64,8 +66,15 @@ public class ProyectoRecursoController {
 			formRecursosProyecto.addProyectoRecurso(proyectoRecurso);
 		}
 		String nombreProyecto = proyectoService.findOne(codProyecto).getDescProyecto();
+		
+		List<Actividad> listaActividades =  actividadService.findByCodProyecto(codProyecto);
+		int tienePlan = 0;
+		if(listaActividades.size()>0) {
+			tienePlan = 1;
+		}
 		model.addAttribute("nombreProyecto", nombreProyecto);
 		model.addAttribute("formRecursosProyecto", formRecursosProyecto);
+		model.addAttribute("plan", tienePlan);
 		return "layout/costoRecursoProyecto :: costoRecursoProyecto";
 	}
 
@@ -82,17 +91,35 @@ public class ProyectoRecursoController {
 			proyectoRecursoService.saveAll(listadoRecursos);
 			status.setComplete();
 			
-			for (ProyectoRecurso proyectoRecurso : listadoRecursos) {
+//			List<Actividad> listaActividades =  actividadService.findByCodProyecto(codProyecto);
+			//Si tiene plan
+//			if(listaActividades.size()>0) {
+//				for (ProyectoRecurso proyectoRecurso : listadoRecursos) {
+//
+//					Float horasRecurso = actividadService.sumTotalHorasProyecto(proyectoRecurso.getProyectoRecursoId().getCodRecurso(), codProyecto);
+//					if (horasRecurso == null) {
+//						horasRecurso = (float) 0;
+//					}
+//					Float costoRecurso = horasRecurso * proyectoRecurso.getImpCostoRecurso();
+//					
+//					totalHoras += horasRecurso;
+//					costoProyecto += costoRecurso;
+//				}
+//			} else {
+				for (ProyectoRecurso proyectoRecurso : listadoRecursos) {
 
-				Float horasRecurso = actividadService.sumTotalHorasProyecto(proyectoRecurso.getProyectoRecursoId().getCodRecurso(), codProyecto);
-				if (horasRecurso == null) {
-					horasRecurso = (float) 0;
+					Float horasRecurso = proyectoRecurso.getValHorasRecurso();
+					if (horasRecurso == null) {
+						horasRecurso = (float) 0;
+					}
+					Float costoRecurso = horasRecurso * proyectoRecurso.getImpCostoRecurso();
+					
+					totalHoras += horasRecurso;
+					costoProyecto += costoRecurso;
 				}
-				Float costoRecurso = horasRecurso * proyectoRecurso.getImpCostoRecurso();
-				
-				totalHoras += horasRecurso;
-				costoProyecto += costoRecurso;
-			}
+//			}
+			
+			
 		}
 		
 		//Set de costo y total de horas + guardado de proyecto
@@ -100,7 +127,7 @@ public class ProyectoRecursoController {
 //		proyecto.setImpCostoProyecto(String.format("%.2f", costoProyecto));
 		
 		
-        String pattern = "###,###,###.##";
+        String pattern = "###,###,###.00";
         //Si no le paso ningun Locale, toma el del sistema, que en mi caso es Locale("es","MX");
         DecimalFormat myFormatter = new DecimalFormat(pattern);
         String output = myFormatter.format(costoProyecto);
@@ -140,13 +167,42 @@ public class ProyectoRecursoController {
 	@RequestMapping(value = "/guardaAsignacionRecursosProyecto")
 	@ResponseBody
 	public String guardaAsignacionRecursosProyecto(@RequestParam(value = "ids[]") Long[] ids,@RequestParam(value = "codProyecto") Long codProyecto,  Model model) {
+		
+		//Lista temporal con los recursos actualmente asignados al proyecto
 		List<ProyectoRecurso> recursoListAsignadosTmp = new ArrayList<ProyectoRecurso>();
 		recursoListAsignadosTmp = proyectoRecursoService.findByProyectoRecursoIdCodProyecto(codProyecto);
-		for (ProyectoRecurso proyectoRecurso : recursoListAsignadosTmp) {
-			proyectoRecursoService.delete(proyectoRecurso);
-		}
+		
+		//Datos del proyecto
 		Proyecto proyecto = proyectoService.findOne(codProyecto);
-		for (Long id : ids) {
+		
+		//convertir arreglo ids a lista para poder eliminar elementos
+		List<Long> listaNuevosAsignados = new ArrayList<>(Arrays.asList(ids));
+		
+		//Definicion de listas para borrar y para agregar recursos
+		List<ProyectoRecurso> listaParaBorrar = new ArrayList<>();
+		List<ProyectoRecurso> listaParaAgregar = new ArrayList<>();
+	
+		//Iteracion para identificar los recursos a borrar y/o agregar
+		for (ProyectoRecurso proyectoRecursoTmp : recursoListAsignadosTmp) {
+			int existe = 0;
+			long q = 0;
+			for (Long id : listaNuevosAsignados) {
+				if(proyectoRecursoTmp.getProyectoRecursoId().getCodRecurso().equals(id)) {
+					existe = 1;
+					q = id;
+					break;
+				}
+			}
+			if(existe == 0) {
+				listaParaBorrar.add(proyectoRecursoTmp);
+			} else if(existe == 1) {
+				listaNuevosAsignados.remove(q);
+			}
+		}
+		
+		//Iterar lista actual de nuevos asignados para completar lista para agregar
+		
+		for (Long id : listaNuevosAsignados) {
 			ProyectoRecurso proyectoRecurso = new ProyectoRecurso();
 			ProyectoRecursoId pryectoRecursoId = new ProyectoRecursoId();
 			pryectoRecursoId.setCodCliente(proyecto.getCodCliente());
@@ -154,17 +210,27 @@ public class ProyectoRecursoController {
 			pryectoRecursoId.setCodRecurso(id);
 			pryectoRecursoId.setCodProyecto(codProyecto);
 			proyectoRecurso.setProyectoRecursoId(pryectoRecursoId);
-			//proyectoRecurso.setImpCostoRecurso();
-			proyectoRecursoService.delete(proyectoRecurso);
-			proyectoRecursoService.save(proyectoRecurso);
-			System.out.println(id);
+			
+			proyectoRecurso.setImpCostoRecurso(recursoService.findOne(id).getValCostoMinimo());
+			proyectoRecurso.setValHorasRecurso((float) 0);
+			
+			listaParaAgregar.add(proyectoRecurso);
+		}
+		
+		
+		for (ProyectoRecurso proyectoRec : listaParaBorrar) {
+			proyectoRecursoService.delete(proyectoRec);
+		}
+		
+		for (ProyectoRecurso proyectoRec : listaParaAgregar) {
+			proyectoRecursoService.save(proyectoRec);
 			try {
-				enviaNotificacionAsignacionRecurso(proyecto, id);
+				enviaNotificacionAsignacionRecurso(proyecto, proyectoRec.getProyectoRecursoId().getCodRecurso());
 			} catch (Exception e) {
 				System.out.println("NOTIFICACIONES : <Error> No se puede enviar notificacion al recurso de nueva asignación sin plan");
 			}
-			
 		}
+		
 		return "Hecho : "+ codProyecto; 
 	}
 	

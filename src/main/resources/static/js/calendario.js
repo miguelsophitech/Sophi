@@ -13,7 +13,7 @@ let year = c_date.getFullYear();
     const calendar = `<div class="row">
                 <div class="col-sm-6 col-12 d-flex">
                     <div class="card border-0 flex-fill">
-                        <div class="card-header py-3 d-flex justify-content-between">
+                        <div class="card-header card-header-cal py-3 d-flex justify-content-between">
                             <span class="prevMonth">&#10096;</span>
                             <span><strong id="s_m"></strong></span>
                             <span class="nextMonth">&#10097;</span>
@@ -36,7 +36,7 @@ let year = c_date.getFullYear();
                 </div>
                 <div class="col-sm-6 col-12 d-flex pa-sm">
                     <div class="card border-0 flex-fill" id="event">
-                        <div class="card-header py-3 text-center">
+                        <div class="card-header card-header-cal py-3 text-center">
                             <strong>Dias seleccionados</strong>
                             <button type="button" class="close hide">
                                 <span aria-hidden="true">&times;</span>
@@ -128,7 +128,7 @@ renderCalendar(month, year)
     	
     	//AGREGA dia seleccionado
         function showEvent(fecSolicitud, id){
-        	
+//        	console.log("este es el id del dia :" + id);
         	var conteoDias = $("#conteoSolicitados").text();
         	var conteoDiasDisponibles = $("#conteoDisponibles").text();
         	if(conteoDiasDisponibles > 0){
@@ -166,6 +166,7 @@ renderCalendar(month, year)
     		});
     		return resultado;
     	}
+        
         function completar(x){
         	
         	if (x.length == 1){
@@ -211,11 +212,21 @@ renderCalendar(month, year)
             let eventDate = year + completar((month + 1).toString()) +  completar($(this).text());
 //            alert(eventDate);
             var hoy = $("#hoy").val();
-            console.log("hoy: " + hoy +" - select: " + eventDate);
+//            console.log("hoy: " + hoy +" - select: " + eventDate);
             if (eventDate >= hoy){
 	            if(agrega(eventDate)){
 	            	if (!(eventDay == "Sabado" || eventDay == "Domingo")){
-	                	showEvent(eventDay + ' ' +todaysDate, eventDate );
+	            		$.ajax({
+	            			url: "/validarDiaLaboral",
+	            			data: {codDia:eventDate},
+	            			success: function(result){
+	            				if( result == "0"){
+	    	            			showEvent(eventDay + ' ' +todaysDate, eventDate );
+	    	            		} else {
+	    	            			alert("Feriado Sophitech: "+ result);
+	    	            		}
+	            			}
+	            		});
 	                } else {
 	                	alert("No disponible para vacaciones.");
 	                }

@@ -28,6 +28,8 @@ public interface ICapHoraService {
 	
 	public List<DetalleRecursoHoras> findRecursoHorasRechazo(Date fecInicial, Date fecFinal);
 	
+	List<CapHora> findRecursoHorasRechazoCustom(Date fecInicial, Date fecFinal);
+	
 	public List<Long> findProyectosCapturadosSemana(Date fecInicial, Date fecFinal);
 
 	public List<Long> findRecursoCapturadosSemana(Date fecInicial, Date fecFinal);

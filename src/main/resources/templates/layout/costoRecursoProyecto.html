@@ -19,19 +19,22 @@
 <!-- 						<th></th> -->
 							<th>Recurso</th>
 							<th>Costo</th>
+<!-- 							<th th:if="${plan == 0}">Horas planeadas</th> -->
+							<th>Horas planeadas</th>
 						</tr>
 					</thead>
 					<tbody>
-						<tr
-							th:each="recursoProyecto, itemStat : ${formRecursosProyecto.listaRecursosProyecto}">
-<!-- 							<td> -->
-<!-- 							</td> -->
-							<td valign="middle">
-								<span th:text="${recursoProyecto.nombreRecurso}"></span>
-							</td>
+						<tr th:each="recursoProyecto, itemStat : ${formRecursosProyecto.listaRecursosProyecto}">
+							<td valign="middle"> <span th:text="${recursoProyecto.nombreRecurso}"></span> </td>
 							<td valign="middle"><input type="text" maxlength="10" onkeypress="return event.charCode >= 46 && event.charCode <= 57" style="width:120px; height:22px; margin:4px; padding: 4px; font-size: 12px;" class="form-control" 
 								th:name="|listaRecursosProyecto[${itemStat.index}].impCostoRecurso|"
 								th:value="${recursoProyecto.getImpCostoRecurso()}" /></td>
+<!-- 							<td th:if="${plan == 0}" valign="middle"><input type="text" maxlength="10" onkeypress="return event.charCode >= 46 && event.charCode <= 57" style="width:120px; height:22px; margin:4px; padding: 4px; font-size: 12px;" class="form-control"  -->
+<!-- 								th:name="|listaRecursosProyecto[${itemStat.index}].valHorasRecurso|" -->
+<!-- 								th:value="${recursoProyecto.getValHorasRecurso()}" /></td> -->
+							<td valign="middle"><input type="text" maxlength="10" onkeypress="return event.charCode >= 46 && event.charCode <= 57" style="width:120px; height:22px; margin:4px; padding: 4px; font-size: 12px;" class="form-control" 
+								th:name="|listaRecursosProyecto[${itemStat.index}].valHorasRecurso|"
+								th:value="${recursoProyecto.getValHorasRecurso() != null} ? ${recursoProyecto.getValHorasRecurso()} : 0 " /></td>
 						</tr>
 					</tbody>
 

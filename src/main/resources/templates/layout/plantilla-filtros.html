@@ -56,7 +56,7 @@
 							<td th:text="${#dates.format(proyecto.fecFinProyecto,'dd/MM/yyyy')}"></td>
 							<td th:text="${proyecto.nombreRecursoLider}"></td>
 							<td th:text="${proyecto.nombreRecursoAprobador}"></td>
-							<td style="color: green; font-weight: bold;">Proyecto</td>
+							<td style="color: green; font-weight: bold;">En ejecuci&oacute;n</td>
 							<td>
                       			<a th:href="@{/preventaProyectoConsulta/}+${proyecto.codProyecto}+'/'+${proyecto.codEstatusProyecto}+'/'+${proyecto.codCliente}" class="badge badge-success">Detalle  <i class="far fa-edit"></i></a>
                       			<a th:if="${proyecto.numAct > 0}" th:href="@{/verPlanActividades/}+${proyecto.codProyecto}" class="badge badge-info">Plan  <i class="fas fa-tasks"></i></a>
@@ -124,12 +124,12 @@
 					<tr class="row justify-content-md-center">
 						<td class="col-6 col-md-4" th:each="agenda: ${contactos}">
 							<ul class="list-group list-group-flush">
-								<li class="list-group-item"><img th:if="${agenda.valActivo} == 1" alt="contact_active" src="/img/contact_active.png" witdh="48" height="48">
-								<img th:if="${agenda.valActivo} == 0" alt="contact_disabled" src="/img/contact_disabled.png" witdh="48" height="48"><br><h3 th:text="${agenda.descContacto}"></h3></li>
+								<li class="list-group-item"><img th:if="${agenda.valActivo} == 1" alt="contact_active" src="/img/contact_active.png" witdh="35" height="35" style="padding: 5px;">
+								<img th:if="${agenda.valActivo} == 0" alt="contact_disabled" src="/img/contact_disabled.png" witdh="35" height="35" style="padding: 5px;"><br><h3 th:text="${agenda.descContacto}"></h3></li>
 								<li class="list-group-item">Clasificaci&oacute;n de puesto: <strong th:text="${agenda.descPuesto}"></strong></li>
 								<li class="list-group-item">Correo electr&oacute;nico: <strong th:text="${agenda.descCorreoElectronico}"></strong></li>
 								<li class="list-group-item">Tel&eacute;fono de empresa: <strong th:text="${agenda.descTelEmpresa}"></strong>&nbsp;	Extensi&oacute;n: <strong th:text="${agenda.descTelExt}"></strong></li>
-								<li class="list-group-item">Tel&eacute;fono particular: <strong th:text="${agenda.descTelCelular}"></strong>&nbsp; <img style="width: 14px; cursor: pointer;" th:src="@{/img/whapp.png}" th:attr="onclick=|loadWA('${agenda.descTelCelular}')|" ></li>
+								<li class="list-group-item">Tel&eacute;fono particular: <strong th:text="${agenda.descTelCelular}"></strong>&nbsp; <img style="width: 14px; cursor: pointer; margin-bottom: 4px;" th:src="@{/img/whapp.png}" th:attr="onclick=|loadWA('${agenda.descTelCelular}')|" ></li>
 								<!-- <li class="list-group-item">Cargo que ocupa: <strong th:text="${agenda.nombreCargo}"></strong></li> -->
 								<li class="list-group-item">Recursos a cargo: <strong th:text="${agenda.valRecursosACargo}"></strong></li>
 								<li class="list-group-item">Fecha de nacimiento: <strong th:text="${agenda.fecNacimiento}"></strong></li>
@@ -174,7 +174,7 @@
 	  	});
 		
 		function loadWA(numero){
-			window.open('http://wppredirect.tk/go/?p=521'+numero+'&amp;m=');
+			window.open('http://wppredirect.tk/go/?p=521'+numero+'&m=');
 		}
 		</script>
 	</div>
