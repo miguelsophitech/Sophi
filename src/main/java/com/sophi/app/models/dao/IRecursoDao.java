@@ -25,5 +25,7 @@ public interface IRecursoDao extends CrudRepository<Recurso, Long>{
 	
 	Recurso findByCodRecurso(Long codRecurso);
 	
+	List<Recurso> findByDescConsultor(Long descConsultor);
+	
 	
 }

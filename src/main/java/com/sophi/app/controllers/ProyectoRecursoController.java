@@ -131,11 +131,13 @@ public class ProyectoRecursoController {
         //Si no le paso ningun Locale, toma el del sistema, que en mi caso es Locale("es","MX");
         DecimalFormat myFormatter = new DecimalFormat(pattern);
         String output = myFormatter.format(costoProyecto);
-        System.out.println(costoProyecto + " " + pattern + " " + output);
+//        System.out.println(costoProyecto + " " + pattern + " " + output);
         proyecto.setImpCostoProyecto(output);
+		double d = totalHoras;
+		String output2 =  myFormatter.format(d);
 		
-		
-		proyecto.setValTotalHorasProyecto(String.format("%.2f", totalHoras));
+//		proyecto.setValTotalHorasProyecto(String.format("%.2f", totalHoras));
+		proyecto.setValTotalHorasProyecto(output2);
 		proyectoService.save(proyecto)
 		;
 		return "redirect:/preventaProyectoContactoInfraestructura/"+ codProyecto; 

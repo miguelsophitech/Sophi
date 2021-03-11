@@ -24,20 +24,16 @@
         <div class="container-fluid">
 
           <!-- Page Heading -->
-<!--           <div class="d-sm-flex align-items-center justify-content-between mb-1"> -->
-<!--             <h1 class="h3 mb-0 text-gray-800"><span class="tituloA" th:text="'Consulta del proyecto ' + ${proyecto.descProyecto}"></span></h1> -->
             
             <h1 class="h3 mb-2 text-gray-800" th:text="'Registro de ' + ${proyecto.descProyecto}"></h1>
-<!--           </div> -->
           <a type="button" th:href="@{/listaProyectosTodo}" id="btnRegresarProyecto" th:text="'&laquo; regresar'"></a>
 
             <!--form-->
               <form class="user" th:action="@{/preventaProyectoActualizar}" th:Object="${proyecto}" method="post">
 <!--                 <p class="tituloC">Lo primero, elige a un cliente o registra un cliente nuevo.</p> -->
-				
 
                 <div class="form-group row" th:if="${proyecto.codEstatusProyecto == 2}">
-                  <div class="col-sm-5 mb-3 mb-sm-0">
+                  <div class="col-sm-12 mb-3 mb-sm-0">
                   <div class="form-check form-check-inline">
                   <label>Estatus: </label>
                   </div>
@@ -54,13 +50,13 @@
                       <label class="form-check-label" for="cerrado">Cerrado</label>
                     </div>
                   </div>
-                  <div class="col-sm-3">
-                  </div>
-                  <div class="col-sm-4">
-                  </div>
+<!--                   <div class="col-sm-3"> -->
+<!--                   </div> -->
+<!--                   <div class="col-sm-4"> -->
+<!--                   </div> -->
                 </div>
                 <div class="form-group row" th:if="${proyecto.codEstatusProyecto == 3}">
-                  <div class="col-sm-5 mb-3 mb-sm-0">
+                  <div class="col-sm-12 mb-3 mb-sm-0">
                   <div class="form-check form-check-inline">
                   <label>Estatus: </label>
                   </div>
@@ -77,13 +73,13 @@
                       <label class="form-check-label" for="cerrado">Cerrado</label>
                     </div>
                   </div>
-                  <div class="col-sm-3">
-                  </div>
-                  <div class="col-sm-4"> 
-                  </div>
+<!--                   <div class="col-sm-3"> -->
+<!--                   </div> -->
+<!--                   <div class="col-sm-4">  -->
+<!--                   </div> -->
                 </div>
                  <div class="form-group row" th:if="${proyecto.codEstatusProyecto == 1}">
-                  <div class="col-sm-5 mb-3 mb-sm-0">
+                  <div class="col-sm-12 mb-3 mb-sm-0">
                   <div class="form-check form-check-inline">
                   <label>Estatus: </label>
                   </div>
@@ -100,36 +96,41 @@
                       <label class="form-check-label" for="cerrado">Cerrado</label>
                     </div>
                   </div>
-                  <div class="col-sm-3">
-                  </div>
-                  <div class="col-sm-4"> 
-                  </div>
+<!--                   <div class="col-sm-3"> -->
+<!--                   </div> -->
+<!--                   <div class="col-sm-4">  -->
+<!--                   </div> -->
                 </div>
                 <div class="form-group row">
-                  <div class="col-sm-3 mb-3 mb-sm-0">
-                      <label for="cliente">Cliente</label>
+                  <div class="col-sm-12 mb-3 mb-sm-0">
+                  <div class="form-check form-check-inline">
+                      <label for="cliente">Cliente:</label>
                   </div>
-                  <div class="col-sm-5">
+<!--                   <div class="col-sm-5"> -->
+                  <div class="form-check form-check-inline">
                   	<label for="valCliente" th:text="${clienteProyecto.descCliente}"></label>
                   	<input id="valCliente" name="valCliente" type="hidden"  th:value="${clienteProyecto.codCliente}">
-                  	
                   </div>
-                  <div class="col-sm-4"> 
-<!--                     <a class="btn btn-primary" th:href="@{/formCliente}" role="button">Agregar cliente <i class="fas fa-plus-circle fa-sm text-white-50"></i></a> -->
                   </div>
                 </div>
+                
                 <div class="form-group row">
-                  <div class="col-sm-3 mb-3 mb-sm-0">
-                      <label for="areaComercial">&Aacute;rea</label>
+                  <div class="col-sm-12 mb-3 mb-sm-0">
+                  <div class="form-check form-check-inline">
+                      <label for="areaComercial">&Aacute;rea:</label>
                   </div>
-                  <div class="col-sm-5">
-                    <select th:attr="readonly=${proyecto.codEstatusProyecto == 3}? 'true' : 'false'" th:field="*{codAreaComercial}" class="form-control " id="areaComercial">
-                        <option th:each="areaComercial : ${areasComerciales}" th:value="${areaComercial.codAreaComercial}" th:text="${areaComercial.descAreaComercial}" th:selected="${areaComercial.codAreaComercial==proyecto.codAreaComercial}"/>
-                      </select>
-                  </div>
-                  <div class="col-sm-4">
+<!--                   <div class="col-sm-5"> -->
+                  <div class="form-check form-check-inline">
+                  	<select th:attr="readonly=${proyecto.codEstatusProyecto == 3}? 'true' : 'false'" th:field="*{codAreaComercial}" class="form-control " id="areaComercial">
+                        <option th:each="areaComercial : ${areasComerciales}" 
+                        th:value="${areaComercial.codAreaComercial}" 
+                        th:text="${areaComercial.descAreaComercial}" 
+                        th:selected="${areaComercial.codAreaComercial==proyecto.codAreaComercial}"/>
+					</select>
                   </div>
                 </div>
+                </div>
+                
                 <input th:field="*{codProyecto}" id="codProyecto" name="codProyecto" type="hidden" th:value="${proyecto.codProyecto}">
                 <input type="hidden" th:value="${proyecto.fecRegistro}" th:attr="name='fecRegistro'"/>
                 <input type="hidden" th:value="${proyecto.fecCambioEstatus}" th:attr="name='fecCambioEstatus'"/>
@@ -138,164 +139,276 @@
 					<div class="card-header py-3">
 	                  <h6 class="m-0 font-weight-bold text-primary">Completa la informaci&oacute;n del proyecto</h6>
 	                </div>
-	                <div class="card-body">
-	                	<div class="form-group row">
-                  <div class="col-sm-4 mb-3 mb-sm-0">
-                     <label for="nombreProyecto">Nombre del proyecto</label>
-                    <input th:attr="readonly=${proyecto.codEstatusProyecto == 3}? 'true' : 'false'"  type="text" th:field="*{descProyecto}" class="form-control" id="nombreProyecto" placeholder="Nombre de proyecto" oninvalid="setCustomValidity('Campo inválido')" onchange="try{setCustomValidity('')}catch(e){}" maxlength="100" required>
-                  </div>
-                  <div class="col-sm-4 mb-3 mb-sm-0">
-                  	<label for="descripcionProyecto">Descripci&oacute;n </label>
-                  	<br>
-                  	<textarea th:attr="readonly=${proyecto.codEstatusProyecto == 3}? 'true' : 'false'" th:field="*{descProyectoTexto}" class="form-control" rows="5" id="descripcionProyecto" placeholder="Descripci&oacute;n del proyecto" oninvalid="setCustomValidity('Campo inválido')" onchange="try{setCustomValidity('')}catch(e){}" maxlength="500" required></textarea>
-                  </div>
-                </div>
-                <div class="form-group row">
-                  <div class="col-sm-4" id="fi">
-                    <label for="fechaInicio">Fecha inicio</label>
-                    <input th:attr="readonly=${proyecto.codEstatusProyecto == 3}? 'true' : 'false'" th:field="*{fecIncioProyecto}" type="date" class="form-control" id="fechaInicio">
-                  </div>
-                  <div class="col-sm-4" id="ff">
-                    <label for="fechaFin">Fecha fin</label>
-                    <input th:attr="readonly=${proyecto.codEstatusProyecto == 3}? 'true' : 'false'" th:field="*{fecFinProyecto}" type="date" class="form-control" id="fechaFin">
-                  </div>
-                </div>
-                <div class="form-group row">
-                  <div class="col-sm-4 mb-3 mb-sm-0">
-                     <label for="codigoProyecto">C&oacute;digo de proyecto</label>
-                    <input th:field="*{descCodigoProyecto}" type="text" class="form-control" id="codigoProyecto" placeholder="Código de proyecto" oninvalid="setCustomValidity('Campo inv&aacute;lido')" onchange="try{setCustomValidity('')}catch(e){}" maxlength="100" readonly="readonly" required>
-                  </div>
-                  <div class="col-sm-4" th:if="${proyecto.codEstatusProyecto == 1 or proyecto.codEstatusProyecto == 3}">
-                    <label for="presupuesto">Presupuesto</label>
-                    <div class="input-group">
-                    	<div class="input-group-prepend">
-							<span class="input-group-text"><i class="fas fa-dollar-sign"></i></span>
+					<div class="card-body">
+						<div class="form-group row">
+							<div class="col-sm-6 mb-3 mb-sm-0">
+								<div class="form-group row">
+									<div class="col-sm-9 mb-3 mb-sm-0">
+										<label for="nombreProyecto">Nombre del proyecto</label> 
+										<input th:attr="readonly=${proyecto.codEstatusProyecto == 3}? 'true' : 'false'"
+										type="text" th:field="*{descProyecto}" class="form-control"
+										id="nombreProyecto" placeholder="Nombre de proyecto"
+										oninvalid="setCustomValidity('Campo inválido')"
+										onchange="try{setCustomValidity('')}catch(e){}"
+										maxlength="100" required>
+									</div>
+									<div class="col-sm-3 mb-3 mb-sm-0">
+										<label for="codigoProyecto">C&oacute;digo</label> <input th:field="*{descCodigoProyecto}"
+										type="text" class="form-control" id="codigoProyecto"
+										placeholder="Código de proyecto"
+										oninvalid="setCustomValidity('Campo inv&aacute;lido')"
+										onchange="try{setCustomValidity('')}catch(e){}"
+										maxlength="100" readonly="readonly" required>
+									</div>
+								</div>
+								<div class="form-group row">
+									<div class="col-sm-6 mb-3 mb-sm-0" id="fi">
+										<label for="fechaInicio">Fecha inicio</label> <input
+										th:attr="readonly=${proyecto.codEstatusProyecto == 3}? 'true' : 'false'"
+										th:field="*{fecIncioProyecto}" type="date"
+										class="form-control" id="fechaInicio">
+									</div>
+									<div class="col-sm-6 mb-3 mb-sm-0" id="ff">
+										<label for="fechaFin">Fecha fin</label> <input
+										th:attr="readonly=${proyecto.codEstatusProyecto == 3}? 'true' : 'false'"
+										th:field="*{fecFinProyecto}" type="date"
+										class="form-control" id="fechaFin">
+									</div>
+								</div>
+							</div>
+							<div class="col-sm-6 mb-3 mb-sm-0">
+								<label for="descripcionProyecto">Descripci&oacute;n </label> <br>
+								<textarea th:attr="readonly=${proyecto.codEstatusProyecto == 3}? 'true' : 'false'"
+								th:field="*{descProyectoTexto}" class="form-control" rows="5" style="height: 125px;"
+								id="descripcionProyecto"
+								placeholder="Descripci&oacute;n del proyecto"
+								oninvalid="setCustomValidity('Campo inválido')"
+								onchange="try{setCustomValidity('')}catch(e){}"
+								maxlength="500" required></textarea>
+							</div>
 						</div>
-                    <input th:attr="readonly=${proyecto.codEstatusProyecto == 3}? 'true' : 'false'" th:field="*{impPresupuesto}" type="text" maxlength="15" onkeypress="return event.charCode >= 46 && event.charCode <= 57" class="form-control" id="presupuesto" placeholder="Presupuesto" oninvalid="setCustomValidity('Presupuesto inv&aacute;lido')" onchange="try{setCustomValidity('')}catch(e){}" min=0 max=9999999 step="any">
-                  </div>
-                  </div>
-                  <div class="col-sm-4" id="pr">
-                   <label for="riesgo">Porcentaje de riesgo</label>
-                  <div class="input-group">
-                    	<div class="input-group-prepend">
-							<span class="input-group-text"><b>%</b></span>
-						</div>
-                   
-                    <input th:attr="readonly=${proyecto.codEstatusProyecto == 3}? 'true' : 'false'" th:field="*{valPorcentajeRiesgo}" type="number" class="form-control" id="riesgo" placeholder="Porcentaje" oninvalid="setCustomValidity('Porcentaje inv&aacute;lido')" onchange="try{setCustomValidity('')}catch(e){}" min=0 max=100>
-                  </div>
-                  </div>
-                </div>
-                <div class="form-group row">
-<!--                   <div class="col-sm-4 mb-3 mb-sm-0"> -->
-<!--                      <label for="tipoFacturacion">Tipo de proyecto</label> -->
-<!--                      <select th:attr="readonly=${proyecto.codEstatusProyecto == 3}? 'true' : 'false'" th:field="*{codTipoProyecto}" class="form-control " id="tipoProyecto"> -->
-<!--                         <option th:each="tipoProyecto : ${tiposProyecto}" th:value="${tipoProyecto.codTipoProyecto}" th:text="${tipoProyecto.descTipoProyecto}" th:selected="${tipoProyecto.codTipoProyecto==proyecto.codTipoProyecto}"/> -->
-<!--                       </select> -->
-<!--                   </div> -->
-				  <div class="col-sm-4 mb-3 mb-sm-0" id="tp">
-                  	<label for="tipoFacturacion">Tipo de facturaci&oacute;n</label>
-                     <select th:attr="readonly=${proyecto.codEstatusProyecto == 3}? 'true' : 'false'" th:field="*{codTipoFacturacion}" class="form-control " id="tipoFacturacion">
-                        <option th:each="tipoFacturacion : ${tiposFacturacion}" th:value="${tipoFacturacion.codTipoFacturacion}" th:text="${tipoFacturacion.descTipoFacturacion}" th:selected="${tipoFacturacion.codTipoFacturacion==proyecto.codTipoFacturacion}"/>
-                      </select>
-                  </div>
-                  <div class="col-sm-4" id="thv">
-                    <label for="totalHoras">Total de horas vendidas</label>
-                    <div class="input-group">
-                    	<div class="input-group-prepend">
-							<span class="input-group-text"><i class="far fa-clock"></i></span>
-						</div>
-	                    <input th:attr="readonly=${proyecto.codEstatusProyecto == 3}? 'true' : 'false'" th:field="*{valTotalHorasVendidas}" type="text" maxlength="10" onkeypress="return event.charCode >= 46 && event.charCode <= 57" class="form-control" id="totalHoras" placeholder="Total de horas vendidas" onchange="try{setCustomValidity('')}catch(e){}" min="0" max="99999999" >
-                    </div>
-                  </div>
-                  <div class="col-sm-4" id="thp">
-                    <label for="thorasProyecto">Total de horas planeadas del proyecto</label>
-                    <div class="input-group">
-                    	<div class="input-group-prepend">
-							<span class="input-group-text"><i class="far fa-clock"></i></span>
-						</div>
-						<input th:field="*{valTotalHorasProyecto}" type="text" maxlength="10" class="form-control" id="thorasProyecto" placeholder="Total de horas planeadas del proyecto" readonly pattern="^-?\d+$">
-                    </div>
-                  </div>
-                </div>
-                <div class="form-group row">
-                  
-                  <div class="col-sm-4" id="pp">
-                    <label for="precio">Precio del proyecto</label>
-                    <div class="input-group">
-                    	<div class="input-group-prepend">
-							<span class="input-group-text"><i class="fas fa-dollar-sign"></i></span>
-						</div>
-                    <input th:attr="readonly=${proyecto.codEstatusProyecto == 3}? 'true' : 'false'" th:field="*{impPrecioPropuesta}" type="text" maxlength="15" onkeypress="return event.charCode >= 46 && event.charCode <= 57" class="form-control" id="precio" placeholder="Precio del proyecto" oninvalid="setCustomValidity('Precio inválido')" onchange="try{setCustomValidity('')}catch(e){}" min=0 max=9999999 step="any">
-                  </div>
-                  </div>
-                  <div class="col-sm-4" id="cp">
-                    <label for="costoProyecto">Costo planeado del proyecto</label>
-                    <div class="input-group">
-                    	<div class="input-group-prepend">
-							<span class="input-group-text"><i class="fas fa-dollar-sign"></i></span>
-						</div>
-                    	<input th:field="*{impCostoProyecto}" type="text" maxlength="10" class="form-control" id="costoProyecto" placeholder="Costo planeado del proyecto" readonly>
-                  	</div>
-                  </div>
-                </div>
-                 <div class="form-group row">
-                	<div class="col-sm-4 mb-3 mb-sm-0">
-                      <label for="clasificacion">Clasificaci&oacute;n del proyecto</label>
-                      <select th:attr="readonly=${proyecto.codEstatusProyecto == 3}? 'true' : 'false'" th:field="*{codClasificacionProyecto}" class="form-control " id="clasificacionProyecto">
-                        	<option th:each="clasificacionProyecto : ${clasificacionesProyecto}" th:value="${clasificacionProyecto.codClasificacionProyecto}" th:text="${clasificacionProyecto.descClasificacion}" th:selected="${clasificacionProyecto.codClasificacionProyecto==proyecto.codClasificacionProyecto}"/>
-                      </select>
-                  	</div>
-                  	<div class="col-sm-4">
-                    	<label for="clasificacion">L&iacute;der de proyecto</label>
-                    	<div class="input-group">
-                    		<div class="input-group-prepend">
-                    			<span class="input-group-text"><i class="fas fa-user-tag"></i></span>
-                    		</div>
-                    		<select th:attr="readonly=${proyecto.codEstatusProyecto == 3}? 'true' : 'false'" th:field="*{codRecursoLider}" class="form-control " id="liderProyecto">
-	                        	<option th:each="recurso : ${recursosLider}" th:value="${recurso.codRecurso}" th:text="${recurso.descRecurso}" th:selected="${recurso.codRecurso==proyecto.codRecursoLider}"/>
-	                      </select>
-                    	</div>
-                  	</div>
-                  	<div class="col-sm-4">
-                    	<label for="aprobador">Aprobador de proyecto</label>
-                    	<div class="input-group">
-                    		<div class="input-group-prepend">
-                    			<span class="input-group-text"><i class="fas fa-user-check"></i></span>
-                    		</div>
-                    		<select th:attr="readonly=${proyecto.codEstatusProyecto == 3}? 'true' : 'false'" th:field="*{codRecursoAprobador}" class="form-control " id="aprobadorProyecto">
-	                        	<option th:each="recurso : ${recursosAprobador}" th:value="${recurso.codRecurso}" th:text="${recurso.descRecurso}" th:selected="false"/>
-	                      </select>
-                    	</div>
-                  	</div>
 
-                </div>
-	                </div>
+						<div class="form-group row">
+							<div class="col-sm-3 mb-3 mb-sm-0"
+								th:if="${proyecto.codEstatusProyecto == 1 or proyecto.codEstatusProyecto == 3}">
+								<label for="presupuesto">Presupuesto</label>
+								<div class="input-group">
+									<div class="input-group-prepend">
+										<span class="input-group-text">
+										<i class="fas fa-dollar-sign"></i>
+										</span>
+									</div>
+									<input th:attr="readonly=${proyecto.codEstatusProyecto == 3}? 'true' : 'false'"
+									th:field="*{impPresupuesto}" type="text" maxlength="15"
+									onkeypress="return event.charCode >= 46 && event.charCode <= 57"
+									class="form-control" id="presupuesto"
+									placeholder="Presupuesto"
+									oninvalid="setCustomValidity('Presupuesto inv&aacute;lido')"
+									onchange="try{setCustomValidity('')}catch(e){}" min=0
+									max=9999999 step="any">
+								</div>
+							</div>
+							<div class="col-sm-3 mb-3 mb-sm-0">
+								<label for="clasificacion">Clasificaci&oacute;n</label> <select
+									th:attr="readonly=${proyecto.codEstatusProyecto == 3}? 'true' : 'false'"
+									th:field="*{codClasificacionProyecto}" class="form-control "
+									id="clasificacionProyecto">
+									<option
+										th:each="clasificacionProyecto : ${clasificacionesProyecto}"
+										th:value="${clasificacionProyecto.codClasificacionProyecto}"
+										th:text="${clasificacionProyecto.descClasificacion}"
+										th:selected="${clasificacionProyecto.codClasificacionProyecto==proyecto.codClasificacionProyecto}" />
+								</select>
+							</div>
+							<div class="col-sm-3 mb-3 mb-sm-0">
+								<label for="clasificacion">L&iacute;der</label>
+								<div class="input-group">
+									<div class="input-group-prepend">
+										<span class="input-group-text"><i
+											class="fas fa-user-tag"></i></span>
+									</div>
+									<select
+										th:attr="readonly=${proyecto.codEstatusProyecto == 3}? 'true' : 'false'"
+										th:field="*{codRecursoLider}" class="form-control "
+										id="liderProyecto">
+										<option th:each="recurso : ${recursosLider}"
+											th:value="${recurso.codRecurso}"
+											th:text="${recurso.descRecurso}"
+											th:selected="${recurso.codRecurso==proyecto.codRecursoLider}" />
+									</select>
+								</div>
+							</div>
+							<div class="col-sm-3 mb-3 mb-sm-0">
+								<label for="aprobador">Aprobador</label>
+								<div class="input-group">
+									<div class="input-group-prepend">
+										<span class="input-group-text"><i
+											class="fas fa-user-check"></i></span>
+									</div>
+									<select
+										th:attr="readonly=${proyecto.codEstatusProyecto == 3}? 'true' : 'false'"
+										th:field="*{codRecursoAprobador}" class="form-control "
+										id="aprobadorProyecto">
+										<option th:each="recurso : ${recursosAprobador}"
+											th:value="${recurso.codRecurso}"
+											th:text="${recurso.descRecurso}" th:selected="false" />
+									</select>
+								</div>
+							</div>
+						</div>
+
+						<div class="form-group row">
+							<div class="col-sm-3 mb-3 mb-sm-0" id="tp">
+								<label for="tipoFacturacion">Tipo de facturaci&oacute;n</label>
+								<select
+									th:attr="readonly=${proyecto.codEstatusProyecto == 3}? 'true' : 'false'"
+									th:field="*{codTipoFacturacion}" class="form-control "
+									id="tipoFacturacion">
+									<option th:each="tipoFacturacion : ${tiposFacturacion}"
+										th:value="${tipoFacturacion.codTipoFacturacion}"
+										th:text="${tipoFacturacion.descTipoFacturacion}"
+										th:selected="${tipoFacturacion.codTipoFacturacion==proyecto.codTipoFacturacion}" />
+								</select>
+							</div>
+							<div class="col-sm-3 mb-3 mb-sm-0" id="thv">
+								<label for="totalHoras">Horas vendidas</label>
+								<div class="input-group">
+									<div class="input-group-prepend">
+										<span class="input-group-text"><i
+											class="far fa-clock"></i></span>
+									</div>
+									<input
+										th:attr="readonly=${proyecto.codEstatusProyecto == 3}? 'true' : 'false'"
+										th:field="*{valTotalHorasVendidas}" type="text"
+										maxlength="10"
+										onkeypress="return event.charCode >= 46 && event.charCode <= 57"
+										class="form-control" id="totalHoras"
+										placeholder="Total de horas vendidas"
+										onchange="try{setCustomValidity('')}catch(e){}" min="0"
+										max="99999999">
+								</div>
+							</div>
+							<div class="col-sm-3 mb-3 mb-sm-0" id="pp">
+								<label for="precio">Precio del proyecto</label>
+								<div class="input-group">
+									<div class="input-group-prepend">
+										<span class="input-group-text"><i
+											class="fas fa-dollar-sign"></i></span>
+									</div>
+									<input
+										th:attr="readonly=${proyecto.codEstatusProyecto == 3}? 'true' : 'false'"
+										th:field="*{impPrecioPropuesta}" type="text" maxlength="15"
+										onkeypress="return event.charCode >= 46 && event.charCode <= 57"
+										class="form-control" id="precio"
+										placeholder="Precio del proyecto"
+										oninvalid="setCustomValidity('Precio inválido')"
+										onchange="try{setCustomValidity('')}catch(e){}" min=0
+										max=9999999 step="any">
+								</div>
+							</div>
+							<div class="col-sm-3 mb-3 mb-sm-0" id="pr">
+								<label for="riesgo">Porcentaje de riesgo</label>
+								<div class="input-group">
+									<div class="input-group-prepend">
+										<span class="input-group-text"><b>%</b></span>
+									</div>
+
+									<input
+										th:attr="readonly=${proyecto.codEstatusProyecto == 3}? 'true' : 'false'"
+										th:field="*{valPorcentajeRiesgo}" type="number"
+										class="form-control" id="riesgo" placeholder="Porcentaje"
+										oninvalid="setCustomValidity('Porcentaje inv&aacute;lido')"
+										onchange="try{setCustomValidity('')}catch(e){}" min=0
+										onkeyup="calculoPrecio(); return false;"
+										max=100>
+								</div>
+							</div>
+					
+						</div>
+
+						<div class="form-group row">
+							<div class="col-sm-3 mb-3 mb-sm-0" id="pm">
+								<label for="riesgo">Porcentaje de margen</label>
+								<div class="input-group">
+									<div class="input-group-prepend">
+										<span class="input-group-text"><b>%</b></span>
+									</div>
+									<input
+										th:attr="readonly=${proyecto.codEstatusProyecto == 3}? 'true' : 'false'"
+										th:field="*{valPorcentajeMargen}" type="number"
+										class="form-control" id="margen" placeholder="Margen"
+										oninvalid="setCustomValidity('Margen inv&aacute;lido')"
+										onchange="try{setCustomValidity('')}catch(e){}" min=0
+										onkeyup="calculoPrecio(); return false;"
+										max=100>
+								</div>
+							</div>
+							<div class="col-sm-3 mb-3 mb-sm-0" id="ig">
+								<label for="riesgo">Gasto</label>
+								<div class="input-group">
+									<div class="input-group-prepend">
+										<span class="input-group-text"><i
+											class="fas fa-dollar-sign"></i></span>
+									</div>
+									<input
+										th:attr="readonly=${proyecto.codEstatusProyecto == 3}? 'true' : 'false'"
+										th:field="*{impGastoProyecto}" type="text" maxlength="15"
+										onkeypress="return event.charCode >= 46 && event.charCode <= 57"
+										class="form-control" id="gasto"
+										placeholder="Gasto del proyecto"
+										oninvalid="setCustomValidity('Gasto inválido')"
+										onchange="try{setCustomValidity('')}catch(e){}" min=0
+										max=9999999 step="any">
+								</div>
+							</div>							
+							<div class="col-sm-3 mb-3 mb-sm-0" id="thp">
+								<label for="thorasProyecto">Horas planeadas</label>
+								<div class="input-group">
+									<div class="input-group-prepend">
+										<span class="input-group-text"><i
+											class="far fa-clock"></i></span>
+									</div>
+									<input th:field="*{valTotalHorasProyecto}" type="text"
+										maxlength="10" class="form-control" id="thorasProyecto"
+										placeholder="Total de horas planeadas del proyecto" readonly
+										pattern="^-?\d+$">
+								</div>
+							</div>
+							<div class="col-sm-3 mb-3 mb-sm-0" id="cp">
+								<label for="costoProyecto">Costo planeado</label>
+								<div class="input-group">
+									<div class="input-group-prepend">
+										<span class="input-group-text"><i
+											class="fas fa-dollar-sign"></i></span>
+									</div>
+									<input th:field="*{impCostoProyecto}" type="text"
+										maxlength="10" class="form-control" id="costoProyecto"
+										placeholder="Costo planeado del proyecto" readonly>
+								</div>
+							</div>
+						</div>
+						<div class="form-group row">
+							<div class="col-sm-12 mb-3 mb-sm-0" id="pc">
+								<span id="totalProyecto" style="font-size: 18px; color: #6E707E; font-weight: 600;">
+								</span>
+							</div>
+						</div>
+					</div>
 				</div>
-				<br>
-                <div class="form-group row">
-                	<div class="col-sm-4" id="complementoProyecto"> 
-                       <a class="btn btn-primary" data-toggle="modal" data-target="#modalComplemento" href="#" role="button">Informaci&oacute;n de contacto e infraestructura</a>
-                  	</div>
-                </div>
-                <div class="form-group row">
-                  <div class="col-sm-4 mb-6 mb-sm-0">
-                     <br>
-                     <input sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_APROB')" th:if="${proyecto.codEstatusProyecto == 1 or proyecto.codEstatusProyecto == 2}" type="submit" value="Guardar y continuar" class="btn btn-primary" id="btnEnviar"/>
-<!--                      <input sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_APROB')" th:if="${proyecto.codEstatusProyecto == 1}" type="submit" value="Guardar" class="btn btn-primary" id="btnEnviar"/> -->
-<!--                      <a th:if="${proyecto.codEstatusProyecto == 1}"class="btn btn-secondary" type="button" th:href="@{/listaProyectosTodo}" >Regresar</a> -->
-                     
-                     <input sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_APROB')" type="submit" value="Aceptar" class="btn btn-secondary" id="btnRegresarCierre"/>
-                     
-                   </div>
-                   <div class="col-sm-5 mb-6 mb-sm-0">
-                   </div>
-                   <div class="col-sm-3 mb-6 mb-sm-0">
-                      <br>
-                     
-                   </div>
-                </div>
-                <div>
-                </div>
+                <div class="row d-flex justify-content-between">
+					<div class="col-sm-4 mb-6 mb-sm-0">
+						<input sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_APROB')"
+							th:if="${proyecto.codEstatusProyecto == 1 or proyecto.codEstatusProyecto == 2}"
+							type="submit" value="Guardar y continuar"
+							class="btn btn-primary" id="btnEnviar" /> <input
+							sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_APROB')"
+							type="submit" value="Aceptar" class="btn btn-secondary"
+							id="btnRegresarCierre" />
+					</div>
+					<div class="col-sm-4" id="complementoProyecto">
+						<a  data-toggle="modal" data-target="#modalComplemento" href="#" role="button"><i class="fa fa-info-circle" aria-hidden="true"></i> Informaci&oacute;n de contacto e infraestructura</a>
+					</div>
+				</div>
               </form>
             <!--form-->
 
@@ -396,7 +509,7 @@
   		  </ul>
         </div>
         <div class="modal-footer">
-          <a class="btn btn-primary" data-dismiss="modal" href="">Regresar</a>
+          <a class="btn btn-primary" data-dismiss="modal" href="">Aceptar</a>
         </div>
       </div>
     </div>

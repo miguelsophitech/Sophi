@@ -78,11 +78,17 @@ public class Proyecto implements Serializable  {
 	@Column(name = "val_porcentaje_riesgo")
 	private String valPorcentajeRiesgo;
 	
+	@Column(name = "val_porcentaje_margen")
+	private String valPorcentajeMargen;
+	
 	@Column(name = "val_total_horas_proyecto")
 	private String valTotalHorasProyecto;
 	
 	@Column(name = "imp_costo_proyecto")
 	private String impCostoProyecto;
+	
+	@Column(name = "imp_gasto_proyecto")
+	private String impGastoProyecto;
 	
 	@Column(name = "fec_registro")
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
@@ -245,6 +251,14 @@ public class Proyecto implements Serializable  {
 		this.valPorcentajeRiesgo = valPorcentajeRiesgo;
 	}
 
+	public String getValPorcentajeMargen() {
+		return valPorcentajeMargen;
+	}
+
+	public void setValPorcentajeMargen(String valPorcentajeMargen) {
+		this.valPorcentajeMargen = valPorcentajeMargen;
+	}
+
 	public String getValTotalHorasProyecto() {
 		return valTotalHorasProyecto;
 	}
@@ -259,6 +273,14 @@ public class Proyecto implements Serializable  {
 
 	public void setImpCostoProyecto(String impCostoProyecto) {
 		this.impCostoProyecto = impCostoProyecto;
+	}
+
+	public String getImpGastoProyecto() {
+		return impGastoProyecto;
+	}
+
+	public void setImpGastoProyecto(String impGastoProyecto) {
+		this.impGastoProyecto = impGastoProyecto;
 	}
 
 	public Date getFecRegistro() {

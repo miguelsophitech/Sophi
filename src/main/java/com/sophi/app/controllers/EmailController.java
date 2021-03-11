@@ -13,20 +13,26 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.sophi.app.Utiles;
 import com.sophi.app.mail.dto.MailRequest;
 import com.sophi.app.mail.dto.MailResponse;
 import com.sophi.app.mail.service.EmailService;
 import com.sophi.app.mail.service.InviteEmailService;
 import com.sophi.app.models.entity.AprobacionGastos;
 import com.sophi.app.models.entity.CapHora;
+import com.sophi.app.models.entity.DetalleForecast;
 import com.sophi.app.models.entity.DetalleRecursoHoras;
 import com.sophi.app.models.entity.InviteContacto;
+import com.sophi.app.models.entity.MesHabil;
 import com.sophi.app.models.entity.Proyecto;
 import com.sophi.app.models.entity.Recurso;
 import com.sophi.app.models.entity.RecursoGasto;
+import com.sophi.app.models.entity.ResumenForecastGeneral;
 import com.sophi.app.models.service.IActividadService;
 import com.sophi.app.models.service.ICapHoraService;
+import com.sophi.app.models.service.IDetalleForecastService;
 import com.sophi.app.models.service.IInviteContactoService;
+import com.sophi.app.models.service.IMesHabilService;
 import com.sophi.app.models.service.IProyectoService;
 import com.sophi.app.models.service.IRecursoService;
 import com.sophi.app.models.service.ISubtareaService;
@@ -54,6 +60,12 @@ public class EmailController {
 	
 	@Autowired
 	private IActividadService actividadService;
+	
+	@Autowired
+	private IMesHabilService mesHabilService;
+	
+	@Autowired
+	private IDetalleForecastService detalleForecastService;
 	
 	@Autowired
 	private IInviteContactoService inviteContactoService;
@@ -139,54 +151,6 @@ public class EmailController {
 			}
 		}
 	}
-	
-	
-	
-	
-	//CRON Miercoles 13:15 hora mexico
-	@Scheduled(cron="0 22 18 * * WED", zone="America/Mexico_City")
-	public void enviaAvisoHrsRechazdasCustom() {
-		List<CapHora> listDetalle = new ArrayList<CapHora>();
-
-		Calendar calendar =  Calendar.getInstance();
-		calendar.setTime(new Date());
-		calendar.add(Calendar.DAY_OF_YEAR, (calendar.get(Calendar.DAY_OF_WEEK) - 1) * -1);
-		Date fecFinal = calendar.getTime();
-		
-		calendar.add(Calendar.DAY_OF_YEAR, -200);
-		Date fecInicial  = calendar.getTime();
-		System.out.println(fecInicial);
-		System.out.println(fecFinal);
-		
-		listDetalle = capHoraService.findRecursoHorasRechazoCustom(fecInicial, fecFinal);
-		if (listDetalle.size() > 0) {
-			for (CapHora detalleRecursoHoras : listDetalle) {
-				
-				System.out.println(recursoService.findOne(detalleRecursoHoras.getCodRecurso()).getDescRecurso() + " - Fecha: " + detalleRecursoHoras.getFecInicioActividad() + " Comentario: " + detalleRecursoHoras.getDescRechazo() + " Hrs rechazadas: " + detalleRecursoHoras.getValDuracionRechazada());
-						
-						
-						
-						
-				
-//				Recurso recurso = recursoService.findOne(detalleRecursoHoras.getLink());
-//				MailRequest request = new MailRequest();
-//				System.out.println(recurso.getDescRecurso());
-//				request.setName(recurso.getDescRecurso());
-//				request.setSubject("Aviso - horas rechazadas");
-//				request.setTo(recurso.getDescCorreoElectronico());
-//				
-//				Map<String, Object> model = new HashMap<String, Object>();
-//				model.put("nombreRecurso", request.getName());
-//				model.put("mensaje","<h3>" + detalleRecursoHoras.getRechazadas() + " horas fueron rechazadas la semana pasada, revisa tu captura en la plataforma</h3>");
-//				model.put("pie", "");
-//				model.put("imagen","<img data-cfsrc=\"images/rechazo.png\" alt=\"\" data-cfstyle=\"width: 200px; max-width: 400px; height: auto; margin: auto; display: block;\" style=\"width: 200px; max-width: 400px; height: auto; margin: auto; display: block;\" src=\"https://sophitech.herokuapp.com/img/img-rechazo.png\">");
-//				
-//				MailResponse response = service.sendEmail(request, model);
-//				System.out.println(response.getMessage());
-			}
-		}
-	}
-	
 	
 	
 	
@@ -420,6 +384,402 @@ public class EmailController {
 			
 		}
 	}
+	
+	
+	//CRON Viernes 10:00 hora mexico
+	@Scheduled(cron="0 0 10 * * THU", zone="America/Mexico_City")
+	public void enviaRecordatoriosForecast() {
+		List<Recurso> listRecursos = new ArrayList<Recurso>();
+		listRecursos = recursoService.findByDescConsultor(1L);
+		if (listRecursos.size()>0) {
+			for (Recurso recurso : listRecursos) {
+				
+				
+				Utiles utiles = new Utiles();
+				
+				Calendar fecha = Calendar.getInstance();
+				fecha.setTime(utiles.getFechaActual());
+				
+				String[] listaMeses = new String[]{"Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"};
+				
+				fecha.add(Calendar.MONTH, 1);
+	        	
+	        	String anio = String.valueOf(fecha.get(Calendar.YEAR));
+	            String mes = String.valueOf(fecha.get(Calendar.MONTH) + 1);
+	            if (mes.length() == 1) {
+	            	mes = "0" + mes;
+	            }
+	            MesHabil mesHabil = mesHabilService.findById(Long.parseLong(anio +  mes));
+	            String nombreMes = listaMeses[fecha.get(Calendar.MONTH)];
+	            
+	            float totalHorasForecast = 0;
+    			List<DetalleForecast> listaForecast = detalleForecastService.findByRecursoAndMesHabil(recurso,mesHabil);
+    			for (DetalleForecast detalleForecast : listaForecast) {
+    				totalHorasForecast += detalleForecast.getValHoras();
+    			}
+				
+    			float alcanceHoras = mesHabil.getValHorasFestivos() + mesHabil.getValHorasHabiles();
+    			
+    			if (totalHorasForecast < alcanceHoras){ 
+    				
+    				MailRequest request = new MailRequest();
+    				request.setName(recurso.getDescRecurso());
+    				request.setSubject("Recordatorio de captura de forecast");
+    				request.setTo(recurso.getDescCorreoElectronico());
+    				
+    				Map<String, Object> model = new HashMap<String, Object>();
+    				model.put("nombreRecurso", request.getName());
+    				model.put("mensaje", "<h3>Recuerda que debes capturar tu forecast del mes de "+ nombreMes +" en la plataforma</h3>");
+    				model.put("pie", "Evita que tu esfuerzo se vaya a la banca");
+    				model.put("imagen","<img data-cfsrc=\"images/forecast.png\" alt=\"\" data-cfstyle=\"width: 200px; max-width: 400px; height: auto; margin: auto; display: block;\" style=\"width: 200px; max-width: 400px; height: auto; margin: auto; display: block;\" src=\"https://sophitech.herokuapp.com/img/img-forecast.png\">");
+    				
+    				MailResponse response = service.sendEmail(request, model);
+    				System.out.println(response.getMessage());
+    			}
+				
+			}
+		}
+	}
+	
+	
+	//CRON Lunes 11:00 hora mexico
+	@Scheduled(cron="0 0 11 * * MON", zone="America/Mexico_City")
+	public void enviaResumenForecastAprobadores() {
+		List<Recurso> listaAprobadores = new ArrayList<>();
+		
+		listaAprobadores = recursoService.findListRecursosAprobadores();
+		for (Recurso recurso : listaAprobadores) {
+			MailRequest request = new MailRequest();
+			request.setName(recurso.getDescRecurso());
+			request.setSubject("Resumen forecast");
+			request.setTo(recurso.getDescCorreoElectronico());
+			
+			Map<String, Object> model = new HashMap<String, Object>();
+			model.put("nombreRecurso", request.getName());
+			model.put("mensaje", "<h3>Resumen forecast de los próximos meses</h3><br>" + tablaMailForecast());
+			model.put("pie", "");
+			model.put("imagen","<img data-cfsrc=\"images/forecast.png\" alt=\"\" data-cfstyle=\"width: 200px; max-width: 400px; height: auto; margin: auto; display: block;\" style=\"width: 200px; max-width: 400px; height: auto; margin: auto; display: block;\" src=\"https://sophitech.herokuapp.com/img/img-forecast.png\">");
+			
+			MailResponse response = service.sendEmail(request, model);
+			System.out.println(response.getMessage());
+		}
+
+	}
+	
+	//Metodo que genera tabla html con resumen de forecast para enviar por mail a los aprobadores
+		//Llamado desde Notificaciones controller
+		public String tablaMailForecast() {
+			List<Recurso> listaRecursosConsultores = new ArrayList<>();
+			
+			//Recursos consultores es cod = 1
+			listaRecursosConsultores = recursoService.findByDescConsultor(1L);
+			
+			
+			Utiles utiles = new Utiles();
+			
+			Calendar fecha = Calendar.getInstance();
+			fecha.setTime(utiles.getFechaActual());
+			
+			String[] listaMeses = new String[]{"Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"};
+			
+			List<ResumenForecastGeneral> listaPeriodo = new ArrayList<>();
+			
+	        
+			//Aqui va valor dinamico para calculo de meses 
+	        for (int i = 0; i < 3; i++) {
+	        	fecha.add(Calendar.MONTH, 1);
+	        	
+	        	String anio = String.valueOf(fecha.get(Calendar.YEAR));
+	            String mes = String.valueOf(fecha.get(Calendar.MONTH) + 1);
+	            if (mes.length() == 1) {
+	            	mes = "0" + mes;
+	            }
+	            MesHabil mesHabil = mesHabilService.findById(Long.parseLong(anio +  mes));
+	            String nombreMes = listaMeses[fecha.get(Calendar.MONTH)];
+	            ResumenForecastGeneral rfg = new ResumenForecastGeneral();
+	            rfg.setNombreMes(nombreMes);
+	            rfg.setMesHabil(mesHabil);
+	            rfg.setTotalHorasHabiles(mesHabil.getValHorasFestivos() + mesHabil.getValHorasHabiles());
+	            listaPeriodo.add(rfg);
+			}
+	        
+	        for (Recurso recurso : listaRecursosConsultores) {
+	        	List<Float> totales = new ArrayList<>();
+	        	for (ResumenForecastGeneral rfg : listaPeriodo) {
+	        	    float totalHorasForecast = 0;
+	    			List<DetalleForecast> listaForecast = detalleForecastService.findByRecursoAndMesHabil(recurso,rfg.getMesHabil());
+	    			for (DetalleForecast detalleForecast : listaForecast) {
+	    				totalHorasForecast += detalleForecast.getValHoras();
+	    			}
+	    			totales.add(totalHorasForecast);
+	        	}
+	        	
+				recurso.setTotalHorasForecast(totales);
+			}		
+			
+			 
+			 StringBuilder retorno = new StringBuilder();
+			 retorno.append("<table class=\"table\" width=\"100%\" cellspacing=\"0\" style=\"padding:0 50px;\">");
+			 
+			 
+			 retorno.append("<tr>");
+			 
+			 retorno.append("<th style=\"text-align:left;\">Recurso</th>");
+			 retorno.append("<th>"+listaPeriodo.get(0).getNombreMes() +"</th>");
+			 retorno.append("<th>"+listaPeriodo.get(1).getNombreMes() +"</th>");
+			 retorno.append("<th>"+listaPeriodo.get(2).getNombreMes() +"</th>");
+			 
+			 retorno.append("</tr>");
+			 
+			 
+			 
+			 for (Recurso recurso : listaRecursosConsultores) {
+			 			retorno.append("<tr>"); 
+			 			retorno.append("<td width=25% style=\"text-align:left;\">" + recurso.getDescRecurso() + "</td>"); 
+			 			
+			 			//INICIO MES 1
+			 			retorno.append("<td width=25%>"); 
+			 			
+			 			float cal0 = recurso.getTotalHorasForecast().get(0) * 100 / listaPeriodo.get(0).getTotalHorasHabiles();
+			 			if (cal0 < 85) {
+			 				retorno.append("<div class=\"progress\" style=\" display: -ms-flexbox;" + 
+			 						"  display: flex;" + 
+			 						"  height: 1rem;" + 
+			 						"  overflow: hidden;" + 
+			 						"  line-height: 0;" + 
+			 						"  font-size: 0.75rem;" + 
+			 						"  background-color: #e9ecef;" + 
+			 						"  border-radius: 0.25rem;\">");
+				 			retorno.append("<div class=\"progress-bar bg-danger\" role=\"progressbar\" style=\"width:" + cal0 + "%; display: -ms-flexbox;" + 
+				 					"  display: flex;" + 
+				 					"  -ms-flex-direction: column;" + 
+				 					"  flex-direction: column;" + 
+				 					"  -ms-flex-pack: center;" + 
+				 					"  justify-content: center;" + 
+				 					"  overflow: hidden;" + 
+				 					"  color: #fff;" + 
+				 					"  text-align: center;" + 
+				 					"  white-space: nowrap;" + 
+				 					"  background-color: #007bff;" + 
+				 					"  transition: width 0.6s ease; background-color: #dc3545 !important; font-size: 10px; vertical-align: middle;\"><span style=\"margin-top:8px;\">" + recurso.getTotalHorasForecast().get(0) + "</span></div>"); 
+				 			retorno.append("</div>"); 
+			 			}
+			 			if (cal0 >= 85 && cal0 < 100) {
+			 				retorno.append("<div class=\"progress\" style=\" display: -ms-flexbox;" + 
+			 						"  display: flex;" + 
+			 						"  height: 1rem;" + 
+			 						"  overflow: hidden;" + 
+			 						"  line-height: 0;" + 
+			 						"  font-size: 0.75rem;" + 
+			 						"  background-color: #e9ecef;" + 
+			 						"  border-radius: 0.25rem;\">");
+				 			retorno.append("<div class=\"progress-bar bg-warning\" role=\"progressbar\" style=\"width:" + cal0 + "%;    display: -ms-flexbox; " + 
+				 					"  display: flex; " + 
+				 					"  -ms-flex-direction: column; " + 
+				 					"  flex-direction: column;" + 
+				 					"  -ms-flex-pack: center; " + 
+				 					"  justify-content: center; " + 
+				 					"  overflow: hidden; " + 
+				 					"  color: #fff; " + 
+				 					"  text-align: center; " + 
+				 					"  white-space: nowrap;" + 
+				 					"  background-color: #007bff; " + 
+				 					"  transition: width 0.6s ease; background-color: #ffc107 !important; font-size: 10px; vertical-align: middle;\"><span style=\"margin-top:8px;\">" + recurso.getTotalHorasForecast().get(0) + "</span></div>"); 
+				 			retorno.append("</div>"); 
+			 			}
+			 			if (cal0 >= 100) {
+			 				retorno.append("<div class=\"progress\" style=\" display: -ms-flexbox;" + 
+			 						"  display: flex;" + 
+			 						"  height: 1rem;" + 
+			 						"  overflow: hidden;" + 
+			 						"  line-height: 0;" + 
+			 						"  font-size: 0.75rem;" + 
+			 						"  background-color: #e9ecef;" + 
+			 						"  border-radius: 0.25rem;\">");
+				 			retorno.append("<div class=\"progress-bar bg-success\" role=\"progressbar\" style=\"width:" + cal0 + "%;   display: -ms-flexbox;" + 
+				 					"  display: flex;" + 
+				 					"  -ms-flex-direction: column;" + 
+				 					"  flex-direction: column;" + 
+				 					"  -ms-flex-pack: center;" + 
+				 					"  justify-content: center;" + 
+				 					"  overflow: hidden;" + 
+				 					"  color: #fff;" + 
+				 					"  text-align: center;" + 
+				 					"  white-space: nowrap;" + 
+				 					"  background-color: #007bff;" + 
+				 					"  transition: width 0.6s ease; background-color: #28a745 !important; font-size: 10px; vertical-align: middle;\"><span style=\"margin-top:8px;\">" + recurso.getTotalHorasForecast().get(0) + "</span></div>"); 
+				 			retorno.append("</div>"); 
+			 			}
+			 			
+			 			retorno.append("</td>"); 
+			 			//FIN MES 1
+			 			
+			 			//INICIO MES 2
+			 			retorno.append("<td width=25%>"); 
+			 			
+			 			float cal1 = recurso.getTotalHorasForecast().get(1) * 100 / listaPeriodo.get(1).getTotalHorasHabiles();
+			 			if (cal1 < 85) {
+			 				retorno.append("<div class=\"progress\" style=\" display: -ms-flexbox;" + 
+			 						"  display: flex;" + 
+			 						"  height: 1rem;" + 
+			 						"  overflow: hidden;" + 
+			 						"  line-height: 0;" + 
+			 						"  font-size: 0.75rem;" + 
+			 						"  background-color: #e9ecef;" + 
+			 						"  border-radius: 0.25rem;\">");
+				 			retorno.append("<div class=\"progress-bar bg-danger\" role=\"progressbar\" style=\"width:" + cal1 + "%; display: -ms-flexbox;" + 
+				 					"  display: flex;" + 
+				 					"  -ms-flex-direction: column;" + 
+				 					"  flex-direction: column;" + 
+				 					"  -ms-flex-pack: center;" + 
+				 					"  justify-content: center;" + 
+				 					"  overflow: hidden;" + 
+				 					"  color: #fff;" + 
+				 					"  text-align: center;" + 
+				 					"  white-space: nowrap;" + 
+				 					"  background-color: #007bff;" + 
+				 					"  transition: width 0.6s ease; background-color: #dc3545 !important; font-size: 10px; vertical-align: middle;\"><span style=\"margin-top:8px;\">" + recurso.getTotalHorasForecast().get(1) + "</span></div>"); 
+				 			retorno.append("</div>"); 
+			 			}
+			 			if (cal1 >= 85 && cal1 < 100) {
+			 				retorno.append("<div class=\"progress\" style=\" display: -ms-flexbox;" + 
+			 						"  display: flex;" + 
+			 						"  height: 1rem;" + 
+			 						"  overflow: hidden;" + 
+			 						"  line-height: 0;" + 
+			 						"  font-size: 0.75rem;" + 
+			 						"  background-color: #e9ecef;" + 
+			 						"  border-radius: 0.25rem;\">");
+				 			retorno.append("<div class=\"progress-bar bg-warning\" role=\"progressbar\" style=\"width:" + cal1 + "%;    display: -ms-flexbox; " + 
+				 					"  display: flex; " + 
+				 					"  -ms-flex-direction: column; " + 
+				 					"  flex-direction: column;" + 
+				 					"  -ms-flex-pack: center; " + 
+				 					"  justify-content: center; " + 
+				 					"  overflow: hidden; " + 
+				 					"  color: #fff; " + 
+				 					"  text-align: center; " + 
+				 					"  white-space: nowrap;" + 
+				 					"  background-color: #007bff; " + 
+				 					"  transition: width 0.6s ease; background-color: #ffc107 !important; font-size: 10px; vertical-align: middle;\"><span style=\"margin-top:8px;\">" + recurso.getTotalHorasForecast().get(1) + "</span></div>"); 
+				 			retorno.append("</div>"); 
+			 			}
+			 			if (cal1 >= 100) {
+			 				retorno.append("<div class=\"progress\" style=\" display: -ms-flexbox;" + 
+			 						"  display: flex;" + 
+			 						"  height: 1rem;" + 
+			 						"  overflow: hidden;" + 
+			 						"  line-height: 0;" + 
+			 						"  font-size: 0.75rem;" + 
+			 						"  background-color: #e9ecef;" + 
+			 						"  border-radius: 0.25rem;\">");
+				 			retorno.append("<div class=\"progress-bar bg-success\" role=\"progressbar\" style=\"width:" + cal1 + "%;   display: -ms-flexbox;" + 
+				 					"  display: flex;" + 
+				 					"  -ms-flex-direction: column;" + 
+				 					"  flex-direction: column;" + 
+				 					"  -ms-flex-pack: center;" + 
+				 					"  justify-content: center;" + 
+				 					"  overflow: hidden;" + 
+				 					"  color: #fff;" + 
+				 					"  text-align: center;" + 
+				 					"  white-space: nowrap;" + 
+				 					"  background-color: #007bff;" + 
+				 					"  transition: width 0.6s ease; background-color: #28a745 !important; font-size: 10px; vertical-align: middle;\"><span style=\"margin-top:8px;\">" + recurso.getTotalHorasForecast().get(1) + "</span></div>"); 
+				 			retorno.append("</div>"); 
+			 			}
+			 			
+			 			retorno.append("</td>"); 
+			 			//FIN MES 2
+			 			
+			 			//INICIO MES 3
+			 			retorno.append("<td width=30%>"); 
+			 			
+			 			float cal2 = recurso.getTotalHorasForecast().get(2) * 100 / listaPeriodo.get(2).getTotalHorasHabiles();
+			 			if (cal2 < 85) {
+			 				retorno.append("<div class=\"progress\" style=\" display: -ms-flexbox;" + 
+			 						"  display: flex;" + 
+			 						"  height: 1rem;" + 
+			 						"  overflow: hidden;" + 
+			 						"  line-height: 0;" + 
+			 						"  font-size: 0.75rem;" + 
+			 						"  background-color: #e9ecef;" + 
+			 						"  border-radius: 0.25rem;\">");
+				 			retorno.append("<div class=\"progress-bar bg-danger\" role=\"progressbar\" style=\"width:" + cal2 + "%; display: -ms-flexbox;" + 
+				 					"  display: flex;" + 
+				 					"  -ms-flex-direction: column;" + 
+				 					"  flex-direction: column;" + 
+				 					"  -ms-flex-pack: center;" + 
+				 					"  justify-content: center;" + 
+				 					"  overflow: hidden;" + 
+				 					"  color: #fff;" + 
+				 					"  text-align: center;" + 
+				 					"  white-space: nowrap;" + 
+				 					"  background-color: #007bff;" + 
+				 					"  transition: width 0.6s ease; background-color: #dc3545 !important; font-size: 10px; vertical-align: middle;\"><span style=\"margin-top:8px;\">" + recurso.getTotalHorasForecast().get(2) + "</span></div>"); 
+				 			retorno.append("</div>"); 
+			 			}
+			 			if (cal2 >= 85 && cal2 < 100) {
+			 				retorno.append("<div class=\"progress\" style=\" display: -ms-flexbox;" + 
+			 						"  display: flex;" + 
+			 						"  height: 1rem;" + 
+			 						"  overflow: hidden;" + 
+			 						"  line-height: 0;" + 
+			 						"  font-size: 0.75rem;" + 
+			 						"  background-color: #e9ecef;" + 
+			 						"  border-radius: 0.25rem;\">");
+				 			retorno.append("<div class=\"progress-bar bg-warning\" role=\"progressbar\" style=\"width:" + cal2 + "%;    display: -ms-flexbox; " + 
+				 					"  display: flex; " + 
+				 					"  -ms-flex-direction: column; " + 
+				 					"  flex-direction: column;" + 
+				 					"  -ms-flex-pack: center; " + 
+				 					"  justify-content: center; " + 
+				 					"  overflow: hidden; " + 
+				 					"  color: #fff; " + 
+				 					"  text-align: center; " + 
+				 					"  white-space: nowrap;" + 
+				 					"  background-color: #007bff; " + 
+				 					"  transition: width 0.6s ease; background-color: #ffc107 !important; font-size: 10px; vertical-align: middle;\"><span style=\"margin-top:8px;\">" + recurso.getTotalHorasForecast().get(2) + "</span></div>"); 
+				 			retorno.append("</div>"); 
+			 			}
+			 			if (cal2 >= 100) {
+			 				retorno.append("<div class=\"progress\" style=\" display: -ms-flexbox;" + 
+			 						"  display: flex;" + 
+			 						"  height: 1rem;" + 
+			 						"  overflow: hidden;" + 
+			 						"  line-height: 0;" + 
+			 						"  font-size: 0.75rem;" + 
+			 						"  background-color: #e9ecef;" + 
+			 						"  border-radius: 0.25rem;\">");
+				 			retorno.append("<div class=\"progress-bar bg-success\" role=\"progressbar\" style=\"width:" + cal2 + "%;   display: -ms-flexbox;" + 
+				 					"  display: flex;" + 
+				 					"  -ms-flex-direction: column;" + 
+				 					"  flex-direction: column;" + 
+				 					"  -ms-flex-pack: center;" + 
+				 					"  justify-content: center;" + 
+				 					"  overflow: hidden;" + 
+				 					"  color: #fff;" + 
+				 					"  text-align: center;" + 
+				 					"  white-space: nowrap;" + 
+				 					"  background-color: #007bff;" + 
+				 					"  transition: width 0.6s ease; background-color: #28a745 !important; font-size: 10px; vertical-align: middle;\"><span style=\"margin-top:8px;\">" + recurso.getTotalHorasForecast().get(2) + "</span></div>"); 
+				 			retorno.append("</div>"); 
+			 			}
+			 			
+			 			retorno.append("</td>"); 
+			 			//FIN MES 3
+			 			
+			 			retorno.append("</tr>"); 
+			 			
+			 		}
+			 
+			 		retorno.append("</table>");
+			 
+			 		
+			 		System.out.println(retorno.toString());
+			 
+			 return retorno.toString();
+			
+		}
 	
 	
 	

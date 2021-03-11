@@ -46,6 +46,10 @@ $(document).ready(function() {
 //	cargarActividadesPrimariasProyecto();
 //	filtraActPorFase();
 //	altaCapHoraActividad();
+	
+	$("[type='number']").keypress(function (evt) {
+	    evt.preventDefault();
+	});
 
 });
 
@@ -95,7 +99,6 @@ function cargarActividadesPrimariasProyecto(){
 
 function clicProyectoEdit(){
 	var url="/cargarActividadPrimariaEdit/"+$("#valCodRecurso").val()+"/"+$("#selectProyectoEdit").val();
-	console.log(url);
 	$("#resultListActividadesPrimariasEdit").load(url);
 }
 
@@ -261,7 +264,6 @@ function delCaptura(codCaptura){
 	    url: "/borrarCapHora",
 	    data: {codCaptura: codCaptura},
 		success: function(result){
-	        console.log(result);
 			var fech = $("#semanaDias .active span").text().split("-");
 			fh = new Date(+fech[2], fech[1]-1, +fech[0]);
 	        semanaInicioFin(fh);

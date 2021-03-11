@@ -70,7 +70,6 @@ disable_days: function() {
         return null;
     }
     tr = $(".date_table > tbody > tr").not(':eq(0)');
-    console.log(tr)
     tr.each(function(){
     td = $(this).children('td')
       td.each(function(){
@@ -103,7 +102,6 @@ disable_days: function() {
 },
 
 renderCalendar: function(startDay, totalDays, currentDate, inicioMes, finMes) {
-	console.log(inicioMes + " " + finMes);
 	var currentRow = 1;
 	var currentDay = startDay;
 	var $table = $('table.date_table');
@@ -116,11 +114,9 @@ renderCalendar: function(startDay, totalDays, currentDate, inicioMes, finMes) {
 	    	    url: "/obtenerCalendarioSophitech",
 	    	    data: {inicioMes: inicioMes,finMes: finMes },
 	    		success: function(data){
-	    			console.log(data);
 	    	    	for (; i <= totalDays; i++) {
 	  	    		  $day = $week.find('td').eq(currentDay);
 	  	    		  
-	  	    		  console.log($day.html());
 	  	    		  $day.text(i);
 	  	    		  
 	  	    		for(var diaFestivo in data){

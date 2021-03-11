@@ -169,25 +169,29 @@ public class AprobacionHorasProyectoController {
 				if(recursosUnicos.size()>0) {
 					for (Long codR : recursosUnicos) {
 					Recurso recursoTmp = recursoService.findOne(codR);
-					DetalleRecursoHoras detalle = capHoraService.findDetalleRecursoHorasTodos(codR, inicio, fin);
-					detalle.setNombreRecurso(recursoTmp.getDescRecurso() + ' ' + recursoTmp.getDescApellidoPaterno());
-					detalle.setLink(recursoTmp.getCodRecurso());
-					detalle.setAprobadas(detalle.getAprobadas()== null ? 0 : detalle.getAprobadas());
-					detalle.setCapturadas(detalle.getCapturadas()== null ? 0 : detalle.getCapturadas());
-					detalle.setRechazadas(detalle.getRechazadas()== null ? 0 : detalle.getRechazadas());
-					listaDetalle.add(detalle);
+						if(recursoTmp.getDescConsultor().equals(1L)) {
+							DetalleRecursoHoras detalle = capHoraService.findDetalleRecursoHorasTodos(codR, inicio, fin);
+							detalle.setNombreRecurso(recursoTmp.getDescRecurso() + ' ' + recursoTmp.getDescApellidoPaterno());
+							detalle.setLink(recursoTmp.getCodRecurso());
+							detalle.setAprobadas(detalle.getAprobadas()== null ? 0 : detalle.getAprobadas());
+							detalle.setCapturadas(detalle.getCapturadas()== null ? 0 : detalle.getCapturadas());
+							detalle.setRechazadas(detalle.getRechazadas()== null ? 0 : detalle.getRechazadas());
+							listaDetalle.add(detalle);
+						}
 					}
 				}
 			} else {
 				for (ProyectoRecurso proyectoRecurso : listProyectoRecurso) {
 					Recurso recursoTmp = recursoService.findOne(proyectoRecurso.getProyectoRecursoId().getCodRecurso());
-					DetalleRecursoHoras detalle = capHoraService.findDetalleRecursoHoras(proyectoRecurso.getProyectoRecursoId().getCodRecurso(), proyectoRecurso.getProyectoRecursoId().getCodProyecto(), inicio, fin);
-					detalle.setNombreRecurso(recursoTmp.getDescRecurso() + ' ' + recursoTmp.getDescApellidoPaterno());
-					detalle.setLink(recursoTmp.getCodRecurso());
-					detalle.setAprobadas(detalle.getAprobadas()== null ? 0 : detalle.getAprobadas());
-					detalle.setCapturadas(detalle.getCapturadas()== null ? 0 : detalle.getCapturadas());
-					detalle.setRechazadas(detalle.getRechazadas()== null ? 0 : detalle.getRechazadas());
-					listaDetalle.add(detalle);
+					if(recursoTmp.getDescConsultor().equals(1L)) {
+						DetalleRecursoHoras detalle = capHoraService.findDetalleRecursoHoras(proyectoRecurso.getProyectoRecursoId().getCodRecurso(), proyectoRecurso.getProyectoRecursoId().getCodProyecto(), inicio, fin);
+						detalle.setNombreRecurso(recursoTmp.getDescRecurso() + ' ' + recursoTmp.getDescApellidoPaterno());
+						detalle.setLink(recursoTmp.getCodRecurso());
+						detalle.setAprobadas(detalle.getAprobadas()== null ? 0 : detalle.getAprobadas());
+						detalle.setCapturadas(detalle.getCapturadas()== null ? 0 : detalle.getCapturadas());
+						detalle.setRechazadas(detalle.getRechazadas()== null ? 0 : detalle.getRechazadas());
+						listaDetalle.add(detalle);
+					}
 				}
 			}
 			

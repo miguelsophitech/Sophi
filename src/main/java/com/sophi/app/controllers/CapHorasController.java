@@ -172,11 +172,9 @@ public class CapHorasController {
 			model.addAttribute("actividadesSecundariasNoPlan", actividadesSecundariasList);
 			return "layout/capHora :: listActividadesSecundariasNoPlan";
 		} else if (descPrimaria.equalsIgnoreCase(PREVENTA)) {
-			System.out.println("entra en preventa");
 			model.addAttribute("actividadesSecundariasListFuera", subtareaService.findByCodTarea(2L));
 			return "layout/capHora :: listActividadesSecundariasFuera";
 		} else if (descPrimaria.equalsIgnoreCase(OTRA)){
-			System.out.println("entra en otra fuera de plan");
 //			model.addAttribute("actividadesSecundariasListFuera", subtareaService.findFueraDePlan());
 			model.addAttribute("actividadesSecundariasListFuera", tareaService.findTareaFueraPlan());
 			return "layout/capHora :: listActividadesSecundariasFueraOtra";
@@ -193,11 +191,9 @@ public class CapHorasController {
 			model.addAttribute("actividadesSecundariasNoPlan", actividadesSecundariasList);
 			return "layout/capHora :: listActividadesSecundariasNoPlanEdit";
 		} else if (descPrimaria.equalsIgnoreCase(PREVENTA)) {
-			System.out.println("entra en preventa");
 			model.addAttribute("actividadesSecundariasListFuera", subtareaService.findByCodTarea(2L));
 			return "layout/capHora :: listActividadesSecundariasFueraEdit";
 		} else if (descPrimaria.equalsIgnoreCase(OTRA)){
-			System.out.println("entra en otra fuera de plan");
 //			model.addAttribute("actividadesSecundariasListFuera", subtareaService.findFueraDePlan());
 			model.addAttribute("actividadesSecundariasListFuera", tareaService.findTareaFueraPlan());
 			return "layout/capHora :: listActividadesSecundariasFueraOtraEdit";
@@ -228,7 +224,6 @@ public class CapHorasController {
 	
 	@GetMapping(value="/cargarDetActividadNoPlan/{codActividad}/{fecCaptura}/{codRecurso}")
 	public String cargarDetActividadNoPlan(@PathVariable Long codActividad, @PathVariable @DateTimeFormat(pattern = "dd-MM-yyyy") Date fecCaptura,@PathVariable Long codRecurso, Model model){
-		System.out.println(codActividad +" "+codRecurso +" "+fecCaptura);
 //		CapHoraId capHoraId = new CapHoraId(codActividad, codRecurso, 1L, 1L, 2L);
 		CapHora capHora = new CapHora();
 		capHora.setCodActividad(codActividad);
@@ -246,7 +241,6 @@ public class CapHorasController {
 	
 	@GetMapping(value="/cargarDetActividadFuera/{codActividad}/{fecCaptura}/{codRecurso}/{codProyecto}")
 	public String cargarDetActividadFuera(@PathVariable Long codActividad, @PathVariable @DateTimeFormat(pattern = "dd-MM-yyyy") Date fecCaptura,@PathVariable Long codRecurso,@PathVariable Long codProyecto, Model model){
-		System.out.println(codActividad +" "+codRecurso +" "+fecCaptura);
 //		CapHoraId capHoraId = new CapHoraId(codActividad, codRecurso, 1L, 1L, 2L);
 		Proyecto proyecto = proyectoService.findByCodProyecto(codProyecto);
 		CapHora capHora = new CapHora();
@@ -292,7 +286,6 @@ public class CapHorasController {
 		descComentarioDetalle_u = capHora.getDescComentarioDetalle();
 		valDuracionReportada_u = capHora.getValDuracionReportada();
 		
-		System.out.println(codproyecto_u + " " + codActividad_u + " " + descComentarioDetalle_u + " " + valDuracionReportada_u);
 		
 		if(result.hasErrors()) {
 
@@ -328,7 +321,6 @@ public class CapHorasController {
 	@RequestMapping(value="/horasTotalSemana",produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	public Float horasTotalSemana(@RequestParam Long codRecurso, @RequestParam Date fechaInicioSemana, @RequestParam Date fechaFinSemana, Model model) {
-		System.out.println(codRecurso + " " + fechaInicioSemana + " "+ fechaFinSemana);
 		return capHoraService.findSumHorasReportadasSemana(codRecurso, fechaInicioSemana, fechaFinSemana);
 	}
 	
@@ -418,7 +410,6 @@ public class CapHorasController {
 			model.addAttribute("actividadesSecundarias", listadoActividadesSecundarias);
 			model.addAttribute("actividadPrimariaSelec", actividadPrimaria);
 			model.addAttribute("otra","0");
-			System.out.println(actividadPrimaria);
 		} else {
 			if(codProyecto.equals(1L)) {
 				
@@ -430,7 +421,6 @@ public class CapHorasController {
 				listadoActividadesSecundarias.add(tarea);
 				model.addAttribute("actividadesSecundarias", listadoActividadesSecundarias);
 				model.addAttribute("otra","1");
-				System.out.println(PREVENTA);
 			} else {
 				model.addAttribute("actividadPrimariaSelec", OTRA);
 				model.addAttribute("otra","1");
@@ -444,7 +434,6 @@ public class CapHorasController {
 				listadoActividadesSecundarias = tareaService.findTareaFueraPlan();
 				model.addAttribute("actividadesSecundarias", listadoActividadesSecundarias);
 				
-				System.out.println(OTRA);
 			}
 	
 		}

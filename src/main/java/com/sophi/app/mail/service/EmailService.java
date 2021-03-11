@@ -41,7 +41,7 @@ public class EmailService {
 			helper.setTo(request.getTo());
 			helper.setText(html,true);
 			helper.setSubject(request.getSubject());
-			helper.setFrom("miguel.tellez@sophitech.mx","Notificaciones Plataforma");
+			helper.setFrom("administracion@sophitech.mx","Notificaciones Plataforma");
 			sender.send(message);
 			
 			response.setMessage("Mail enviado a: " + request.getTo());
@@ -71,7 +71,7 @@ public class EmailService {
 			helper.setTo(request.getTo());
 			helper.setText(html,true);
 			helper.setSubject(request.getSubject());
-			helper.setFrom("miguel.tellez@sophitech.mx","Notificaciones Plataforma");
+			helper.setFrom("administracion@sophitech.mx","Notificaciones Plataforma");
 			sender.send(message);
 			
 			response.setMessage("Mail enviado a: " + request.getTo());

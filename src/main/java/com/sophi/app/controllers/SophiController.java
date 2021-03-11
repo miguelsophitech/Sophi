@@ -99,6 +99,11 @@ public class SophiController {
 		return "layout/layout :: dataSesionOption";
 	}
 	
+	@GetMapping(value="/mstrForecast")
+	public String mstrForecast(Model model) {
+		return "mstr/mstrForecast";
+	}
+	
 	
 
 }
