@@ -92,7 +92,6 @@ public class AprobacionHorasProyectoController {
     		roles = rolService.findByCodRecurso(codRecurso);
     		for (Rol rol : roles) {
 				cadenaRol.add(rol.getDescRol());
-				System.out.println(rol.getDescRol());
 			}
     		
     		//Obtiene listado de proyectos donde el recurso es lider.
@@ -170,25 +169,29 @@ public class AprobacionHorasProyectoController {
 				if(recursosUnicos.size()>0) {
 					for (Long codR : recursosUnicos) {
 					Recurso recursoTmp = recursoService.findOne(codR);
-					DetalleRecursoHoras detalle = capHoraService.findDetalleRecursoHorasTodos(codR, inicio, fin);
-					detalle.setNombreRecurso(recursoTmp.getDescRecurso() + ' ' + recursoTmp.getDescApellidoPaterno());
-					detalle.setLink(recursoTmp.getCodRecurso());
-					detalle.setAprobadas(detalle.getAprobadas()== null ? 0 : detalle.getAprobadas());
-					detalle.setCapturadas(detalle.getCapturadas()== null ? 0 : detalle.getCapturadas());
-					detalle.setRechazadas(detalle.getRechazadas()== null ? 0 : detalle.getRechazadas());
-					listaDetalle.add(detalle);
+						if(recursoTmp.getDescConsultor().equals(1L)) {
+							DetalleRecursoHoras detalle = capHoraService.findDetalleRecursoHorasTodos(codR, inicio, fin);
+							detalle.setNombreRecurso(recursoTmp.getDescRecurso() + ' ' + recursoTmp.getDescApellidoPaterno());
+							detalle.setLink(recursoTmp.getCodRecurso());
+							detalle.setAprobadas(detalle.getAprobadas()== null ? 0 : detalle.getAprobadas());
+							detalle.setCapturadas(detalle.getCapturadas()== null ? 0 : detalle.getCapturadas());
+							detalle.setRechazadas(detalle.getRechazadas()== null ? 0 : detalle.getRechazadas());
+							listaDetalle.add(detalle);
+						}
 					}
 				}
 			} else {
 				for (ProyectoRecurso proyectoRecurso : listProyectoRecurso) {
 					Recurso recursoTmp = recursoService.findOne(proyectoRecurso.getProyectoRecursoId().getCodRecurso());
-					DetalleRecursoHoras detalle = capHoraService.findDetalleRecursoHoras(proyectoRecurso.getProyectoRecursoId().getCodRecurso(), proyectoRecurso.getProyectoRecursoId().getCodProyecto(), inicio, fin);
-					detalle.setNombreRecurso(recursoTmp.getDescRecurso() + ' ' + recursoTmp.getDescApellidoPaterno());
-					detalle.setLink(recursoTmp.getCodRecurso());
-					detalle.setAprobadas(detalle.getAprobadas()== null ? 0 : detalle.getAprobadas());
-					detalle.setCapturadas(detalle.getCapturadas()== null ? 0 : detalle.getCapturadas());
-					detalle.setRechazadas(detalle.getRechazadas()== null ? 0 : detalle.getRechazadas());
-					listaDetalle.add(detalle);
+					if(recursoTmp.getDescConsultor().equals(1L)) {
+						DetalleRecursoHoras detalle = capHoraService.findDetalleRecursoHoras(proyectoRecurso.getProyectoRecursoId().getCodRecurso(), proyectoRecurso.getProyectoRecursoId().getCodProyecto(), inicio, fin);
+						detalle.setNombreRecurso(recursoTmp.getDescRecurso() + ' ' + recursoTmp.getDescApellidoPaterno());
+						detalle.setLink(recursoTmp.getCodRecurso());
+						detalle.setAprobadas(detalle.getAprobadas()== null ? 0 : detalle.getAprobadas());
+						detalle.setCapturadas(detalle.getCapturadas()== null ? 0 : detalle.getCapturadas());
+						detalle.setRechazadas(detalle.getRechazadas()== null ? 0 : detalle.getRechazadas());
+						listaDetalle.add(detalle);
+					}
 				}
 			}
 			
@@ -208,10 +211,6 @@ public class AprobacionHorasProyectoController {
     											@RequestParam(value = "f") String desde, 
     											@RequestParam(value = "t") String hasta, 
     											Model model){
-    	System.out.println(codRecurso);
-    	System.out.println(proyectos);
-    	System.out.println(semana);
-    	
     	Date inicio = new Date();
     	Date fin = new Date();
     	try {
@@ -312,12 +311,12 @@ public class AprobacionHorasProyectoController {
     	Long codRecurso = recursoService.findByDescCorreoElectronico(mail).getCodRecurso();
     	CapHora capHora = capHoraService.findOne(codCapHora);
     	if (capHora != null) {
-    		System.out.println(hora +" "+ codRecurso +" "+ new Date() );
     		capHora.setValDuracionValidad(hora);
     		capHora.setCodRecursoValidador(codRecurso);
     		capHora.setFecValidacion(new Date());
     		capHora.setValRechazo(0L);
     		capHora.setValDuracionRechazada(0L);
+    		capHora.setDescRechazo(null);
     		capHoraService.save(capHora);
     		return "ok";
     	} else {
@@ -338,6 +337,7 @@ public class AprobacionHorasProyectoController {
     		capHora.setCodRecursoValidador(recurso.getCodRecurso());
     		capHora.setValDuracionRechazada(capHora.getValDuracionReportada());
     		capHora.setDescRechazo(recurso.getDescRecurso() + " dijo: "+ comentario);
+    		capHora.setValDuracionValidad((float) 0);
     		capHora.setFecValidacion(null);
     		capHoraService.save(capHora);
     		return "ok";

@@ -156,14 +156,12 @@ public class PreventaProyectoController {
 		detalleClienteAreaComercialService.save(dcac);
 		proyectoService.save(proyecto);
 		
-		System.out.println("Proyeto buscado "+proyecto.getDescProyecto()+" "+proyecto.getCodCliente()+" "+proyecto.getCodEstatusProyecto()+" "+ proyecto.getFecRegistro());
 		//obtengo el proyecto guardado
 //		Proyecto proyectoN = proyectoService.findByDescProyectoAndCodClienteAndCodEstatusProyectoAndFecRegistro(proyecto.getDescProyecto(), proyecto.getCodCliente(), proyecto.getCodEstatusProyecto(), proyecto.getFecRegistro());
 		Proyecto proyectoN = proyectoService.findByDescProyectoAndCodClienteAndCodEstatusProyecto(proyecto.getDescProyecto(), proyecto.getCodCliente(), proyecto.getCodEstatusProyecto());
 		model.addAttribute("contactos", agendaService.findContactosBycodCliente(proyecto.getCodCliente()));
 		model.addAttribute("tecnologias", detalleInfraestructuraService.findAll());
 //		DetalleInfraestructura di= detalleInfraestructuraService.findAll().get(0);
-//		System.out.println("Primero "+);
 		modelM.put("proyecto", proyectoN);
 		flash.addFlashAttribute("success", "Recurso guardado con éxito");
 		return "preventaProyectoComplemento";
@@ -178,7 +176,6 @@ public class PreventaProyectoController {
 		DetalleProyectoInfraestructuraId dpiid = new DetalleProyectoInfraestructuraId();
 		Date fechaHoy = new Date();
 		
-		System.out.println("codCliente "+codCliente+" codDEtalle "+codDetalleInfra+" fecha "+fechaHoy+" codEstatusProyecto "+codEstatusProyecto+" codProyecto "+codProyecto);
 		
 		dciid.setCodCliente(codCliente);
 		dciid.setCodDetalleInfraestructura(codDetalleInfra);
@@ -213,11 +210,9 @@ public class PreventaProyectoController {
 	@RequestMapping(value = "/eliminarInfra/{codPRoyecto}/{codEstatusProyecto}/{codCliente}")
     @ResponseBody
 	public String eliminarInfra(Map<String, Object> modelM, Model model, @PathVariable(value = "codPRoyecto") long codProyecto, @PathVariable(value = "codEstatusProyecto") long codEstatusProyecto, @PathVariable(value = "codEstatusProyecto") long codCliente) {
-		System.out.println("codProyecto borrarInfra"+codProyecto);
 		
 		detalleProyectoInfraestructuraService.borrarByCodProyecto(codProyecto);
 		
-		System.out.println("codProyecto "+codProyecto);
 		Proyecto proyecto = proyectoService.findByCodProyectoAndCodEstatusProyectoAndCodCliente(codProyecto, codEstatusProyecto, codCliente);
 		modelM.put("proyecto", proyecto);
 		return "preventaProyectoContactoInfraestructura";
@@ -243,16 +238,13 @@ public class PreventaProyectoController {
 		dpc.setFecRegistro(fechaHoy);
 		
 		if(cod_contacto==-1) {
-			System.out.println("Sin contacto");
 			//flash.addFlashAttribute("success", "Complemento guardado con éxito sin contacto");
 		}else {
-			System.out.println("Con contacto");
 			//flash.addFlashAttribute("success", "Complemento guardado con éxito con contacto");
 			detalleProyectoContactoService.save(dpc);
 			proyectoService.save(proyecto);
 		}
 		flash.addFlashAttribute("success", "Complemento guardado con éxito");
-		System.out.println("Enviar a consulta");		
 		return "redirect:/preventaProyectoConsulta/"+codProyecto+"/"+proyecto.getCodEstatusProyecto()+"/"+proyecto.getCodCliente();
     }
 	
@@ -272,13 +264,11 @@ public class PreventaProyectoController {
 		DetalleProyectoContacto dpc = new DetalleProyectoContacto();
 		Date fechaHoy = new Date();
 		Proyecto proyecto = proyectoService.findByCodProyectoAndCodEstatusProyectoAndCodCliente(codProyecto, codEstatusProyecto, codCliente);
-//		System.out.println("Agregar contacto");
 		//Guarda contacto
 		dpcid.setCodCliente(codCliente);
 		dpcid.setCodContacto(cod_contacto);
 		dpcid.setCodEstatusProyecto(proyecto.getCodEstatusProyecto());
 		dpcid.setCodProyecto(proyecto.getCodProyecto());
-//		System.out.println("Agregar contacto SET ");
 		dpc.setValResponsableCliente(cod_contacto);
 		dpc.setDetalleProyectoContactoId(dpcid);
 		dpc.setFecRegistro(fechaHoy);
@@ -428,7 +418,6 @@ public class PreventaProyectoController {
 	@RequestMapping(value = "/listaProyectosTodo", method = RequestMethod.GET)
 	public String listaProyectos(Model model) {
 		model.addAttribute("titulo", "Proyecto");
-		System.out.println("Carga vista proyectos");
 		return "preventaProyectoListaTodo";
 	}
 	
@@ -442,12 +431,9 @@ public class PreventaProyectoController {
 			roles = rolService.findByCodRecurso(recurso.getCodRecurso());
 			if(roles.size() > 0) {
 				for (Rol rol : roles) {
-					System.out.println("rol: " + rol.getDescRol());
 					if(rol.getDescRol().equalsIgnoreCase("ROLE_ADMIN")){
-						System.out.println("Carga ROLE ADMIN");
 						clientes = clienteService.findAll();
 					} else if(rol.getDescRol().equalsIgnoreCase("ROLE_APROB")) {
-						System.out.println("Carga ROLE APROB");
 						List<Long> listaClientes = new ArrayList<Long>();
 						listaClientes = proyectoService.findListaClientesRecursoAprobador(recurso.getCodRecurso());
 						if (listaClientes.size()>0) {
@@ -456,7 +442,6 @@ public class PreventaProyectoController {
 							}
 						}
 					} else if(rol.getDescRol().equalsIgnoreCase("ROLE_LIDER")) {
-						System.out.println("Carga ROLE LIDER");
 						List<Long> listaClientes = new ArrayList<Long>();
 						listaClientes = proyectoService.findListaClientesRecursoLider(recurso.getCodRecurso());
 						if (listaClientes.size()>0) {
@@ -476,7 +461,6 @@ public class PreventaProyectoController {
 	
 	@RequestMapping(value = "/proyecto/{codCliente}/{session}", method = RequestMethod.GET)
 	public String listado(@PathVariable(value = "codCliente") Long codCliente, @PathVariable(value = "session") String mail,  Model model) {
-		System.out.println("codigo de proyecto: " +  codCliente);
 		Recurso recurso = recursoService.findByDescCorreoElectronico(mail);
 		List<Proyecto> listaProyectoTodo = new ArrayList<Proyecto>();
 		
@@ -485,23 +469,19 @@ public class PreventaProyectoController {
 			roles = rolService.findByCodRecurso(recurso.getCodRecurso());
 			if(roles.size() > 0) {
 				for (Rol rol : roles) {
-					System.out.println("rol: " + rol.getDescRol());
 					if(rol.getDescRol().equalsIgnoreCase("ROLE_ADMIN")){
-						System.out.println("Carga ROLE ADMIN");
 						if(codCliente.equals(-1L)) {
 							listaProyectoTodo = proyectoService.findAll();
 						} else {
 							listaProyectoTodo = proyectoService.findByCodCliente(codCliente);
 						}
 					} else if(rol.getDescRol().equalsIgnoreCase("ROLE_APROB")) {
-						System.out.println("Carga ROLE APROB");
 						if(codCliente.equals(-1L)) {
 							listaProyectoTodo = proyectoService.findListaProyectosRecursoAprobadorTodos(recurso.getCodRecurso());
 						} else {
 							listaProyectoTodo = proyectoService.findListaProyectosRecursoAprobador(recurso.getCodRecurso(), codCliente);
 						}
 					} else if(rol.getDescRol().equalsIgnoreCase("ROLE_LIDER")) {
-						System.out.println("Carga ROLE LIDER");
 						if(codCliente.equals(-1L)) {
 							listaProyectoTodo = proyectoService.findListaProyectosRecursoLiderTodos(recurso.getCodRecurso());
 						} else {
@@ -663,11 +643,8 @@ public class PreventaProyectoController {
 		List<DetalleProyectoContacto> listaDPC=detalleProyectoContactoService.findByDetalleProyectoContactoIdCodProyectoAndDetalleProyectoContactoIdCodEstatusProyectoAndDetalleProyectoContactoIdCodCliente(codProyecto, codEstatusProyecto, codCliente);
 		
 		for(int indice = 0;indice<listaDI.size();indice++){
-//		    System.out.println(listaDI.get(indice).getCodDetalleInfraestructura());
 		    for(int indice2 = 0;indice2<listaDPI.size();indice2++){
-//		    	System.out.println("L"+listaDPI.get(indice2).getDetalleProyectoInfraestructuraId().getCod_detalle_infraestructura()  );
 		    	if(listaDI.get(indice).getCodDetalleInfraestructura()==listaDPI.get(indice2).getDetalleProyectoInfraestructuraId().getCodDetalleInfraestructura()) {
-//		    		System.out.println("Coincide "+listaDI.get(indice).getCodDetalleInfraestructura());
 		    		listaDISel.add(listaDI.get(indice));
 		    		listaDI.remove(listaDI.get(indice));
 		    	}
@@ -680,10 +657,8 @@ public class PreventaProyectoController {
 		}
 		
 		
-//		System.out.println("tam "+listaDPC.size());
 		Long codCon=0L;
 		for(int indice = 0;indice<listaDPC.size();indice++){
-//			System.out.println("contacto "+listaDPC.get(indice).getDetalleProyectoContactoId().getCod_contacto());
 			codCon=listaDPC.get(indice).getDetalleProyectoContactoId().getCodContacto();
 		}
 		
@@ -695,7 +670,6 @@ public class PreventaProyectoController {
 			for(int indice2 = 0;indice2<listaDCAC.size();indice2++){
 				if(listaAC.get(indice).getCodAreaComercial()==listaDCAC.get(indice2).getDetalleClienteAreaComercialId().getCodAreaComercia()) {
 					listaAux.add(listaAC.get(indice));
-					System.out.println("AC "+listaAC.get(indice).getDescAreaComercial());
 				}
 			}
 		}
@@ -781,9 +755,7 @@ public class PreventaProyectoController {
 			System.out.println(e);
 		}
 		
-		System.out.println("Proyeto buscado "+proyecto.getDescProyecto()+" "+proyecto.getCodCliente()+" "+proyecto.getCodEstatusProyecto()+" "+ proyecto.getFecRegistro());
 		//obtengo el proyecto guardado
-//		Proyecto proyectoN = proyectoService.findByDescProyectoAndCodClienteAndCodEstatusProyectoAndFecRegistro(proyecto.getDescProyecto(), proyecto.getCodCliente(), proyecto.getCodEstatusProyecto(), proyecto.getFecRegistro());
 		Proyecto proyectoN = proyectoService.findByDescProyectoAndCodClienteAndCodEstatusProyecto(proyecto.getDescProyecto(), proyecto.getCodCliente(), proyecto.getCodEstatusProyecto());
 		model.addAttribute("contactos", agendaService.findContactosBycodCliente(proyecto.getCodCliente()));
 		model.addAttribute("tecnologias", detalleInfraestructuraService.findAll());
@@ -817,7 +789,6 @@ public class PreventaProyectoController {
 			return "preventaProyectoConsulta";
 		}
 		
-		System.out.println("codAreaComercial "+proyecto.getCodAreaComercial()+" codCliente "+(proyecto.getCodCliente()));
 		
 		//agrego el area comercial al cliente
 //		Date fechaHoy = new Date(); 
@@ -832,8 +803,6 @@ public class PreventaProyectoController {
 				
 		detalleClienteAreaComercialService.save(dcac);
 		
-		System.out.println(proyecto.getValTotalHorasProyecto());
-		System.out.println(proyecto.getImpCostoProyecto());
 		
 //		proyecto.setValTotalHorasProyecto((proyecto.getValTotalHorasProyecto() == "" || proyecto.getValTotalHorasProyecto() == null) ? "0" : proyecto.getValTotalHorasProyecto());
 		
@@ -849,7 +818,6 @@ public class PreventaProyectoController {
 		
 		proyectoService.save(proyecto);
 		
-		System.out.println("guarda proyecto "+proyecto.getCodProyecto()+" "+proyecto.getDescProyecto() +" cliente "+proyecto.getCodCliente()+" codStatus "+proyecto.getCodEstatusProyecto());
 		flash.addFlashAttribute("success", "Recurso guardado con éxito");
 		
 		//redirijo dependiendo
@@ -937,7 +905,6 @@ public class PreventaProyectoController {
 		detalleClienteAreaComercialService.save(dcac);
 		proyectoService.save(proyecto);
 		
-		System.out.println("Proyeto buscado "+proyecto.getDescProyecto()+" "+proyecto.getCodCliente()+" "+proyecto.getCodEstatusProyecto()+" "+ proyecto.getFecRegistro());
 		//obtengo el proyecto guardado
 //		Proyecto proyectoN = proyectoService.findByDescProyectoAndCodClienteAndCodEstatusProyectoAndFecRegistro(proyecto.getDescProyecto(), proyecto.getCodCliente(), proyecto.getCodEstatusProyecto(), proyecto.getFecRegistro());
 		Proyecto proyectoN = proyectoService.findByDescProyectoAndCodClienteAndCodEstatusProyecto(proyecto.getDescProyecto(), proyecto.getCodCliente(), proyecto.getCodEstatusProyecto());
@@ -945,10 +912,8 @@ public class PreventaProyectoController {
 		model.addAttribute("tecnologias", detalleInfraestructuraService.findAll());
 
 		List<DetalleProyectoContacto> listaDPC=detalleProyectoContactoService.findByDetalleProyectoContactoIdCodProyectoAndDetalleProyectoContactoIdCodEstatusProyectoAndDetalleProyectoContactoIdCodCliente(proyecto.getCodProyecto(), proyecto.getCodEstatusProyecto(), proyecto.getCodCliente());
-		//		System.out.println("tam "+listaDPC.size());
 		Long codCon=0L;
 		for(int indice = 0;indice<listaDPC.size();indice++){
-//			System.out.println("contacto "+listaDPC.get(indice).getDetalleProyectoContactoId().getCod_contacto());
 			codCon=listaDPC.get(indice).getDetalleProyectoContactoId().getCodContacto();
 		}
 		
@@ -962,16 +927,9 @@ public class PreventaProyectoController {
 	
 	//Asignación de proyecto (aprobador y lider)
 	public void enviaNotificacionAsignacionAprobadorResponsable(Proyecto proy) {
-		System.out.println(proy.getCodRecursoAprobador());
-		System.out.println(proy.getCodRecursoLider());
-		System.out.println(proy.getDescProyecto());
-		
 		
 		Recurso aprobador = recursoService.findOne(proy.getCodRecursoAprobador());
 		Recurso responsable = recursoService.findOne(proy.getCodRecursoLider());
-		
-		System.out.println(aprobador);
-		System.out.println(responsable);
 		
 		//Aprobador INICIO 
 		MailRequest request = new MailRequest();

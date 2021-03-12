@@ -22,9 +22,9 @@
 
                 <div class="container-fluid">
                 
-	                <h1 class="h3 mb-2 text-gray-800" th:text="${textoTitulo}"></h1>
+	                <!-- <h1 class="h3 mb-2 text-gray-800" th:text="${textoTitulo}"></h1> -->
 	                <!-- <p class="mb-4" th:text="${textoDescriptivo}"></p> -->
-	          		<a th:href="@{'/listaClientes'}" th:text="'&laquo; volver'"></a>
+	          		<a th:href="@{'/listaClientes'}" th:text="'&laquo; regresar'"></a>
 	              	
 	              	<!-- Collapsable Card Datos personales -->
 					<div class="card shadow mb-4">
@@ -35,14 +35,14 @@
 			         					<ul class="list-group list-group-flush">
 											<li class="list-group-item"><h3 th:text="${cliente.descCliente}"></h3></li>
 											<li class="list-group-item">C&oacute;digo: <strong th:text="${cliente.descCodigoCliente}"></strong></li>
-											<li class="list-group-item">Nombre anterior: <strong th:text="${cliente.descClienteAnterior}"></strong></li>
-											<li class="list-group-item">Fecha de actualizaci&oacute;n de nombre: <strong th:text="${cliente.fecActualizacion}"></strong></li>
-											<li class="list-group-item">Direcci&oacute;n fiscal: <strong th:text="${cliente.descDireccionFiscal}"></strong></li>
-											<li class="list-group-item">Grupo empresarial al que pertences: <strong th:text="${cliente.descGrupoEmpresarial}"></strong></li>
-											<li class="list-group-item">Facturaci&oacute;n anual: <strong th:text="${cliente.impFacturacionAnual}"></strong></li>
-											<li class="list-group-item">Tama&ntilde;o de la empresa: <strong th:text="${cliente.descRangoRecursos}"></strong></li>
+											<!-- <li class="list-group-item">Nombre anterior: <strong th:text="${cliente.descClienteAnterior}"></strong></li> -->
+											<!-- <li class="list-group-item">Fecha de actualizaci&oacute;n de nombre: <strong th:text="${cliente.fecActualizacion}"></strong></li> -->
+											<li class="list-group-item">Grupo empresarial: <strong th:text="${cliente.descGrupoEmpresarial}"></strong></li>
 											<li class="list-group-item">RFC: <strong th:text="${cliente.descRFC}"></strong></li>
-											<li class="list-group-item">Sector al que pertence: <strong th:text="${cliente.sector.descSector}"></strong></li>
+											<li class="list-group-item">Direcci&oacute;n fiscal: <strong th:text="${cliente.descDireccionFiscal}"></strong></li>
+											<li class="list-group-item">Sector: <strong th:text="${cliente.sector.descSector}"></strong></li>
+											<li class="list-group-item">Tama&ntilde;o de la empresa: <strong th:text="${cliente.descRangoRecursos}"></strong></li>
+											<li class="list-group-item">Facturaci&oacute;n anual: <strong th:text="${cliente.impFacturacionAnual}"></strong></li>																						
 										</ul>
 			      					</div>
 			      					<div class="col-md-6" style="display: flex; align-items: center;">
@@ -52,8 +52,54 @@
 	                		</div>
 	            		</div>
 	            	</div>
+	            	
+	            	<div class="card shadow mb-4">
+						<div class="collapse show" id="collapseCardCliente">
+							<div class="card-body">
+								<div class="container">
+									<div class="row row-cols-2">
+										<div class="col-md-8">
+											<h3 class="h3 mb-2 text-gray-800">Contactos</h3>
+										</div>
+										<div class="col-md-4">
+											<div class="d-sm-flex align-items-center justify-content-between mb-1" style="float: right">
+								      			<a th:href="@{/newContacto/} + ${cliente.codCliente}" class="btn btn-primary">
+								      				<i class="fas fa-plus fa-sm text-white-50"></i> Nuevo
+								      			</a>
+									        </div>
+										</div>
+									</div>
+								</div>
+								<div class="col" id="contenidoTabla">
+			         					
+			      				</div>
+			      				<input id="filterCliente" type="hidden" th:value="${cliente.codCliente}">
+			      				<input id="codigoContacto" type="hidden"></input>
+	                		</div>
+	            		</div>
+	            	</div>
 				</div>
-			
+				<!--Modal Eliminar -->
+                <div id="eliminarRegistro" class="modal fade" data-backdrop="static" data-keyboard="false"
+                    tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="staticBackdropLabel">Eliminar contacto</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                &iquest;Est&aacute; seguro que desea eliminar este contacto?
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                                <a href="#!" class="btn btn-primary" onclick="eliminarRegistro();">Eliminar</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>			
 			</div>
             <!-- Footer -->
             <footer th:replace="layout/layout :: footer"></footer>
@@ -85,6 +131,9 @@
     <script th:src="@{/js/sb-admin-2.min.js}"></script>
 
 	<script th:src="@{/js/datosRecursoSesion.js}"></script>
+	<script th:src="@{/js/mostrarContactosCliente.js}"></script>
+	<script th:src="@{/js/eliminarContacto.js}"></script>
+	<script th:src="@{/js/phone.js}"></script>
 
 </body>
 

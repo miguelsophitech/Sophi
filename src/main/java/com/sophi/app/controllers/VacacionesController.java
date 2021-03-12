@@ -24,16 +24,22 @@ import com.sophi.app.mail.dto.MailRequest;
 import com.sophi.app.mail.dto.MailResponse;
 import com.sophi.app.mail.service.EmailService;
 import com.sophi.app.models.entity.DetalleSolicitud;
+import com.sophi.app.models.entity.DiaFestivo;
 import com.sophi.app.models.entity.Proyecto;
 import com.sophi.app.models.entity.ProyectoRecurso;
 import com.sophi.app.models.entity.Recurso;
 import com.sophi.app.models.entity.RecursoVacaciones;
+import com.sophi.app.models.entity.Rol;
 import com.sophi.app.models.entity.SolicitudVacaciones;
+import com.sophi.app.models.service.IDiaFestivoService;
 import com.sophi.app.models.service.IProyectoRecursoService;
 import com.sophi.app.models.service.IProyectoService;
 import com.sophi.app.models.service.IRecursoService;
 import com.sophi.app.models.service.IRecursoVacacionesService;
+import com.sophi.app.models.service.IRolService;
 import com.sophi.app.models.service.ISolicitudVacacionesService;
+import com.sophi.app.models.service.RecursoVacacionesServiceImpl;
+import com.sophi.app.models.service.RolServiceImpl;
 
 @Controller
 public class VacacionesController {
@@ -54,7 +60,13 @@ public class VacacionesController {
 	private IProyectoService proyectoService;
 	
 	@Autowired
+	private IDiaFestivoService diaFestivoService;
+	
+	@Autowired
 	private EmailService service;
+	
+	@Autowired
+	private IRolService rolService;
 
 	@GetMapping({"/misVacaciones/{mail}"})
 	public String listadoVacaciones(@PathVariable String mail, Model model) {
@@ -108,35 +120,43 @@ public class VacacionesController {
 	
 	@GetMapping({"/solicitudVacaciones/{codRecurso}"})
 	public String solicitudVacaciones(@PathVariable Long codRecurso, Model model) {
-		
+		System.out.println(codRecurso);
 		List<ProyectoRecurso> listaPR = new ArrayList<>();
 		StringBuilder strb = new StringBuilder();
-		strb.append("");
+		strb.append("<ul style=\"margin:0px;\">");
+		
 		
 		RecursoVacaciones recursoVacaciones = null;
 		recursoVacaciones = recursoVacacionesService.findById(codRecurso);
 		
 		String pattern = "yyyyMMdd";
 		DateFormat df = new SimpleDateFormat(pattern);
-		String hoyVal = df.format(new Date(new Utiles().getFechaActual().getTime() + (1000 * 60 * 60 * 24 * 7) ));
+		String hoyVal = df.format(new Date(new Utiles().getFechaActual().getTime() + (1000 * 60 * 60 * 24 * 1) ));
 		
 		List<String> aprobadores = new ArrayList<String>();
 		
 		listaPR = proyectoRecursoService.findProyectoRecursoActivo(codRecurso);
 		for (ProyectoRecurso proyectoRecurso : listaPR) {
-			Proyecto proyecto = proyectoService.findByCodProyecto(proyectoRecurso.getProyectoRecursoId().getCodProyecto());
-			if(proyecto != null && proyecto.getCodProyecto() != 1) {
-				strb.append(proyecto.getDescProyecto());
+			Proyecto proyecto = proyectoService.findByCodProyectoAndCodEstatusProyecto(proyectoRecurso.getProyectoRecursoId().getCodProyecto(), 2L);
+			if(proyecto != null  && proyecto.getCodEstatusProyecto() == 2) {
+				strb.append("<li>" + proyecto.getDescProyecto());
 				strb.append(" del ");
 				SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
 				strb.append(format.format(proyecto.getFecIncioProyecto()));
 				strb.append(" al ");
-				strb.append(format.format(proyecto.getFecFinProyecto()));
-				strb.append(". ");
+				if(proyecto.getFecFinProyecto() != null) {
+					strb.append(format.format(proyecto.getFecFinProyecto()));
+				}
+				else {
+					strb.append("N/A");
+				}
+				strb.append(".</li>");
 				aprobadores.add(recursoService.findOne(proyecto.getCodRecursoAprobador()).getDescCorreoElectronico());
 			}
 			
 		}
+		
+		strb.append("</ul>");
 		
 		 Set<String> hashSet = new HashSet<String>(aprobadores);
 		 aprobadores.clear();
@@ -153,10 +173,7 @@ public class VacacionesController {
 		model.addAttribute("hoyVal",hoyVal);
 		model.addAttribute("informacion",strb.toString());
 		model.addAttribute("aprobadores",aprob.toString());
-		return "formSolicitudVacaciones";
-		
-		
-		
+		return "formSolicitudVacaciones";		
 	}
 	
 	@GetMapping({"/confirmarSolicitud"})
@@ -230,10 +247,112 @@ public class VacacionesController {
 	}
 	
 	
+	@GetMapping({"/validarDiaLaboral"})
+	@ResponseBody
+	public String validarDiaLaboral(@RequestParam Long codDia, Model model) {
+		List<DiaFestivo> diasFestivos = null;
+		diasFestivos = diaFestivoService.findEsNoLaboral(codDia);
+		if (diasFestivos.size() > 0 ) {
+			String desc = "";
+			for (DiaFestivo df : diasFestivos) {
+				desc += df.getDescDiaFestivo() + " ";
+			}
+			return desc;
+		} else {
+			return "0";
+		}
+		
+	}
 	
 	
 	
+	@GetMapping("/controlVacaciones")
+	public String controlVacaciones(Model model) {
+		return "vacacionesResumen";
+	}
 	
+	
+	@GetMapping("/vacacionesResumen")
+	public String vacacionesResumen(@RequestParam String mail, Model model) {
+		Recurso recurso = recursoService.findByDescCorreoElectronico(mail);
+		if(recurso != null) {
+			List<Rol> listaRolesRecurso =  rolService.findByCodRecurso(recurso.getCodRecurso());
+			if(listaRolesRecurso != null && listaRolesRecurso.size() > 0) {
+				for (Rol rol : listaRolesRecurso) {
+					if(rol.getDescRol().equalsIgnoreCase("ROLE_RH") || rol.getDescRol().equalsIgnoreCase("ROLE_ADMIN")) {
+						
+						List<RecursoVacaciones> listadoRecursosTmp = recursoVacacionesService.findAll();
+						List<RecursoVacaciones> listadoRecursos = new ArrayList<>();
+						
+						for (RecursoVacaciones rv : listadoRecursosTmp) {
+							Recurso recursoTmp = recursoService.findOne(rv.getCodRecurso());
+							if(recursoTmp.getDescActivo().equals(1L)) {
+								rv.setNombreRecurso(recursoTmp.getDescRecurso() + " " + recursoTmp.getDescApellidoPaterno());
+								listadoRecursos.add(rv);
+							} 
+						}
+						model.addAttribute("listadoRecursos", listadoRecursos);
+						return  "layout/vacaciones :: listaRecursosVacaciones";
+					}
+				}
+			}
+		}
+		return "layout/vacaciones :: accesoDenegado";
+	}
+	
+	//Servicio para la actualizacion de dias acumulados, recuperados y por contrato de los recursos en sophitech. por cada periodo
+	@GetMapping({"/actualizarDiasVacaciones"})
+	@ResponseBody
+	public String actualizarDiasVacaciones(@RequestParam Long codRecurso,
+										@RequestParam Long acumulado,
+										@RequestParam Long recuperado,
+										@RequestParam Long contrato,
+										Model model) {
+		RecursoVacaciones recursoVacaciones = recursoVacacionesService.findById(codRecurso);
+		if(recursoVacaciones != null ) {
+			//Set de nuevos valores
+			recursoVacaciones.setValAcumulado(acumulado);
+			recursoVacaciones.setValRecuperado(recuperado);
+			recursoVacaciones.setValContrato(contrato);
+			//Calculados
+			Long total = acumulado+recuperado+contrato;
+			recursoVacaciones.setValTotal(total);
+			Long aprobados = recursoVacaciones.getValAprobado();
+			recursoVacaciones.setValDisponibles(total-aprobados);
+			//Guardar actualizacion
+			recursoVacacionesService.save(recursoVacaciones);
+			return "ok";
+		} else {
+			return "nok";
+		}
+		
+	}
+
+	@GetMapping({"/detalleVacacionesRecurso/{codRecurso}"})
+	public String detalleVacacionesRecurso(@PathVariable Long codRecurso, Model model) {
+		
+		
+		
+		List<SolicitudVacaciones> listaSolicitudes = new ArrayList<SolicitudVacaciones>();
+		
+		Long contador = 0L;
+		
+		RecursoVacaciones recursoVacaciones = null;
+		
+//		if (recurso != null) {
+			recursoVacaciones = recursoVacacionesService.findById(codRecurso);
+			listaSolicitudes = solicitudVacacionesService.findByCodRecurso(codRecurso);
+			for (SolicitudVacaciones solicitudVacaciones : listaSolicitudes) {
+				contador++;
+				solicitudVacaciones.setContador(contador);
+			}
+//		}
+		
+		model.addAttribute("codRecurso", codRecurso);
+		model.addAttribute("recursoVacaciones", recursoVacaciones);
+		model.addAttribute("listaSolicitudes", listaSolicitudes);
+		return "listaVacaciones :: listaDetalleVacaciones";
+	}
 	
 	
 }

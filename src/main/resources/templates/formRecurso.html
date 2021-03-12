@@ -54,12 +54,12 @@
 							<div class="row">
 								<div class="form-group col-12 col-md-3">
 									<label class="col-form-label">Nombre*</label>
-									<input type="text" th:field="*{descRecurso}" class="form-control" th:errorclass="'form-control alert-danger'"/>
+									<input type="text" th:field="*{descRecurso}" class="form-control" th:errorclass="'form-control alert-danger'" required/>
 									<small class="form-text text-danger" th:if="${#fields.hasErrors('descRecurso')}" th:errors="*{descRecurso}"></small>
 								</div>
 								<div class="form-group col-12 col-md-3">
 									<label class="col-form-label">Ap. Paterno*</label>
-									<input type="text" th:field="*{descApellidoPaterno}" class="form-control" th:errorclass="'form-control alert-danger'"/>
+									<input type="text" th:field="*{descApellidoPaterno}" class="form-control" th:errorclass="'form-control alert-danger'" required/>
 									<small class="form-text text-danger" th:if="${#fields.hasErrors('descApellidoPaterno')}" th:errors="*{descApellidoPaterno}"></small>
 								</div>
 								<div class="form-group col-12 col-md-3">
@@ -68,7 +68,8 @@
 								</div>
 								<div class="form-group col-12 col-md-3">
 									<label class="col-form-label">Tel. particular*</label>
-									<input type="tel" th:field="*{descTelCelular}" class="form-control" maxlength="10" th:errorclass="'form-control alert-danger'" oninvalid="setCustomValidity('N&uacute;mero inv&aacute;lido')" onchange="try{setCustomValidity('')}catch(e){}" pattern="[0-9]{10}"/>
+<!-- 									<input type="tel" th:field="*{descTelCelular}" class="form-control telefono" maxlength="10" th:errorclass="'form-control alert-danger'" oninvalid="setCustomValidity('N&uacute;mero inv&aacute;lido')" onchange="try{setCustomValidity('')}catch(e){}" pattern="(\d{2,3})(-)(\d{3,4})(-)(\d{4})" required/> -->
+									<input type="tel" th:field="*{descTelCelular}" class="form-control telefono" maxlength="10" th:errorclass="'form-control alert-danger'" oninvalid="setCustomValidity('N&uacute;mero inv&aacute;lido')" onchange="try{setCustomValidity('')}catch(e){}" required/>
 									<small class="form-text text-danger" th:if="${#fields.hasErrors('descTelCelular')}" th:errors="*{descTelCelular}"></small>
 								</div>
 							</div>
@@ -81,12 +82,13 @@
 								</div>
 								<div class="form-group col-12 col-md-4">
 									<label class="col-form-label">Correo*</label>
-									<input type="text" th:field="*{descCorreoElectronico}" class="form-control" th:errorclass="'form-control alert-danger'"/>
+									<input type="text" th:field="*{descCorreoElectronico}" class="form-control" th:errorclass="'form-control alert-danger'" pattern="^\S{1,}@\S{2,}\.\S{2,}$" required/>
 									<small class="form-text text-danger" th:if="${#fields.hasErrors('descCorreoElectronico')}" th:errors="*{descCorreoElectronico}"></small>
 								</div>
 								<div class="form-group col-8 col-md-3">
 									<label class="col-form-label">Tel. empresa</label>
-									<input type="tel" th:field="*{descTelEmpresa}" class="form-control"  maxlength="10" th:errorclass="'form-control alert-danger'" oninvalid="setCustomValidity('N&uacute;mero inv&aacute;lido')" onchange="try{setCustomValidity('')}catch(e){}" pattern="[0-9]{10}"/>
+<!-- 									<input type="tel" th:field="*{descTelEmpresa}" class="form-control telefono"  maxlength="10" th:errorclass="'form-control alert-danger'" oninvalid="setCustomValidity('N&uacute;mero inv&aacute;lido')" onchange="try{setCustomValidity('')}catch(e){}" pattern="(\d{2,3})(-)(\d{3,4})(-)(\d{4})"/> -->
+									<input type="tel" th:field="*{descTelEmpresa}" class="form-control telefono"  maxlength="10" th:errorclass="'form-control alert-danger'" oninvalid="setCustomValidity('N&uacute;mero inv&aacute;lido')" onchange="try{setCustomValidity('')}catch(e){}"/>
 									<small class="form-text text-danger" th:if="${#fields.hasErrors('descTelEmpresa')}" th:errors="*{descTelEmpresa}"></small>
 								</div>
 								<div class="form-group col-4 col-md-2">
@@ -99,17 +101,17 @@
 							<div class="row">
 								<div class="form-group col-12 col-md-3">
 									<label class="col-form-label">Fecha nacimiento*</label>
-									<input type="date" th:field="*{fecNacimiento}" class="form-control" placeholder="AAAA-MM-DD" th:errorclass="'form-control alert-danger'"/>
+									<input type="date" th:field="*{fecNacimiento}" class="form-control" placeholder="AAAA-MM-DD" th:errorclass="'form-control alert-danger'" required/>
 									<small class="form-text text-danger" th:if="${#fields.hasErrors('fecNacimiento')}" th:errors="*{fecNacimiento}"></small>
 								</div>
 								<div class="form-group col-12 col-md-3">
 									<label class="col-form-label">RFC*</label>
-									<input type="text" th:field="*{descRfc}" class="form-control" th:errorclass="'form-control alert-danger'" oninvalid="setCustomValidity('RFC con homoclave inv&aacute;lido')" onchange="try{setCustomValidity('')}catch(e){}" pattern="([A-Z,�,&]{3,4}([0-9]{2})(0[1-9]|1[0-2])(0[1-9]|1[0-9]|2[0-9]|3[0-1])[A-Z|\d]{3})"/>
+									<input type="text" th:field="*{descRfc}" class="form-control" th:errorclass="'form-control alert-danger'" oninvalid="setCustomValidity('RFC con homoclave inv&aacute;lido')" onchange="try{setCustomValidity('')}catch(e){}" pattern="([A-Z,�,&]{3,4}([0-9]{2})(0[1-9]|1[0-2])(0[1-9]|1[0-9]|2[0-9]|3[0-1])[A-Z|\d]{3})" required/>
 									<small class="form-text text-danger" th:if="${#fields.hasErrors('descRfc')}" th:errors="*{descRfc}"></small>
 								</div>
 								<div class="form-group col-12 col-md-3">
 									<label class="col-form-label">CURP*</label>
-									<input type="text" th:field="*{descCurp}" class="form-control" th:errorclass="'form-control alert-danger'" oninvalid="setCustomValidity('CURP inv&aacute;lido')" onchange="try{setCustomValidity('')}catch(e){}" pattern="([A-Z][AEIOUX][A-Z]{2}\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\d|3[01])[HM](?:AS|B[CS]|C[CLMSH]|D[FG]|G[TR]|HG|JC|M[CNS]|N[ETL]|OC|PL|Q[TR]|S[PLR]|T[CSL]|VZ|YN|ZS)[B-DF-HJ-NP-TV-Z]{3}[A-Z\d])(\d)"/>
+									<input type="text" th:field="*{descCurp}" class="form-control" th:errorclass="'form-control alert-danger'" oninvalid="setCustomValidity('CURP inv&aacute;lido')" onchange="try{setCustomValidity('')}catch(e){}" pattern="([A-Z][AEIOUX][A-Z]{2}\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\d|3[01])[HM](?:AS|B[CS]|C[CLMSH]|D[FG]|G[TR]|HG|JC|M[CNS]|N[ETL]|OC|PL|Q[TR]|S[PLR]|T[CSL]|VZ|YN|ZS)[B-DF-HJ-NP-TV-Z]{3}[A-Z\d])(\d)" required/>
 									<small class="form-text text-danger" th:if="${#fields.hasErrors('descCurp')}" th:errors="*{descCurp}"></small>
 								</div>
 								<div class="form-group col-12 col-md-3">
@@ -122,7 +124,7 @@
 							<div class="row">
 								<div class="form-group col-12 col-md-4">
 									<label class="col-form-label">Calle*</label>
-									<input type="text" th:field="*{dirCalle}" class="form-control" maxlength="40" th:errorclass="'form-control alert-danger'"/>
+									<input type="text" th:field="*{dirCalle}" class="form-control" maxlength="40" th:errorclass="'form-control alert-danger'" required/>
 									<small class="form-text text-danger" th:if="${#fields.hasErrors('dirCalle')}" th:errors="*{dirCalle}"></small>
 								</div>
 								<div class="form-group col-6 col-md-2">
@@ -135,7 +137,7 @@
 								</div>
 								<div class="form-group col-12 col-md-4">
 									<label class="col-form-label">Colonia*</label>
-									<input type="text" th:field="*{dirColonia}" class="form-control" maxlength="20"/>
+									<input type="text" th:field="*{dirColonia}" class="form-control" maxlength="20" required/>
 									<small class="form-text text-danger" th:if="${#fields.hasErrors('dirColonia')}" th:errors="*{dirColonia}"></small>
 								</div>
 							</div>
@@ -143,17 +145,17 @@
 							<div class="row">
 								<div class="form-group col-4 col-md-2">
 									<label class="col-form-label">C.P.*</label>
-									<input type="text" th:field="*{dirCp}" class="form-control" th:errorclass="'form-control alert-danger'" oninvalid="setCustomValidity('CURP inv&aacute;lido')" onchange="try{setCustomValidity('')}catch(e){}" pattern="[0-9]{5}"/>
+									<input type="text" th:field="*{dirCp}" class="form-control" th:errorclass="'form-control alert-danger'" oninvalid="setCustomValidity('CURP inv&aacute;lido')" onchange="try{setCustomValidity('')}catch(e){}" pattern="[0-9]{5}" required/>
 									<small class="form-text text-danger" th:if="${#fields.hasErrors('dirCp')}" th:errors="*{dirCp}"></small>
 								</div>
 								<div class="form-group col-8 col-md-5">
 									<label class="col-form-label">Municipio*</label>
-									<input type="text" th:field="*{dirAlcaldiaMunicipio}" class="form-control" maxlength="40" th:errorclass="'form-control alert-danger'"/>
+									<input type="text" th:field="*{dirAlcaldiaMunicipio}" class="form-control" maxlength="40" th:errorclass="'form-control alert-danger'" required/>
 									<small class="form-text text-danger" th:if="${#fields.hasErrors('dirAlcaldiaMunicipio')}" th:errors="*{dirAlcaldiaMunicipio}"></small>
 								</div>
 								<div class="form-group col-12 col-md-5">
 									<label class="col-form-label">Estado*</label>
-									<input type="text" th:field="*{dirEstado}" class="form-control"  maxlength="20" th:errorclass="'form-control alert-danger'"/>
+									<input type="text" th:field="*{dirEstado}" class="form-control"  maxlength="20" th:errorclass="'form-control alert-danger'" required/>
 									<small class="form-text text-danger" th:if="${#fields.hasErrors('dirEstado')}" th:errors="*{dirEstado}"></small>
 								</div>
 							</div>
@@ -251,7 +253,7 @@
 						
 							<div class="row">
 								<div class="form-group col-12 col-md-4">
-									<label class="col-form-label">Costo minimo</label>
+									<label class="col-form-label">Costo m&iacute;nimo</label>
 									<input type="text" th:field="*{valCostoMinimo}" class="form-control"/>
 								</div>
 							</div>
@@ -276,7 +278,7 @@
 					
 					<!-- Card Header - Accordion -->
 					<a href="#collapseCardMedicos" class="d-block card-header py-3" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="collapseCardMedicos">
-						<h6 class="m-0 font-weight-bold text-primary">Antecedentes médicos</h6>
+						<h6 class="m-0 font-weight-bold text-primary">Antecedentes m&eacute;dicos</h6>
 					</a>
 					<!-- Card Content - Collapse -->
 					<div class="collapse show" id="collapseCardMedicos">
@@ -346,7 +348,7 @@
 							  <img th:src="@{/img/img-contacto-emergencia.png}" class="card-img-top" alt="Contactos de emergencia">
 							  <div class="card-body">
 							    <h5 class="card-title">Contactos de emergencia</h5>
-							    <p class="card-text">Informacion que describe este apartado.</p>
+							    <p class="card-text">Informaci&oacute;n que describe este apartado.</p>
 							    <a th:href="@{/listarContactosEmergencia/} +  ${recurso.codRecurso}" class="btn btn-primary stretched-link">Ver</a>
 							  </div>
 							</div>
@@ -356,7 +358,7 @@
 							  <img th:src="@{/img/img-herramienta.png}" class="card-img-top" alt="Contactos de emergencia">
 							  <div class="card-body">
 							    <h5 class="card-title">Herramientas</h5>
-							     <p class="card-text">Informacion que describe este apartado.</p>
+							     <p class="card-text">Informaci&oacute;n que describe este apartado.</p>
 							    <a th:href="@{/listarHerramientas/} +  ${recurso.codRecurso}" class="btn btn-primary stretched-link">Ver</a>
 <!-- 							    <table> -->
 <!-- 							    <tr th:each="herramienta : ${recurso.herramientas}"> -->
@@ -373,7 +375,7 @@
 							  <img th:src="@{/img/img-sueldo-prestacion.png}" class="card-img-top" alt="Contactos de emergencia">
 							  <div class="card-body">
 							    <h5 class="card-title">Sueldos y prestaciones</h5>
-							     <p class="card-text">Informacion que describe este apartado.</p>
+							     <p class="card-text">Informaci&oacute;n que describe este apartado.</p>
 							    <a th:href="@{/listarSueldos/} +  ${recurso.codRecurso}" class="btn btn-primary stretched-link">Ver</a>
 							  </div>
 							</div>
@@ -383,7 +385,7 @@
 							  <img th:src="@{/img/img-dependientes-economicos.png}" class="card-img-top" alt="Contactos de emergencia">
 							  <div class="card-body">
 							    <h5 class="card-title">Dependientes econ&oacute;micos</h5>
-							     <p class="card-text">Informacion que describe este apartado.</p>
+							     <p class="card-text">Informaci&oacute;n que describe este apartado.</p>
 							    <a th:href="@{/listarDependientes/} +  ${recurso.codRecurso}" class="btn btn-primary stretched-link">Ver</a>
 							  </div>
 							</div>
@@ -452,6 +454,7 @@
   <script th:src="@{/js/demo/datatables-demo.js}"></script>
   
   <script th:src="@{/js/datosRecursoSesion.js}"></script>
+  <script th:src="@{/js/phone.js}"></script>
 
 </body>
 

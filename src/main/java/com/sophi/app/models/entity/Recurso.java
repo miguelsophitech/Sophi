@@ -20,6 +20,7 @@ import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
@@ -137,7 +138,7 @@ public class Recurso implements Serializable  {
 	@Column(name = "desc_activo")
 	private Long descActivo;
 	
-	@Column(name = "desc_consultor")
+	@Column(name = "cod_area_recurso")
 	private Long descConsultor;
 	
 	@Temporal(TemporalType.DATE)
@@ -239,6 +240,9 @@ public class Recurso implements Serializable  {
 	@JoinColumn(name = "cod_recurso")
 	private List<Skill> skills;
 	
+	@Transient
+	private List<Float> totalHorasForecast;
+	
 	public Recurso() {
 		herramientas = new ArrayList<Herramienta>();
 		dependientes = new ArrayList<Dependiente>();
@@ -250,6 +254,15 @@ public class Recurso implements Serializable  {
 	@PrePersist
 	public void prePersist() {
 		fecRegistro = new Date();
+	}
+	
+
+	public List<Float> getTotalHorasForecast() {
+		return totalHorasForecast;
+	}
+
+	public void setTotalHorasForecast(List<Float> totalHorasForecast) {
+		this.totalHorasForecast = totalHorasForecast;
 	}
 
 	public Long getCodRecurso() {

@@ -5,6 +5,7 @@
 <meta name="x-apple-disable-message-reformatting"> 
 <title></title> 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link href="css/bootstrap.css" rel="stylesheet">
 </head>
 <body width="100%" style="margin: 0; padding: 0 !important; mso-line-height-rule: exactly; background-color: #f1f1f1;">
 	<center style="width: 100%; background-color: #f1f1f1;">

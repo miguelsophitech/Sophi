@@ -24,7 +24,7 @@
 								<div class="progress"> 
 									<div class="progress-bar bg-danger" role="progressbar" th:text="${recursoProyecto.rechazadas}*1" th:style="'width:' + @{${recursoProyecto.rechazadas}*100/40} + '%;'"></div>
 									<div class="progress-bar bg-success" role="progressbar" th:text="${recursoProyecto.aprobadas}*1" th:style="'width:' + @{${recursoProyecto.aprobadas}*100/40} + '%;'"></div>
-									<div class="progress-bar bg-warning" role="progressbar" th:text="${recursoProyecto.capturadas} - ${recursoProyecto.aprobadas} - ${recursoProyecto.rechazadas}" th:style="'width:' + @{(${recursoProyecto.capturadas}-${recursoProyecto.aprobadas}- ${recursoProyecto.rechazadas})*100/40} + '%;'"></div>
+									<div class="progress-bar bg-warning" role="progressbar" th:text="${recursoProyecto.capturadas} - ${recursoProyecto.aprobadas} - ${recursoProyecto.rechazadas} " th:style="'width:' + @{(${recursoProyecto.capturadas}-${recursoProyecto.aprobadas}- ${recursoProyecto.rechazadas})*100/40} + '%;'"></div>
 									
 								</div>
 							</td>
@@ -100,7 +100,6 @@
 							<td><span th:text="${recursoVacaciones.valPendientes}"></span></td>
 							<td>
 								<div class="progress"> 
-<!-- 									<div class="progress-bar bg-info" role="progressbar" th:text="${recursoVacaciones.valDisponibles}*1" th:style="'width:' + @{${recursoVacaciones.valDisponibles}*100/${recursoVacaciones.valTotal}} + '%;'"></div> -->
 									<div class="progress-bar bg-success" role="progressbar" th:text="${recursoVacaciones.valAprobado}*1" th:style="'width:' + @{${recursoVacaciones.valAprobado}*100/${recursoVacaciones.valTotal}} + '%;'"></div>
 									<div class="progress-bar bg-warning" role="progressbar" th:text="${recursoVacaciones.valPendientes}*1" th:style="'width:' + @{${recursoVacaciones.valPendientes}*100/${recursoVacaciones.valTotal}} + '%;'"></div>
 								</div>

@@ -20,11 +20,16 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter{
 	 
 	 @Autowired
 	 private BCryptPasswordEncoder passwordEncoder;
+		
+	@Bean
+	public BCryptPasswordEncoder passwordEncoder() {
+		return new BCryptPasswordEncoder();
+	}
 
 	
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http.authorizeRequests().antMatchers("/css/**","/js/**","/img/**","/scss/**","/vendor/**","/sendingEmail").permitAll()
+		http.authorizeRequests().antMatchers("/css/**","/js/**","/img/**","/scss/**","/vendor/**","/sendingEmail","/resetPassword","/newPassword**","/registroWebinar**").permitAll()
 //		.antMatchers("/**").hasAnyRole("USER")
 //		.antMatchers("/listaClientes/**").hasAnyRole("ROLE_ADMIN","ROLE_LIDER")
 //		.antMatchers("/agenda").hasAnyRole("ROLE_ADMIN","ROLE_LIDER")
@@ -45,16 +50,11 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter{
 	}
 
 
-	@Bean
-	public BCryptPasswordEncoder passwordEncoder() {
-		return new BCryptPasswordEncoder();
-	}
-	
 	
 	@Autowired
 	public void configurerGlobal(AuthenticationManagerBuilder builder) throws Exception {
 		builder.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder);
-//		String[ ] pass = {"dNCsJUxb"};
+//		String[ ] pass = {"QZA3zk4P","cNV5WFjB"};
 //		for (String p : pass) {
 //			System.out.println(p + " - " + passwordEncoder.encode(p));
 //		}

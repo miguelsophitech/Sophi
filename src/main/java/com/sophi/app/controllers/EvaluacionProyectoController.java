@@ -1,18 +1,14 @@
 package com.sophi.app.controllers;
 
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.TimeZone;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -22,10 +18,8 @@ import com.sophi.app.Utiles;
 import com.sophi.app.mail.dto.MailRequest;
 import com.sophi.app.mail.dto.MailResponse;
 import com.sophi.app.mail.service.EmailService;
-import com.sophi.app.models.entity.Cliente;
 import com.sophi.app.models.entity.Concepto;
 import com.sophi.app.models.entity.DetalleEvaluacionProyecto;
-import com.sophi.app.models.entity.DetalleRecursoHoras;
 import com.sophi.app.models.entity.Etapa;
 import com.sophi.app.models.entity.Evaluacion;
 import com.sophi.app.models.entity.Proyecto;

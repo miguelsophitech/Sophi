@@ -38,6 +38,12 @@ public class PreguntaRespuestaClimaServiceImp implements IPreguntaRespuestaClima
 	public void delete(Long codPreguntaRespuestaClima) {
 		preguntaRespuestaClimaDao.deleteById(codPreguntaRespuestaClima);
 	}
+
+	@Override
+	@Transactional
+	public List<PreguntaRespuestaClima> findByCodPregunta(Long codPregunta) {
+		return preguntaRespuestaClimaDao.findByPreguntaClimaCodPreguntaClima(codPregunta);
+	}
 	
 
 }

@@ -18,7 +18,6 @@ h1>span.tituloBN {
    font-size: 20px;
    font-weight: bold;
 }
-
 /*Archivos*/
 
 .files input {
@@ -179,4 +178,52 @@ h1>span.tituloBN {
 	z-index: 9999;
 	position: fixed;
 	display: inline-block;
+}
+
+.inputControlVacaciones{
+	font-size: 12px; 
+	margin: 0px; 
+	padding: 3px; 
+	height: 20px; 
+	width: 50%;
+}
+
+.btnActualizarVacaciones{
+	cursor: pointer;
+}
+
+.timeline-Widget{
+	padding-left: 15%;
+	padding-right: 15%;
+}
+
+#twitter-widget-0{
+	padding-left: 15%;
+	padding-right: 15%;
+}
+
+.selected_date{
+	font-weight: 600;
+	background-color: #f5dee6;
+}
+
+.hoy_calendar{
+	font-weight: 600;
+	background-color: #ffff80;
+}
+
+.calendarioSophi{
+	cursor: help;
+}
+
+.crop {
+	width: 140px;
+	height: 60px;
+	overflow: hidden;
+}
+
+.crop img {
+/* 	width: 400px; */
+/* 	height: 300px; */
+/* 	margin: -75px 0 0 -100px; */
 }

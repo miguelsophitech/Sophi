@@ -27,7 +27,7 @@
           <!-- Page Heading -->
           <div class="d-sm-flex align-items-center justify-content-between mb-1">
 			<h1 class="h3 text-gray-800">Mis Vacaciones</h1>
-			<a th:href="@{'/solicitudVacaciones/'+ ${codRecurso}}" class="btn btn-primary">
+			<a th:href="@{'/solicitudVacaciones/'} + ${codRecurso}" class="btn btn-primary">
 				<i class="fas fa-plus fa-sm text-white-50"></i> Nueva solicitud
 			</a>
           </div>
@@ -91,7 +91,7 @@
           
 
           <!-- DataTales Example -->
-          <div class="card shadow mb-4">
+          <div th:fragment="listaDetalleVacaciones" class="card shadow mb-4">
             <div class="card-body" id="contenidoTabla">
               <div class="table-responsive fz-12">
                 <table class="table" id="dataTable" width="100%" cellspacing="0">

@@ -53,11 +53,15 @@ public class AgendaController {
 	@RequestMapping(value = "/contactos/{codCliente}", method = RequestMethod.GET)
 	public String contactoListado(@PathVariable(value = "codCliente") Long codCliente,Model model) {
 		List<Agenda> listaAgenda = new ArrayList<Agenda>();
+		/*
 		if (codCliente.equals(-1L)) {
 			listaAgenda = agendaService.findAll();
 		} else {
 			listaAgenda = agendaService.findContactosBycodCliente(codCliente);
 		}
+		 */
+		
+		listaAgenda = agendaService.findContactosBycodCliente(codCliente);
 		
 		Agenda agenda = agendaService.findOne(1L);
 		listaAgenda.remove(agenda);
@@ -87,9 +91,11 @@ public class AgendaController {
 		return "dataContacto";
 	}
 	
-	@RequestMapping(value = "/formContacto")
-	public String crearContacto(Map<String, Object> model) {
+	@RequestMapping(value = "/newContacto/{codCliente}")
+	public String crearContacto(Map<String, Object> model, @PathVariable(value = "codCliente") Long codcliente) {
 		Agenda agenda = new Agenda();
+		agenda.setValActivo(agenda.getValActivo() == null ? 1L : agenda.getValActivo());
+		
 		model.put("agenda", agenda);
 		List<Cargo> cargoList = new ArrayList<Cargo>();
 		List<Cliente> clienteList = new ArrayList<Cliente>();
@@ -102,7 +108,7 @@ public class AgendaController {
 	}
 	
 	@RequestMapping(value="/formContacto", method = RequestMethod.POST)
-	public String guardarContacto(@Valid Agenda agenda, BindingResult result, Model model,RedirectAttributes flash,SessionStatus status) {
+	public String guardarContacto(@Valid Agenda agenda, Long codCliente, BindingResult result, Model model,RedirectAttributes flash,SessionStatus status) {
 		if(result.hasErrors()) {
 			model.addAttribute("titulo", "Formulario de contactos");
 			List<Cargo> cargoList = new ArrayList<Cargo>();
@@ -113,10 +119,13 @@ public class AgendaController {
 			model.addAttribute("clienteList",clienteList);
 			return "formContacto";
 		}
+		if(agenda.getValActivo() == null) {
+			agenda.setValActivo(1L);
+		}
 		agendaService.save(agenda);
 		status.setComplete();
 		flash.addFlashAttribute("success", "Contacto guardado con éxito");
-		return "redirect:/agenda";
+		return "redirect:/dataCliente/"+codCliente;
 	}
 	
 	@RequestMapping(value = "/formContacto/{id}")
@@ -127,7 +136,7 @@ public class AgendaController {
 			if(agenda == null) {
 				flash.addFlashAttribute("error", "El codigo del contacto no existe en base de datos!");
 				return "redirect:/agenda";
-			}
+			} 
 		} else {
 			flash.addFlashAttribute("error", "El codigo del contacto no debe ser cero!");
 			return "redirect:/agenda";

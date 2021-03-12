@@ -25,18 +25,22 @@
         <div class="container-fluid">
 
           <!-- Page Heading -->
-          <div class="d-sm-flex align-items-center justify-content-between mb-1">
-            <h1 class="h3 mb-0 text-gray-800"><span class="tituloA">Registrar preventa o proyecto</span></h1>
+<!--           <div class="d-sm-flex align-items-center justify-content-between mb-1"> -->
+<!--             <h1 class="h3 mb-0 text-gray-800"><span class="tituloA">Registrar preventa o proyecto</span></h1> -->
+            <h1 class="h3 mb-2 text-gray-800">Complemento del proyecto</h1>
+<!--             <a type="button" th:href="@{/listaProyectosTodo}" id="btnRegresarProyecto" th:text="'&laquo; regresar'"></a> -->
             
-          </div>
+            <a type="button" th:href="@{/preventaProyectoConsulta/} + ${proyecto.codProyecto} + '/' + ${proyecto.codEstatusProyecto} + '/' + ${proyecto.codCliente}" th:text="'&laquo; regresar'"></a>
+            
+<!--           </div> -->
              	<input id="codProyecto" name="codProyecto" type="hidden"  th:value="${proyecto.codProyecto}">
              	<input id="codCliente" name="codCliente" type="hidden"  th:value="${proyecto.codCliente}">
              	<input id="codEstatusProyecto" name="codEstatusProyecto" type="hidden"  th:value="${proyecto.codEstatusProyecto}">
-                <div class="form-group row">
-                	<div class="col-sm-12 mb-3 mb-sm-0">
-                		<p>Por favor, continua con la informaci&oacute;n complementaria.</p>
-                	</div>
-                </div>
+<!--                 <div class="form-group row"> -->
+<!--                 	<div class="col-sm-12 mb-3 mb-sm-0"> -->
+<!--                 		<p>Por favor, continua con la informaci&oacute;n complementaria.</p> -->
+<!--                 	</div> -->
+<!--                 </div> -->
                 <div class="row">
                   <div class="col-12 col-sm-6">
                      <label for="contacto">Contacto del proyecto</label>
@@ -45,7 +49,8 @@
 	                     	<option value="-1">Sin contacto</option>
 	                        <option th:each="contacto : ${contactos}" th:value="${contacto.codContacto}" th:text="${contacto.descContacto}" th:selected="${contacto.codContacto==codCon}"/>
 	                      </select>
-	                      <a class="btn btn-primary"  th:href="@{/formContacto}"  role="button"> <i class="fas fa-plus-circle fa-sm text-white-50"></i></a>
+<!-- 	                      <a class="btn btn-primary"  th:href="@{/formContacto}"  role="button"> <i class="fas fa-plus-circle fa-sm text-white-50"></i></a> -->
+	                      <a class="btn btn-primary"  th:href="@{/dataCliente/} + ${proyecto.codCliente}"  role="button"> <i class="fas fa-plus-circle fa-sm text-white-50"></i></a>
                       </div>
                   </div>
                   
@@ -98,7 +103,7 @@
                       <button class="btn btn-primary"  onclick="guardarCom()">Guardar</button>
 <!--                       onclick="guardaC()" -->
 <!--                       <a class="btn btn-secondary" type="button" th:href="@{/listaProyectosTodo}" >Cancelar</a> -->
-                      <a class="btn btn-secondary" type="button" th:href="@{/preventaProyectoConsulta/} + ${proyecto.codProyecto} + '/' + ${proyecto.codEstatusProyecto} + '/' + ${proyecto.codCliente}" >Regresar</a>
+<!--                       <a class="btn btn-secondary" type="button" th:href="@{/preventaProyectoConsulta/} + ${proyecto.codProyecto} + '/' + ${proyecto.codEstatusProyecto} + '/' + ${proyecto.codCliente}" >Regresar</a> -->
                    </div>
                    <div class="col-sm-3 mb-6 mb-sm-0">
                       <br>

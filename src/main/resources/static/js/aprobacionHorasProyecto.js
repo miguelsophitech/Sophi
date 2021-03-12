@@ -1,21 +1,23 @@
 $(document).ready(function() {
-	
 	var rangeIsFrom = "";
 	var rangeIsTo = "";
-	var semanaActual = new Date().getFullYear() + '-W' +getWeekNr();
+	var from = "";
+	var to = "";
+	var semanaActual = new Date().getFullYear() + '-W' +getWeekNr(new Date().toISOString().substring(0,10));
 	document.getElementById("semana").defaultValue=semanaActual;
 	
 	$("#proyecto").change(function(){
 		$("#recursosHoras").html('<div class="spinner-grow text-muted"></div>');
-		var sem = document.getElementById("semana").value.substring(6); 
-		var url = getDateRangeOfWeek(sem)+"/"+proyectoSeleccion(this.value);
+		var sem = document.getElementById("semana").value.substring(6);
+		var ano = document.getElementById("semana").value.substring(0,4);
+		var url = getDateRangeOfWeek(sem, ano)+"/"+proyectoSeleccion(this.value);
 		$("#recursosHoras").load(url);
 	});
 	
 	$("#semana").change(function(){
 		$("#recursosHoras").html('<div class="spinner-grow text-muted"></div>');
 		var pro = document.getElementById("proyecto").value; 
-		var url = getDateRangeOfWeek(this.value.substring(6))+"/"+proyectoSeleccion(pro);
+		var url = getDateRangeOfWeek(this.value.substring(6), this.value.substring(0,4))+"/"+proyectoSeleccion(pro);
 		$("#recursosHoras").load(url);
 	});
 	
@@ -124,7 +126,8 @@ function datosInicial(){
 	$("#recursosHoras").html('<div class="spinner-grow text-muted"></div>');
 	var pro = document.getElementById("proyecto").value; 
 	var sem = document.getElementById("semana").value.substring(6); 
-	var url = getDateRangeOfWeek(sem) +"/"+proyectoSeleccion(pro);
+	var ano = document.getElementById("semana").value.substring(0,4);
+	var url = getDateRangeOfWeek(sem, ano) +"/"+proyectoSeleccion(pro);
 	$("#recursosHoras").load(url);
 }
 
@@ -191,7 +194,6 @@ function rechazar(cod){
 function detalleCaptura(obj){
 	document.getElementById("semana").disabled = true;
 	document.getElementById("proyecto").disabled = true;
-	
 	$("#recursosHoras").html('<div class="spinner-grow text-muted"></div>');
 	var codRecurso = $(obj).attr('id');
 	var codPr = document.getElementById("proyecto").value; 
@@ -204,7 +206,7 @@ function detalleCaptura(obj){
 		proyectos = codPr;
 	}
 
-	var url = "/aprobacionHorasProyecto/detalle/?r="+codRecurso+"&p="+proyectos+"&s="+semana+"&f="+rangeIsFrom+"&t="+rangeIsTo;
+	var url = "/aprobacionHorasProyecto/detalle/?r="+codRecurso+"&p="+proyectos+"&s="+semana+"&f="+from+"&t="+to;
 	$("#recursosHoras").load(url, function(){
 		totales();
     });
@@ -229,43 +231,93 @@ function codProyecto(){
 }
 
 //Obtiene el numero de la semana actual de inicio
-function getWeekNr() {
-	var now = new Date(), i = 0, f, sem = (new Date(now.getFullYear(), 0, 1) .getDay() > 0) ? 1 : 0;
-	while ((f = new Date(now.getFullYear(), 0, ++i)) < now) {
-		if (!f.getDay()) {
-			sem++;
-		}
-	}
-	return sem;
+function getWeekNr(fecha) {
+	if(fecha.match(/\//)){
+      fecha   =   fecha.replace(/\//g,"-",fecha); //Permite que se puedan ingresar formatos de fecha ustilizando el "/" o "-" como separador
+   };
+   
+   fecha   =   fecha.split("-"); //Dividimos el string de fecha en trozos (dia,mes,año)
+   ano   =   eval(fecha[0]);
+   mes   =   eval(fecha[1]);
+   dia   =   eval(fecha[2]);
+   
+   if (mes==1 || mes==2){
+      //Cálculos si el mes es Enero o Febrero
+      a   =   ano-1;
+      b   =   Math.floor(a/4)-Math.floor(a/100)+Math.floor(a/400);
+      c   =   Math.floor((a-1)/4)-Math.floor((a-1)/100)+Math.floor((a-1)/400);
+      s   =   b-c;
+      e   =   0;
+      f   =   dia-1+(31*(mes-1));
+   } else {
+      //Calculos para los meses entre marzo y Diciembre
+      a   =   ano;
+      b   =   Math.floor(a/4)-Math.floor(a/100)+Math.floor(a/400);
+      c   =   Math.floor((a-1)/4)-Math.floor((a-1)/100)+Math.floor((a-1)/400);
+      s   =   b-c;
+      e   =   s+1;
+      f   =   dia+Math.floor(((153*(mes-3))+2)/5)+58+s;
+   };
+
+   //Adicionalmente sumándole 1 a la variable $f se obtiene numero ordinal del dia de la fecha ingresada con referencia al año actual.
+
+   //Estos cálculos se aplican a cualquier mes
+   g   =   (a+b)%7;
+   d   =   (f+g-e)%7; //Adicionalmente esta variable nos indica el dia de la semana 0=Lunes, ... , 6=Domingo.
+   n   =   f+3-d;
+   
+   if (n<0){
+      //Si la variable n es menor a 0 se trata de una semana perteneciente al año anterior
+      semana   =   53-Math.floor((g-s)/5);
+      ano      =   ano-1; 
+   } else if (n>(364+s)) {
+      //Si n es mayor a 364 + $s entonces la fecha corresponde a la primera semana del año siguiente.
+      semana   = 1;
+      ano   =   ano+1;
+   } else {
+      //En cualquier otro caso es una semana del año actual.
+      semana   =   Math.floor(n/7)+1;
+   };
+   
+   if(semana < 10){
+   		semana = '0'+semana;
+   }
+   
+   return semana;
+   //return $semana+"-"+$ano; La función retorna una cadena de texto indicando la semana y el año correspondiente a la fecha ingresada
 }
 
 //Obtiene el numero de la semana seleccionado en la vista
 function semanaSeleccion(obj){//2020-W38
-	var WeekNo = obj.value.substring(6); 
-	getDateRangeOfWeek(WeekNo);
+	var WeekNo = obj.value.substring(6);
+	var year = obj.value.substring(0,4);
+	getDateRangeOfWeek(WeekNo, year);
+}
+
+function getDateOfISOWeek(weekNo, year) {
+    var simple = new Date(year, 0, 1 + (weekNo - 1) * 7);
+    var dow = simple.getDay();
+    var ISOweekStart = simple;
+    if (dow <= 4){
+        ISOweekStart.setDate(simple.getDate() - simple.getDay() + 1);
+    }
+    else{
+        ISOweekStart.setDate(simple.getDate() + 8 - simple.getDay());
+    }
+    return ISOweekStart;
 }
 
 //Obtiene rango de fechas de la semana del parametro
-function getDateRangeOfWeek(weekNo){
-    var d1 = new Date();
-    numOfdaysPastSinceLastMonday = eval(d1.getDay()- 1);
-    d1.setDate(d1.getDate() - numOfdaysPastSinceLastMonday);
-    var weekNoToday = getWeekNr();
-    var weeksInTheFuture = eval( weekNo - weekNoToday );
-    d1.setDate(d1.getDate() + eval( 7 * weeksInTheFuture ));
-    rangeIsFrom = eval(d1.getMonth()+1) +"-" + d1.getDate() + "-" + d1.getFullYear();
-//    var from = rangeIsFrom.split("-")[2] + "-" + (rangeIsFrom.split("-")[0])-1 + "-" + rangeIsFrom.split("-")[1];
-    d1.setDate(d1.getDate() + 6);
-    rangeIsTo = eval(d1.getMonth()+1) +"-" + d1.getDate() + "-" + d1.getFullYear() ;
-//    var to = rangeIsTo.split("-")[2] + "-" + (rangeIsTo.split("-")[0])-1 + "-" + rangeIsTo.split("-")[1];
- 
-//    return rangeIsFrom + " to "+rangeIsTo;
+function getDateRangeOfWeek(weekNo, year){
+	var date = getDateOfISOWeek(weekNo, year);
+    //var rangeIsFromISO = date.toISOString().slice(0, 10);
+    rangeIsFrom = date;
+    from = eval(rangeIsFrom.getMonth() + 1) + '-' + rangeIsFrom.getDate() + '-' + rangeIsFrom.getFullYear();
+    date.setDate(date.getDate() + 6);
+    //var rangeIsToISO = date.toISOString().slice(0, 10);
+    rangeIsTo = date;
+    to = eval(rangeIsTo.getMonth() + 1) + '-' + rangeIsTo.getDate() + '-' + rangeIsTo.getFullYear() ;
     
-    var url="/capturaHorasPeriodo/"+rangeIsFrom +"/"+rangeIsTo;
+    var url="/capturaHorasPeriodo/"+from +"/"+to;
     return url;
-//    console.log(url);
-//	$("#recursosHoras").load(url);
-};
-
-
-	
+}

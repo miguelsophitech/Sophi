@@ -40,6 +40,10 @@ public interface ICapHoraDao extends CrudRepository<CapHora, Long>{
 		       "GROUP BY r.descRecurso, ch.codRecurso")
 			List<DetalleRecursoHoras> findRecursoHorasRechazo(@Param("fecInicial") Date fecInicial,@Param("fecFinal") Date fecFinal);
 	
+	@Query(value="FROM  CapHora AS ch INNER JOIN Recurso AS r ON ch.codRecurso = r.codRecurso " +
+		       "WHERE ch.fecInicioActividad BETWEEN :fecInicial AND :fecFinal AND ch.valRechazo = 1 AND r.descActivo = 1 " )
+			List<CapHora> findRecursoHorasRechazoCustom(@Param("fecInicial") Date fecInicial,@Param("fecFinal") Date fecFinal);
+	
 	@Query("SELECT DISTINCT(codProyecto) FROM CapHora C WHERE C.fecInicioActividad  BETWEEN ?1 AND ?2")
 	List<Long> findProyectosCapturadosSemana(Date fechaInicio, Date fechaFin);
 	

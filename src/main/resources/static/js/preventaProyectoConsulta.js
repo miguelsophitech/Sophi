@@ -26,7 +26,49 @@ $(document).ready(function() {
 		  		}
 	});
 	
+	$("#gasto").on({
+		"focus": function(event) {
+					$(event.target).select();
+				},
+		"keyup": function(event) {
+					$(event.target).val(function(index, value) {
+						return value.replace(/\D/g, "")
+						.replace(/([0-9])([0-9]{2})$/, '$1.$2')
+						.replace(/\B(?=(\d{3})+(?!\d)\.?)/g, ",");
+					});
+					calculoPrecio();
+		  		}
+	});
+	
 	$("#costoProyecto").on({
+		"focus": function(event) {
+					$(event.target).select();
+				},
+		"keyup": function(event) {
+					$(event.target).val(function(index, value) {
+						return value.replace(/\D/g, "")
+						.replace(/([0-9])([0-9]{2})$/, '$1.$2')
+						.replace(/\B(?=(\d{3})+(?!\d)\.?)/g, ",");
+					});
+		  		}
+	});
+	
+	$("#thorasProyecto").on({
+		"focus": function(event) {
+					$(event.target).select();
+				},
+		"keyup": function(event) {
+					$(event.target).val(function(index, value) {
+						return value.replace(/\D/g, "")
+						.replace(/([0-9])([0-9]{2})$/, '$1.$2')
+						.replace(/\B(?=(\d{3})+(?!\d)\.?)/g, ",");
+					});
+		  		}
+	});
+	
+	
+	
+	$("#totalHoras").on({
 		"focus": function(event) {
 					$(event.target).select();
 				},
@@ -45,6 +87,9 @@ $(document).ready(function() {
 	
 	if (checkBox.checked == false){
     	$('#pr').hide();
+    	$('#pm').hide();		
+		$('#ig').hide();
+		$('#pc').hide();
 		$('#thp').hide();
 		$('#cp').hide();
 		$('#pp').hide();
@@ -59,6 +104,9 @@ $(document).ready(function() {
 	if (checkBoxCierre.checked == true){
 		$('#btnRegresarCierre').show('500');
 		$('#pr').show();
+		$('#pc').show();
+		$('#pm').show();		
+		$('#ig').show();		
 		$('#thp').show();
 		$('#cp').show();
 		$('#pp').show();
@@ -76,6 +124,9 @@ $(document).ready(function() {
 	$( "#aceptarProyecto" ).click(function() {
 		$( "#preventa" ).prop( "disabled", true );
 		$('#pr').show('500');
+		$('#pc').show('500');
+		$('#pm').show('500');		
+		$('#ig').show('500');	
 		$('#thp').show('500');
 		$('#cp').show('500');
 		$('#pp').show('500');
@@ -174,9 +225,38 @@ $(document).ready(function() {
     	})
 	});
 	
-	
+	calculoPrecio();
 
 });
+
+
+function calculoPrecio(){
+	var costo = parse($("#costoProyecto").val());
+	var gasto = parse($("#gasto").val());
+	var riesgoPorcentaje = parse($("#riesgo").val());
+	var margenPorcentaje = parse($("#margen").val());
+	
+	var costogasto = gasto + costo;
+	var riesgoValor = riesgoPorcentaje / 100 * costogasto ;
+	var precio = costogasto + riesgoValor;
+	var margenValor = margenPorcentaje / 100 * precio; 
+	var precioTotal = precio + margenValor;
+	
+//	console.log(precioTotal.toLocaleString("en-US", {minimumFractionDigits: 2}));
+	if (precioTotal != Number.Nan) {
+		$("#totalProyecto").html("Precio calculado: $" + precioTotal.toLocaleString("en-US", {minimumFractionDigits: 2}));
+	}
+	
+	
+	
+}
+
+function parse(texto){
+	var valor = parseFloat(texto.replace(/,/g, ''));
+	return valor;
+}
+
+
 function guardarTodo(){
 	//alert("Entra a funcion");
 	var codCliente=$('#codCliente').val();

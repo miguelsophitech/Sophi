@@ -251,15 +251,18 @@ public class RecursoGastoController {
 		RecursoGasto recursoGasto = recursoGastoService.findOne(codRecursoGasto);
 
 		for (ProyectoRecurso proRec : listaProRec) {
+			
 			listaProyecto.add(proyectoService.findByCodProyecto(proRec.getProyectoRecursoId().getCodProyecto()));
 		}
 
+		
+		
 		System.out.println("CodRecurso " + codRecurso);
 		model.addAttribute("tiposGastos", tipoGastoService.findAll());
 		model.addAttribute("proyectosAsignados", listaProyecto);
 		model.addAttribute("recursoGasto", recursoGasto);
 		model.addAttribute("r", codRecurso);
-
+		model.addAttribute("codProyecto", codProyecto); 
 		return "recursoGastoVer";
 
 	}
