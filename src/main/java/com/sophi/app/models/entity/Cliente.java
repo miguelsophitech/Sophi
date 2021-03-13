@@ -79,6 +79,9 @@ public class Cliente implements Serializable {
 	@OneToMany(mappedBy = "cliente")
     List<DetalleClienteInfraestructura> clientesInfraestructura;
 	
+	@OneToMany(mappedBy = "agenda")
+	List<DetalleProyectoContacto> detalleProyectoContacto;
+
 	@PrePersist
 	public void prePersist() {
 		fecRegistro = new Date();
@@ -190,6 +193,14 @@ public class Cliente implements Serializable {
 
 	public void setClientesInfraestructura(List<DetalleClienteInfraestructura> clientesInfraestructura) {
 		this.clientesInfraestructura = clientesInfraestructura;
+	}
+	
+	public List<DetalleProyectoContacto> getDetalleProyectoContacto() {
+		return detalleProyectoContacto;
+	}
+
+	public void setDetalleProyectoContacto(List<DetalleProyectoContacto> detalleProyectoContacto) {
+		this.detalleProyectoContacto = detalleProyectoContacto;
 	}
 
 	public Sector getSector() {

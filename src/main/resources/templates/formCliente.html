@@ -40,11 +40,6 @@
                                 <div class="collapse show" id="collapseCardCliente">
                                     <div class="card-body">
                                         <div class="row">
-                                        	<div class="form-group col-12 col-md-4">
-	                                            <label class="col-form-label">Grupo empresarial:</label>
-	                                            <input id="gpo_empresarial" type="text" maxlength="100" th:field="*{descGrupoEmpresarial}" class="form-control" th:errorClass="form-control alert-danger"/>
-	                                            <small class="form-text text-danger" th:if="${#fields.hasErrors('descGrupoEmpresarial')}" th:errors="*{descGrupoEmpresarial}"></small>
-	                                        </div>
                                             <div class="form-group col-12 col-md-4">
                                                 <label class="col-form-label">Nombre:</label>
                                                 <input id="Nombre" type="text" maxlength="100" th:field="*{descCliente}" class="form-control" th:errorClass="form-control alert-danger" onkeyup="codigo_cliente();" oninvalid="setCustomValidity('Campo inv\u00E1lido')" onchange="try{setCustomValidity('')}catch(e){}" required/>
@@ -55,6 +50,11 @@
 	                                            <label class="col-form-label">C&oacute;digo de cliente:</label>
 	                                            <input id="codigocliente" type="text" maxlength="100" th:field="*{descCodigoCliente}" class="form-control" th:errorClass="form-control alert-danger"/>
 	                                            <small class="form-text text-danger" th:if="${#fields.hasErrors('descCodigoCliente')}" th:errors="*{descCodigoCliente}"></small>
+	                                        </div>
+	                                        <div class="form-group col-12 col-md-4">
+	                                            <label class="col-form-label">Grupo empresarial:</label>
+	                                            <input id="gpo_empresarial" type="text" maxlength="100" th:field="*{descGrupoEmpresarial}" class="form-control" th:errorClass="form-control alert-danger"/>
+	                                            <small class="form-text text-danger" th:if="${#fields.hasErrors('descGrupoEmpresarial')}" th:errors="*{descGrupoEmpresarial}"></small>
 	                                        </div>
                                         </div>
                                         <div class="row">
@@ -150,7 +150,6 @@
   
   <script th:src="@{/js/datosRecursoSesion.js}"></script>
   <script th:src="@{/js/fecregact.js}"></script>
-  <script th:src="@{/js/regex_rfc.js}"></script>
 
 </body>
 
