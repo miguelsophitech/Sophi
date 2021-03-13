@@ -2,12 +2,14 @@ package com.sophi.app.models.entity;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -34,7 +36,6 @@ public class Agenda implements Serializable {
 	@Column(name = "desc_contacto")
 	private String descContacto;
 	
-	@NotEmpty(message = "Este dato no debe estar vacío")
 	@Column(name = "desc_puesto")
 	private String descPuesto;
 	
@@ -79,6 +80,9 @@ public class Agenda implements Serializable {
 	@Column(name = "val_activo")
 	private Long valActivo;
 	
+	@OneToMany(mappedBy = "agenda")
+	List<DetalleProyectoContacto> detalleProyectoContacto;
+
 	@PrePersist
 	public void prePersist() {
 		fecRegistro = new Date();
@@ -198,6 +202,14 @@ public class Agenda implements Serializable {
 
 	public void setNombreCargo(String nombreCargo) {
 		this.nombreCargo = nombreCargo;
+	}
+	
+	public List<DetalleProyectoContacto> getDetalleProyectoContacto() {
+		return detalleProyectoContacto;
+	}
+
+	public void setDetalleProyectoContacto(List<DetalleProyectoContacto> detalleProyectoContacto) {
+		this.detalleProyectoContacto = detalleProyectoContacto;
 	}
 
 	public Long getValActivo() {
