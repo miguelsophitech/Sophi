@@ -23,11 +23,13 @@ import com.sophi.app.models.entity.DetalleEvaluacionProyecto;
 import com.sophi.app.models.entity.Etapa;
 import com.sophi.app.models.entity.Evaluacion;
 import com.sophi.app.models.entity.Proyecto;
+import com.sophi.app.models.entity.ProyectoRecurso;
 import com.sophi.app.models.entity.Recurso;
 import com.sophi.app.models.service.IConceptoService;
 import com.sophi.app.models.service.IDetalleEvaluacionProyectoService;
 import com.sophi.app.models.service.IEtapaService;
 import com.sophi.app.models.service.IEvaluacionService;
+import com.sophi.app.models.service.IProyectoRecursoService;
 import com.sophi.app.models.service.IProyectoService;
 import com.sophi.app.models.service.IRecursoService;
 
@@ -54,6 +56,9 @@ public class EvaluacionProyectoController {
 	
 	@Autowired
 	private IDetalleEvaluacionProyectoService detalleEvaluacionProyectoService;
+	
+	@Autowired
+	private IProyectoRecursoService proyectoRecursoService;
 	
 	@RequestMapping(value = "/evaluacionProyecto/{codProyecto}", method = RequestMethod.GET)
 	public String EvaluacionProyecto(@PathVariable(value = "codProyecto") Long codProyecto, Model model) {
@@ -96,8 +101,10 @@ public class EvaluacionProyectoController {
 		List<Evaluacion> listaEvaluacion = new ArrayList<Evaluacion>();
 		listaEvaluacion = evaluacionService.listaEvaluacion();
 		List<Recurso> listaRecursos = new ArrayList<Recurso>();
+		//List<Recurso> listaRecursosAprobadores = new ArrayList<Recurso>();
 		listaRecursos = recursoService.findRecursosActivos();
-		
+		//List<ProyectoRecurso> listaProyectoRecurso = new ArrayList<ProyectoRecurso>();
+		//listaProyectoRecurso = proyectoRecursoService.findByProyectoRecursoIdCodProyecto(codProyecto);
 		
 		model.addAttribute("listaDetalleEvaluacion", listaConceptosProyecto); 
 		model.addAttribute("listaEvaluacion", listaEvaluacion);

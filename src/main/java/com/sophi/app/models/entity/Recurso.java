@@ -106,7 +106,6 @@ public class Recurso implements Serializable  {
 	@Column(name = "dir_colonia")
 	private String dirColonia;
 	
-	//@Pattern(regexp="\\d+", message = "No es un CP correcto")
 	@NotEmpty(message = "Este dato no debe estar vacío")
 	@Column(name = "dir_cp")
 	private String dirCp;
