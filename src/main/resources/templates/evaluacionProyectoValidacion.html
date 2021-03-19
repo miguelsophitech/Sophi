@@ -35,8 +35,8 @@
           </div>
           <a type="button" th:href="@{/listaProyectosTodo}" th:text="'&laquo; regresar'"></a>
           <br>
-          <a style="font-size: 12px;" th:href="@{/evaluacionProyecto/}+${proyecto.codProyecto}" class="badge badge-info mb-2" ><i class="fas fa-tasks"></i> Asignar conceptos</a>
-          <a style="font-size: 12px;" href="#modalEvaluador" data-toggle="modal" class="badge badge-success mb-2" ><i class="fas fa-user-check"></i> Asignar evaluador</a>
+          <a th:if="${proyecto.valEvaluacion==null && proyecto.fecCierreEvaluacion==null}" style="font-size: 12px;" th:href="@{/evaluacionProyecto/}+${proyecto.codProyecto}" class="badge badge-info mb-2" ><i class="fas fa-tasks"></i> Asignar conceptos</a>
+          <a th:if="${proyecto.valEvaluacion==null && proyecto.fecCierreEvaluacion==null}" style="font-size: 12px;" href="#modalEvaluador" data-toggle="modal" class="badge badge-success mb-2" ><i class="fas fa-user-check"></i> Asignar evaluador</a>
           <!-- DataTales Example -->
           <div class="card shadow mb-4">
             <div class="card-body" id="contenidoTabla">

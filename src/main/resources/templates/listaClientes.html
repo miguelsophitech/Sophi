@@ -63,6 +63,7 @@
 <!-- 							<a type="button" class="btn btn-info" th:href="@{/formCliente/} + ${cliente.codCliente}" data-toggle="tooltip" title="Editar"><i class="far fa-edit"></i></a> -->
 								<a th:href="@{/dataCliente/} + ${cliente.codCliente}" class="badge badge-info">Ver  <i class="far fa-address-book"></i></a>
 								<a th:href="@{/formCliente/} + ${cliente.codCliente}" class="badge badge-success">Editar  <i class="far fa-edit"></i></a>
+								<a th:if="${cliente.detalleProyectoContacto == null}" th:onclick="eliminar([[${cliente.codCliente}]])" href="#" class="badge badge-danger borrar">Eliminar  <i class="fas fa-trash-alt"></i></a>
 <!-- 						</div> -->
 							</td>
                             
@@ -101,7 +102,27 @@
   <a class="scroll-to-top rounded" href="#page-top">
     <i class="fas fa-angle-up"></i>
   </a>
-
+				<!--Modal Eliminar -->
+                <div id="eliminarRegistro" class="modal fade" data-backdrop="static" data-keyboard="false"
+                    tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="staticBackdropLabel">Eliminar contacto</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                &iquest;Est&aacute; seguro que desea eliminar este cliente?
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                                <a href="#!" class="btn btn-primary" onclick="eliminarRegistro();">Eliminar</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>	
 	  <!-- ModalLogout -->
       <footer th:replace="layout/layout :: modalLogout"></footer>
       <!-- End ModalLogout -->
@@ -124,6 +145,7 @@
   <script th:src="@{/js/demo/datatables-demo.js}"></script>
   
   <script th:src="@{/js/datosRecursoSesion.js}"></script>
+  <script th:src="@{/js/eliminarCliente.js}"></script>
 
 </body>
 

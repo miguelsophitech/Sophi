@@ -73,7 +73,7 @@
                     </div>
                      <div class="form-group col-12 col-md-3">
                         <label class="col-form-label">Tel&eacute;fono celular:</label>
-                        <input type="tel" th:field="*{descTelCelular}" class="form-control telefono" th:errorClass="'form-control alert-danger'" oninvalid="setCustomValidity('N&uacute;mero inv&aacute;lido')" onchange="try{setCustomValidity('')}catch(e){}" pattern="(\d{2,3})(-)(\d{3,4})(-)(\d{4})"/>
+                        <input type="tel" th:field="*{descTelCelular}" class="form-control telefono" th:errorClass="'form-control alert-danger'" oninvalid="setCustomValidity('N&uacute;mero inv&aacute;lido')" onchange="try{setCustomValidity('')}catch(e){}" pattern="(\d{2,3})(-)(\d{3,4})(-)(\d{4})" required/>
                         <small class="form-text text-danger" th:if="${#fields.hasErrors('descTelCelular')}" th:errors="*{descTelCelular}"></small>
                       </div>
                       <div class="form-group col-8 col-md-3">

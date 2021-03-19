@@ -121,7 +121,7 @@
 		<!-- <div class="table-responsive fz-12"> -->
 			<table class="table container" id="dataTable" width="100%" cellspacing="0">
 				<tbody>
-					<tr class="row justify-content-md-center">
+					<tr class="row row-cols-3">
 						<td class="col-6 col-md-4" th:each="agenda: ${contactos}">
 							<ul class="list-group list-group-flush">
 								<li class="list-group-item"><img th:if="${agenda.valActivo} == 1" alt="contact_active" src="/img/contact_active.png" witdh="35" height="35" style="padding: 5px;">
@@ -133,7 +133,7 @@
 								<!-- <li class="list-group-item">Cargo que ocupa: <strong th:text="${agenda.nombreCargo}"></strong></li> -->
 								<li class="list-group-item">Recursos a cargo: <strong th:text="${agenda.valRecursosACargo}"></strong></li>
 								<li class="list-group-item">Fecha de nacimiento: <strong th:text="${agenda.fecNacimiento}"></strong></li>
-								<li class="list-group-item"><a th:href="@{/formContacto/} + ${agenda.codContacto}" class="badge badge-success">Editar  <i class="far fa-edit"></i></a>	<a th:onclick="eliminar([[${agenda.codContacto}]])" href="#" class="badge badge-danger">Eliminar  <i class="far fa-trash-alt"></i></a><input class="codCliente" type="hidden" th:value="${agenda.codCliente}"/></li>
+								<li class="list-group-item"><a th:href="@{/formContacto/} + ${agenda.codContacto}" class="badge badge-success">Editar  <i class="far fa-edit"></i></a>	<a th:if="${agenda.detalleProyectoContacto == null}" th:onclick="eliminar([[${agenda.codContacto}]])" href="#" class="badge badge-danger">Eliminar  <i class="far fa-trash-alt"></i></a><input class="codCliente" type="hidden" th:value="${agenda.codCliente}"/></li>
 							</ul>
 						</td>
 					</tr>
