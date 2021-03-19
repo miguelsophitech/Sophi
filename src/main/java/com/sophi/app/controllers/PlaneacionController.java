@@ -77,6 +77,20 @@ public class PlaneacionController {
 				listaRecursosAsignados.add(pr);
 				}
 			}
+			
+			for(ProyectoRecurso proyectoRecurso: listaRecursosAsignados) {
+				Long codRecurso = proyectoRecurso.getProyectoRecursoId().getCodRecurso();
+				float totalHoras = 0;
+				for (Actividad actividad : actividades.getActividades()) {
+					if(codRecurso.equals(actividad.getCodRecurso())) {
+						totalHoras +=  Float.parseFloat(actividad.getValDuracionActividad());
+					}
+				}
+				proyectoRecurso.setValHorasRecurso(totalHoras);
+				proyectoRecurso.setImpCostoRecurso(recursoService.findOne(codRecurso).getValCostoMinimo());
+			}
+			
+			
 			proyectoRecursoService.saveAll(listaRecursosAsignados);
 			
 			//Envio de noificacion al recurso de nueva asignacion a proyecto

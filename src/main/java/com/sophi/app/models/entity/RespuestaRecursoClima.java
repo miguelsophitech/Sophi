@@ -33,9 +33,8 @@ public class RespuestaRecursoClima implements Serializable {
 	@Column(name = "cod_pregunta_respuesta")
 	private Long codPreguntaRespuesta;
 	
-//	@ManyToOne(fetch = FetchType.LAZY)
-//	@JoinColumn(name = "cod_pregunta_respuesta")
-//	private PreguntaRespuestaClima preguntaRespuestaClima;
+	@Column(name = "cod_pregunta_clima")
+	private Long codPreguntaClima;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "cod_recurso")
@@ -57,14 +56,6 @@ public class RespuestaRecursoClima implements Serializable {
 		this.codRespuestaRecursoClima = codRespuestaRecursoClima;
 	}
 
-//	public PreguntaRespuestaClima getPreguntaRespuestaClima() {
-//		return preguntaRespuestaClima;
-//	}
-//
-//	public void setPreguntaRespuestaClima(PreguntaRespuestaClima preguntaRespuestaClima) {
-//		this.preguntaRespuestaClima = preguntaRespuestaClima;
-//	}
-	
 	public Recurso getRecurso() {
 		return recurso;
 	}
@@ -88,5 +79,15 @@ public class RespuestaRecursoClima implements Serializable {
 	public void setFecRespuesta(Date fecRespuesta) {
 		this.fecRespuesta = fecRespuesta;
 	}
+
+	public Long getCodPreguntaClima() {
+		return codPreguntaClima;
+	}
+
+	public void setCodPreguntaClima(Long codPreguntaClima) {
+		this.codPreguntaClima = codPreguntaClima;
+	}
+	
+	
 	
 }

@@ -1,5 +1,6 @@
 package com.sophi.app.models.dao;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.Query;
@@ -48,5 +49,8 @@ public interface IProyectoDao extends CrudRepository<Proyecto, Long> {
 	
 	@Query("FROM Proyecto Pr WHERE Pr.codRecursoLider = ?1")
 	List<Proyecto> findListaProyectosRecursoLiderTodos(Long codRecursoLider);
+	
+	@Query("FROM Proyecto Pr WHERE Pr.fecFinProyecto < ?1 AND Pr.codEstatusProyecto NOT IN (3)")
+	List<Proyecto> findListaProyectosPorCerrar(Date fecFinProyecto);
 
 }
