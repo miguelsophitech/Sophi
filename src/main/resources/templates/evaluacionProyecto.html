@@ -50,7 +50,8 @@
                       <div class="custom-control custom-checkbox small">
                         <input type="checkbox"class="custom-control-input" th:id="'concepto_' + ${concepto.codConcepto}">
                         <label  class="custom-control-label" th:for="'concepto_' + ${concepto.codConcepto}" th:text="${concepto.descConcepto}"></label>
-                        <a th:if="${concepto.rutaTemplate != null}" th:href="${concepto.rutaTemplate}" target="_blank" class="badge badge-light"><i class="fa fa-link"></i> formato</a>
+                        <a th:if="${concepto.rutaTemplate != null && concepto.rutaTemplate != 'Formato Libre' && concepto.rutaTemplate != 'Formato Legal'}" th:href="${concepto.rutaTemplate}" target="_blank" class="badge badge-light"><i class="fa fa-link"></i> formato</a>
+                        <label th:if="${concepto.rutaTemplate == 'Formato Libre' || concepto.rutaTemplate == 'Formato Legal'}" class="badge badge-light">formato libre</label>
 <!--                         <i class="fa fa-file-alt" aria-hidden="true" style="padding-left: 5px;"></i> -->
                       </div>
                     </div>
