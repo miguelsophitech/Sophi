@@ -101,14 +101,44 @@ public class EvaluacionProyectoController {
 		List<Evaluacion> listaEvaluacion = new ArrayList<Evaluacion>();
 		listaEvaluacion = evaluacionService.listaEvaluacion();
 		List<Recurso> listaRecursos = new ArrayList<Recurso>();
-		//List<Recurso> listaRecursosAprobadores = new ArrayList<Recurso>();
+		List<Recurso> listaRecursosEvaluadores = new ArrayList<Recurso>();
 		listaRecursos = recursoService.findRecursosActivos();
-		//List<ProyectoRecurso> listaProyectoRecurso = new ArrayList<ProyectoRecurso>();
-		//listaProyectoRecurso = proyectoRecursoService.findByProyectoRecursoIdCodProyecto(codProyecto);
+		List<ProyectoRecurso> listaProyectoRecurso = new ArrayList<ProyectoRecurso>();
+		listaProyectoRecurso = proyectoRecursoService.findByProyectoRecursoIdCodProyecto(codProyecto);
+		
+		for(Recurso recurso: listaRecursos) {
+			switch(recurso.getPuesto().getDescPuesto()) {
+				case "Consultor Junior BI": listaRecursosEvaluadores.add(recurso);
+				break;
+				case "Consultor Senior BI": listaRecursosEvaluadores.add(recurso);
+				break;
+				case "Consultor Junior MicroStrategy": listaRecursosEvaluadores.add(recurso);
+				break;
+				case "Consultor Senior MicroStrategy": listaRecursosEvaluadores.add(recurso);
+				break;
+				case "Consultor Junior ETL": listaRecursosEvaluadores.add(recurso);
+				break;
+				case "Consultor Senior ETL": listaRecursosEvaluadores.add(recurso);
+				break;
+				case "Developer Junior": listaRecursosEvaluadores.add(recurso);
+				break;
+				case "Developer Senior": listaRecursosEvaluadores.add(recurso);
+				break;
+				case "Consultor Principal": listaRecursosEvaluadores.add(recurso);
+				break;
+				default: 
+				break;
+			}
+			for(ProyectoRecurso proyectorecurso: listaProyectoRecurso) {
+				if(proyectorecurso.getProyectoRecursoId().getCodRecurso().equals(recurso.getCodRecurso())) {
+					listaRecursosEvaluadores.remove(recurso);
+				}
+			}
+		}
 		
 		model.addAttribute("listaDetalleEvaluacion", listaConceptosProyecto); 
 		model.addAttribute("listaEvaluacion", listaEvaluacion);
-		model.addAttribute("listaRecursos", listaRecursos);
+		model.addAttribute("listaRecursos", listaRecursosEvaluadores);
 		model.addAttribute("proyecto", proyecto); 
 		return "evaluacionProyectoValidacion";
 	}

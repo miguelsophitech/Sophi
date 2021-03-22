@@ -123,6 +123,9 @@ public class Proyecto implements Serializable  {
 	@Temporal(TemporalType.DATE)
 	private Date fecCierreEvaluacion;
 	
+	@Column(name = "val_evaluar")
+	private Long valEvaluar;
+
 	@Transient
 	private Long numAct;
 	
@@ -363,7 +366,12 @@ public class Proyecto implements Serializable  {
 		this.fecCierreEvaluacion = fecCierreEvaluacion;
 	}
 	
-	
-	
+	public Long getValEvaluar() {
+		return valEvaluar;
+	}
+
+	public void setValEvaluar(Long valEvaluar) {
+		this.valEvaluar = valEvaluar;
+	}
 	
 }
