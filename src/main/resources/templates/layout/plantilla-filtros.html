@@ -46,7 +46,7 @@
 							<td>
 								<a th:href="@{/preventaProyectoConsulta/}+${proyecto.codProyecto}+'/'+${proyecto.codEstatusProyecto}+'/'+${proyecto.codCliente}" class="badge badge-success">Detalle  <i class="far fa-edit"></i></a>
 								<a th:if="${proyecto.numAct > 0}" th:href="@{/verPlanActividades/}+${proyecto.codProyecto}" class="badge badge-info">Plan  <i class="fas fa-tasks"></i></a>
-								<a th:href="@{/evaluacionProyectoValidacion/}+${proyecto.codProyecto}" class="badge badge-info">Evaluaci&oacute;n  <i class="fas fa-clipboard-check"></i></a>
+								<a th:if="${proyecto.valEvaluar == 1}" th:href="@{/evaluacionProyectoValidacion/}+${proyecto.codProyecto}" class="badge badge-info">Evaluaci&oacute;n  <i class="fas fa-clipboard-check"></i></a>
 								<input class="codCliente" type="hidden" th:value="${proyecto.codCliente}"/>
 							</td>
 						</tr>
@@ -60,7 +60,7 @@
 							<td>
                       			<a th:href="@{/preventaProyectoConsulta/}+${proyecto.codProyecto}+'/'+${proyecto.codEstatusProyecto}+'/'+${proyecto.codCliente}" class="badge badge-success">Detalle  <i class="far fa-edit"></i></a>
                       			<a th:if="${proyecto.numAct > 0}" th:href="@{/verPlanActividades/}+${proyecto.codProyecto}" class="badge badge-info">Plan  <i class="fas fa-tasks"></i></a>
-                      			<a th:href="@{/evaluacionProyectoValidacion/}+${proyecto.codProyecto}" class="badge badge-info">Evaluaci&oacute;n  <i class="fas fa-clipboard-check"></i></a>
+                      			<a th:if="${proyecto.valEvaluar == 1}" th:href="@{/evaluacionProyectoValidacion/}+${proyecto.codProyecto}" class="badge badge-info">Evaluaci&oacute;n  <i class="fas fa-clipboard-check"></i></a>
                       			<input class="codCliente" type="hidden" th:value="${proyecto.codCliente}"/>
                       		</td>
 	                    </tr>
