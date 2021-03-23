@@ -233,10 +233,10 @@ div[style*="margin: 16px 0;"] {
 																		<tr> 
 																			<td align="left" class="wrapper center" style="padding: 5px 20px;"> 
 																				<div class="mktoText" id="wc-title">
-																					<h2 style="line-height: 32px;">Revoluci&oacute;n Anal&iacute;tica para Seguros</h2>
+																					<h2 style="line-height: 32px;">Revoluci&oacute;n Anal&iacute;tica para retail</h2>
 																				</div> 
 																				<div class="mktoText" id="wc-date">
-																					<p style="margin: 0; padding: 0;">18 de Noviembre | 11:00 / Ciudad de M&eacute;xico </p>
+																					<p style="margin: 0; padding: 0;">20 de Abril | 12:00 / Evento virtual </p>
 																				</div>
 																			</td> 
 																		</tr> 
@@ -254,7 +254,7 @@ div[style*="margin: 16px 0;"] {
 																					<table border="0" cellspacing="0" cellpadding="0" class="center" width="100%"> 
 																						<tbody> 
 																							<tr> 
-																								<td style="text-align: right;" align="right" class="center"><a href="https://go.microstrategy.com/Revolucion_Analitica_para_Seguros.html?CID=7014W0000014u1bQAA" target="_blank" style="font-size: 14px; font-family: 'Helvetica', Arial, sans-serif; text-transform: uppercase; font-weight: bold; color: #c02c57; text-decoration: none; background-color: #ffffff; border-top: 8px solid #ffffff; border-bottom: 8px solid #ffffff; border-right: 12px solid #ffffff; border-left: 12px solid #ffffff; display: inline-block; text-align: center;">Reg&iacute;strate ahora</a></td> 
+																								<td style="text-align: right;" align="right" class="center"><a href="https://sophitech.herokuapp.com/registroWebinar" target="_blank" style="font-size: 14px; font-family: 'Helvetica', Arial, sans-serif; text-transform: uppercase; font-weight: bold; color: #c02c57; text-decoration: none; background-color: #ffffff; border-top: 8px solid #ffffff; border-bottom: 8px solid #ffffff; border-right: 12px solid #ffffff; border-left: 12px solid #ffffff; display: inline-block; text-align: center;">Reg&iacute;strate ahora</a></td> 
 																							</tr> 
 																						</tbody> 
 																					</table>
@@ -283,7 +283,7 @@ div[style*="margin: 16px 0;"] {
 											<td align="left" class="wrapper" style="padding:20px 20px; color: #333333; font-family: 'Helvetica', Arial, sans-serif; font-size: 16px; font-weight: 400; line-height: 25px;"> 
 												<div class="mktoText" id="edit_intro">
 													<p>Hola ${nombre_invite},</p> 
-													<p>Asiste a este webinar para aprender c&oacute;mo las empresas de seguros l&iacute;deres en el mundo utilizan MicroStrategy para analizar y gestionar p&oacute;lizas, siniestros, riesgos y la productividad de su fuerza de ventas.</p>
+													<p>Asiste a este webinar para aprender c&oacute;mo las empresas de retail l&iacute;deres en el mundo utilizan MicroStrategy para analizar y gestionar productos, precios, inventarios, tiendas y la productividad de su fuerza de ventas.</p>
 												</div> 
 											</td> 
 										</tr> 
@@ -293,7 +293,7 @@ div[style*="margin: 16px 0;"] {
 													<table border="0" cellspacing="0" cellpadding="0" align="left" class="center" width="250" style="width: 250px;"> 
 														<tbody> 
 															<tr> 
-																<td bgcolor="#c02c57" align="center" class="mobile"><a href="https://go.microstrategy.com/Revolucion_Analitica_para_Seguros.html?CID=7014W0000014u1bQAA" target="_blank" style="font-size: 14px; font-family: 'Helvetica', Arial, sans-serif; text-transform: uppercase; font-weight: bold; color: #ffffff; text-decoration: none; background-color: #c02c57; padding: 4px 8px; border-top: 5px solid #c02c57; border-bottom: 5px solid #c02c57; border-right: 8px solid #c02c57; border-left: 8px solid #c02c57; display: inline-block; text-align: center;">Reg&iacute;strate ahora</a></td> 
+																<td bgcolor="#c02c57" align="center" class="mobile"><a href="https://sophitech.herokuapp.com/registroWebinar" target="_blank" style="font-size: 14px; font-family: 'Helvetica', Arial, sans-serif; text-transform: uppercase; font-weight: bold; color: #ffffff; text-decoration: none; background-color: #c02c57; padding: 4px 8px; border-top: 5px solid #c02c57; border-bottom: 5px solid #c02c57; border-right: 8px solid #c02c57; border-left: 8px solid #c02c57; display: inline-block; text-align: center;">Reg&iacute;strate ahora</a></td> 
 															</tr> 
 														</tbody> 
 													</table>
@@ -303,9 +303,9 @@ div[style*="margin: 16px 0;"] {
 										<tr> 
 											<td bgcolor="#ffffff" align="left" style="padding:10px 20px; color: #333333; font-family: 'Helvetica', Arial, sans-serif;  font-size: 16px;font-weight: 400; line-height: 25px;"> 
 												<div class="mktEditable" id="signature_edit">
-													<p>&iquest;No puedes asistir? <a href="https://go.microstrategy.com/Revolucion_Analitica_para_Seguros.html?CID=7014W0000014u1bQAA" style="color: #c02c57;" target="_blank"><strong>Registrate de todas formas</strong></a> y te enviaremos la grabaci&oacute;n de la sesi&oacute;n.</p> 
+													<p>&iquest;No puedes asistir? <a href="https://sophitech.herokuapp.com/registroWebinar" style="color: #c02c57;" target="_blank"><strong>Registrate de todas formas</strong></a> y te enviaremos la grabaci&oacute;n de la sesi&oacute;n.</p> 
 													<p>&iexcl;Gracias!<br>
-														Rogelio Botello | Rebeca Bobadilla<br><em>rogelio.botello@sophitech.mx</em> | <em>rbobadilla@microstrategy.com</em>														
+														Rogelio Botello<br><em>rogelio.botello@sophitech.mx</em>														
 													</p>
 												</div>
 											</td> 
