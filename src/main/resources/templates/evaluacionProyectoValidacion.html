@@ -35,8 +35,8 @@
           </div>
           <a type="button" th:href="@{/listaProyectosTodo}" th:text="'&laquo; regresar'"></a>
           <br>
-          <a th:if="${proyecto.valEvaluacion==null && proyecto.fecCierreEvaluacion==null}" style="font-size: 12px;" th:href="@{/evaluacionProyecto/}+${proyecto.codProyecto}" class="badge badge-info mb-2" ><i class="fas fa-tasks"></i> Asignar conceptos</a>
-          <a th:if="${proyecto.valEvaluacion==null && proyecto.fecCierreEvaluacion==null}" style="font-size: 12px;" href="#modalEvaluador" data-toggle="modal" class="badge badge-success mb-2" ><i class="fas fa-user-check"></i> Asignar evaluador</a>
+          <a th:if="${proyecto.valEvaluacion!=2 && proyecto.fecCierreEvaluacion==null}" style="font-size: 12px;" th:href="@{/evaluacionProyecto/}+${proyecto.codProyecto}" class="badge badge-info mb-2" ><i class="fas fa-tasks"></i> Asignar conceptos</a>
+          <a th:if="${proyecto.valEvaluacion!=2 && proyecto.fecCierreEvaluacion==null}" style="font-size: 12px;" href="#modalEvaluador" data-toggle="modal" class="badge badge-success mb-2" ><i class="fas fa-user-check"></i> Asignar evaluador</a>
           <!-- DataTales Example -->
           <div class="card shadow mb-4">
             <div class="card-body" id="contenidoTabla">
@@ -49,7 +49,7 @@
 	                      <th>Comentario <i class="far fa-edit"></i></th>
 	                      <th>Evidencia <i class="far fa-edit"></i></th>
 	                      <th>Evaluaci&oacute;n</th>
-	                      <th>Opciones</th>
+	                      <th th:if="${proyecto.valEvaluacion!=2}">Opciones</th>
                     	</tr>
 	                 </thead>
 	                 <tbody>
@@ -77,7 +77,7 @@
 								<input th:if="${detalleEvaluacion.concepto.codConcepto == 7016 and detalleEvaluacion.calificacion != 0}" th:id="'evalEncuesta_' + ${detalleEvaluacion.concepto.codConcepto}" type="number" disabled="disabled" style="font-size: 12px; padding: 5px;" class="form-control" th:value="${detalleEvaluacion.calificacion}"> 
 								<span th:if="${detalleEvaluacion.codEvaluacion == null and detalleEvaluacion.calificacion == 0}"  style="font-size: 12px;" th:text="'Sin evaluaci&oacute;n'"></span>
                     		</td>
-                    		<td style="vertical-align:middle;">
+                    		<td th:if="${proyecto.valEvaluacion!=2}" style="vertical-align:middle;">
                     			<a style="font-size: 10px;" th:id="'save_'+${detalleEvaluacion.concepto.codConcepto}" href="#" class="badge badge-success" onclick="actualizar(this.id); return false;"><i class="fas fa-save"></i> Guardar</a>
                     			<div th:id="'wait_'+${detalleEvaluacion.concepto.codConcepto}" class="spinner-grow text-muted"></div>
                     		</td>
