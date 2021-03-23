@@ -38,10 +38,12 @@ function flashSurvey(){
 
 function saveRespuesta(objRespuesta){
 	var resp = $(objRespuesta).attr("id").substring(4);
+	var codPregunta = $(pregunta).val();
 	$.ajax({
 		url: '/guardaRespuestaFlash',
 		data: { recurso: $("#authGetName").val(), 
-				respuesta: resp},
+				respuesta: resp,
+				pregunta: codPregunta},
 		success: function(succ){
 			$('#modalClima').modal('hide');
 			$('#btnFlash').hide();

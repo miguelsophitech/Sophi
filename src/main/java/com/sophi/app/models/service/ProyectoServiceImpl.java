@@ -1,5 +1,6 @@
 package com.sophi.app.models.service;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -105,6 +106,11 @@ public class ProyectoServiceImpl implements IProyectoService {
 	@Override
 	public List<Proyecto> findListaProyectosRecursoLiderTodos(Long codRecursoLider) {
 		return proyectoDao.findListaProyectosRecursoLiderTodos(codRecursoLider);
+	}
+
+	@Override
+	public List<Proyecto> findListaProyectosPorCerrar(Date fecFinProyecto) {
+		return proyectoDao.findListaProyectosPorCerrar(fecFinProyecto);
 	}
 
 }

@@ -1,5 +1,6 @@
 package com.sophi.app.models.service;
 
+import java.util.Date;
 import java.util.List;
 
 import com.sophi.app.models.entity.Proyecto;
@@ -38,5 +39,7 @@ public interface IProyectoService {
 	public List<Proyecto> findListaProyectosRecursoAprobadorTodos(Long codRecursoAprobador);
 	
 	public List<Proyecto> findListaProyectosRecursoLiderTodos(Long codRecursoLider);
+	
+	public List<Proyecto> findListaProyectosPorCerrar(Date fecFinProyecto);
 
 }

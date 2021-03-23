@@ -45,7 +45,7 @@ public class FlashController {
 	
 	@RequestMapping(value = "/guardaRespuestaFlash")
 	@ResponseBody
-	public String guardaRespuestaFlash(@RequestParam String recurso, @RequestParam Long respuesta,Model model) {
+	public String guardaRespuestaFlash(@RequestParam String recurso, @RequestParam Long respuesta, @RequestParam Long pregunta,Model model) {
 		Recurso recursoRes = recursoService.findByDescCorreoElectronico(recurso);
 		RespuestaRecursoClima respuestaRecurso = new RespuestaRecursoClima();
 		
@@ -53,6 +53,8 @@ public class FlashController {
 		
 		respuestaRecurso.setCodPreguntaRespuesta(preguntaRespuestaClimaService.findOne(respuesta).getValRespuesta());
 		respuestaRecurso.setRecurso(recursoRes);
+		respuestaRecurso.setCodPreguntaClima(pregunta);
+		
 		respuestaRecursoClimaService.save(respuestaRecurso);
 		return "Gracias";
 	} 
@@ -134,9 +136,11 @@ public class FlashController {
 		diaSemana = calendar.get(Calendar.DAY_OF_WEEK);
 		if(diaSemana == 6) {
 			model.addAttribute("preguntaFlash", preguntaClimaService.findOne(1L));
+			model.addAttribute("pregunta", 1);
 			model.addAttribute("respuestasFlash",preguntaRespuestaClimaService.findByCodPregunta(1L));
 		} else {
 			model.addAttribute("preguntaFlash", preguntaClimaService.findOne(2L));
+			model.addAttribute("pregunta", 2);
 			model.addAttribute("respuestasFlash",preguntaRespuestaClimaService.findByCodPregunta(2L));
 		}
 		return "layout/layout :: modalFlash";

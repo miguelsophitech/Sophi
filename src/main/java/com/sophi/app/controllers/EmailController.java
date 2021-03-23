@@ -70,14 +70,14 @@ public class EmailController {
 	@Autowired
 	private IInviteContactoService inviteContactoService;
 	
-//	@Scheduled(cron="0 3 12 * * TUE", zone="America/Mexico_City")
+	@Scheduled(cron="0 40 9 * * TUE", zone="America/Mexico_City")
 	public void enviaInvitacionWebinar() {
 		List<InviteContacto> listaContactosInvite = new ArrayList<InviteContacto>();
 		listaContactosInvite = inviteContactoService.findAll();
 		for (InviteContacto inviteContacto : listaContactosInvite) {
 			MailRequest request = new MailRequest();
 			request.setName(inviteContacto.getNombre());
-			request.setSubject("Revolución Analítica para Seguros");
+			request.setSubject("Revolución Analítica para retail");
 			request.setTo(inviteContacto.getEmail());
 			
 			Map<String, Object> model = new HashMap<String, Object>();
@@ -437,6 +437,32 @@ public class EmailController {
     				System.out.println(response.getMessage());
     			}
 				
+			}
+		}
+	}
+	
+	//CRON Diario 12:00 hora mexico
+	@Scheduled(cron="0 0 12 * * *", zone="America/Mexico_City")
+	public void enviaRecordatorioCierreProyecto() {
+		List<Proyecto> listaProyectos = new ArrayList<>();
+		listaProyectos = proyectoService.findListaProyectosPorCerrar(new Utiles().getFechaActual());
+		
+		if(listaProyectos.size() > 0) {
+			for (Proyecto proyecto : listaProyectos) {
+				Recurso recurso = recursoService.findOne(proyecto.getCodRecursoAprobador());
+				MailRequest request = new MailRequest();
+				request.setName(recurso.getDescRecurso());
+				request.setSubject("Recordatorio de cierre de proyecto");
+				request.setTo(recurso.getDescCorreoElectronico());
+				
+				Map<String, Object> model = new HashMap<String, Object>();
+				model.put("nombreRecurso", request.getName());
+				model.put("mensaje", "<h3>La fecha de t&eacute;rmino del proyecto " + proyecto.getDescProyecto()+" ha vencido, es necesario cerrar el proyecto lo antes posible en la plataforma</h3>");
+				model.put("pie", "");
+				model.put("imagen","<img data-cfsrc=\"images/dashboard.png\" alt=\"\" data-cfstyle=\"width: 200px; max-width: 400px; height: auto; margin: auto; display: block;\" style=\"width: 200px; max-width: 400px; height: auto; margin: auto; display: block;\" src=\"https://sophitech.herokuapp.com/img/img-dashboard.png\">");
+				
+				MailResponse response = service.sendEmail(request, model);
+				System.out.println(response.getMessage());
 			}
 		}
 	}
