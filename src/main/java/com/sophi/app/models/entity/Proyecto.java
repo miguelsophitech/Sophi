@@ -129,6 +129,9 @@ public class Proyecto implements Serializable  {
 	@Transient
 	private Long numAct;
 	
+	@Column(name = "cod_recurso_aprobador_bkp")
+	private Long codRecursoAprobadorBKP;
+
 	@PrePersist
 	public void prePersist() {
 		fecRegistro = new Date();
@@ -372,6 +375,14 @@ public class Proyecto implements Serializable  {
 
 	public void setValEvaluar(Long valEvaluar) {
 		this.valEvaluar = valEvaluar;
+	}
+	
+	public Long getCodRecursoAprobadorBKP() {
+		return codRecursoAprobadorBKP;
+	}
+
+	public void setCodRecursoAprobadorBKP(Long codRecursoAprobadorBKP) {
+		this.codRecursoAprobadorBKP = codRecursoAprobadorBKP;
 	}
 	
 }
