@@ -129,6 +129,11 @@ public class VacacionesController {
 		RecursoVacaciones recursoVacaciones = null;
 		recursoVacaciones = recursoVacacionesService.findById(codRecurso);
 		
+		List<Recurso> listaRecursosAprobadores = new ArrayList<Recurso>();
+		listaRecursosAprobadores = recursoService.findListRecursosAprobadores();
+		Recurso recurso = recursoService.findOne(codRecurso);
+		Long valAprobador  = recurso.getValAprobador();
+		
 		String pattern = "yyyyMMdd";
 		DateFormat df = new SimpleDateFormat(pattern);
 		String hoyVal = df.format(new Date(new Utiles().getFechaActual().getTime() + (1000 * 60 * 60 * 24 * 1) ));
@@ -173,6 +178,8 @@ public class VacacionesController {
 		model.addAttribute("hoyVal",hoyVal);
 		model.addAttribute("informacion",strb.toString());
 		model.addAttribute("aprobadores",aprob.toString());
+		model.addAttribute("listaAprobadores", listaRecursosAprobadores);
+		model.addAttribute("valAprobador", valAprobador);
 		return "formSolicitudVacaciones";		
 	}
 	
@@ -183,6 +190,7 @@ public class VacacionesController {
 										@RequestParam String usr,
 										@RequestParam Long totalSolicitud,
 										@RequestParam String aprobadores,
+										@RequestParam Long recursoBKP,
 										Model model) {
 		
 		List<DetalleSolicitud> detallesSolicitud = new ArrayList<>();
@@ -221,12 +229,23 @@ public class VacacionesController {
 		recursoVacacionesService.save(recursoVacaciones);
 		
 		System.out.println(aprobadores);
+		System.out.println("Recurso BKP: "+recursoBKP);
+		
+		List<ProyectoRecurso> listaProyectoRecurso = new ArrayList<ProyectoRecurso>();
+		listaProyectoRecurso = proyectoRecursoService.findByProyectoRecursoIdCodRecurso(codRecurso);
+		
+		for(ProyectoRecurso proyectorecurso: listaProyectoRecurso) {
+			Proyecto proyecto = proyectoService.findByCodProyecto(proyectorecurso.getProyectoRecursoId().getCodProyecto());
+			proyecto.setCodRecursoAprobadorBKP(recursoBKP);
+			proyectoService.save(proyecto);
+		}
 		
 		for (String mailAprobador : aprobadores.split(",")) {
 		//Mail Notificacion INICIO 
 		Recurso recurso = recursoService.findOne(codRecurso);
 		Recurso recursoAprobador = recursoService.findByDescCorreoElectronico(mailAprobador);
 		MailRequest request = new MailRequest();
+		System.out.println(recursoAprobador.getDescRecurso());
 		request.setName(recursoAprobador.getDescRecurso());
 		request.setSubject("Nueva solicitud de vacaciones");
 		request.setTo(recursoAprobador.getDescCorreoElectronico());

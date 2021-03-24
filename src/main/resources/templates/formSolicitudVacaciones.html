@@ -26,6 +26,7 @@
         <input id="hoy" type="hidden" th:value="${hoyVal}"></input>
         <input id="aprobadores" type="hidden" th:value="${aprobadores}"></input>
         <input id="infoProyectos" type="hidden" th:value="${informacion}"></input>
+        <input id="valAprobador" type="hidden" th:value="${valAprobador}"></input>
 
           <!-- Page Heading -->
           <div class="d-sm-flex align-items-center justify-content-between mb-1">
@@ -129,6 +130,13 @@
 					<p id="confirmacionSolicitud">
 						<!-- texto de confirmacion -->
 					</p>
+					<div id="asignarBKP">
+					<p>Escoge un recurso BKP: </p>
+					<select name="recurso_bkp" class="custom-select" id="filterRecursoBKP">
+			        	<option selected value="-1">Todos</option>
+			        	<option th:each="aprobadorbkp:${listaAprobadores}" th:value="${aprobadorbkp.codRecurso}" th:text="${aprobadorbkp.descRecurso} + ' ' + ${aprobadorbkp.descApellidoPaterno}"></option>
+			    	</select>
+					</div>
 				</div>
 				<div class="modal-footer" id="btn-control">
 					<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
@@ -171,8 +179,11 @@
 <script type="text/javascript">
   $(document).ready(function() {
 	  $("#mensajeInfo").html($("#infoProyectos").val());
+	  
+	  if($("#valAprobador").val() != 1){
+		  $("#asignarBKP").hide();
+	  }
   });
-  
   
   function verDetalleSolicitud(verId){
 	  var idSolicitud = verId.substring(4);
@@ -198,7 +209,8 @@
 						diasSelec:JSON.stringify(dias),
 						usr:$("#authGetName").val(),
 						totalSolicitud:$("#conteoSolicitados").text(),
-						aprobadores:$("#aprobadores").val()
+						aprobadores:$("#aprobadores").val(),
+						recursoBKP: $("#filterRecursoBKP").val()
 				},
 				success: function(result){
 					window.location.href = "https://sophitech.herokuapp.com" + result;
@@ -208,7 +220,7 @@
   
   //Modal para solicitud ?
   function solicitar(){
-	$("#confirmacionSolicitud").html("&iquest;Confirmar la solicitud de " + $("#conteoSolicitados").text() + " d&iacute;a(s) de vacaciones?")
+	$("#confirmacionSolicitud").html("&iquest;Confirmar la solicitud de " + $("#conteoSolicitados").text() + " d&iacute;a(s) de vacaciones?");
 	$("#modalConfirmSolicitud").modal('show');
   }  
   </script>
