@@ -55,6 +55,17 @@ public class ContactoEmergencia implements Serializable {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "cod_recurso")
 	private Recurso recurso;
+	
+	@Column(name = "val_dependiente_económico")
+	private Long valDependienteEconomico;
+
+	public Long getValDependienteEconomico() {
+		return valDependienteEconomico;
+	}
+
+	public void setValDependienteEconomico(Long valDependienteEconomico) {
+		this.valDependienteEconomico = valDependienteEconomico;
+	}
 
 	public Long getCodContactoEmergencia() {
 		return codContactoEmergencia;
