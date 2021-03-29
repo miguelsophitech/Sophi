@@ -29,8 +29,8 @@ public class HerramientaServiceImpl implements IHerramientaService {
 
 	@Override
 	@Transactional(readOnly = true)
-	public Herramienta findOne(Long codHerramienta) {
-		return herramientaDao.findById(codHerramienta).orElse(null);
+	public Herramienta findOne(Long codEquipo) {
+		return herramientaDao.findById(codEquipo).orElse(null);
 	}
 
 	@Override

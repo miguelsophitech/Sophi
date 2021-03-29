@@ -10,7 +10,7 @@ public interface IHerramientaService {
 	
 	public void save(Herramienta herramienta);
 	
-	public Herramienta findOne(Long codHerramienta);
+	public Herramienta findOne(Long codEquipo);
 	
 	public void delete(Herramienta herramienta);
 	

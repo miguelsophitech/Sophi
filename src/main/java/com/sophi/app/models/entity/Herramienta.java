@@ -6,8 +6,6 @@ import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -26,17 +24,12 @@ public class Herramienta implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "cod_herramienta")
-	private Long codHerramienta;
+	@Column(name = "cod_equipo")
+	private Long codEquipo;
 	
 	@NotEmpty(message = "Este dato no debe estar vacío")
-	@Column(name = "desc_herramienta")
-	private String descHerramienta;
-	
-	@NotEmpty(message = "Este dato no debe estar vacío")
-	@Column(name = "desc_numero_serie")
-	private String descNumeroSerie;
+	@Column(name = "desc_observaciones")
+	private String descObservaciones;
 	
 	@Column(name = "fec_registro")
 	@Temporal(TemporalType.TIMESTAMP)
@@ -47,33 +40,41 @@ public class Herramienta implements Serializable{
 	public void prePersist() {
 		fecRegistro = new Date();
 	}
+	
+	@Column(name = "cod_recurso")
+	private Long codRecurso;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "cod_recurso")
 	private Recurso recurso;
+	
+	@Column(name = "responsiva")
+	private byte[] responsiva;
+	
+	@Column(name = "fec_prestamo")
+	@Temporal(TemporalType.DATE)
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	private Date fecPrestamo;
+	
+	@Column(name = "fec_devolucion")
+	@Temporal(TemporalType.DATE)
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	private Date fecDevolucion;
 
-	public Long getCodHerramienta() {
-		return codHerramienta;
+	public Long getCodEquipo() {
+		return codEquipo;
 	}
 
-	public void setCodHerramienta(Long codHerramienta) {
-		this.codHerramienta = codHerramienta;
+	public void setCodEquipo(Long codEquipo) {
+		this.codEquipo = codEquipo;
 	}
 
-	public String getDescHerramienta() {
-		return descHerramienta;
+	public String getDescObservaciones() {
+		return descObservaciones;
 	}
 
-	public void setDescHerramienta(String descHerramienta) {
-		this.descHerramienta = descHerramienta;
-	}
-
-	public String getDescNumeroSerie() {
-		return descNumeroSerie;
-	}
-
-	public void setDescNumeroSerie(String descNumeroSerie) {
-		this.descNumeroSerie = descNumeroSerie;
+	public void setDescObservaciones(String descObservaciones) {
+		this.descObservaciones = descObservaciones;
 	}
 
 	public Date getFecRegistro() {
@@ -95,7 +96,37 @@ public class Herramienta implements Serializable{
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
-	
-	
 
+	public Long getCodRecurso() {
+		return codRecurso;
+	}
+
+	public void setCodRecurso(Long codRecurso) {
+		this.codRecurso = codRecurso;
+	}
+
+	public byte[] getResponsiva() {
+		return responsiva;
+	}
+
+	public void setResponsiva(byte[] responsiva) {
+		this.responsiva = responsiva;
+	}
+
+	public Date getFecPrestamo() {
+		return fecPrestamo;
+	}
+
+	public void setFecPrestamo(Date fecPrestamo) {
+		this.fecPrestamo = fecPrestamo;
+	}
+
+	public Date getFecDevolucion() {
+		return fecDevolucion;
+	}
+
+	public void setFecDevolucion(Date fecDevolucion) {
+		this.fecDevolucion = fecDevolucion;
+	}
+	
 }

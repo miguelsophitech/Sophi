@@ -52,6 +52,9 @@ public class ContactoEmergencia implements Serializable {
 		fecRegistro = new Date();
 	}
 	
+	@Column(name = "cod_recurso")
+	private Long codRecurso;
+	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "cod_recurso")
 	private Recurso recurso;
@@ -117,6 +120,14 @@ public class ContactoEmergencia implements Serializable {
 
 	public static long getSerialversionuid() {
 		return serialVersionUID;
+	}
+
+	public Long getCodRecurso() {
+		return codRecurso;
+	}
+
+	public void setCodRecurso(Long codRecurso) {
+		this.codRecurso = codRecurso;
 	}
 
 	

@@ -122,8 +122,12 @@ public class Recurso implements Serializable  {
 	@Column(name = "desc_nss")
 	private String descNss;
 
-	@Column(name = "desc_estado_civil")
-	private String descEstadoCivil;
+	@Column(name = "cod_estado_civil")
+	private Long codEstadoCivil;
+	
+	@OneToOne
+	@JoinColumn(name = "cod_estado_civil", insertable=false, updatable=false)
+	private EstadoCivil estadocivil;
 	
 	@Column(name = "val_numero_hijos")
 	private Long valNumeroHijos;
@@ -134,8 +138,8 @@ public class Recurso implements Serializable  {
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date fecIngresoEmpresa;
 	
-	@Column(name = "desc_activo")
-	private Long descActivo;
+	@Column(name = "val_activo")
+	private Long valActivo;
 	
 	@Column(name = "cod_area_recurso")
 	private Long descConsultor;
@@ -416,12 +420,12 @@ public class Recurso implements Serializable  {
 		this.descNss = descNss;
 	}
 
-	public String getDescEstadoCivil() {
-		return descEstadoCivil;
+	public Long getcodEstadoCivil() {
+		return codEstadoCivil;
 	}
 
-	public void setDescEstadoCivil(String descEstadoCivil) {
-		this.descEstadoCivil = descEstadoCivil;
+	public void setcodEstadoCivil(Long codEstadoCivil) {
+		this.codEstadoCivil = codEstadoCivil;
 	}
 
 	public Long getValNumeroHijos() {
@@ -440,12 +444,12 @@ public class Recurso implements Serializable  {
 		this.fecIngresoEmpresa = fecIngresoEmpresa;
 	}
 
-	public Long getDescActivo() {
-		return descActivo;
+	public Long getValActivo() {
+		return valActivo;
 	}
 
-	public void setDescActivo(Long descActivo) {
-		this.descActivo = descActivo;
+	public void setValActivo(Long valActivo) {
+		this.valActivo = valActivo;
 	}
 
 	public Long getDescConsultor() {
