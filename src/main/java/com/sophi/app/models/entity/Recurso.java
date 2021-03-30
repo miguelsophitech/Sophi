@@ -122,8 +122,8 @@ public class Recurso implements Serializable  {
 	@Column(name = "desc_nss")
 	private String descNss;
 
-	@Column(name = "desc_estado_civil")
-	private String descEstadoCivil;
+	@Column(name = "cod_estado_civil")
+	private Long codEstadoCivil;
 	
 	@Column(name = "val_numero_hijos")
 	private Long valNumeroHijos;
@@ -415,13 +415,13 @@ public class Recurso implements Serializable  {
 	public void setDescNss(String descNss) {
 		this.descNss = descNss;
 	}
-
-	public String getDescEstadoCivil() {
-		return descEstadoCivil;
+	
+	public Long getCodEstadoCivil() {
+		return codEstadoCivil;
 	}
 
-	public void setDescEstadoCivil(String descEstadoCivil) {
-		this.descEstadoCivil = descEstadoCivil;
+	public void setCodEstadoCivil(Long codEstadoCivil) {
+		this.codEstadoCivil = codEstadoCivil;
 	}
 
 	public Long getValNumeroHijos() {

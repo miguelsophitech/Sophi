@@ -39,8 +39,8 @@ public class ContactoEmergencia implements Serializable {
 	private String descTelContactoEmergencia;
 	
 	@NotEmpty(message = "Este dato no debe estar vacío")
-	@Column(name = "desc_parentesco_contacto_emergencia")
-	private String descParentescoContactoEmergencia;
+	@Column(name = "cod_parentesco")
+	private Long codParentesco;
 	
 	@Column(name = "fec_registro")
 	@Temporal(TemporalType.TIMESTAMP)
@@ -83,12 +83,12 @@ public class ContactoEmergencia implements Serializable {
 		this.descTelContactoEmergencia = descTelContactoEmergencia;
 	}
 
-	public String getDescParentescoContactoEmergencia() {
-		return descParentescoContactoEmergencia;
+	public Long getCodParentesco() {
+		return codParentesco;
 	}
 
-	public void setDescParentescoContactoEmergencia(String descParentescoContactoEmergencia) {
-		this.descParentescoContactoEmergencia = descParentescoContactoEmergencia;
+	public void setCodParentesco(Long codParentesco) {
+		this.codParentesco = codParentesco;
 	}
 
 	public Date getFecRegistro() {
