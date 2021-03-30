@@ -47,6 +47,9 @@ public class Proveedor implements Serializable{
 	@DateTimeFormat(pattern = "yyyy-MM-dd hh:mm:ss")
 	private Date fecRegistro;
 	
+	@Column(name = "val_activo")
+	private Long valActivo;
+	
 	@PrePersist
 	public void prePersist() {
 		fecRegistro = new Date();
@@ -100,10 +103,16 @@ public class Proveedor implements Serializable{
 		this.fecRegistro = fecRegistro;
 	}
 
+	public Long getValActivo() {
+		return valActivo;
+	}
+
+	public void setValActivo(Long valActivo) {
+		this.valActivo = valActivo;
+	}
+
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
-	
-	
 
 }

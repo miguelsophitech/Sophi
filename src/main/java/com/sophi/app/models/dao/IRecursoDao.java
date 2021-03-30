@@ -14,7 +14,7 @@ public interface IRecursoDao extends CrudRepository<Recurso, Long>{
 	@Query("FROM Recurso R WHERE LOWER(R.descRecurso) LIKE LOWER(concat('%',?1, '%')) AND LOWER(R.descApellidoPaterno) LIKE LOWER(concat('%',?2, '%'))")
 	List<Recurso> findByNombreApellido(String descRecurso, String descApellidoPaterno);
 	
-	@Query("FROM Recurso R WHERE R.descActivo = 1")
+	@Query("FROM Recurso R WHERE R.valActivo = 1")
 	List<Recurso> findRecursosActivos();
 	
 	@Query("FROM Recurso R WHERE R.valResponsable = 1")

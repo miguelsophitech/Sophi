@@ -134,8 +134,8 @@ public class Recurso implements Serializable  {
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date fecIngresoEmpresa;
 	
-	@Column(name = "desc_activo")
-	private Long descActivo;
+	@Column(name = "val_activo")
+	private Long valActivo;
 	
 	@Column(name = "cod_area_recurso")
 	private Long descConsultor;
@@ -440,12 +440,12 @@ public class Recurso implements Serializable  {
 		this.fecIngresoEmpresa = fecIngresoEmpresa;
 	}
 
-	public Long getDescActivo() {
-		return descActivo;
+	public Long getValActivo() {
+		return valActivo;
 	}
 
-	public void setDescActivo(Long descActivo) {
-		this.descActivo = descActivo;
+	public void setValActivo(Long valActivo) {
+		this.valActivo = valActivo;
 	}
 
 	public Long getDescConsultor() {

@@ -36,12 +36,12 @@ public interface ICapHoraDao extends CrudRepository<CapHora, Long>{
 	@Query(value="SELECT  "
 			+ "new com.sophi.app.models.entity.DetalleRecursoHoras(r.descRecurso, ch.codRecurso, SUM(ch.valDuracionRechazada)) " +
 		       "FROM  CapHora AS ch INNER JOIN Recurso AS r ON ch.codRecurso = r.codRecurso " +
-		       "WHERE ch.fecInicioActividad BETWEEN :fecInicial AND :fecFinal AND ch.valRechazo = 1 AND r.descActivo = 1 "+
+		       "WHERE ch.fecInicioActividad BETWEEN :fecInicial AND :fecFinal AND ch.valRechazo = 1 AND r.valActivo = 1 "+
 		       "GROUP BY r.descRecurso, ch.codRecurso")
 			List<DetalleRecursoHoras> findRecursoHorasRechazo(@Param("fecInicial") Date fecInicial,@Param("fecFinal") Date fecFinal);
 	
 	@Query(value="FROM  CapHora AS ch INNER JOIN Recurso AS r ON ch.codRecurso = r.codRecurso " +
-		       "WHERE ch.fecInicioActividad BETWEEN :fecInicial AND :fecFinal AND ch.valRechazo = 1 AND r.descActivo = 1 " )
+		       "WHERE ch.fecInicioActividad BETWEEN :fecInicial AND :fecFinal AND ch.valRechazo = 1 AND r.valActivo = 1 " )
 			List<CapHora> findRecursoHorasRechazoCustom(@Param("fecInicial") Date fecInicial,@Param("fecFinal") Date fecFinal);
 	
 	@Query("SELECT DISTINCT(codProyecto) FROM CapHora C WHERE C.fecInicioActividad  BETWEEN ?1 AND ?2")
@@ -53,7 +53,7 @@ public interface ICapHoraDao extends CrudRepository<CapHora, Long>{
 	@Query(value="SELECT  "
 			+ "new com.sophi.app.models.entity.DetalleRecursoHoras(r.descRecurso, ch.codRecurso, SUM(ch.valDuracionReportada), SUM(ch.valDuracionValidad), SUM(ch.valDuracionRechazada)) " +
 		       "FROM  CapHora AS ch INNER JOIN Recurso AS r ON ch.codRecurso = r.codRecurso " +
-		       "WHERE ch.fecInicioActividad BETWEEN :fecInicial AND :fecFinal AND ch.codProyecto = :codProyecto  AND r.descActivo = 1 "+
+		       "WHERE ch.fecInicioActividad BETWEEN :fecInicial AND :fecFinal AND ch.codProyecto = :codProyecto  AND r.valActivo = 1 "+
 		       "GROUP BY r.descRecurso, ch.codRecurso")
 			List<DetalleRecursoHoras> findProyectoRecursosResumenSemanal(@Param("codProyecto") Long codProyecto, @Param("fecInicial") Date fecInicial,@Param("fecFinal") Date fecFinal);
 	
