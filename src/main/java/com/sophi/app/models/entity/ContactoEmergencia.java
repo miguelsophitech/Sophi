@@ -47,6 +47,9 @@ public class ContactoEmergencia implements Serializable {
 	@DateTimeFormat(pattern = "yyyy-MM-dd hh:mm:ss")
 	private Date fecRegistro;
 	
+	@Column(name = "val_dependiente_economico")
+	private Long valDependienteEconomico;
+	
 	@PrePersist
 	public void prePersist() {
 		fecRegistro = new Date();
@@ -94,6 +97,14 @@ public class ContactoEmergencia implements Serializable {
 
 	public void setFecRegistro(Date fecRegistro) {
 		this.fecRegistro = fecRegistro;
+	}
+	
+	public Long getValDependienteEconomico() {
+		return valDependienteEconomico;
+	}
+
+	public void setValDependienteEconomico(Long valDependienteEconomico) {
+		this.valDependienteEconomico = valDependienteEconomico;
 	}
 
 	public Recurso getRecurso() {
