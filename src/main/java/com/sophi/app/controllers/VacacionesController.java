@@ -305,7 +305,7 @@ public class VacacionesController {
 						
 						for (RecursoVacaciones rv : listadoRecursosTmp) {
 							Recurso recursoTmp = recursoService.findOne(rv.getCodRecurso());
-							if(recursoTmp.getDescActivo().equals(1L)) {
+							if(recursoTmp.getValActivo().equals(1L)) {
 								rv.setNombreRecurso(recursoTmp.getDescRecurso() + " " + recursoTmp.getDescApellidoPaterno());
 								listadoRecursos.add(rv);
 							} 
