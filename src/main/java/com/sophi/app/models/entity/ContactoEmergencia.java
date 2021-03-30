@@ -39,13 +39,16 @@ public class ContactoEmergencia implements Serializable {
 	private String descTelContactoEmergencia;
 	
 	@NotEmpty(message = "Este dato no debe estar vacío")
-	@Column(name = "desc_parentesco_contacto_emergencia")
-	private String descParentescoContactoEmergencia;
+	@Column(name = "cod_parentesco")
+	private Long codParentesco;
 	
 	@Column(name = "fec_registro")
 	@Temporal(TemporalType.TIMESTAMP)
 	@DateTimeFormat(pattern = "yyyy-MM-dd hh:mm:ss")
 	private Date fecRegistro;
+	
+	@Column(name = "val_dependiente_economico")
+	private Long valDependienteEconomico;
 	
 	@PrePersist
 	public void prePersist() {
@@ -80,12 +83,12 @@ public class ContactoEmergencia implements Serializable {
 		this.descTelContactoEmergencia = descTelContactoEmergencia;
 	}
 
-	public String getDescParentescoContactoEmergencia() {
-		return descParentescoContactoEmergencia;
+	public Long getCodParentesco() {
+		return codParentesco;
 	}
 
-	public void setDescParentescoContactoEmergencia(String descParentescoContactoEmergencia) {
-		this.descParentescoContactoEmergencia = descParentescoContactoEmergencia;
+	public void setCodParentesco(Long codParentesco) {
+		this.codParentesco = codParentesco;
 	}
 
 	public Date getFecRegistro() {
@@ -94,6 +97,14 @@ public class ContactoEmergencia implements Serializable {
 
 	public void setFecRegistro(Date fecRegistro) {
 		this.fecRegistro = fecRegistro;
+	}
+	
+	public Long getValDependienteEconomico() {
+		return valDependienteEconomico;
+	}
+
+	public void setValDependienteEconomico(Long valDependienteEconomico) {
+		this.valDependienteEconomico = valDependienteEconomico;
 	}
 
 	public Recurso getRecurso() {
