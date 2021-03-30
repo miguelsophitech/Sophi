@@ -70,7 +70,7 @@ public class EmailController {
 	@Autowired
 	private IInviteContactoService inviteContactoService;
 	
-	@Scheduled(cron="0 40 9 * * TUE", zone="America/Mexico_City")
+	@Scheduled(cron="0 40 11 * * *", zone="America/Mexico_City")
 	public void enviaInvitacionWebinar() {
 		List<InviteContacto> listaContactosInvite = new ArrayList<InviteContacto>();
 		listaContactosInvite = inviteContactoService.findAll();
