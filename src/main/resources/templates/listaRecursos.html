@@ -43,7 +43,8 @@
           			<div class="col-sm col-md col-lg-3" th:each="recurso: ${recursos}">
 						<div class="profile-card card rounded-lg shadow p-4 text-center position-relative overflow-hidden">
 							<div class="banner"></div>
-							<img th:if="${recurso.foto} != null" th:src="@{'/fotoRecursoPerfil/' + ${recurso.codRecurso}}" alt="${recurso.descRecurso}" class="img-circle mx-auto mb-3">
+<!-- 							img-profile imgPrevCircle -->
+							<img th:if="${recurso.foto} != null" th:src="@{'/fotoRecursoPerfil/' + ${recurso.codRecurso}}" alt="${recurso.descRecurso}" class="imgPrevCircleRecurso mx-auto mb-3">
 							<h5 th:text="${recurso.descRecurso} + ' ' + ${recurso.descApellidoPaterno} + ' ' + ${recurso.descApellidoMaterno}"></h5>
 							<div class="text-left">
 								<p style="font-size: 14.35px;"><i class="fa fa-envelope mr-2"></i>[[${recurso.descCorreoElectronico}]]</p>

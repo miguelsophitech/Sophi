@@ -4,398 +4,105 @@
 <head th:replace="layout/layout::head"></head>
 
 <body id="page-top">
-<input id="authGetName" type="hidden" th:value="${#authentication.getName()}"></input>
-  <!-- Page Wrapper -->
-  <div id="wrapper">
+	<input id="authGetName" type="hidden" th:value="${#authentication.getName()}"></input>
+	
+	<!-- Page Wrapper -->
+	<div id="wrapper">
 
-    <!-- Sidebar -->
-    <ul th:replace="layout/layout::menu"> </ul>
-    <!-- End of Sidebar -->
+	    <!-- Sidebar -->
+	    <ul th:replace="layout/layout::menu"> </ul>
+	    <!-- End of Sidebar -->
 
-    <!-- Content Wrapper -->
-    <div id="content-wrapper" class="d-flex flex-column">
+    	<!-- Content Wrapper -->
+		<div id="content-wrapper" class="d-flex flex-column">
 
-      <!-- Main Content -->
-      <div id="content">
-
-         <header th:replace="layout/layout :: header"></header>
+			<!-- Main Content -->
+			<div id="content">
+				
+				<header th:replace="layout/layout :: header"></header>
          
-        <!-- Begin Page Content -->
-        <div class="container-fluid">
+					<!-- Begin Page Content -->
+					<div class="container-fluid">
 
-          <!-- Page Heading -->
-          <h1 class="h3 mb-2 text-gray-800">Informaci&oacute;n del recurso</h1>
-<!--           <p class="mb-4">Secci&oacute;n para consultar los datos del recurso.</p> -->
-          <a sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_RH')" th:href="@{'/listarRecursos'}" th:text="'&laquo; regresar al listado de recursos'"></a>
+						<!-- Page Heading -->
+						<h1 class="h3 mb-2 text-gray-800">Informaci&oacute;n del recurso</h1>
+						<a sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_RH')" th:href="@{'/listarRecursos'}" th:text="'&laquo; regresar al listado de recursos'"></a>
 			
-			<div class="container emp-profile">
-            <form method="post">
-                <div class="row">
-                    <div class="col-md-4">
-                        <div class="profile-img">
-                            <img th:if="${recurso.foto} != null" th:src="@{'/fotoRecursoPerfil/' + ${recurso.codRecurso}}" alt="${recurso.descRecurso}"/>
-                            <div class="file btn btn-lg btn-primary">
-                                Cambiar foto
-                                <input type="file" name="file"/>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="profile-head">
-                                    <h5 th:text="${recurso.descRecurso} + ' ' + ${recurso.descApellidoPaterno} + ' ' + ${recurso.descApellidoMaterno}">
-                                        
-                                    </h5>
-                                    <h6 th:text="${recurso.puesto.descPuesto}">
-                                        
-                                    </h6>
-                                    <p class="proile-rating">Evaluaci&oacute;n Q: <span>8/10</span></p>
-                            <ul class="nav nav-tabs" id="myTab" role="tablist">
-                                <li class="nav-item">
-                                    <a class="nav-link" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Datos Generales</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Trayectoria</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Expediente digital</a>
-                                </li>
+						<div class="card shadow mb-4">
+							<div class="collapse show">
+								<div class="card-body">
+									<div class="row">
+									
+					                    <div class="col-md-3">
+					                        <div class="profile-img">
+					                            <img th:if="${recurso.foto} != null" th:src="@{'/fotoRecursoPerfil/' + ${recurso.codRecurso}}" class="imgPrevRecurso mx-auto mb-3" alt="${recurso.descRecurso}"/>
+					                            <div class="file btn btn-lg btn-primary">
+					                                Cambiar foto
+					                                <input type="file" name="file"/>
+					                            </div>
+					                        </div>
+					                        <div class="profile-work" style="color: #495057; font-size: 12px; font-weight: 600">
+					                            <p style="font-size: 12px; font-weight: 700">Informaci&oacute;n</p>
+					                            
+					                            <i class="fa fa-user mr-2"></i><span th:text="${recurso.descRecurso} + ' ' + ${recurso.descApellidoPaterno} + ' ' + ${recurso.descApellidoMaterno}" class="mb-1" ></span><br>
+					                            <i class="fas fa-id-badge mr-2"></i><span class="mb-1">[[${recurso.puesto.descPuesto}]]</span><br>
+					                            <i class="fa fa-envelope mr-2"></i><span class="mb-1">[[${recurso.descCorreoElectronico}]]</span><br>
+					                            <i class="fa fa-envelope mr-2"></i><span class="mb-1">[[${recurso.descCorreoElectronico}]]</span><br>
+					                            <i class="fa fa-phone mr-2"></i><span class="mb-1">[[${recurso.descTelCelular}]]</span>
+					                            
+                        				</div>
+					                    </div>
+					                    
+										<div class="col-md-9">
+                        					<div class="profile-head">
+                                    			<div class="d-flex justify-content-between">
+                                    				<h5 th:text="${recurso.descRecurso} + ' ' + ${recurso.descApellidoPaterno} + ' ' + ${recurso.descApellidoMaterno}"> </h5>
+                                    				<input type="button" class="profile-edit-btn"  value="Editar"/>
+                                    			</div>
+                                    			<h6 style="font-size: 12px;" th:text="${recurso.puesto.descPuesto}"></h6>
+                                    			<p class="proile-rating">Evaluaci&oacute;n Q: <span>8/10</span></p>
+                            					
+                            					<ul class="nav nav-tabs" id="myTab" role="tablist">
+                            					
+					                                <li class="nav-item">
+					                                    <a class="nav-link" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Datos Generales</a>
+					                                </li>
+					                                <li class="nav-item">
+					                                    <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Trayectoria</a>
+					                                </li>
+					                                <li class="nav-item">
+					                                    <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Expediente digital</a>
+					                                </li>
                                 
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="col-md-2">
-                        <input type="button" class="profile-edit-btn" name="btnAddMore" value="Editar"/>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-4">
-                        <div class="profile-work">
-                            <!-- <p>WORK LINK</p>
-                            <a href="">Website Link</a><br/>
-                            <a href="">Bootsnipp Profile</a><br/>
-                            <a href="">Bootply Profile</a> -->
-                            <p>Informaci&oacute;n</p>
-                            
-                            <span th:text="${recurso.descRecurso} + ' ' + ${recurso.descApellidoPaterno} + ' ' + ${recurso.descApellidoMaterno}" class="mb-1" style="font-size: small; color: #495057;
-                            font-weight: 600;
-                            font-size: 14px;"><i class="fa fa-user mr-2"></i></span><br>
-                            <span class="mb-1" style="font-size: small; color: #495057;
-                            font-weight: 600;
-                            font-size: 14px;"><i class="fas fa-id-badge mr-2"></i>[[${recurso.puesto.descPuesto}]]</span><br>
-                            <span class="mb-1" style="font-size: small; color: #495057;
-                            font-weight: 600;
-                            font-size: 14px;"><i class="fa fa-envelope mr-2"></i>[[${recurso.descCorreoElectronico}]]</span><br>
-                            <span class="mb-1" style="font-size: small; color: #495057;
-                            font-weight: 600;
-                            font-size: 14px;"><i class="fa fa-envelope mr-2"></i> carlos.parada@gmail.com</span><br>
-                            <span style="font-size: small; color: #495057;
-                            font-weight: 600;
-                            font-size: 14px;"><i class="fa fa-phone mr-2"></i>[[${recurso.descTelCelular}]]</span>
-                            
-                        </div>
-                    </div>
-                    <div class="col-md-8">
-                        <div class="tab-content profile-tab" id="myTabContent">
-                            <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-                                        <div class="row">
-                                            <div class="col-md-2">
-                                                <label>Usuario</label>
-                                            </div>
-                                            <div class="col-md-8">
-                                                <p th:text="${recurso.descCorreoElectronico}"></p>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-2">
-                                                <label>Nombre</label>
-                                            </div>
-                                            <div class="col-md-8">
-                                                <p th:text="${recurso.descRecurso} + ' ' + ${recurso.descApellidoPaterno} + ' ' + ${recurso.descApellidoMaterno}"></p>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-2">
-                                                <label>Email</label>
-                                            </div>
-                                            <div class="col-md-8">
-                                                <p th:text="${recurso.descCorreoElectronico}"></p>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-2">
-                                                <label>Tel&eacute;fono</label>
-                                            </div>
-                                            <div class="col-md-8">
-                                                <p th:text="${recurso.descTelCelular}"></p>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-2">
-                                                <label>Perfil</label>
-                                            </div>
-                                            <div class="col-md-8">
-                                                <p th:text="${recurso.puesto.descPuesto}"></p>
-                                            </div>
-                                        </div>
-                            </div>
-                            <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-                                        <div class="row">
-                                            <div class="col-md-2">
-                                                <label>Experiencia</label>
-                                            </div>
-                                            <div class="col-md-8">
-                                                <p>Experto</p>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-2">
-                                                <label>Costo minimo</label>
-                                            </div>
-                                            <div class="col-md-8">
-                                                <p>$1,000.00</p>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-2">
-                                                <label>Total Proyectos</label>
-                                            </div>
-                                            <div class="col-md-8">
-                                                <p>230</p>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-2">
-                                                <label>Nivel de ingles</label>
-                                            </div>
-                                            <div class="col-md-8">
-                                                <p>Experto</p>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-2">
-                                                <label>Antigüedad</label>
-                                            </div>
-                                            <div class="col-md-8">
-                                                <p>6 años</p>
-                                            </div>
-                                        </div>
-                               <!--  <div class="row">
-                                    <div class="col-md-12">
-                                        <label>Your Bio</label><br/>
-                                        <p>Your detail description</p>
-                                    </div>
-                                </div> -->
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </form>           
-        </div>
+                            					</ul>
+                        					</div>
+                    					</div>
+                					</div>
 			
-			<div class="card shadow mb-4">
-			<div class="collapse show" id="collapseCardExample">
-			<div class="card-body">
-				<div class="row">
-			      <div class="col-md-6">
-			         <ul class="list-group list-group-flush">
-						<li class="list-group-item"><h3 th:text="${recurso.descRecurso} + ' ' + ${recurso.descApellidoPaterno} + ' ' + ${recurso.descApellidoMaterno}"></h3></li>
-						<li class="list-group-item">Correo: <strong th:text="${recurso.descCorreoElectronico}"></strong></li>
-						<li class="list-group-item">Tel&eacute;fono Celular: <strong th:text="${recurso.descTelCelular}"></strong></li>
-						<li class="list-group-item">Tel&eacute;fono Empresa: <strong th:text="${recurso.descTelEmpresa}"></strong></li>
-						<li class="list-group-item">Extensi&oacute;n: <strong th:text="${recurso.descTelExt}"></strong></li>
-						<li class="list-group-item">R.F.C: <strong th:text="${recurso.descRfc}"></strong></li>
-						<li class="list-group-item">C.U.R.P: <strong th:text="${recurso.descCurp}"></strong></li>
-						<li class="list-group-item">Fecha de Nacimiento: <strong th:text="${recurso.fecNacimiento}"></strong></li>
-						<li class="list-group-item">Direcci&oacute;n: <strong th:text="${recurso.dirCalle}+ ' ' + ${recurso.dirNumeroExt} + ' ' + ${recurso.dirNumeroInt}+ ' ' + ${recurso.dirColonia}+ ' ' + ${recurso.dirAlcaldiaMunicipio}+ ' ' + ${recurso.dirEstado}+ ' ' + ${recurso.dirCp}"></strong></li>
-						<li class="list-group-item">N&uacute;mero de Seguridad Social: <strong th:text="${recurso.descNss}"></strong></li>
-						<li class="list-group-item">Estado Civil: <strong th:text="${recurso.descEstadoCivil}"></strong></li>
-						<li class="list-group-item">No. de Hijos: <strong th:text="${recurso.valNumeroHijos}"></strong></li>
-					</ul>
-      			  </div>
-		          <div class="col-md-6" style="display: flex; align-items: center;">
-		            <img th:if="${recurso.foto} != null" class="img-thumbnail rounded" th:src="@{'/fotoRecursoPerfil/' + ${recurso.codRecurso}}" alt="${recurso.descRecurso}" width="70%">
-		          </div>
- 				</div>
-			</div>
-			</div>
-		</div>
-		
-              <div class="card shadow mb-4">
-                <!-- Card Header - Accordion -->
-                <a href="#collapseCard1" class="d-block card-header py-3" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapseCardExample">
-                  <h6 class="m-0 font-weight-bold text-primary">Informaci&oacute;n del recurso</h6>
-                </a>
-                <!-- Card Content - Collapse -->
-                <div class="collapse show" id="collapseCard1">
-                  <div class="card-body">
-                    <div class="row">
-			      <div class="col-md-6">
-			         <ul class="list-group list-group-flush">
-						<li class="list-group-item">Fecha de ingreso a la empresa: <strong th:text="${recurso.fecIngresoEmpresa}"></strong></li>
-						<li class="list-group-item">Activo/Inactivo: <strong th:text="${recurso.descActivo}"></strong></li>
-						<li class="list-group-item">Fecha de salida de la empresa: <strong th:text="${recurso.fecSalidaEmpresa}"></strong></li>
-						<li class="list-group-item">Motivo de salida de la empresa: <strong th:text="${recurso.descMotivoSalida}"></strong></li>
-						<li class="list-group-item">Puesto: <strong th:text="${recurso.puesto.descPuesto}"></strong></li>
-						<li class="list-group-item">Jornada: <strong th:text="${recurso.jornada.descJornada}"></strong></li>
-						<li class="list-group-item">Tipo de recurso: <strong th:text="${recurso.tiporecurso.descTipoRecurso}"></strong></li>
-						<li class="list-group-item">Proveedor: <strong th:text="${recurso.proveedor.descProveedor}"></strong></li>
-						<li class="list-group-item">Costo m&iacute;nimo: <strong th:text="${recurso.valCostoMinimo}"></strong></li>
-					</ul>
-      			  </div>
- 				</div>
-                  </div>
-                </div>
-              </div>
-              
-              <div class="card shadow mb-4">
-                <!-- Card Header - Accordion -->
-                <a href="#collapseCardEscolaridad" class="d-block card-header py-3" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapseCardExample">
-                  <h6 class="m-0 font-weight-bold text-primary">Escolaridad</h6>
-                </a>
-                <!-- Card Content - Collapse -->
-                <div class="collapse show" id="collapseCardEscolaridad">
-                  <div class="card-body">
-                    <div class="row">
-			      <div class="col-md-6">
-			         <ul class="list-group list-group-flush">
-						<li class="list-group-item">Grado de Escolaridad: <strong th:text="${recurso.descEduGradoEscolaridad}"></strong></li>
-						<li class="list-group-item">Etapa: <strong th:text="${recurso.descEduEtapa}"></strong></li>
-						<li class="list-group-item">Instituci&oacute;n acad&eacute;mica: <strong th:text="${recurso.descEduInstitucionAcademica}"></strong></li>
-						<li class="list-group-item">Documento obtenido: <strong th:text="${recurso.descEduDocumentoObtenido}"></strong></li>
-					</ul>
-      			  </div>
- 				</div>
-                  </div>
-                </div>
-              </div>
-              
-              <div class="card shadow mb-4">
-                <!-- Card Header - Accordion -->
-                <a href="#collapseCardBanco" class="d-block card-header py-3" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapseCardExample">
-                 <h6 class="m-0 font-weight-bold text-primary">Informaci&oacute;n bancaria</h6>
-                </a>
-                <!-- Card Content - Collapse -->
-                <div class="collapse show" id="collapseCardBanco">
-                  <div class="card-body">
-                    <div class="row">
-			      <div class="col-md-6">
-			         <ul class="list-group list-group-flush">
-						<li class="list-group-item">Banco: <strong th:text="${recurso.descBancoNombre}"></strong></li>
-						<li class="list-group-item">Cuenta: <strong th:text="${recurso.descBancoNumeroCuenta}"></strong></li>
-						<li class="list-group-item">CLABE Interbancaria: <strong th:text="${recurso.descBancoClabe}"></strong></li>
-					</ul>
-      			  </div>
- 				</div>
-                  </div>
-                </div>
-              </div>
-              
-              <div class="card shadow mb-4">
-                <!-- Card Header - Accordion -->
-                <a href="#collapseCardMedico" class="d-block card-header py-3" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapseCardExample">
-                  <h6 class="m-0 font-weight-bold text-primary">Informaci&oacute;n m&eacute;dica</h6>
-                </a>
-                <!-- Card Content - Collapse -->
-                <div class="collapse show" id="collapseCardMedico">
-                  <div class="card-body">
-                    <div class="row">
-			      <div class="col-md-6">
-			         <ul class="list-group list-group-flush">
-						<li class="list-group-item">Tipo de sangre: <strong th:text="${recurso.descMedicosTipoSangre}"></strong></li>
-						<li class="list-group-item">Alergias: <strong th:text="${recurso.descMedicosAlergias}"></strong></li>
-						<li class="list-group-item">Embarazos: <strong th:text="${recurso.descMedicosEmbarazos}"></strong></li>
-						<li class="list-group-item">Cirug&iacute;as: <strong th:text="${recurso.descMedicosCirugias}"></strong></li>
-						<li class="list-group-item">Enfermedades: <strong th:text="${recurso.descMedicosEnfermedades}"></strong></li>
-					</ul>
-      			  </div>
- 				</div>
-                  </div>
-                </div>
-              </div>
-<!-- 			
-					
-					<!-- Card Header - Accordion -->
-					<a href="#collapseCardExtraComplementaria" class="d-block card-header py-3" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="collapseCardExtraComplementaria">
-						<h6 class="m-0 font-weight-bold text-primary">Extra</h6>
-					</a>
-					<!-- Card Content - Collapse -->
-					<div class="collapse show" id="collapseCardExtraComplementaria">
-						<div class="card-body">
+								</div>
+							</div>
+						</div>	
+			
+                
+				
+				
 
-							<table class="table-responsive">
-							<tr>
-							<td>
-							<div class="card" style="width: 100%;">
-							  <img th:src="@{/img/img-contacto-emergencia.png}" class="card-img-top" alt="Contactos de emergencia">
-							  <div class="card-body">
-							    <h5 class="card-title">Contactos de emergencia</h5>
-							    <p class="card-text">Informacion que describe este apartado.</p>
-							    <a th:href="@{/listarContactosEmergencia/} +  ${recurso.codRecurso}" class="btn btn-primary stretched-link">Ver</a>
-							  </div>
-							</div>
-							</td>
-							<td>
-							<div class="card" style="width: 100%;">
-							  <img th:src="@{/img/img-herramienta.png}" class="card-img-top" alt="Contactos de emergencia">
-							  <div class="card-body">
-							    <h5 class="card-title">Herramientas</h5>
-							     <p class="card-text">Informacion que describe este apartado.</p>
-							    <a th:href="@{/listarHerramientas/} +  ${recurso.codRecurso}" class="btn btn-primary stretched-link">Ver</a>
-<!-- 							    <table> -->
-<!-- 							    <tr th:each="herramienta : ${recurso.herramientas}"> -->
-<!-- 							    <td th:text="${herramienta.descHerramienta}"></td> -->
-<!-- 							    <td th:text="${herramienta.descNumeroSerie}"></td> -->
-<!-- 							    <td th:text="${herramienta.codHerramienta}"></td> -->
-<!-- 							    </tr> -->
-<!-- 							    </table> -->
-							  </div>
-							</div>
-							</td>
-							<td>
-							<div class="card" style="width: 100%;">
-							  <img th:src="@{/img/img-sueldo-prestacion.png}" class="card-img-top" alt="Contactos de emergencia">
-							  <div class="card-body">
-							    <h5 class="card-title">Sueldos y prestaciones</h5>
-							     <p class="card-text">Informacion que describe este apartado.</p>
-							    <a th:href="@{/listarSueldos/} +  ${recurso.codRecurso}" class="btn btn-primary stretched-link">Ver</a>
-							  </div>
-							</div>
-							</td>
-							<td>
-							<div class="card" style="width: 100%;">
-							  <img th:src="@{/img/img-dependientes-economicos.png}" class="card-img-top" alt="Contactos de emergencia">
-							  <div class="card-body">
-							    <h5 class="card-title">Dependientes econ&oacute;micos</h5>
-							     <p class="card-text">Informacion que describe este apartado.</p>
-							    <a th:href="@{/listarDependientes/} +  ${recurso.codRecurso}" class="btn btn-primary stretched-link">Ver</a>
-							  </div>
-							</div>
-							</td>
-							</tr>
-							</table>
-
-						</div>
 					</div>
-					
-				
-				
+			        <!-- /.container-fluid -->
+
+				</div>
+				<!-- End of Main Content -->
+
+				<!-- Footer -->
+				<footer th:replace="layout/layout :: footer"></footer>
+				<!-- End of Footer -->
+		
+		
+		    </div>
+			<!-- End of Content Wrapper -->
 
 		</div>
-        <!-- /.container-fluid -->
-
-      </div>
-      <!-- End of Main Content -->
-
-       <!-- Footer -->
-      <footer th:replace="layout/layout :: footer"></footer>
-      <!-- End of Footer -->
-
-
-    </div>
-    <!-- End of Content Wrapper -->
-
-  </div>
-  <!-- End of Page Wrapper -->
+		<!-- End of Page Wrapper -->
 
   <!-- Scroll to Top Button--> <div class="st-actionContainer right-bottom" id="btnFlash"> <div class="st-btn-container right-bottom" onclick="flashSurvey(); return false;"> <div class="st-button-main"><i class="fa fa-bolt" aria-hidden="true"></i></div> </div> </div>
   <a class="scroll-to-top rounded" href="#page-top">
