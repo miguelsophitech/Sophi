@@ -28,6 +28,170 @@
 <!--           <p class="mb-4">Secci&oacute;n para consultar los datos del recurso.</p> -->
           <a sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_RH')" th:href="@{'/listarRecursos'}" th:text="'&laquo; regresar al listado de recursos'"></a>
 			
+			<div class="container emp-profile">
+            <form method="post">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="profile-img">
+                            <img th:if="${recurso.foto} != null" th:src="@{'/fotoRecursoPerfil/' + ${recurso.codRecurso}}" alt="${recurso.descRecurso}"/>
+                            <div class="file btn btn-lg btn-primary">
+                                Cambiar foto
+                                <input type="file" name="file"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="profile-head">
+                                    <h5 th:text="${recurso.descRecurso} + ' ' + ${recurso.descApellidoPaterno} + ' ' + ${recurso.descApellidoMaterno}">
+                                        
+                                    </h5>
+                                    <h6 th:text="${recurso.puesto.descPuesto}">
+                                        
+                                    </h6>
+                                    <p class="proile-rating">Evaluaci&oacute;n Q: <span>8/10</span></p>
+                            <ul class="nav nav-tabs" id="myTab" role="tablist">
+                                <li class="nav-item">
+                                    <a class="nav-link" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Datos Generales</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Trayectoria</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Expediente digital</a>
+                                </li>
+                                
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <input type="button" class="profile-edit-btn" name="btnAddMore" value="Editar"/>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="profile-work">
+                            <!-- <p>WORK LINK</p>
+                            <a href="">Website Link</a><br/>
+                            <a href="">Bootsnipp Profile</a><br/>
+                            <a href="">Bootply Profile</a> -->
+                            <p>Informaci&oacute;n</p>
+                            
+                            <span th:text="${recurso.descRecurso} + ' ' + ${recurso.descApellidoPaterno} + ' ' + ${recurso.descApellidoMaterno}" class="mb-1" style="font-size: small; color: #495057;
+                            font-weight: 600;
+                            font-size: 14px;"><i class="fa fa-user mr-2"></i></span><br>
+                            <span class="mb-1" style="font-size: small; color: #495057;
+                            font-weight: 600;
+                            font-size: 14px;"><i class="fas fa-id-badge mr-2"></i>[[${recurso.puesto.descPuesto}]]</span><br>
+                            <span class="mb-1" style="font-size: small; color: #495057;
+                            font-weight: 600;
+                            font-size: 14px;"><i class="fa fa-envelope mr-2"></i>[[${recurso.descCorreoElectronico}]]</span><br>
+                            <span class="mb-1" style="font-size: small; color: #495057;
+                            font-weight: 600;
+                            font-size: 14px;"><i class="fa fa-envelope mr-2"></i> carlos.parada@gmail.com</span><br>
+                            <span style="font-size: small; color: #495057;
+                            font-weight: 600;
+                            font-size: 14px;"><i class="fa fa-phone mr-2"></i>[[${recurso.descTelCelular}]]</span>
+                            
+                        </div>
+                    </div>
+                    <div class="col-md-8">
+                        <div class="tab-content profile-tab" id="myTabContent">
+                            <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                                        <div class="row">
+                                            <div class="col-md-2">
+                                                <label>Usuario</label>
+                                            </div>
+                                            <div class="col-md-8">
+                                                <p th:text="${recurso.descCorreoElectronico}"></p>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-2">
+                                                <label>Nombre</label>
+                                            </div>
+                                            <div class="col-md-8">
+                                                <p th:text="${recurso.descRecurso} + ' ' + ${recurso.descApellidoPaterno} + ' ' + ${recurso.descApellidoMaterno}"></p>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-2">
+                                                <label>Email</label>
+                                            </div>
+                                            <div class="col-md-8">
+                                                <p th:text="${recurso.descCorreoElectronico}"></p>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-2">
+                                                <label>Tel&eacute;fono</label>
+                                            </div>
+                                            <div class="col-md-8">
+                                                <p th:text="${recurso.descTelCelular}"></p>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-2">
+                                                <label>Perfil</label>
+                                            </div>
+                                            <div class="col-md-8">
+                                                <p th:text="${recurso.puesto.descPuesto}"></p>
+                                            </div>
+                                        </div>
+                            </div>
+                            <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                                        <div class="row">
+                                            <div class="col-md-2">
+                                                <label>Experiencia</label>
+                                            </div>
+                                            <div class="col-md-8">
+                                                <p>Experto</p>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-2">
+                                                <label>Costo minimo</label>
+                                            </div>
+                                            <div class="col-md-8">
+                                                <p>$1,000.00</p>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-2">
+                                                <label>Total Proyectos</label>
+                                            </div>
+                                            <div class="col-md-8">
+                                                <p>230</p>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-2">
+                                                <label>Nivel de ingles</label>
+                                            </div>
+                                            <div class="col-md-8">
+                                                <p>Experto</p>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-2">
+                                                <label>Antigüedad</label>
+                                            </div>
+                                            <div class="col-md-8">
+                                                <p>6 años</p>
+                                            </div>
+                                        </div>
+                               <!--  <div class="row">
+                                    <div class="col-md-12">
+                                        <label>Your Bio</label><br/>
+                                        <p>Your detail description</p>
+                                    </div>
+                                </div> -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>           
+        </div>
+			
 			<div class="card shadow mb-4">
 			<div class="collapse show" id="collapseCardExample">
 			<div class="card-body">
