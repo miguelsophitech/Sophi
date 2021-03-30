@@ -15,6 +15,8 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Entity
 @Table(name="CAT_COMPETENCIAS")
 public class Competencias implements Serializable {
+	
+	private static final long serialVersionUID = 1L;
 
 	@Id
 	@Column(name = "cod_competencias")
