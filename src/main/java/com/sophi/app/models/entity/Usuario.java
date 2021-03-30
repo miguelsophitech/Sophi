@@ -45,6 +45,9 @@ public class Usuario implements Serializable {
 	@Column(name = "desc_usuario")
 	private String descUsuario;
 	
+	@Column(name = "cod_recurso")
+	private Long cod_recurso;
+	
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinColumn(name = "cod_usuario")
 	private List<Rol> roles;
@@ -100,6 +103,14 @@ public class Usuario implements Serializable {
 
 	public void setDescUsuario(String descUsuario) {
 		this.descUsuario = descUsuario;
+	}
+
+	public Long getCod_recurso() {
+		return cod_recurso;
+	}
+
+	public void setCod_recurso(Long cod_recurso) {
+		this.cod_recurso = cod_recurso;
 	}
 
 	public List<Rol> getRoles() {

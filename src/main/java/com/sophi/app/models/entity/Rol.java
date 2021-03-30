@@ -31,6 +31,9 @@ public class Rol implements Serializable {
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date fecRegistro;
 	
+	@Column(name = "cod_recurso")
+	private Long cod_recurso;
+	
 	@Column(name = "cod_usuario")
 	private Long cod_usuario;
 	
@@ -61,6 +64,14 @@ public class Rol implements Serializable {
 
 	public void setFecRegistro(Date fecRegistro) {
 		this.fecRegistro = fecRegistro;
+	}
+
+	public Long getCod_recurso() {
+		return cod_recurso;
+	}
+
+	public void setCod_recurso(Long cod_recurso) {
+		this.cod_recurso = cod_recurso;
 	}
 
 	public Long getCod_usuario() {
