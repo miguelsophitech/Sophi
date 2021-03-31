@@ -45,7 +45,7 @@
 							<div class="banner"></div>
 <!-- 							img-profile imgPrevCircle -->
 							<img th:if="${recurso.foto} != null" th:src="@{'/fotoRecursoPerfil/' + ${recurso.codRecurso}}" alt="${recurso.descRecurso}" class="imgPrevCircleRecurso mx-auto mb-3">
-							<h5>[[${recurso.descRecurso}]]<br>[[${recurso.descApellidoPaterno}]]&nbsp;[[${recurso.descApellidoPaterno}]]</h5>
+							<h5>[[${recurso.descRecurso}]]<br>[[${recurso.descApellidoPaterno}]]&nbsp;[[${recurso.descApellidoMaterno}]]</h5>
 							<div class="text-left">
 								<p style="font-size: 13px;"><i class="fa fa-envelope mr-2"></i>[[${recurso.descCorreoElectronico}]]</p>
 								<p style="font-size: 13px;"><i class="fa fa-phone mr-2"></i>[[${recurso.descTelCelular}]] <img style="width: 12px; cursor: pointer; padding-bottom: 3px;" th:src="@{/img/whapp.png}" th:attr="onclick=|loadWA('${recurso.descTelCelular}','${recurso.descRecurso}')|" ></p>
