@@ -125,6 +125,10 @@ public class Recurso implements Serializable  {
 	@Column(name = "cod_estado_civil")
 	private Long codEstadoCivil;
 	
+	@OneToOne
+	@JoinColumn(name = "cod_estado_civil", insertable = false, updatable = false)
+	private EstadoCivil estadoCivil;
+	
 	@Column(name = "val_numero_hijos")
 	private Long valNumeroHijos;
 	
@@ -647,8 +651,6 @@ public class Recurso implements Serializable  {
 	public void setContactosEmergencia(List<ContactoEmergencia> contactosEmergencia) {
 		this.contactosEmergencia = contactosEmergencia;
 	}
-	
-	
 
 	public List<Skill> getSkills() {
 		return skills;
@@ -728,6 +730,14 @@ public class Recurso implements Serializable  {
 
 	public void setProveedor(Proveedor proveedor) {
 		this.proveedor = proveedor;
+	}
+
+	public EstadoCivil getEstadoCivil() {
+		return estadoCivil;
+	}
+
+	public void setEstadoCivil(EstadoCivil estadoCivil) {
+		this.estadoCivil = estadoCivil;
 	}
 
 }
