@@ -180,5 +180,4 @@ public class RecursoController {
 		model.put("estadoCivilList", estadoCivilService.findAll());
 		return "formRecurso";
 	}
-
 }
