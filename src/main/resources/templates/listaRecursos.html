@@ -40,14 +40,15 @@
           <section class="main-content">
           	<div class="container">
           		<div class="row">
-          			<div class="col-sm col-md col-lg-3" th:each="recurso: ${recursos}">
-						<div class="profile-card card rounded-lg shadow p-4 text-center position-relative overflow-hidden">
+          			<div class="col-md-3" style="padding: 0 10px 10px 0;" th:each="recurso: ${recursos}">
+						<div class="profile-card card shadow text-center position-relative overflow-hidden" style="border-radius: 15px !important; padding: 20px;">
 							<div class="banner"></div>
-							<img th:if="${recurso.foto} != null" th:src="@{'/fotoRecursoPerfil/' + ${recurso.codRecurso}}" alt="${recurso.descRecurso}" class="img-circle mx-auto mb-3">
-							<h5 th:text="${recurso.descRecurso} + ' ' + ${recurso.descApellidoPaterno} + ' ' + ${recurso.descApellidoMaterno}"></h5>
+<!-- 							img-profile imgPrevCircle -->
+							<img th:if="${recurso.foto} != null" th:src="@{'/fotoRecursoPerfil/' + ${recurso.codRecurso}}" alt="${recurso.descRecurso}" class="imgPrevCircleRecurso mx-auto mb-3">
+							<h5>[[${recurso.descRecurso}]]<br>[[${recurso.descApellidoPaterno}]]&nbsp;[[${recurso.descApellidoPaterno}]]</h5>
 							<div class="text-left">
-								<p style="font-size: 14.35px;"><i class="fa fa-envelope mr-2"></i>[[${recurso.descCorreoElectronico}]]</p>
-								<p style="font-size: 14.35px;">[[${recurso.descTelCelular}]] <img style="width: 14px; cursor: pointer; padding-bottom: 2px;" th:src="@{/img/whapp.png}" th:attr="onclick=|loadWA('${recurso.descTelCelular}','${recurso.descRecurso}')|" ></p>
+								<p style="font-size: 13px;"><i class="fa fa-envelope mr-2"></i>[[${recurso.descCorreoElectronico}]]</p>
+								<p style="font-size: 13px;"><i class="fa fa-phone mr-2"></i>[[${recurso.descTelCelular}]] <img style="width: 12px; cursor: pointer; padding-bottom: 3px;" th:src="@{/img/whapp.png}" th:attr="onclick=|loadWA('${recurso.descTelCelular}','${recurso.descRecurso}')|" ></p>
 							</div>
 							<div class="button mt-2 d-flex flex-row align-items-center"> <a th:href="@{/verRecurso/} + ${recurso.codRecurso}" class="btn btn-sm btn-outline-primary w-100">Ver</a> <a th:href="@{/formRecurso/} + ${recurso.codRecurso}" class="btn btn-sm btn-primary w-100 ml-2">Editar</a> </div>
 						</div>
