@@ -31,8 +31,8 @@ public class Herramienta implements Serializable{
 	private Long codHerramienta;
 	
 	@NotEmpty(message = "Este dato no debe estar vacío")
-	@Column(name = "desc_herramienta")
-	private String descHerramienta;
+	@Column(name = "desc_observaciones")
+	private String descObservaciones;
 	
 	@NotEmpty(message = "Este dato no debe estar vacío")
 	@Column(name = "desc_numero_serie")
@@ -51,6 +51,19 @@ public class Herramienta implements Serializable{
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "cod_recurso")
 	private Recurso recurso;
+	
+	@Column(name = "responsiva")
+	private byte[] responsiva;
+	
+	@Column(name = "fec_prestamo")
+	@Temporal(TemporalType.DATE)
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	private Date fecPrestamo;
+	
+	@Column(name = "fec_devolucion")
+	@Temporal(TemporalType.DATE)
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	private Date fecDevolucion;
 
 	public Long getCodHerramienta() {
 		return codHerramienta;
@@ -60,12 +73,12 @@ public class Herramienta implements Serializable{
 		this.codHerramienta = codHerramienta;
 	}
 
-	public String getDescHerramienta() {
-		return descHerramienta;
+	public String getDescObservaciones() {
+		return descObservaciones;
 	}
 
-	public void setDescHerramienta(String descHerramienta) {
-		this.descHerramienta = descHerramienta;
+	public void setDescObservaciones(String descObservaciones) {
+		this.descObservaciones = descObservaciones;
 	}
 
 	public String getDescNumeroSerie() {
@@ -92,10 +105,32 @@ public class Herramienta implements Serializable{
 		this.recurso = recurso;
 	}
 
+	public byte[] getResponsiva() {
+		return responsiva;
+	}
+
+	public void setResponsiva(byte[] responsiva) {
+		this.responsiva = responsiva;
+	}
+
+	public Date getFecPrestamo() {
+		return fecPrestamo;
+	}
+
+	public void setFecPrestamo(Date fecPrestamo) {
+		this.fecPrestamo = fecPrestamo;
+	}
+
+	public Date getFecDevolucion() {
+		return fecDevolucion;
+	}
+
+	public void setFecDevolucion(Date fecDevolucion) {
+		this.fecDevolucion = fecDevolucion;
+	}
+
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
-	
-	
 
 }
