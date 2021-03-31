@@ -25,6 +25,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.sophi.app.Utiles;
 import com.sophi.app.models.entity.Recurso;
+import com.sophi.app.models.service.IEstadoCivilService;
 import com.sophi.app.models.service.IJornadaService;
 import com.sophi.app.models.service.IProveedorService;
 import com.sophi.app.models.service.IPuestoService;
@@ -50,6 +51,9 @@ public class RecursoController {
 	
 	@Autowired
 	private IJornadaService jornadaService;
+	
+	@Autowired
+	private IEstadoCivilService estadoCivilService;
 	
 	@GetMapping(value = "/verRecurso/{id}")
 	public String verRecurso(@PathVariable(value="id") Long codRecurso, Map<String, Object> model, RedirectAttributes flash, HttpServletResponse response) {
@@ -107,6 +111,7 @@ public class RecursoController {
 		model.put("jornadaList", jornadaService.findAll());
 		model.put("tipoRecursoList", tipoREcursoService.findAll());
 		model.put("proveedorList",proveedorService.findAll());
+		model.put("estadoCivilList", estadoCivilService.findAll());
 		return "formRecurso";
 	}
 	
@@ -120,6 +125,7 @@ public class RecursoController {
 			model.addAttribute("jornadaList", jornadaService.findAll());
 			model.addAttribute("tipoRecursoList", tipoREcursoService.findAll());
 			model.addAttribute("proveedorList",proveedorService.findAll());
+			model.addAttribute("estadoCivilList", estadoCivilService.findAll());
 			return "formRecurso";
 		}
 		
@@ -171,6 +177,7 @@ public class RecursoController {
 		model.put("jornadaList", jornadaService.findAll());
 		model.put("tipoRecursoList", tipoREcursoService.findAll());
 		model.put("proveedorList",proveedorService.findAll());
+		model.put("estadoCivilList", estadoCivilService.findAll());
 		return "formRecurso";
 	}
 
