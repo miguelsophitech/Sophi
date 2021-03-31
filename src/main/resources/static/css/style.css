@@ -364,3 +364,14 @@ font-size: 12px;
     font-weight: 600;
     color: #0062cc;
 }
+
+.dg-campo{
+	font-size: 14px;
+	font-weight: 700;
+	text-align: right;
+}
+
+.dg-info{
+	font-size: 14px;
+	text-align: left;
+}

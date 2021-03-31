@@ -65,17 +65,84 @@
                             					<ul class="nav nav-tabs" id="myTab" role="tablist">
                             					
 					                                <li class="nav-item">
-					                                    <a class="nav-link" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Datos Generales</a>
+					                                    <a class="nav-link active" id="datos-generales-tab" data-toggle="tab" href="#datos-generales" aria-controls="datos-generales" role="tab" aria-selected="true">Datos generales</a>
 					                                </li>
 					                                <li class="nav-item">
-					                                    <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Trayectoria</a>
+					                                    <a class="nav-link" id="datos-empresa-tab" data-toggle="tab" href="#datos-empresa" role="tab" aria-controls="datos-empresa" aria-selected="false">Datos empresa</a>
 					                                </li>
 					                                <li class="nav-item">
-					                                    <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Expediente digital</a>
+					                                    <a class="nav-link" id="trayectoria-tab" data-toggle="tab" href="#trayectoria" role="tab" aria-controls="trayectoria" aria-selected="true">Trayectoria</a>
 					                                </li>
-                                
+                                					<li class="nav-item">
+					                                    <a class="nav-link" id="expediente-digital-tab" data-toggle="tab" href="#expediente-digital" role="tab" aria-controls="expediente-digital" aria-selected="true">Expediente digital</a>
+					                                </li>
+					                                
                             					</ul>
                         					</div>
+                        					
+                        					
+											<div class="tab-content profile-tab" id="myTabContent">
+												
+												<div class="tab-pane fade show active" id="datos-generales" role="tabpanel" aria-labelledby="datos-generales-tab">
+													<table class="table table-borderless">
+        
+														<tr>
+															<td><span class="dg-campo">Nombre: </span><span class="dg-info" contenteditable="true" th:text="${recurso.descRecurso}"></span></td>
+															<td><span class="dg-campo">Ap. Materno: </span><span class="dg-info" contenteditable="true" th:text="${recurso.descApellidoPaterno}"></span></td>
+															<td><span class="dg-campo">Ap. Paterno: </span><span class="dg-info" contenteditable="true" th:text="${recurso.descApellidoMaterno}"></span></td>
+															<td><span class="dg-campo">Tel: </span><span class="dg-info" contenteditable="true" th:text="${recurso.descTelCelular}"></span></td>
+														</tr>
+														<tr>
+															<td><span class="dg-campo">Nacimiento: </span><span class="dg-info" contenteditable="true" th:text="${recurso.fecNacimiento}"></span></td>
+															<td><span class="dg-campo">RFC: </span><span class="dg-info" contenteditable="true" th:text="${recurso.descRfc}"></span></td>
+															<td><span class="dg-campo">CURP: </span><span class="dg-info" contenteditable="true" th:text="${recurso.descCurp}"></span></td>
+															<td><span class="dg-campo">NSS: </span><span class="dg-info" contenteditable="true" th:text="${recurso.descNss}"></span></td>
+														</tr>
+														<tr>
+															<td><span class="dg-campo">Calle: </span><span class="dg-info" contenteditable="true" th:text="${recurso.dirCalle}"></span></td>
+															<td><span class="dg-campo"># ext: </span><span class="dg-info" contenteditable="true" th:text="${recurso.dirNumeroExt}"></span></td>
+															<td><span class="dg-campo"># int: </span><span class="dg-info" contenteditable="true" th:text="${recurso.dirNumeroInt}"></span></td>
+															<td><span class="dg-campo">C.P.: </span><span class="dg-info" contenteditable="true" th:text="${recurso.dirCp}"></span></td>
+														</tr>
+														<tr>
+															<td><span class="dg-campo">Colonia: </span><span class="dg-info" contenteditable="true" th:text="${recurso.dirColonia}"></span></td>
+															<td><span class="dg-campo">Municipio: </span><span class="dg-info" contenteditable="true" th:text="${recurso.dirAlcaldiaMunicipio}"></span></td>
+															<td><span class="dg-campo">Estado: </span><span class="dg-info" contenteditable="true" th:text="${recurso.dirEstado}"></span></td>
+														</tr>
+														<tr>
+															<td><span class="dg-campo">Estado civil: </span><span class="dg-info" contenteditable="true" th:text="${recurso.codEstadoCivil}"></span></td>
+															<td><span class="dg-campo"># hijos: </span><span class="dg-info" contenteditable="true" th:text="${recurso.valNumeroHijos}"></span></td>
+														</tr>
+														
+														<tr style="padding-top: 10px;">
+															<td><span class="dg-campo">Banco: </span><span class="dg-info" contenteditable="true" th:text="${recurso.descBancoNombre}"></span></td>
+															<td><span class="dg-campo">Cuenta: </span><span class="dg-info" contenteditable="true" th:text="${recurso.descBancoNumeroCuenta}"></span></td>
+															<td><span class="dg-campo">CLABE: </span><span class="dg-info" contenteditable="true" th:text="${recurso.descBancoClabe}"></span></td>
+															<td></td>
+														</tr>
+														
+														<tr style="padding-top: 10px;">
+															<td><span class="dg-campo">Sangre: </span><span class="dg-info" contenteditable="true" th:text="${recurso.descMedicosTipoSangre}"></span></td>
+															<td><span class="dg-campo">Alergias: </span><span class="dg-info" contenteditable="true" th:text="${recurso.descMedicosAlergias}"></span></td>
+															<td><span class="dg-campo">Cirugias: </span><span class="dg-info" contenteditable="true" th:text="${recurso.descMedicosCirugias}"></span></td>
+															<td><span class="dg-campo">Enfermedades: </span><span class="dg-info" contenteditable="true" th:text="${recurso.descMedicosEnfermedades}"></span></td>
+														</tr>
+														
+													</table>
+													
+                            					</div>
+                            					
+                            					<div class="tab-pane fade" id="datos-empresa" role="tabpanel" aria-labelledby="datos-empresa-tab">
+                                        			
+                            					
+                            					</div>
+                        					</div>
+                        					
+                        					
+                        					
+                        					
+                        					
+                        					
                     					</div>
                 					</div>
 			
