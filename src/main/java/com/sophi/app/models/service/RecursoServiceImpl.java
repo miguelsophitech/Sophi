@@ -72,8 +72,8 @@ public class RecursoServiceImpl implements IRecursoService {
 
 	@Override
 	@Transactional(readOnly = true)
-	public List<Recurso> findByDescConsultor(Long descConsultor) {
-		return recursoDao.findByDescConsultor(descConsultor);
+	public List<Recurso> findByCodAreaRecurso(Long codAreaRecurso) {
+		return recursoDao.findByCodAreaRecurso(codAreaRecurso);
 	}
 
 	

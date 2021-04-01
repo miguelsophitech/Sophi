@@ -150,7 +150,11 @@ public class Recurso implements Serializable  {
 	private Long valActivo;
 	
 	@Column(name = "cod_area_recurso")
-	private Long descConsultor;
+	private Long codAreaRecurso;
+	
+	@OneToOne
+	@JoinColumn(name = "cod_area_recurso", referencedColumnName="cod_consultor", insertable=false, updatable=false)
+	private AreaRecurso arearecurso;
 	
 	@Temporal(TemporalType.DATE)
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
@@ -460,12 +464,20 @@ public class Recurso implements Serializable  {
 		this.valActivo = valActivo;
 	}
 
-	public Long getDescConsultor() {
-		return descConsultor;
+	public Long getCodAreaRecurso() {
+		return codAreaRecurso;
 	}
 
-	public void setDescConsultor(Long descConsultor) {
-		this.descConsultor = descConsultor;
+	public void setCodAreaRecurso(Long codAreaRecurso) {
+		this.codAreaRecurso = codAreaRecurso;
+	}
+
+	public AreaRecurso getArearecurso() {
+		return arearecurso;
+	}
+
+	public void setArearecurso(AreaRecurso arearecurso) {
+		this.arearecurso = arearecurso;
 	}
 
 	public Date getFecSalidaEmpresa() {

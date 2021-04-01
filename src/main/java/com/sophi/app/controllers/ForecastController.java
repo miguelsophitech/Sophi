@@ -264,7 +264,7 @@ public class ForecastController {
 		List<Recurso> listaRecursosConsultores = new ArrayList<>();
 		
 		//Recursos consultores cod = 1
-		listaRecursosConsultores = recursoService.findByDescConsultor(1L);
+		listaRecursosConsultores = recursoService.findByCodAreaRecurso(1L);
 		
 		
 		Utiles utiles = new Utiles();
