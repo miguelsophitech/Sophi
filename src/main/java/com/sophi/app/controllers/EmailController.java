@@ -390,7 +390,7 @@ public class EmailController {
 	@Scheduled(cron="0 0 10 * * THU", zone="America/Mexico_City")
 	public void enviaRecordatoriosForecast() {
 		List<Recurso> listRecursos = new ArrayList<Recurso>();
-		listRecursos = recursoService.findByDescConsultor(1L);
+		listRecursos = recursoService.findByCodAreaRecurso(1L);
 		if (listRecursos.size()>0) {
 			for (Recurso recurso : listRecursos) {
 				
@@ -498,7 +498,7 @@ public class EmailController {
 			List<Recurso> listaRecursosConsultores = new ArrayList<>();
 			
 			//Recursos consultores es cod = 1
-			listaRecursosConsultores = recursoService.findByDescConsultor(1L);
+			listaRecursosConsultores = recursoService.findByCodAreaRecurso(1L);
 			
 			
 			Utiles utiles = new Utiles();

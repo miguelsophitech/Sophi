@@ -127,21 +127,71 @@
 															<td><span class="dg-campo">Cirugias: </span><span class="dg-info" contenteditable="true" th:text="${recurso.descMedicosCirugias}"></span></td>
 															<td><span class="dg-campo">Enfermedades: </span><span class="dg-info" contenteditable="true" th:text="${recurso.descMedicosEnfermedades}"></span></td>
 														</tr>
-														
 													</table>
-													
                             					</div>
-                            					
-                            					<div class="tab-pane fade" id="datos-empresa" role="tabpanel" aria-labelledby="datos-empresa-tab">
-                                        			
-                            					
+                            					<div class="tab-pane fade show active" id="datos-empresa" role="tabpanel" aria-labelledby="datos-empresa-tab">
+                                        			<table class="table table-borderless">
+														<tr>
+															<td><span class="dg-campo">E-mail empresa: </span><span class="dg-info" contenteditable="true" th:text="${recurso.descCorreoElectronico}"></span></td>
+															<td><span class="dg-campo">Tel. empresa: </span><span class="dg-info" contenteditable="true" th:text="${recurso.descTelEmpresa}"></span></td>
+															<td><span class="dg-campo">Ext.: </span><span class="dg-info" contenteditable="true" th:text="${recurso.descTelExt}"></span></td>
+														</tr>
+														<tr>
+															<td><span class="dg-campo">Fec. Ingreso: </span><span class="dg-info" contenteditable="true" th:text="${recurso.fecIngresoEmpresa}"></span></td>
+															<td><span class="dg-campo">&Aacute;rea: </span><span class="dg-info" contenteditable="true" th:text="${recurso.arearecurso.descConsultor}"></span></td>
+															<td th:if="${recurso.valActivo == 1}"><span class="dg-campo">Activo: </span><span class="dg-info" contenteditable="true">S&iacute;</span></td>
+															<td th:if="${recurso.valActivo == 0}"><span class="dg-campo">Activo: </span><span class="dg-info" contenteditable="true">No</span></td>
+															<td th:if="${recurso.valResponsable == 1}"><span class="dg-campo">Es responsable: </span><span class="dg-info" contenteditable="true">S&iacute;</span></td>
+															<td th:if="${recurso.valResponsable == 0}"><span class="dg-campo">Es responsable: </span><span class="dg-info" contenteditable="true">No</span></td>
+															<td th:if="${recurso.valAprobador == 1}"><span class="dg-campo">Es aprobador: </span><span class="dg-info" contenteditable="true">S&iacute;</span></td>
+															<td th:if="${recurso.valAprobador == 0}"><span class="dg-campo">Es aprobador: </span><span class="dg-info" contenteditable="true">No</span></td>
+														</tr>
+														<tr th:if="${recurso.fecSalidaEmpresa != null && recurso.descMotivoSalida != null}">
+															<td><span class="dg-campo">Fec. Salida: </span><span class="dg-info" contenteditable="true" th:text="${recurso.fecSalidaEmpresa}"></span></td>
+															<td><span class="dg-campo">Motivo: </span><span class="dg-info" contenteditable="true" th:text="${recurso.descMotivoSalida}"></span></td>
+														</tr>
+														<tr>
+															<td><span class="dg-campo">Puesto: </span><span class="dg-info" contenteditable="true" th:text="${recurso.Puesto.descPuesto}"></span></td>
+															<td><span class="dg-campo">Jornada: </span><span class="dg-info" contenteditable="true" th:text="${recurso.Jornada.descJornada}"></span></td>
+															<td><span class="dg-campo">Tipo recurso: </span><span class="dg-info" contenteditable="true" th:text="${recurso.tiporecurso.descTipoRecurso}"></span></td>
+															<td><span class="dg-campo">Proveedor: </span><span class="dg-info" contenteditable="true" th:text="${recurso.Proveedor.descProveedor}"></span></td>
+															<td><span class="dg-campo">Costo m&iacute;nimo: </span><span class="dg-info" contenteditable="true" th:text="${recurso.valCostoMinimo}"></span></td>
+														</tr>
+														<tr>
+															<td>
+																<div class="card border-dark mb-3">
+																  <div class="card-header"><h5>Herramientas</h5></div>
+																  <div class="card-body text-dark">
+																    	<div class="card-deck">
+																	    	<div class="card p-3">
+																				<div class="d-flex align-items-center">
+																					<!-- <div class="image"> <img src="img/user1.jpg" class="rounded" width="155"> </div> -->
+																					<div class=" w-100">
+																						<h4 class="mb-0 mt-0">Laptop</h4> <span style="font-size: small;">DELL Inspiron</span>
+																						<!-- <div class="p-2 mt-2 bg-primary d-flex justify-content-between rounded text-white stats">
+																							<div class="d-flex flex-column"> <span class="articles">Articles</span> <span class="number1">38</span> </div>
+																							<div class="d-flex flex-column"> <span class="followers">Followers</span> <span class="number2">980</span> </div>
+																							<div class="d-flex flex-column"> <span class="rating">Rating</span> <span class="number3">8.9</span> </div>
+																						</div> -->
+																						<div style="margin: 10px 0px;">
+																							<span style="font-size: small;">S/N 2225411105246548</span><br>
+																							<span style="font-size: small;">i7 / 250 SSD / 16 RAM</span>
+																						</div>
+																						<div class="button mt-2 d-flex flex-row align-items-center"> 
+																							<button class="btn btn-sm btn-outline-primary w-100">Editar</button> 
+																							<!-- <button class="btn btn-sm btn-primary w-100 ml-2">Editar</button>  -->
+																						</div>
+																					</div>
+																				</div>
+																			</div>
+																    	</div>
+																  </div>
+																</div>
+															</td>
+														</tr>
+													</table>
                             					</div>
                         					</div>
-                        					
-                        					
-                        					
-                        					
-                        					
                         					
                     					</div>
                 					</div>
