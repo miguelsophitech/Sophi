@@ -69,6 +69,11 @@ public class Recurso implements Serializable  {
 	private String descCorreoElectronico;
 	
 	@NotEmpty(message = "Este dato no debe estar vacío")
+	@Email(message = "No es un email correcto")
+	@Column(name = "desc_correo_personal")
+	private String descCorreoPersonal;
+	
+	@NotEmpty(message = "Este dato no debe estar vacío")
 	@Column(name = "desc_tel_celular")
 	private String descTelCelular;
 	
@@ -124,6 +129,9 @@ public class Recurso implements Serializable  {
 
 	@Column(name = "cod_estado_civil")
 	private Long codEstadoCivil;
+	
+	@Column(name = "desc_genero")
+	private String descGenero;
 	
 	@OneToOne
 	@JoinColumn(name = "cod_estado_civil", insertable = false, updatable = false)
@@ -751,5 +759,22 @@ public class Recurso implements Serializable  {
 	public void setEstadoCivil(EstadoCivil estadoCivil) {
 		this.estadoCivil = estadoCivil;
 	}
+
+	public String getDescCorreoPersonal() {
+		return descCorreoPersonal;
+	}
+
+	public void setDescCorreoPersonal(String descCorreoPersonal) {
+		this.descCorreoPersonal = descCorreoPersonal;
+	}
+
+	public String getDescGenero() {
+		return descGenero;
+	}
+
+	public void setDescGenero(String descGenero) {
+		this.descGenero = descGenero;
+	}
+	
 
 }
