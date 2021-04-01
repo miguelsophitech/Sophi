@@ -374,4 +374,9 @@ font-size: 12px;
 .dg-info{
 	font-size: 14px;
 	text-align: left;
+	height: 18px;
+	margin-left: 3px;
+	padding: 5px 2px;
+	width: 70%;
+	border: none;
 }
