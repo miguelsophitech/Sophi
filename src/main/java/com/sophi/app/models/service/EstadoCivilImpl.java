@@ -17,12 +17,6 @@ public class EstadoCivilImpl implements IEstadoCivilService {
 	
 	@Override
 	@Transactional(readOnly = true)
-	public EstadoCivil findOne(Long codEstadoCivil) {
-		return estadoCivilDao.findById(codEstadoCivil).orElse(null);
-	}
-	
-	@Override
-	@Transactional(readOnly = true)
 	public List<EstadoCivil> findAll(){
 		return (List<EstadoCivil>) estadoCivilDao.findAll();
 	}
