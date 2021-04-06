@@ -27,6 +27,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.sophi.app.Utiles;
 import com.sophi.app.models.entity.Recurso;
+import com.sophi.app.models.service.IAreaRecursoService;
 import com.sophi.app.models.service.IEstadoCivilService;
 import com.sophi.app.models.service.IJornadaService;
 import com.sophi.app.models.service.IProveedorService;
@@ -50,7 +51,7 @@ public class RecursoController {
 	private IPuestoService puestoService;
 	
 	@Autowired
-	private ITipoRecursoService tipoREcursoService;
+	private ITipoRecursoService tipoRecursoService;
 	
 	@Autowired
 	private IJornadaService jornadaService;
@@ -60,6 +61,9 @@ public class RecursoController {
 	
 	@Autowired
 	private ITipoSangreService tipoSangreService;
+  
+  @Autowired
+  private IAreaRecursoService areaRecursoService;
 	
 	@GetMapping(value = "/verRecurso/{id}")
 	public String verRecurso(@PathVariable(value="id") Long codRecurso, Map<String, Object> model, RedirectAttributes flash, HttpServletResponse response) {
@@ -78,6 +82,12 @@ public class RecursoController {
 		
 		model.put("recurso",recurso);
 		model.put("recursoEdit",recurso);
+		model.put("areaRecursoList", areaRecursoService.findAll());
+		model.put("puestoList", puestoService.findAll());
+		model.put("jornadaList", jornadaService.findAll());
+		model.put("tipoRecursoList", tipoRecursoService.findAll());
+		model.put("proveedorList",proveedorService.findAll());
+		model.put("estadoCivilList", estadoCivilService.findAll());
 		model.put("titulo", "Información de " + recurso.getDescRecurso());
 		model.put("listaEstadoCivil", estadoCivilService.findAll());
 		model.put("listaTipoSangre", tipoSangreService.findAll());
@@ -118,7 +128,7 @@ public class RecursoController {
 		model.put("etapaList", util.recursosEtapaList());
 		model.put("puestoList", puestoService.findAll());
 		model.put("jornadaList", jornadaService.findAll());
-		model.put("tipoRecursoList", tipoREcursoService.findAll());
+		model.put("tipoRecursoList", tipoRecursoService.findAll());
 		model.put("proveedorList",proveedorService.findAll());
 		model.put("estadoCivilList", estadoCivilService.findAll());
 		return "formRecurso";
@@ -140,7 +150,7 @@ public class RecursoController {
 			model.addAttribute("etapaList", util.recursosEtapaList());
 			model.addAttribute("puestoList", puestoService.findAll());
 			model.addAttribute("jornadaList", jornadaService.findAll());
-			model.addAttribute("tipoRecursoList", tipoREcursoService.findAll());
+			model.addAttribute("tipoRecursoList", tipoRecursoService.findAll());
 			model.addAttribute("proveedorList",proveedorService.findAll());
 			model.addAttribute("estadoCivilList", estadoCivilService.findAll());
 			return "formRecurso";
@@ -173,6 +183,21 @@ public class RecursoController {
 		return "redirect:listarRecursos";
 	}
 	
+	@RequestMapping(value = "/guardarDatosEmpresaRecurso", method = RequestMethod.POST)
+	public String guardarDatosEmpresaRecurso(@Valid Recurso recurso, BindingResult result, RedirectAttributes flash, SessionStatus status) {
+		if(result.hasErrors()) {
+			return "verRecurso/"+recurso.getCodRecurso();
+		}
+		
+		String mensajeFlash = "Recurso editado con éxito!";
+		System.out.println("Tiene que pasar por aquí a fuerza");
+		
+		recursoService.save(recurso);
+		status.setComplete();
+		flash.addFlashAttribute("success", mensajeFlash);
+		return "redirect:verRecurso/"+recurso.getCodRecurso();
+	}
+	
 	@RequestMapping(value = "/formRecurso/{id}")
 	public String editarRecurso(@PathVariable(value = "id") Long codRecurso, Map<String, Object> model, RedirectAttributes flash) {
 		Recurso recurso = null;
@@ -192,7 +217,7 @@ public class RecursoController {
 		model.put("etapaList", util.recursosEtapaList());
 		model.put("puestoList", puestoService.findAll());
 		model.put("jornadaList", jornadaService.findAll());
-		model.put("tipoRecursoList", tipoREcursoService.findAll());
+		model.put("tipoRecursoList", tipoRecursoService.findAll());
 		model.put("proveedorList",proveedorService.findAll());
 		model.put("estadoCivilList", estadoCivilService.findAll());
 		return "formRecurso";
