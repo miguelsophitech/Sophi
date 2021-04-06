@@ -44,10 +44,10 @@
 					                        <div class="profile-work" style="color: #495057; font-size: 12px; font-weight: 600">
 					                            <p style="font-size: 12px; font-weight: 700">Informaci&oacute;n</p>
 					                            
-					                            <i class="fa fa-user mr-2"></i><span th:text="${recurso.descRecurso} + ' ' + ${recurso.descApellidoPaterno} + ' ' + ${recurso.descApellidoMaterno}" class="mb-1" ></span><br>
+					                            <i class="fa fa-user mr-2"></i><span th:text="${recurso.descRecurso} + ' ' + ${recurso.descApellidoPaterno}" class="mb-1" ></span><br>
 					                            <i class="fas fa-id-badge mr-2"></i><span class="mb-1">[[${recurso.puesto.descPuesto}]]</span><br>
 					                            <i class="fa fa-envelope mr-2"></i><span class="mb-1">[[${recurso.descCorreoElectronico}]]</span><br>
-					                            <i class="fa fa-envelope mr-2"></i><span class="mb-1">[[${recurso.descCorreoElectronico}]]</span><br>
+					                            <i class="fa fa-envelope mr-2"></i><span class="mb-1">[[${recurso.descCorreoPersonal}]]</span><br>
 					                            <i class="fa fa-phone mr-2"></i><span class="mb-1">[[${recurso.descTelCelular}]]</span>
 					                            
                         				</div>
@@ -57,7 +57,8 @@
                         					<div class="profile-head">
                                     			<div class="d-flex justify-content-between">
                                     				<h5 th:text="${recurso.descRecurso} + ' ' + ${recurso.descApellidoPaterno} + ' ' + ${recurso.descApellidoMaterno}"> </h5>
-                                    				<input type="button" class="profile-edit-btn"  value="Editar"/>
+                                    				<div id="divBtnEditar"><input type="button" class="profile-edit-btn" onclick="functionEditar();" value="Editar"/></div>
+                                    				<div id="divBtnGuardar"><input type="button" class="profile-edit-btn" onclick="functionGuardar();" value="Guardar"/></div>
                                     			</div>
                                     			<h6 style="font-size: 12px;" th:text="${recurso.puesto.descPuesto}"></h6>
                                     			<p class="proile-rating">Evaluaci&oacute;n Q: <span>8/10</span></p>
@@ -84,80 +85,167 @@
 											<div class="tab-content profile-tab" id="myTabContent">
 												
 												<div class="tab-pane fade show active" id="datos-generales" role="tabpanel" aria-labelledby="datos-generales-tab">
+												<br>
+												<fieldset class="border p-2">
+	   												<legend  class="w-auto dg-campo" >&nbsp;GENERALES&nbsp;</legend>
+	   												<div class="row">
+														<div class="col-xl-3 col-sm-4 col-md-4 col-lg-3 form-group"> 
+															<span class="dg-campo">Nombre: </span>
+															<input class="form-control dg-info"  type="text" placeholder="Sin informaci&oacute;n" th:field="*{recurso.descRecurso}" disabled="disabled"/>
+														</div>
+														<div class="col-xl-2 col-sm-4 col-md-4 col-lg-3 form-group"> 
+														 	<span class="dg-campo">Ap. Materno: </span>
+														 	<input class="form-control dg-info"  type="text" placeholder="Sin informaci&oacute;n" th:field="${recurso.descApellidoPaterno}" disabled="disabled"/>
+														 </div>
+														 <div class="col-xl-2 col-sm-4 col-md-4 col-lg-3 form-group"> 
+															<span class="dg-campo">Ap. Paterno: </span>
+															<input class="form-control dg-info"  type="text" placeholder="Sin informaci&oacute;n" th:field="${recurso.descApellidoMaterno}" disabled="disabled"/>
+														</div>
+														<div class="col-xl-2 col-sm-4 col-md-4 col-lg-3 form-group">
+															<span class="dg-campo">Tel: </span>
+															<input class="form-control dg-info"  type="text" placeholder="Sin informaci&oacute;n" th:field="${recurso.descTelCelular}" disabled="disabled"/>
+														</div>
+														<div class="col-xl-3 col-sm-4 col-md-4 col-lg-3 form-group">
+															<span class="dg-campo">Correo personal: </span>
+															<input class="form-control dg-info"  type="text" placeholder="Sin informaci&oacute;n" th:field="${recurso.descCorreoPersonal}" disabled="disabled"/>
+														</div>
 													
-													<table class="table table-responsive table-borderless">
-        												<tr>
-															<td>
-															<span class="dg-campo" style="color: #495057;">GENERALES</span>
-															</td>
-														</tr>
-														<tr>
-<!-- 															<td><span class="dg-campo">Nombre: </span><span class="dg-info" contenteditable="true" th:text="${recurso.descRecurso}"></span></td> -->
-															<td><div class="form-inline"> <span class="dg-campo">Nombre: </span><input class="form-control dg-info"  type="text"  th:field="*{recurso.descRecurso}"/></div></td>
-															<td><div class="form-inline"> <span class="dg-campo">Ap. Materno: </span><input class="form-control dg-info"  type="text"  th:field="${recurso.descApellidoPaterno}"/></div></td>
-															<td><div class="form-inline"> <span class="dg-campo">Ap. Paterno: </span><input class="form-control dg-info"  type="text"  th:field="${recurso.descApellidoMaterno}"/></div></td>
-															<td><div class="form-inline"> <span class="dg-campo">Tel: </span><input class="form-control dg-info"  type="text"  th:field="${recurso.descTelCelular}"/></div></td>
-														</tr>
-														<tr>
-															<td><span class="dg-campo">Nacimiento: </span><span class="dg-info" contenteditable="true" th:text="${recurso.fecNacimiento}"></span></td>
-															<td><span class="dg-campo">RFC: </span><span class="dg-info" contenteditable="true" th:text="${recurso.descRfc}"></span></td>
-															<td><span class="dg-campo">CURP: </span><span class="dg-info" contenteditable="true" th:text="${recurso.descCurp}"></span></td>
-															<td><span class="dg-campo">NSS: </span><span class="dg-info" contenteditable="true" th:text="${recurso.descNss}"></span></td>
-														</tr>
-														<tr>
-															<td><span class="dg-campo">Calle: </span><span class="dg-info" contenteditable="true" th:text="${recurso.dirCalle}"></span></td>
-															<td><span class="dg-campo"># ext: </span><span class="dg-info" contenteditable="true" th:text="${recurso.dirNumeroExt}"></span></td>
-															<td><span class="dg-campo"># int: </span><span class="dg-info" contenteditable="true" th:text="${recurso.dirNumeroInt}"></span></td>
-															<td><span class="dg-campo">C.P.: </span><span class="dg-info" contenteditable="true" th:text="${recurso.dirCp}"></span></td>
-														</tr>
-														<tr>
-															<td><span class="dg-campo">Colonia: </span><span class="dg-info" contenteditable="true" th:text="${recurso.dirColonia}"></span></td>
-															<td><span class="dg-campo">Municipio: </span><span class="dg-info" contenteditable="true" th:text="${recurso.dirAlcaldiaMunicipio}"></span></td>
-															<td><span class="dg-campo">Estado: </span><span class="dg-info" contenteditable="true" th:text="${recurso.dirEstado}"></span></td>
-														</tr>
-														<tr>
-															<td><span class="dg-campo">Estado civil: </span><span class="dg-info" contenteditable="true" th:text="${recurso.EstadoCivil.descEstadoCivil}"></span></td>
-															<td><span class="dg-campo"># hijos: </span><span class="dg-info" contenteditable="true" th:text="${recurso.valNumeroHijos}"></span></td>
-														</tr>
-														<tr>
-															<td>
-															<span class="dg-campo" style="color: #495057;">BANCARIOS</span>
-															</td>
-														</tr>
-														<tr >
-															<td><span class="dg-campo">Banco: </span><span class="dg-info" contenteditable="true" th:text="${recurso.descBancoNombre}"></span></td>
-															<td><span class="dg-campo">Cuenta: </span><span class="dg-info" contenteditable="true" th:text="${recurso.descBancoNumeroCuenta}"></span></td>
-															<td><span class="dg-campo">CLABE: </span><span class="dg-info" contenteditable="true" th:text="${recurso.descBancoClabe}"></span></td>
-															<td></td>
-														</tr>
-														<tr>
-															<td>
-															<span class="dg-campo" style="color: #495057;">SALUD</span>
-															</td>
-														</tr>
-														<tr>
-															<td><span class="dg-campo">Sangre: </span><span class="dg-info" contenteditable="true" th:text="${recurso.descMedicosTipoSangre}"></span></td>
-															<td><span class="dg-campo">Alergias: </span><span class="dg-info" contenteditable="true" th:text="${recurso.descMedicosAlergias}"></span></td>
-															<td><span class="dg-campo">Cirugias: </span><span class="dg-info" contenteditable="true" th:text="${recurso.descMedicosCirugias}"></span></td>
-															<td><span class="dg-campo">Enfermedades: </span><span class="dg-info" contenteditable="true" th:text="${recurso.descMedicosEnfermedades}"></span></td>
-														</tr>
-														<tr>
-															<td><span class="dg-campo">Embarazos: </span><span class="dg-info" contenteditable="true" th:text="${recurso.descMedicosEmbarazos}"></span></td>
-														</tr>
-														<tr>
-                                        					<td><div class="card border-secondary mb-3" style="font-size: 14px; font-weight: 700; max-width: 20rem;">
-																<div class="card-header" style="color: #495057;">Contactos de emergencia</div>
-																<div class="card-body text-secondary">
-																	<h5 class="card-title">Secondary card title</h5>
-																	<p class="card-text">Some quick example text to build
-																		on the card title and make up the bulk of the card's
-																		content.</p>
-																</div>
-															</div></td>
-                                        				</tr>
-													</table>
-                            					</div>
-                            					<div class="tab-pane fade show active" id="datos-empresa" role="tabpanel" aria-labelledby="datos-empresa-tab">
+														<div class="col-xl-3 col-sm-4 col-md-4 col-lg-3 form-group"> 
+															<span class="dg-campo">Nacimiento: </span>
+															<input class="form-control dg-info"  type="date" placeholder="Sin informaci&oacute;n" th:field="${recurso.fecNacimiento}" disabled="disabled"/>
+														</div>
+														<div class="col-xl-1 col-sm-4 col-md-4 col-lg-3 form-group"> 
+														 	<span class="dg-campo">Genero: </span>
+														 	<select class="form-control dg-info" style="padding: 0;" onchange="hideByGenero(this.value);" th:field="*{recurso.descGenero}">
+																<option th:value="'M'" th:text="M"></option>
+																<option th:value="'F'" th:text="F"></option>
+															</select> 
+														 </div>
+														 <div class="col-xl-3 col-sm-4 col-md-4 col-lg-3 form-group"> 
+															<span class="dg-campo">RFC: </span>
+															<input class="form-control dg-info"  type="text" placeholder="Sin informaci&oacute;n" th:field="${recurso.descRfc}" disabled="disabled"/>
+														</div>
+														<div class="col-xl-3 col-sm-4 col-md-4 col-lg-3 form-group">
+															<span class="dg-campo">CURP: </span>
+															<input class="form-control dg-info"  type="text" placeholder="Sin informaci&oacute;n" th:field="${recurso.descCurp}" disabled="disabled"/>
+														</div>
+														<div class="col-xl-2 col-sm-4 col-md-4 col-lg-3 form-group">
+															<span class="dg-campo">NSS: </span>
+															<input class="form-control dg-info"  type="text" placeholder="Sin informaci&oacute;n" th:field="${recurso.descNss}" disabled="disabled"/>
+														</div>
+													
+														<div class="col-xl-3 col-sm-4 col-md-4 col-lg-3 form-group"> 
+															<span class="dg-campo">Estado civil: </span>
+															<input class="form-control dg-info"  type="text" placeholder="Sin informaci&oacute;n" th:field="${recurso.EstadoCivil.descEstadoCivil}" disabled="disabled"/>
+														</div>
+														<div class="col-xl-2 col-sm-4 col-md-4 col-lg-3 form-group"> 
+														 	<span class="dg-campo">No. hijos: </span>
+														 	<input class="form-control dg-info"  type="number" max="10" min="0" step="1" placeholder="Sin informaci&oacute;n" th:field="${recurso.valNumeroHijos}" disabled="disabled"/>
+														 </div>
+													</div>
+												</fieldset>
+												
+												<fieldset class="border p-2">
+	   												<legend  class="w-auto dg-campo">&nbsp;DIRECCI&Oacute;N&nbsp;</legend>
+	   												<div class="row">
+	   													<div class="col-xl-3 col-sm-4 col-md-4 col-lg-3 form-group"> 
+															<span class="dg-campo">Calle: </span>
+															<input class="form-control dg-info"  type="text" placeholder="Sin informaci&oacute;n" th:field="${recurso.dirCalle}"/>
+														</div>
+														<div class="col-xl-3 col-sm-4 col-md-4 col-lg-3 form-group"> 
+														 	<span class="dg-campo">No. ext: </span>
+														 	<input class="form-control dg-info"  type="text" placeholder="Sin informaci&oacute;n" th:field="${recurso.dirNumeroExt}"/>
+														 </div>
+														 <div class="col-xl-2 col-sm-4 col-md-4 col-lg-3 form-group"> 
+															<span class="dg-campo">No. int: </span>
+															<input class="form-control dg-info"  type="text" placeholder="Sin informaci&oacute;n" th:field="${recurso.dirNumeroInt}"/>
+														</div>
+														
+														<div class="col-xl-3 col-sm-4 col-md-4 col-lg-3 form-group"> 
+															<span class="dg-campo">Colonia: </span>
+															<input class="form-control dg-info"  type="text" placeholder="Sin informaci&oacute;n" th:field="${recurso.dirColonia}"/>
+														</div>
+														<div class="col-xl-3 col-sm-4 col-md-4 col-lg-3 form-group"> 
+														 	<span class="dg-campo">Municipio: </span>
+														 	<input class="form-control dg-info"  type="text" placeholder="Sin informaci&oacute;n" th:field="${recurso.dirAlcaldiaMunicipio}"/>
+														 </div>
+														 <div class="col-xl-3 col-sm-4 col-md-4 col-lg-3 form-group"> 
+															<span class="dg-campo">Estado: </span>
+															<input class="form-control dg-info"  type="text" placeholder="Sin informaci&oacute;n" th:field="${recurso.dirEstado}"/>
+														</div>
+														
+														<div class="col-xl-2 col-sm-4 col-md-4 col-lg-3 form-group">
+															<span class="dg-campo">CP: </span>
+															<input class="form-control dg-info"  type="text" placeholder="Sin informaci&oacute;n" th:field="${recurso.dirCp}"/>
+														</div>
+													</div>
+	   											</fieldset>
+	   											
+	   											<fieldset class="border p-2">
+	   												<legend  class="w-auto dg-campo">&nbsp;BANCARIOS&nbsp;</legend>
+	   												<div class="row">
+	   													<div class="col-xl-3 col-sm-4 col-md-4 col-lg-3 form-group"> 
+															<span class="dg-campo">Banco: </span>
+															<input class="form-control dg-info"  type="text" placeholder="Sin informaci&oacute;n" th:field="${recurso.descBancoNombre}"/>
+														</div>
+														<div class="col-xl-3 col-sm-4 col-md-4 col-lg-3 form-group"> 
+														 	<span class="dg-campo">Cuenta: </span>
+														 	<input class="form-control dg-info"  type="text" placeholder="Sin informaci&oacute;n" th:field="${recurso.descBancoNumeroCuenta}"/>
+														 </div>
+														 <div class="col-xl-3 col-sm-4 col-md-4 col-lg-3 form-group"> 
+															<span class="dg-campo">CLABE: </span>
+															<input class="form-control dg-info"  type="text" placeholder="Sin informaci&oacute;n" th:field="${recurso.descBancoClabe}"/>
+														</div>
+													</div>
+	   											</fieldset>
+	   											
+	   											<fieldset class="border p-2">
+	   												<legend  class="w-auto dg-campo">&nbsp;SALUD&nbsp;</legend>
+	   												<div class="row">
+	   													<div class="col-xl-3 col-sm-4 col-md-4 col-lg-3 form-group"> 
+															<span class="dg-campo">Tipo de Sangre: </span>
+															<input class="form-control dg-info"  type="text" placeholder="Sin informaci&oacute;n" th:field="${recurso.descMedicosTipoSangre}"/>
+														</div>
+														<div class="col-xl-3 col-sm-4 col-md-4 col-lg-3 form-group"> 
+														 	<span class="dg-campo">Alergias: </span>
+														 	<input class="form-control dg-info"  type="text" placeholder="Sin informaci&oacute;n" th:field="${recurso.descMedicosAlergias}"/>
+														</div>
+														<div class="col-xl-3 col-sm-4 col-md-4 col-lg-3 form-group"> 
+															<span class="dg-campo">Cirugias: </span>
+															<input class="form-control dg-info"  type="text" placeholder="Sin informaci&oacute;n" th:field="${recurso.descMedicosCirugias}"/>
+														</div>
+														<div class="col-xl-3 col-sm-4 col-md-4 col-lg-3 form-group"> 
+															<span class="dg-campo">Cirugias: </span>
+															<input class="form-control dg-info"  type="text" placeholder="Sin informaci&oacute;n" th:field="${recurso.descMedicosEnfermedades}"/>
+														</div>
+														<div id="divEmbarazos" class="col-xl-2 col-sm-2 col-md-2 col-lg-2 form-group"> 
+															<span class="dg-campo">Embarazos: </span>
+															<select class="form-control dg-info" style="padding: 0;" th:field="${recurso.descMedicosEmbarazos}">
+																<option th:value="'Si'" th:text="No"></option>
+																<option th:value="'No'" th:text="Si"></option>
+															</select> 
+<!-- 															<input class="form-control dg-info"  type="text" placeholder="Sin informaci&oacute;n" th:field="${recurso.descMedicosEmbarazos}"/> -->
+														</div>
+													</div>
+	   											</fieldset>
+	   											
+	   										<br>
+												
+													<div class="card border-secondary mb-3" style="font-size: 14px; font-weight: 700; max-width: 20rem;">
+														<div class="card-header" style="color: #495057;">Contactos de emergencia</div>
+														<div class="card-body text-secondary">
+															<h5 class="card-title">Secondary card title</h5>
+															<p class="card-text">Some quick example text to build
+																on the card title and make up the bulk of the card's
+																content.</p>
+														</div>
+													</div>
+
+
+
+											</div>
+                            					
+                            					<div class="tab-pane fade show" id="datos-empresa" role="tabpanel" aria-labelledby="datos-empresa-tab">
                                         			<table class="table table-borderless">
 														<tr>
 															<td><span class="dg-campo">E-mail empresa: </span><span class="dg-info" contenteditable="true" th:text="${recurso.descCorreoElectronico}"></span></td>
@@ -270,19 +358,9 @@
   <script th:src="@{/js/demo/datatables-demo.js}"></script>
   
   <script th:src="@{/js/datosRecursoSesion.js}"></script>
+  <script th:src="@{/js/datosGenerales.js}"></script>
   
   
-  <script type="text/javascript">
-  $(document).ready(function() {
-	  
-	 $("#nombre").onkeypress = function() {myFunction(this)}; 
-  });
-  
-  function myFunction(campo) {
-	  console.log("escribe");
-	  campo.style.backgroundColor = "red";
-	}
-  </script>
   
   
 
