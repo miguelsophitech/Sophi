@@ -23,7 +23,6 @@
          
 					<!-- Begin Page Content -->
 					<div class="container-fluid">
-
 						<!-- Page Heading -->
 						<h1 class="h3 mb-2 text-gray-800">Informaci&oacute;n del recurso</h1>
 						<a sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_RH')" th:href="@{'/listarRecursos'}" th:text="'&laquo; regresar al listado de recursos'"></a>
@@ -49,8 +48,7 @@
 					                            <i class="fa fa-envelope mr-2"></i><span class="mb-1">[[${recurso.descCorreoElectronico}]]</span><br>
 					                            <i class="fa fa-envelope mr-2"></i><span class="mb-1">[[${recurso.descCorreoPersonal}]]</span><br>
 					                            <i class="fa fa-phone mr-2"></i><span class="mb-1">[[${recurso.descTelCelular}]]</span>
-					                            
-                        				</div>
+                        					</div>
 					                    </div>
 					                    
 										<div class="col-md-9">
@@ -83,63 +81,67 @@
                         					
                         					
 											<div class="tab-content profile-tab" id="myTabContent">
-												
+<!-- 												<form id="formDatosGenerales" action="#" th:action="@{/guardaActualizaRecurso}" th:object="${recurso}" method="post"> -->
 												<div class="tab-pane fade show active" id="datos-generales" role="tabpanel" aria-labelledby="datos-generales-tab">
 												<br>
+												<form id="formDatosGenerales" th:action="@{/guardaActualizaRecurso}" th:object="${recurso}" method="post">
+
 												<fieldset class="border p-2">
 	   												<legend  class="w-auto dg-campo" >&nbsp;GENERALES&nbsp;</legend>
 	   												<div class="row">
 														<div class="col-xl-3 col-sm-4 col-md-4 col-lg-3 form-group"> 
 															<span class="dg-campo">Nombre: </span>
-															<input class="form-control dg-info"  type="text" placeholder="Sin informaci&oacute;n" th:field="*{recurso.descRecurso}" disabled="disabled"/>
+															<input class="form-control dg-info dg-edit"  type="text" placeholder="Sin informaci&oacute;n" th:field="*{descRecurso}"/>
 														</div>
 														<div class="col-xl-2 col-sm-4 col-md-4 col-lg-3 form-group"> 
 														 	<span class="dg-campo">Ap. Materno: </span>
-														 	<input class="form-control dg-info"  type="text" placeholder="Sin informaci&oacute;n" th:field="${recurso.descApellidoPaterno}" disabled="disabled"/>
+														 	<input class="form-control dg-info dg-edit"  type="text" placeholder="Sin informaci&oacute;n" th:field="*{descApellidoPaterno}"/>
 														 </div>
 														 <div class="col-xl-2 col-sm-4 col-md-4 col-lg-3 form-group"> 
 															<span class="dg-campo">Ap. Paterno: </span>
-															<input class="form-control dg-info"  type="text" placeholder="Sin informaci&oacute;n" th:field="${recurso.descApellidoMaterno}" disabled="disabled"/>
+															<input class="form-control dg-info dg-edit"  type="text" placeholder="Sin informaci&oacute;n" th:field="*{descApellidoMaterno}"/>
 														</div>
 														<div class="col-xl-2 col-sm-4 col-md-4 col-lg-3 form-group">
 															<span class="dg-campo">Tel: </span>
-															<input class="form-control dg-info"  type="text" placeholder="Sin informaci&oacute;n" th:field="${recurso.descTelCelular}" disabled="disabled"/>
+															<input class="form-control dg-info dg-edit"  type="text" placeholder="Sin informaci&oacute;n" th:field="*{descTelCelular}"/>
 														</div>
 														<div class="col-xl-3 col-sm-4 col-md-4 col-lg-3 form-group">
 															<span class="dg-campo">Correo personal: </span>
-															<input class="form-control dg-info"  type="text" placeholder="Sin informaci&oacute;n" th:field="${recurso.descCorreoPersonal}" disabled="disabled"/>
+															<input class="form-control dg-info dg-edit"  type="email" placeholder="Sin informaci&oacute;n" th:field="*{descCorreoPersonal}"/>
 														</div>
 														<div class="col-xl-3 col-sm-4 col-md-4 col-lg-3 form-group"> 
 															<span class="dg-campo">Nacimiento: </span>
-															<input class="form-control dg-info"  type="date" placeholder="Sin informaci&oacute;n" th:field="${recurso.fecNacimiento}" disabled="disabled"/>
+															<input class="form-control dg-info dg-edit"  type="date" placeholder="Sin informaci&oacute;n" th:field="*{fecNacimiento}"/>
 														</div>
 														<div class="col-xl-1 col-sm-4 col-md-4 col-lg-3 form-group"> 
 														 	<span class="dg-campo">Genero: </span>
-														 	<select class="form-control dg-info" style="padding: 0;" onchange="hideByGenero(this.value);" th:field="*{recurso.descGenero}">
+														 	<select id="selectGenero" class="form-control dg-info dg-edit" style="padding: 0;" onchange="hideByGenero(this.value);" th:field="*{descGenero}">
 																<option th:value="'M'" th:text="M"></option>
 																<option th:value="'F'" th:text="F"></option>
 															</select> 
 														 </div>
 														 <div class="col-xl-3 col-sm-4 col-md-4 col-lg-3 form-group"> 
 															<span class="dg-campo">RFC: </span>
-															<input class="form-control dg-info"  type="text" placeholder="Sin informaci&oacute;n" th:field="${recurso.descRfc}" disabled="disabled"/>
+															<input class="form-control dg-info dg-edit"  type="text" placeholder="Sin informaci&oacute;n" th:field="*{descRfc}"/>
 														</div>
 														<div class="col-xl-3 col-sm-4 col-md-4 col-lg-3 form-group">
 															<span class="dg-campo">CURP: </span>
-															<input class="form-control dg-info"  type="text" placeholder="Sin informaci&oacute;n" th:field="${recurso.descCurp}" disabled="disabled"/>
+															<input class="form-control dg-info dg-edit"  type="text" placeholder="Sin informaci&oacute;n" th:field="*{descCurp}"/>
 														</div>
 														<div class="col-xl-2 col-sm-4 col-md-4 col-lg-3 form-group">
 															<span class="dg-campo">NSS: </span>
-															<input class="form-control dg-info"  type="text" placeholder="Sin informaci&oacute;n" th:field="${recurso.descNss}" disabled="disabled"/>
+															<input class="form-control dg-info dg-edit"  type="text" placeholder="Sin informaci&oacute;n" th:field="*{descNss}"/>
 														</div>
 													
 														<div class="col-xl-3 col-sm-4 col-md-4 col-lg-3 form-group"> 
 															<span class="dg-campo">Estado civil: </span>
-															<input class="form-control dg-info"  type="text" placeholder="Sin informaci&oacute;n" th:field="${recurso.EstadoCivil.descEstadoCivil}" disabled="disabled"/>
+															<select class="form-control dg-info dg-edit" style="padding: 0;" th:field="*{codEstadoCivil}">
+																<option th:each="estadoCivil : ${listaEstadoCivil}" th:value="${estadoCivil.codEstadoCivil}" th:text="${estadoCivil.descEstadoCivil}"> </option>
+															</select> 
 														</div>
 														<div class="col-xl-2 col-sm-4 col-md-4 col-lg-3 form-group"> 
 														 	<span class="dg-campo">No. hijos: </span>
-														 	<input class="form-control dg-info"  type="number" max="10" min="0" step="1" placeholder="Sin informaci&oacute;n" th:field="${recurso.valNumeroHijos}" disabled="disabled"/>
+														 	<input class="form-control dg-info dg-edit"  type="number" max="10" min="0" step="1" placeholder="Sin informaci&oacute;n" th:field="*{valNumeroHijos}"/>
 														 </div>
 													</div>
 												</fieldset>
@@ -147,35 +149,35 @@
 												<fieldset class="border p-2">
 	   												<legend  class="w-auto dg-campo">&nbsp;DIRECCI&Oacute;N&nbsp;</legend>
 	   												<div class="row">
-	   													<div class="col-xl-3 col-sm-4 col-md-4 col-lg-3 form-group"> 
+	   													<div class="col-xl-4 col-sm-4 col-md-4 col-lg-3 form-group"> 
 															<span class="dg-campo">Calle: </span>
-															<input class="form-control dg-info"  type="text" placeholder="Sin informaci&oacute;n" th:field="${recurso.dirCalle}"/>
+															<input class="form-control dg-info dg-edit"  type="text" placeholder="Sin informaci&oacute;n" th:field="*{dirCalle}"/>
 														</div>
 														<div class="col-xl-3 col-sm-4 col-md-4 col-lg-3 form-group"> 
 														 	<span class="dg-campo">No. ext: </span>
-														 	<input class="form-control dg-info"  type="text" placeholder="Sin informaci&oacute;n" th:field="${recurso.dirNumeroExt}"/>
+														 	<input class="form-control dg-info dg-edit"  type="text" placeholder="Sin informaci&oacute;n" th:field="*{dirNumeroExt}"/>
 														 </div>
 														 <div class="col-xl-2 col-sm-4 col-md-4 col-lg-3 form-group"> 
 															<span class="dg-campo">No. int: </span>
-															<input class="form-control dg-info"  type="text" placeholder="Sin informaci&oacute;n" th:field="${recurso.dirNumeroInt}"/>
+															<input class="form-control dg-info dg-edit"  type="text" placeholder="Sin informaci&oacute;n" th:field="*{dirNumeroInt}"/>
 														</div>
 														
 														<div class="col-xl-3 col-sm-4 col-md-4 col-lg-3 form-group"> 
 															<span class="dg-campo">Colonia: </span>
-															<input class="form-control dg-info"  type="text" placeholder="Sin informaci&oacute;n" th:field="${recurso.dirColonia}"/>
+															<input class="form-control dg-info dg-edit"  type="text" placeholder="Sin informaci&oacute;n" th:field="*{dirColonia}"/>
 														</div>
 														<div class="col-xl-3 col-sm-4 col-md-4 col-lg-3 form-group"> 
 														 	<span class="dg-campo">Municipio: </span>
-														 	<input class="form-control dg-info"  type="text" placeholder="Sin informaci&oacute;n" th:field="${recurso.dirAlcaldiaMunicipio}"/>
+														 	<input class="form-control dg-info dg-edit"  type="text" placeholder="Sin informaci&oacute;n" th:field="*{dirAlcaldiaMunicipio}"/>
 														 </div>
 														 <div class="col-xl-3 col-sm-4 col-md-4 col-lg-3 form-group"> 
 															<span class="dg-campo">Estado: </span>
-															<input class="form-control dg-info"  type="text" placeholder="Sin informaci&oacute;n" th:field="${recurso.dirEstado}"/>
+															<input class="form-control dg-info dg-edit"  type="text" placeholder="Sin informaci&oacute;n" th:field="*{dirEstado}"/>
 														</div>
 														
 														<div class="col-xl-2 col-sm-4 col-md-4 col-lg-3 form-group">
 															<span class="dg-campo">CP: </span>
-															<input class="form-control dg-info"  type="text" placeholder="Sin informaci&oacute;n" th:field="${recurso.dirCp}"/>
+															<input class="form-control dg-info dg-edit"  type="text" placeholder="Sin informaci&oacute;n" th:field="*{dirCp}"/>
 														</div>
 													</div>
 	   											</fieldset>
@@ -185,15 +187,15 @@
 	   												<div class="row">
 	   													<div class="col-xl-3 col-sm-4 col-md-4 col-lg-3 form-group"> 
 															<span class="dg-campo">Banco: </span>
-															<input class="form-control dg-info"  type="text" placeholder="Sin informaci&oacute;n" th:field="${recurso.descBancoNombre}"/>
+															<input class="form-control dg-info dg-edit"  type="text" placeholder="Sin informaci&oacute;n" th:field="*{descBancoNombre}"/>
 														</div>
 														<div class="col-xl-3 col-sm-4 col-md-4 col-lg-3 form-group"> 
 														 	<span class="dg-campo">Cuenta: </span>
-														 	<input class="form-control dg-info"  type="text" placeholder="Sin informaci&oacute;n" th:field="${recurso.descBancoNumeroCuenta}"/>
+														 	<input class="form-control dg-info dg-edit"  type="text" placeholder="Sin informaci&oacute;n" th:field="*{descBancoNumeroCuenta}"/>
 														 </div>
 														 <div class="col-xl-3 col-sm-4 col-md-4 col-lg-3 form-group"> 
 															<span class="dg-campo">CLABE: </span>
-															<input class="form-control dg-info"  type="text" placeholder="Sin informaci&oacute;n" th:field="${recurso.descBancoClabe}"/>
+															<input class="form-control dg-info dg-edit"  type="text" placeholder="Sin informaci&oacute;n" th:field="*{descBancoClabe}"/>
 														</div>
 													</div>
 	   											</fieldset>
@@ -201,35 +203,53 @@
 	   											<fieldset class="border p-2">
 	   												<legend  class="w-auto dg-campo">&nbsp;SALUD&nbsp;</legend>
 	   												<div class="row">
-	   													<div class="col-xl-3 col-sm-4 col-md-4 col-lg-3 form-group"> 
+	   													<div class="col-xl-2 col-sm-4 col-md-4 col-lg-3 form-group"> 
 															<span class="dg-campo">Tipo de Sangre: </span>
-															<input class="form-control dg-info"  type="text" placeholder="Sin informaci&oacute;n" th:field="${recurso.descMedicosTipoSangre}"/>
-														</div>
-														<div class="col-xl-3 col-sm-4 col-md-4 col-lg-3 form-group"> 
-														 	<span class="dg-campo">Alergias: </span>
-														 	<input class="form-control dg-info"  type="text" placeholder="Sin informaci&oacute;n" th:field="${recurso.descMedicosAlergias}"/>
-														</div>
-														<div class="col-xl-3 col-sm-4 col-md-4 col-lg-3 form-group"> 
-															<span class="dg-campo">Cirugias: </span>
-															<input class="form-control dg-info"  type="text" placeholder="Sin informaci&oacute;n" th:field="${recurso.descMedicosCirugias}"/>
-														</div>
-														<div class="col-xl-3 col-sm-4 col-md-4 col-lg-3 form-group"> 
-															<span class="dg-campo">Cirugias: </span>
-															<input class="form-control dg-info"  type="text" placeholder="Sin informaci&oacute;n" th:field="${recurso.descMedicosEnfermedades}"/>
-														</div>
-														<div id="divEmbarazos" class="col-xl-2 col-sm-2 col-md-2 col-lg-2 form-group"> 
-															<span class="dg-campo">Embarazos: </span>
-															<select class="form-control dg-info" style="padding: 0;" th:field="${recurso.descMedicosEmbarazos}">
-																<option th:value="'Si'" th:text="No"></option>
-																<option th:value="'No'" th:text="Si"></option>
+															<select class="form-control dg-info dg-edit" style="padding: 0;" th:field="*{codTipoSangre}">
+																<option th:each="tipoSangre : ${listaTipoSangre}" th:value="${tipoSangre.codTipoSangre}" th:text="${tipoSangre.descTipoSangre}"> </option>
 															</select> 
-<!-- 															<input class="form-control dg-info"  type="text" placeholder="Sin informaci&oacute;n" th:field="${recurso.descMedicosEmbarazos}"/> -->
+														</div>
+														<div class="col-xl-2 col-sm-4 col-md-4 col-lg-3 form-group"> 
+															<span class="dg-campo">Cirugias: </span>
+															<select class="form-control dg-info dg-edit" style="padding: 0;" th:field="*{descMedicosCirugias}">
+																<option th:value="'Si'" th:text="Si"></option>
+																<option th:value="'No'" th:text="No"></option>
+															</select> 
+														</div>
+														<div id="divEmbarazos" class="col-xl-2 col-sm-4 col-md-4 col-lg-3 form-group"> 
+															<span class="dg-campo">Embarazos: </span>
+															<select class="form-control dg-info dg-edit" style="padding: 0;" th:field="*{descMedicosEmbarazos}">
+																<option th:value="'Si'" th:text="Si"></option>
+																<option th:value="'No'" th:text="No"></option>
+															</select> 
+														</div>
+														<br>
+														<div class="col-xl-2 col-sm-4 col-md-4 col-lg-3 form-group"> 
+														 	<span class="dg-campo">Alergias: </span>
+														 	<select id="selectAlergias" class="form-control dg-info dg-edit" style="padding: 0;">
+																<option th:value="'Si'" th:text="Si"></option>
+																<option th:value="'No'" th:text="No"></option>
+															</select>
+														</div>
+														<div class="col-xl-2 col-sm-4 col-md-4 col-lg-3 form-group"> 
+														 	<span class="dg-campo">Enfermedades: </span>
+														 	<select id="selectEnfermedades" class="form-control dg-info dg-edit" style="padding: 0;">
+																<option th:value="'Si'" th:text="Si"></option>
+																<option th:value="'No'" th:text="No"></option>
+															</select>
+														</div>
+														<div id="divAlergias" class="col-xl-12 col-sm-12 col-md-12 col-lg-12 form-group"> 
+															<span class="dg-campo">Detalle de alergias: </span>
+															<textarea class="form-control dg-info dg-edit" placeholder="Sin informaci&oacute;n" th:field="*{descMedicosAlergias}"></textarea>
+														</div>
+														<div id="divEnfermedades" class="col-xl-12 col-sm-12 col-md-12 col-lg-12 form-group"> 
+															<span class="dg-campo">Detalle de enfermedades: </span>
+															<textarea class="form-control dg-info dg-edit" placeholder="Sin informaci&oacute;n" th:field="*{descMedicosEnfermedades}"></textarea>
 														</div>
 													</div>
 	   											</fieldset>
-	   											
-	   										<br>
-												
+	   											<br>
+	   											</form>
 													<div class="card border-secondary mb-3" style="font-size: 14px; font-weight: 700; max-width: 20rem;">
 														<div class="card-header" style="color: #495057;">Contactos de emergencia</div>
 														<div class="card-body text-secondary">

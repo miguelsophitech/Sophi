@@ -130,11 +130,14 @@ public class Recurso implements Serializable  {
 	@Column(name = "cod_estado_civil")
 	private Long codEstadoCivil;
 	
+	@Column(name = "cod_tipo_sangre")
+	private Long codTipoSangre;
+	
 	@Column(name = "desc_genero")
 	private String descGenero;
 	
-	@OneToOne
-	@JoinColumn(name = "cod_estado_civil", insertable = false, updatable = false)
+	@OneToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "cod_estado_civil",insertable = false, updatable = false)
 	private EstadoCivil estadoCivil;
 	
 	@Column(name = "val_numero_hijos")
@@ -216,8 +219,9 @@ public class Recurso implements Serializable  {
 	@Column(name = "desc_banco_clabe")
 	private String descBancoClabe;
 	
-	@Column(name = "desc_medicos_tipo_sangre")
-	private String descMedicosTipoSangre;
+	@OneToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "cod_tipo_sangre",insertable = false, updatable = false)
+	private TipoSangre tipoSangre;
 	
 	@Column(name = "desc_medicos_alergias")
 	private String descMedicosAlergias;
@@ -271,6 +275,13 @@ public class Recurso implements Serializable  {
 		fecRegistro = new Date();
 	}
 	
+	public Long getCodTipoSangre() {
+		return codTipoSangre;
+	}
+
+	public void setCodTipoSangre(Long codTipoSangre) {
+		this.codTipoSangre = codTipoSangre;
+	}
 
 	public List<Float> getTotalHorasForecast() {
 		return totalHorasForecast;
@@ -592,16 +603,17 @@ public class Recurso implements Serializable  {
 		this.descBancoClabe = descBancoClabe;
 	}
 
-	public String getDescMedicosTipoSangre() {
-		return descMedicosTipoSangre;
-	}
-
-	public void setDescMedicosTipoSangre(String descMedicosTipoSangre) {
-		this.descMedicosTipoSangre = descMedicosTipoSangre;
-	}
-
+	
 	public String getDescMedicosAlergias() {
 		return descMedicosAlergias;
+	}
+
+	public TipoSangre getTipoSangre() {
+		return tipoSangre;
+	}
+
+	public void setTipoSangre(TipoSangre tipoSangre) {
+		this.tipoSangre = tipoSangre;
 	}
 
 	public void setDescMedicosAlergias(String descMedicosAlergias) {
