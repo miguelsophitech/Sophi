@@ -166,6 +166,21 @@ public class RecursoController {
 		return "redirect:listarRecursos";
 	}
 	
+	@RequestMapping(value = "/guardarDatosEmpresaRecurso", method = RequestMethod.POST)
+	public String guardarDatosEmpresaRecurso(@Valid Recurso recurso, BindingResult result, RedirectAttributes flash, SessionStatus status) {
+		if(result.hasErrors()) {
+			return "verRecurso/"+recurso.getCodRecurso();
+		}
+		
+		String mensajeFlash = "Recurso editado con éxito!";
+		System.out.println("Tiene que pasar por aquí a fuerza");
+		
+		recursoService.save(recurso);
+		status.setComplete();
+		flash.addFlashAttribute("success", mensajeFlash);
+		return "redirect:verRecurso/"+recurso.getCodRecurso();
+	}
+	
 	@RequestMapping(value = "/formRecurso/{id}")
 	public String editarRecurso(@PathVariable(value = "id") Long codRecurso, Map<String, Object> model, RedirectAttributes flash) {
 		Recurso recurso = null;
