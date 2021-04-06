@@ -14,10 +14,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.multipart.MultipartFile;
@@ -31,6 +33,7 @@ import com.sophi.app.models.service.IProveedorService;
 import com.sophi.app.models.service.IPuestoService;
 import com.sophi.app.models.service.IRecursoService;
 import com.sophi.app.models.service.ITipoRecursoService;
+import com.sophi.app.models.service.ITipoSangreService;
 
 
 @Controller
@@ -55,6 +58,9 @@ public class RecursoController {
 	@Autowired
 	private IEstadoCivilService estadoCivilService;
 	
+	@Autowired
+	private ITipoSangreService tipoSangreService;
+	
 	@GetMapping(value = "/verRecurso/{id}")
 	public String verRecurso(@PathVariable(value="id") Long codRecurso, Map<String, Object> model, RedirectAttributes flash, HttpServletResponse response) {
 		response.setContentType("image/jpeg");
@@ -71,7 +77,10 @@ public class RecursoController {
 		}
 		
 		model.put("recurso",recurso);
+		model.put("recursoEdit",recurso);
 		model.put("titulo", "Información de " + recurso.getDescRecurso());
+		model.put("listaEstadoCivil", estadoCivilService.findAll());
+		model.put("listaTipoSangre", tipoSangreService.findAll());
 		
 		return "verRecurso";
 	}
@@ -113,6 +122,14 @@ public class RecursoController {
 		model.put("proveedorList",proveedorService.findAll());
 		model.put("estadoCivilList", estadoCivilService.findAll());
 		return "formRecurso";
+	}
+	
+	@RequestMapping(value="/guardaActualizaRecurso", method = RequestMethod.POST)
+	@ResponseBody
+	public String guardarActualizaRecurso(@Valid Recurso recurso, Model model) {
+		System.out.println("entra a guardar");
+		recursoService.save(recurso);
+		return "OK";
 	}
 	
 	@RequestMapping(value="/formRecurso", method = RequestMethod.POST)

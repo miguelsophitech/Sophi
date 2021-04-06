@@ -395,3 +395,15 @@ font-size: 12px;
 .dg-info:disabled {
   background-color: white;
 }
+
+.dg-info-edit{
+	font-size: 14px;
+	text-align: left;
+	height: 18px;
+	margin-left: 3px;
+	padding: 5px 2px;
+	width: 100%;
+	border: none;
+  	border-bottom: 1px solid green;
+/* 	border-color: #c02c27; */
+}
