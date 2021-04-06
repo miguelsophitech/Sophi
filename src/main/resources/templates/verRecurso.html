@@ -109,7 +109,6 @@
 															<span class="dg-campo">Correo personal: </span>
 															<input class="form-control dg-info"  type="text" placeholder="Sin informaci&oacute;n" th:field="${recurso.descCorreoPersonal}" disabled="disabled"/>
 														</div>
-													
 														<div class="col-xl-3 col-sm-4 col-md-4 col-lg-3 form-group"> 
 															<span class="dg-campo">Nacimiento: </span>
 															<input class="form-control dg-info"  type="date" placeholder="Sin informaci&oacute;n" th:field="${recurso.fecNacimiento}" disabled="disabled"/>
@@ -244,43 +243,110 @@
 
 
 											</div>
-                            					
-                            					<div class="tab-pane fade show" id="datos-empresa" role="tabpanel" aria-labelledby="datos-empresa-tab">
+                            					<div class="tab-pane fade show active" id="datos-empresa" role="tabpanel" aria-labelledby="datos-empresa-tab">
+                            						<form th:Object="${recurso}" method="POST">
                                         			<table class="table table-borderless">
 														<tr>
-															<td><span class="dg-campo">E-mail empresa: </span><span class="dg-info" contenteditable="true" th:text="${recurso.descCorreoElectronico}"></span></td>
-															<td><span class="dg-campo">Tel. empresa: </span><span class="dg-info" contenteditable="true" th:text="${recurso.descTelEmpresa}"></span></td>
-															<td><span class="dg-campo">Ext.: </span><span class="dg-info" contenteditable="true" th:text="${recurso.descTelExt}"></span></td>
+															<td><span class="dg-campo">E-mail empresa: </span><input type="text" class="form-control dg-info" th:field="${recurso.descCorreoElectronico}"/></td>
+															<td><span class="dg-campo">Tel. empresa: </span><input type="text" class="form-control dg-info" th:field="${recurso.descTelEmpresa}"/></td>
+															<td><span class="dg-campo">Ext.: </span><input type="text" class="form-control dg-info" th:field="${recurso.descTelExt}"/></td>
 														</tr>
 														<tr>
-															<td><span class="dg-campo">Fec. Ingreso: </span><span class="dg-info" contenteditable="true" th:text="${recurso.fecIngresoEmpresa}"></span></td>
-															<td><span class="dg-campo">&Aacute;rea: </span><span class="dg-info" contenteditable="true" th:text="${recurso.arearecurso.descConsultor}"></span></td>
-															<td th:if="${recurso.valActivo == 1}"><span class="dg-campo">Activo: </span><span class="dg-info" contenteditable="true">S&iacute;</span></td>
-															<td th:if="${recurso.valActivo == 0}"><span class="dg-campo">Activo: </span><span class="dg-info" contenteditable="true">No</span></td>
-															<td th:if="${recurso.valResponsable == 1}"><span class="dg-campo">Es responsable: </span><span class="dg-info" contenteditable="true">S&iacute;</span></td>
-															<td th:if="${recurso.valResponsable == 0}"><span class="dg-campo">Es responsable: </span><span class="dg-info" contenteditable="true">No</span></td>
-															<td th:if="${recurso.valAprobador == 1}"><span class="dg-campo">Es aprobador: </span><span class="dg-info" contenteditable="true">S&iacute;</span></td>
-															<td th:if="${recurso.valAprobador == 0}"><span class="dg-campo">Es aprobador: </span><span class="dg-info" contenteditable="true">No</span></td>
+															<td><span class="dg-campo">Fec. Ingreso: </span><input type="date" class="form-control dg-info" th:field="${recurso.fecIngresoEmpresa}"/></td>
+															<td><span class="dg-campo">&Aacute;rea: </span>
+															<select th:field="${recurso.codAreaRecurso}" class="form-control dg-info" style="padding:0;">
+																<option value="-1">Todos</option>
+																<option th:each="areaRecursoLista : ${areaRecursoList}" th:value="${areaRecursoLista.codConsultor}" th:text="${areaRecursoLista.descConsultor}"></option>
+															</select>
+															</td>
+															<td th:if="${recurso.valActivo == 1}"><span class="dg-campo">Activo: </span>
+															<select th:field="${recurso.valActivo}" class="form-control dg-info" style="padding:0;">
+						      									<option value="0">No</option>
+						      									<option value="1">S&iacute;</option>
+						   									</select>
+						   									</td>
+															<td th:if="${recurso.valActivo == 0}"><span class="dg-campo">Activo: </span>
+															<select th:field="${recurso.valActivo}" class="form-control dg-info" style="padding:0;">
+						      									<option value="0">No</option>
+						      									<option value="1">S&iacute;</option>
+						   									</select>
+															</td>
+															<td th:if="${recurso.valResponsable == 1}"><span class="dg-campo">Es responsable: </span>
+															<select th:field="${recurso.valResponsable}" class="form-control dg-info" style="padding:0;">
+						      									<option value="0">No</option>
+						      									<option value="1">S&iacute;</option>
+						   									</select>
+															</td>
+															<td th:if="${recurso.valResponsable == 0}"><span class="dg-campo">Es responsable: </span>
+															<select th:field="${recurso.valResponsable}" class="form-control dg-info" style="padding:0;">
+						      									<option value="0">No</option>
+						      									<option value="1">S&iacute;</option>
+						   									</select>
+															</td>
+															<td th:if="${recurso.valAprobador == 1}"><span class="dg-campo">Es aprobador: </span>
+															<select th:field="${recurso.valAprobador}" class="form-control dg-info" style="padding:0;">
+						      									<option value="0">No</option>
+						      									<option value="1">S&iacute;</option>
+						   									</select>
+															</td>
+															<td th:if="${recurso.valAprobador == 0}"><span class="dg-campo">Es aprobador: </span>
+															<select th:field="${recurso.valAprobador}" class="form-control dg-info" style="padding:0;">
+						      									<option value="0">No</option>
+						      									<option value="1">S&iacute;</option>
+						   									</select>
+															</td>
 														</tr>
 														<tr th:if="${recurso.fecSalidaEmpresa != null && recurso.descMotivoSalida != null}">
-															<td><span class="dg-campo">Fec. Salida: </span><span class="dg-info" contenteditable="true" th:text="${recurso.fecSalidaEmpresa}"></span></td>
-															<td><span class="dg-campo">Motivo: </span><span class="dg-info" contenteditable="true" th:text="${recurso.descMotivoSalida}"></span></td>
+															<td><span class="dg-campo">Fec. Salida: </span><input type="date" class="form-control dg-info" th:field="${recurso.fecSalidaEmpresa}"/></td>
+															<td><span class="dg-campo">Motivo: </span><input type="text" class="form-control dg-info" th:field="${recurso.descMotivoSalida}"/></td>
 														</tr>
 														<tr>
-															<td><span class="dg-campo">Puesto: </span><span class="dg-info" contenteditable="true" th:text="${recurso.Puesto.descPuesto}"></span></td>
-															<td><span class="dg-campo">Jornada: </span><span class="dg-info" contenteditable="true" th:text="${recurso.Jornada.descJornada}"></span></td>
-															<td><span class="dg-campo">Tipo recurso: </span><span class="dg-info" contenteditable="true" th:text="${recurso.tiporecurso.descTipoRecurso}"></span></td>
-															<td><span class="dg-campo">Proveedor: </span><span class="dg-info" contenteditable="true" th:text="${recurso.Proveedor.descProveedor}"></span></td>
-															<td><span class="dg-campo">Costo m&iacute;nimo: </span><span class="dg-info" contenteditable="true" th:text="${recurso.valCostoMinimo}"></span></td>
+															<td><span class="dg-campo">Puesto: </span>
+															<select th:field="${recurso.codPuesto}" class="form-control dg-info" style="padding:0;">
+																<option value="-1">Todos</option>
+																<option th:each="puestoLista : ${puestoList}" th:value="${puestoLista.codPuesto}" th:text="${puestoLista.descPuesto}"></option>
+															</select>
+															</td>
+															<td><span class="dg-campo">Jornada: </span>
+															<select th:field="${recurso.codJornada}" class="form-control dg-info" style="padding:0;">
+																<option value="-1">Todos</option>
+																<option th:each="jornadaLista : ${jornadaList}" th:value="${jornadaLista.codJornada}" th:text="${jornadaLista.descJornada}"></option>
+															</select>
+															</td>
+															<td><span class="dg-campo">Tipo recurso: </span>
+															<select th:field="${recurso.codTipoRecurso}" class="form-control dg-info" style="padding:0;">
+																<option value="-1">Todos</option>
+																<option th:each="tipoRecursoLista : ${tipoRecursoList}" th:value="${tipoRecursoLista.codTipoRecurso}" th:text="${tipoRecursoLista.descTipoRecurso}"></option>
+															</select>
+															</td>
+															<td><span class="dg-campo">Proveedor: </span>
+															<select th:field="${recurso.codProveedor}" class="form-control dg-info" style="padding:0;">
+																<option value="-1">Todos</option>
+																<option th:each="proveedorLista : ${proveedorList}" th:value="${proveedorLista.codProveedor}" th:text="${proveedorLista.descProveedor}"></option>
+															</select>
+															</td>
+															<td><span class="dg-campo">Costo m&iacute;nimo: </span><input type="number" step="0.10" class="form-control dg-info" th:field="${recurso.valCostoMinimo}" placeholder="$"/></td>
 														</tr>
-														
+													</table>
+													</form>
+													<table>
 														<tr>
 															<td>
-															<div class="card border-dark mb-3">
+																<div class="card border-dark mb-3">
 																  <div class="card-header"><h5>Herramientas</h5></div>
-																  <div class="card-body text-dark">
-																    	<div class="card-deck">
-																	    	<div class="card p-3">
+																	  <div class="card-body text-dark">
+																	    	<div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+																				<ol class="carousel-indicators">
+																				  <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+																				  <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+																				  <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+																				</ol>
+																				<div class="carousel-inner">
+																				  <div class="carousel-item active">
+																					<div class="card-deck">
+																	    	<div class="row row-cols-1 row-cols-md-3 g-4">
+																	    		<div class="col-sm-6">
+																	    			<div class="card p-3 mb-3">
 																				<div class="d-flex align-items-center">
 																					<!-- <div class="image"> <img src="img/user1.jpg" class="rounded" width="155"> </div> -->
 																					<div class=" w-100">
@@ -301,8 +367,217 @@
 																					</div>
 																				</div>
 																			</div>
-																    	</div>
-																  </div>
+																	    		</div>
+																	    		<div class="col-sm-6">
+																	    			<div class="card p-3 mb-3">
+																				<div class="d-flex align-items-center">
+																					<!-- <div class="image"> <img src="img/user1.jpg" class="rounded" width="155"> </div> -->
+																					<div class=" w-100">
+																						<h4 class="mb-0 mt-0">Laptop</h4> <span style="font-size: small;">DELL Inspiron</span>
+																						<!-- <div class="p-2 mt-2 bg-primary d-flex justify-content-between rounded text-white stats">
+																							<div class="d-flex flex-column"> <span class="articles">Articles</span> <span class="number1">38</span> </div>
+																							<div class="d-flex flex-column"> <span class="followers">Followers</span> <span class="number2">980</span> </div>
+																							<div class="d-flex flex-column"> <span class="rating">Rating</span> <span class="number3">8.9</span> </div>
+																						</div> -->
+																						<div style="margin: 10px 0px;">
+																							<span style="font-size: small;">S/N 2225411105246548</span><br>
+																							<span style="font-size: small;">i7 / 250 SSD / 16 RAM</span>
+																						</div>
+																						<div class="button mt-2 d-flex flex-row align-items-center"> 
+																							<button class="btn btn-sm btn-outline-primary w-100">Editar</button> 
+																							<!-- <button class="btn btn-sm btn-primary w-100 ml-2">Editar</button>  -->
+																						</div>
+																					</div>
+																				</div>
+																			</div>
+																	    		</div>
+																	    		<div class="col-sm-6">
+																	    			<div class="card p-3 mb-3">
+																				<div class="d-flex align-items-center">
+																					<!-- <div class="image"> <img src="img/user1.jpg" class="rounded" width="155"> </div> -->
+																					<div class=" w-100">
+																						<h4 class="mb-0 mt-0">Laptop</h4> <span style="font-size: small;">DELL Inspiron</span>
+																						<!-- <div class="p-2 mt-2 bg-primary d-flex justify-content-between rounded text-white stats">
+																							<div class="d-flex flex-column"> <span class="articles">Articles</span> <span class="number1">38</span> </div>
+																							<div class="d-flex flex-column"> <span class="followers">Followers</span> <span class="number2">980</span> </div>
+																							<div class="d-flex flex-column"> <span class="rating">Rating</span> <span class="number3">8.9</span> </div>
+																						</div> -->
+																						<div style="margin: 10px 0px;">
+																							<span style="font-size: small;">S/N 2225411105246548</span><br>
+																							<span style="font-size: small;">i7 / 250 SSD / 16 RAM</span>
+																						</div>
+																						<div class="button mt-2 d-flex flex-row align-items-center"> 
+																							<button class="btn btn-sm btn-outline-primary w-100">Editar</button> 
+																							<!-- <button class="btn btn-sm btn-primary w-100 ml-2">Editar</button>  -->
+																						</div>
+																					</div>
+																				</div>
+																			</div>
+																	    		</div>
+																	    	</div>
+																	    	</div>
+																				  </div>
+																				  <div class="carousel-item">
+																					<div class="card-deck">
+																	    	<div class="row row-cols-1 row-cols-md-3 g-4">
+																	    		<div class="col-sm-6">
+																	    			<div class="card p-3 mb-3">
+																				<div class="d-flex align-items-center">
+																					<!-- <div class="image"> <img src="img/user1.jpg" class="rounded" width="155"> </div> -->
+																					<div class=" w-100">
+																						<h4 class="mb-0 mt-0">Laptop</h4> <span style="font-size: small;">HP</span>
+																						<!-- <div class="p-2 mt-2 bg-primary d-flex justify-content-between rounded text-white stats">
+																							<div class="d-flex flex-column"> <span class="articles">Articles</span> <span class="number1">38</span> </div>
+																							<div class="d-flex flex-column"> <span class="followers">Followers</span> <span class="number2">980</span> </div>
+																							<div class="d-flex flex-column"> <span class="rating">Rating</span> <span class="number3">8.9</span> </div>
+																						</div> -->
+																						<div style="margin: 10px 0px;">
+																							<span style="font-size: small;">S/N 2225411105246548</span><br>
+																							<span style="font-size: small;">i7 / 250 SSD / 32 RAM</span>
+																						</div>
+																						<div class="button mt-2 d-flex flex-row align-items-center"> 
+																							<button class="btn btn-sm btn-outline-primary w-100">Editar</button> 
+																							<!-- <button class="btn btn-sm btn-primary w-100 ml-2">Editar</button>  -->
+																						</div>
+																					</div>
+																				</div>
+																			</div>
+																	    		</div>
+																	    		<div class="col-sm-6">
+																	    			<div class="card p-3 mb-3">
+																				<div class="d-flex align-items-center">
+																					<!-- <div class="image"> <img src="img/user1.jpg" class="rounded" width="155"> </div> -->
+																					<div class=" w-100">
+																						<h4 class="mb-0 mt-0">Laptop</h4> <span style="font-size: small;">HP</span>
+																						<!-- <div class="p-2 mt-2 bg-primary d-flex justify-content-between rounded text-white stats">
+																							<div class="d-flex flex-column"> <span class="articles">Articles</span> <span class="number1">38</span> </div>
+																							<div class="d-flex flex-column"> <span class="followers">Followers</span> <span class="number2">980</span> </div>
+																							<div class="d-flex flex-column"> <span class="rating">Rating</span> <span class="number3">8.9</span> </div>
+																						</div> -->
+																						<div style="margin: 10px 0px;">
+																							<span style="font-size: small;">S/N 2225411105246548</span><br>
+																							<span style="font-size: small;">i7 / 250 SSD / 32 RAM</span>
+																						</div>
+																						<div class="button mt-2 d-flex flex-row align-items-center"> 
+																							<button class="btn btn-sm btn-outline-primary w-100">Editar</button> 
+																							<!-- <button class="btn btn-sm btn-primary w-100 ml-2">Editar</button>  -->
+																						</div>
+																					</div>
+																				</div>
+																			</div>
+																	    		</div>
+																	    		<div class="col-sm-6">
+																	    			<div class="card p-3 mb-3">
+																				<div class="d-flex align-items-center">
+																					<!-- <div class="image"> <img src="img/user1.jpg" class="rounded" width="155"> </div> -->
+																					<div class=" w-100">
+																						<h4 class="mb-0 mt-0">Laptop</h4> <span style="font-size: small;">HP</span>
+																						<!-- <div class="p-2 mt-2 bg-primary d-flex justify-content-between rounded text-white stats">
+																							<div class="d-flex flex-column"> <span class="articles">Articles</span> <span class="number1">38</span> </div>
+																							<div class="d-flex flex-column"> <span class="followers">Followers</span> <span class="number2">980</span> </div>
+																							<div class="d-flex flex-column"> <span class="rating">Rating</span> <span class="number3">8.9</span> </div>
+																						</div> -->
+																						<div style="margin: 10px 0px;">
+																							<span style="font-size: small;">S/N 2225411105246548</span><br>
+																							<span style="font-size: small;">i7 / 250 SSD / 32 RAM</span>
+																						</div>
+																						<div class="button mt-2 d-flex flex-row align-items-center"> 
+																							<button class="btn btn-sm btn-outline-primary w-100">Editar</button> 
+																							<!-- <button class="btn btn-sm btn-primary w-100 ml-2">Editar</button>  -->
+																						</div>
+																					</div>
+																				</div>
+																			</div>
+																	    		</div>
+																	    	</div>
+																	    	</div>
+																				  </div>
+																				  <div class="carousel-item">
+																					<div class="card-deck">
+																	    	<div class="row row-cols-1 row-cols-md-3 g-4">
+																	    		<div class="col-sm-6">
+																	    			<div class="card p-3 mb-3">
+																				<div class="d-flex align-items-center">
+																					<!-- <div class="image"> <img src="img/user1.jpg" class="rounded" width="155"> </div> -->
+																					<div class=" w-100">
+																						<h4 class="mb-0 mt-0">Laptop</h4> <span style="font-size: small;">Asus</span>
+																						<!-- <div class="p-2 mt-2 bg-primary d-flex justify-content-between rounded text-white stats">
+																							<div class="d-flex flex-column"> <span class="articles">Articles</span> <span class="number1">38</span> </div>
+																							<div class="d-flex flex-column"> <span class="followers">Followers</span> <span class="number2">980</span> </div>
+																							<div class="d-flex flex-column"> <span class="rating">Rating</span> <span class="number3">8.9</span> </div>
+																						</div> -->
+																						<div style="margin: 10px 0px;">
+																							<span style="font-size: small;">S/N 2225411105246548</span><br>
+																							<span style="font-size: small;">i7 / 250 SSD / 8 RAM</span>
+																						</div>
+																						<div class="button mt-2 d-flex flex-row align-items-center"> 
+																							<button class="btn btn-sm btn-outline-primary w-100">Editar</button> 
+																							<!-- <button class="btn btn-sm btn-primary w-100 ml-2">Editar</button>  -->
+																						</div>
+																					</div>
+																				</div>
+																			</div>
+																	    		</div>
+																	    		<div class="col-sm-6">
+																	    			<div class="card p-3 mb-3">
+																				<div class="d-flex align-items-center">
+																					<!-- <div class="image"> <img src="img/user1.jpg" class="rounded" width="155"> </div> -->
+																					<div class=" w-100">
+																						<h4 class="mb-0 mt-0">Laptop</h4> <span style="font-size: small;">Asus</span>
+																						<!-- <div class="p-2 mt-2 bg-primary d-flex justify-content-between rounded text-white stats">
+																							<div class="d-flex flex-column"> <span class="articles">Articles</span> <span class="number1">38</span> </div>
+																							<div class="d-flex flex-column"> <span class="followers">Followers</span> <span class="number2">980</span> </div>
+																							<div class="d-flex flex-column"> <span class="rating">Rating</span> <span class="number3">8.9</span> </div>
+																						</div> -->
+																						<div style="margin: 10px 0px;">
+																							<span style="font-size: small;">S/N 2225411105246548</span><br>
+																							<span style="font-size: small;">i7 / 250 SSD / 8 RAM</span>
+																						</div>
+																						<div class="button mt-2 d-flex flex-row align-items-center"> 
+																							<button class="btn btn-sm btn-outline-primary w-100">Editar</button> 
+																							<!-- <button class="btn btn-sm btn-primary w-100 ml-2">Editar</button>  -->
+																						</div>
+																					</div>
+																				</div>
+																			</div>
+																	    		</div>
+																	    		<div class="col-sm-6">
+																	    			<div class="card p-3 mb-3">
+																				<div class="d-flex align-items-center">
+																					<!-- <div class="image"> <img src="img/user1.jpg" class="rounded" width="155"> </div> -->
+																					<div class=" w-100">
+																						<h4 class="mb-0 mt-0">Laptop</h4> <span style="font-size: small;">Asus</span>
+																						<!-- <div class="p-2 mt-2 bg-primary d-flex justify-content-between rounded text-white stats">
+																							<div class="d-flex flex-column"> <span class="articles">Articles</span> <span class="number1">38</span> </div>
+																							<div class="d-flex flex-column"> <span class="followers">Followers</span> <span class="number2">980</span> </div>
+																							<div class="d-flex flex-column"> <span class="rating">Rating</span> <span class="number3">8.9</span> </div>
+																						</div> -->
+																						<div style="margin: 10px 0px;">
+																							<span style="font-size: small;">S/N 2225411105246548</span><br>
+																							<span style="font-size: small;">i7 / 250 SSD / 8 RAM</span>
+																						</div>
+																						<div class="button mt-2 d-flex flex-row align-items-center"> 
+																							<button class="btn btn-sm btn-outline-primary w-100">Editar</button> 
+																							<!-- <button class="btn btn-sm btn-primary w-100 ml-2">Editar</button>  -->
+																						</div>
+																					</div>
+																				</div>
+																			</div>
+																	    		</div>
+																	    	</div>
+																	    	</div>
+																				  </div>
+																				</div>
+																				<a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+																				  <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+																				  <span class="sr-only">Previous</span>
+																				</a>
+																				<a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+																				  <span class="carousel-control-next-icon" aria-hidden="true"></span>
+																				  <span class="sr-only">Next</span>
+																				</a>
+																			 </div>
+																	  </div>
 																</div>
 															</td>
 														</tr>
@@ -362,7 +637,11 @@
   
   
   
-  
+  <script type="text/javascript">
+  	$(document).ready(function(){
+  		$('.carousel').carousel('pause');
+  	});
+  </script>
 
 </body>
 
