@@ -35,17 +35,17 @@
           </div>
           <div class="d-flex flex-row">
 			<label style="padding-right: 15px;">Ver:</label>
-			<div class="custom-control custom-radio" style="padding-right: 15px; cursor: pointer;">
-              <input type="radio" id="radioTodos" name="customRadio" class="custom-control-input" style="cursor: pointer;" checked="checked">
-              <label class="custom-control-label" for="radioTodos">Todos</label>
-            </div>
             <div class="custom-control custom-radio" style="padding-right: 15px;  cursor: pointer;">
-              <input type="radio" id="radioActivos" name="customRadio" class="custom-control-input" style="cursor: pointer;">
+              <input type="radio" id="radioActivos" name="customRadio" class="custom-control-input" style="cursor: pointer;" checked="checked">
               <label class="custom-control-label" for="radioActivos" style="cursor: pointer;">Activos</label>
             </div>
-            <div class="custom-control custom-radio" style="cursor: pointer;">
+            <div class="custom-control custom-radio" style="padding-right: 15px; cursor: pointer;">
               <input type="radio" id="radioBajas" name="customRadio" class="custom-control-input" style="cursor: pointer;">
               <label class="custom-control-label" for="radioBajas" style="cursor: pointer;">Bajas</label>
+            </div>
+            <div class="custom-control custom-radio" style="padding-right: 15px; cursor: pointer;">
+              <input type="radio" id="radioTodos" name="customRadio" class="custom-control-input" style="cursor: pointer;" >
+              <label class="custom-control-label" for="radioTodos" style="cursor: pointer;">Todos</label>
             </div>
 			</div>
           
@@ -126,6 +126,11 @@
   
   <script type="text/javascript">
   $(function() {
+	  	
+	  $("div[name = 'baja']").hide();
+      $("div[name = 'activo']").show();
+	  
+	  
 	    $("#radioTodos").click(function(){
 	        $("div[name = 'baja']").show();
 	        $("div[name = 'activo']").show();
