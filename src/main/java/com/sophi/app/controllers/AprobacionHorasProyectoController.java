@@ -169,7 +169,7 @@ public class AprobacionHorasProyectoController {
 				if(recursosUnicos.size()>0) {
 					for (Long codR : recursosUnicos) {
 					Recurso recursoTmp = recursoService.findOne(codR);
-						if(recursoTmp.getDescConsultor().equals(1L)) {
+						if(recursoTmp.getCodAreaRecurso().equals(1L)) {
 							DetalleRecursoHoras detalle = capHoraService.findDetalleRecursoHorasTodos(codR, inicio, fin);
 							detalle.setNombreRecurso(recursoTmp.getDescRecurso() + ' ' + recursoTmp.getDescApellidoPaterno());
 							detalle.setLink(recursoTmp.getCodRecurso());
@@ -183,7 +183,7 @@ public class AprobacionHorasProyectoController {
 			} else {
 				for (ProyectoRecurso proyectoRecurso : listProyectoRecurso) {
 					Recurso recursoTmp = recursoService.findOne(proyectoRecurso.getProyectoRecursoId().getCodRecurso());
-					if(recursoTmp.getDescConsultor().equals(1L)) {
+					if(recursoTmp.getCodAreaRecurso().equals(1L)) {
 						DetalleRecursoHoras detalle = capHoraService.findDetalleRecursoHoras(proyectoRecurso.getProyectoRecursoId().getCodRecurso(), proyectoRecurso.getProyectoRecursoId().getCodProyecto(), inicio, fin);
 						detalle.setNombreRecurso(recursoTmp.getDescRecurso() + ' ' + recursoTmp.getDescApellidoPaterno());
 						detalle.setLink(recursoTmp.getCodRecurso());

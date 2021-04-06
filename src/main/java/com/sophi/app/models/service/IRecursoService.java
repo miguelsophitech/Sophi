@@ -24,6 +24,6 @@ public interface IRecursoService {
 	
 	public List<Recurso> findListRecursosAprobadores();
 	
-	public List<Recurso> findByDescConsultor(Long descConsultor);
+	public List<Recurso> findByCodAreaRecurso(Long codAreaRecurso);
 
 }
