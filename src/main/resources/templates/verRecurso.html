@@ -259,9 +259,6 @@
 																content.</p>
 														</div>
 													</div>
-
-
-
 											</div>
                             					<div class="tab-pane fade show active" id="datos-empresa" role="tabpanel" aria-labelledby="datos-empresa-tab">
                             						<form id="formDatosEmpresa" th:action="@{/guardaActualizaRecurso}" th:object="${recurso}" method="post">
@@ -353,10 +350,17 @@
 														<tr>
 															<td>
 																<div class="card border-dark mb-3">
-																  <div class="card-header"><h5>Herramientas</h5>
-																  	<a id="iNuevaHerramienta" class="btn btn-info" data-toggle="modal" data-target="#nuevaHerramientaModal" href="#">
-														              <i class="fas fa-plus fa-sm text-gray-50"></i>
-														            </a>
+																  <div class="card-header">
+																  	<div class="row">
+																  		<div class="col-8">
+																  			<span style="color: #495057;">Herramientas</span>
+																  		</div>
+																	  	<div class="col-4" style="float: right;">
+																	  		<a id="iNuevaHerramienta" class="btn btn-info" data-toggle="modal" data-target="#nuevaHerramientaModal" href="#" style="float: right;">
+																              <i class="fas fa-plus fa-sm text-gray-50"></i>
+																            </a>
+																	  	</div>
+																  	</div>
 														          </div>
 																	  <div class="card-body text-dark">
 																	    	<div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
@@ -368,8 +372,8 @@
 																				<div class="carousel-inner">
 																				  <div class="carousel-item active">
 																					<div class="card-deck">
-																	    	<div class="row row-cols-1 row-cols-md-3 g-4">
-																	    		<div class="col-sm-6">
+																	    	<div class="row">
+																	    		<div class="col">
 																	    			<div class="card p-3 mb-3">
 																				<div class="d-flex align-items-center">
 																					<!-- <div class="image"> <img src="img/user1.jpg" class="rounded" width="155"> </div> -->
@@ -392,30 +396,7 @@
 																				</div>
 																			</div>
 																	    		</div>
-																	    		<div class="col-sm-6">
-																	    			<div class="card p-3 mb-3">
-																				<div class="d-flex align-items-center">
-																					<!-- <div class="image"> <img src="img/user1.jpg" class="rounded" width="155"> </div> -->
-																					<div class=" w-100">
-																						<h4 class="mb-0 mt-0">Laptop</h4> <span style="font-size: small;">DELL Inspiron</span>
-																						<!-- <div class="p-2 mt-2 bg-primary d-flex justify-content-between rounded text-white stats">
-																							<div class="d-flex flex-column"> <span class="articles">Articles</span> <span class="number1">38</span> </div>
-																							<div class="d-flex flex-column"> <span class="followers">Followers</span> <span class="number2">980</span> </div>
-																							<div class="d-flex flex-column"> <span class="rating">Rating</span> <span class="number3">8.9</span> </div>
-																						</div> -->
-																						<div style="margin: 10px 0px;">
-																							<span style="font-size: small;">S/N 2225411105246548</span><br>
-																							<span style="font-size: small;">i7 / 250 SSD / 16 RAM</span>
-																						</div>
-																						<div class="button mt-2 d-flex flex-row align-items-center"> 
-																							<button class="btn btn-sm btn-outline-primary w-100" data-toggle="modal" data-target="#editHerramientaModal">Editar</button> 
-																							<!-- <button class="btn btn-sm btn-primary w-100 ml-2">Editar</button>  -->
-																						</div>
-																					</div>
-																				</div>
-																			</div>
-																	    		</div>
-																	    		<div class="col-sm-6">
+																	    		<div class="col">
 																	    			<div class="card p-3 mb-3">
 																				<div class="d-flex align-items-center">
 																					<!-- <div class="image"> <img src="img/user1.jpg" class="rounded" width="155"> </div> -->
@@ -443,8 +424,8 @@
 																				  </div>
 																				  <div class="carousel-item">
 																					<div class="card-deck">
-																	    	<div class="row row-cols-1 row-cols-md-3 g-4">
-																	    		<div class="col-sm-6">
+																	    	<div class="row">
+																	    		<div class="col">
 																	    			<div class="card p-3 mb-3">
 																				<div class="d-flex align-items-center">
 																					<!-- <div class="image"> <img src="img/user1.jpg" class="rounded" width="155"> </div> -->
@@ -467,30 +448,7 @@
 																				</div>
 																			</div>
 																	    		</div>
-																	    		<div class="col-sm-6">
-																	    			<div class="card p-3 mb-3">
-																				<div class="d-flex align-items-center">
-																					<!-- <div class="image"> <img src="img/user1.jpg" class="rounded" width="155"> </div> -->
-																					<div class=" w-100">
-																						<h4 class="mb-0 mt-0">Laptop</h4> <span style="font-size: small;">HP</span>
-																						<!-- <div class="p-2 mt-2 bg-primary d-flex justify-content-between rounded text-white stats">
-																							<div class="d-flex flex-column"> <span class="articles">Articles</span> <span class="number1">38</span> </div>
-																							<div class="d-flex flex-column"> <span class="followers">Followers</span> <span class="number2">980</span> </div>
-																							<div class="d-flex flex-column"> <span class="rating">Rating</span> <span class="number3">8.9</span> </div>
-																						</div> -->
-																						<div style="margin: 10px 0px;">
-																							<span style="font-size: small;">S/N 2225411105246548</span><br>
-																							<span style="font-size: small;">i7 / 250 SSD / 32 RAM</span>
-																						</div>
-																						<div class="button mt-2 d-flex flex-row align-items-center"> 
-																							<button class="btn btn-sm btn-outline-primary w-100" data-toggle="modal" data-target="#editHerramientaModal">Editar</button> 
-																							<!-- <button class="btn btn-sm btn-primary w-100 ml-2">Editar</button>  -->
-																						</div>
-																					</div>
-																				</div>
-																			</div>
-																	    		</div>
-																	    		<div class="col-sm-6">
+																	    		<div class="col">
 																	    			<div class="card p-3 mb-3">
 																				<div class="d-flex align-items-center">
 																					<!-- <div class="image"> <img src="img/user1.jpg" class="rounded" width="155"> </div> -->
@@ -518,8 +476,8 @@
 																				  </div>
 																				  <div class="carousel-item">
 																					<div class="card-deck">
-																	    	<div class="row row-cols-1 row-cols-md-3 g-4">
-																	    		<div class="col-sm-6">
+																	    	<div class="row">
+																	    		<div class="col">
 																	    			<div class="card p-3 mb-3">
 																				<div class="d-flex align-items-center">
 																					<!-- <div class="image"> <img src="img/user1.jpg" class="rounded" width="155"> </div> -->
@@ -542,30 +500,7 @@
 																				</div>
 																			</div>
 																	    		</div>
-																	    		<div class="col-sm-6">
-																	    			<div class="card p-3 mb-3">
-																				<div class="d-flex align-items-center">
-																					<!-- <div class="image"> <img src="img/user1.jpg" class="rounded" width="155"> </div> -->
-																					<div class=" w-100">
-																						<h4 class="mb-0 mt-0">Laptop</h4> <span style="font-size: small;">Asus</span>
-																						<!-- <div class="p-2 mt-2 bg-primary d-flex justify-content-between rounded text-white stats">
-																							<div class="d-flex flex-column"> <span class="articles">Articles</span> <span class="number1">38</span> </div>
-																							<div class="d-flex flex-column"> <span class="followers">Followers</span> <span class="number2">980</span> </div>
-																							<div class="d-flex flex-column"> <span class="rating">Rating</span> <span class="number3">8.9</span> </div>
-																						</div> -->
-																						<div style="margin: 10px 0px;">
-																							<span style="font-size: small;">S/N 2225411105246548</span><br>
-																							<span style="font-size: small;">i7 / 250 SSD / 8 RAM</span>
-																						</div>
-																						<div class="button mt-2 d-flex flex-row align-items-center"> 
-																							<button class="btn btn-sm btn-outline-primary w-100" data-toggle="modal" data-target="#editHerramientaModal">Editar</button> 
-																							<!-- <button class="btn btn-sm btn-primary w-100 ml-2">Editar</button>  -->
-																						</div>
-																					</div>
-																				</div>
-																			</div>
-																	    		</div>
-																	    		<div class="col-sm-6">
+																	    		<div class="col">
 																	    			<div class="card p-3 mb-3">
 																				<div class="d-flex align-items-center">
 																					<!-- <div class="image"> <img src="img/user1.jpg" class="rounded" width="155"> </div> -->
@@ -632,49 +567,49 @@
 				          </button>
 				        </div>
 				        <div class="modal-body" style="font-size: 14px;">
-						<form th:Object="${herramienta}" method="post">
+						<form th:object="${herramienta}" method="post">
 							<div class="row">
 								<div class="form-group col-12 col-md-12">
 									<label class="col-form-label">Observaciones*</label>
-									<!-- <input type="text" th:field="*{descObservaciones}" class="form-control" th:errorclass="'form-control alert-danger'"/>
-									<small class="form-text text-danger" th:if="${#fields.hasErrors('descObservaciones')}" th:errors="*{descObservaciones}"></small> -->
+									<input type="text" th:field="*{descObservaciones}" class="form-control" th:errorclass="'form-control alert-danger'"/>
+									<small class="form-text text-danger" th:if="${#fields.hasErrors('descObservaciones')}" th:errors="*{descObservaciones}"></small>
 								</div>
 							</div>
 							
 							<div class="row">
 								<div class="form-group col-12 col-md-12">
 									<label class="col-form-label">No. Serie*</label>
-									<input type="text" class="form-control"/>
-									<!-- <input type="text" th:field="*{descNumeroSerie}" class="form-control" th:errorclass="'form-control alert-danger'"/>
-									<small class="form-text text-danger" th:if="${#fields.hasErrors('descNumeroSerie')}" th:errors="*{descNumeroSerie}"></small> -->
+									<input type="text" th:field="*{descNumeroSerie}" class="form-control" th:errorclass="'form-control alert-danger'"/>
+									<small class="form-text text-danger" th:if="${#fields.hasErrors('descNumeroSerie')}" th:errors="*{descNumeroSerie}"></small>
 								</div>
 							</div>
 							
 							<div class="row">
 								<div class="form-group col-12 col-md-12">
 									<label class="col-form-label">Responsiva*</label>
-									<input type="file" class="form-control"/>
-									<!-- <input id="responsiva" type="file" th:field="*{responsiva}" class="form-control" th:errorclass="'form-control alert-danger'"/>
-									<label class="custom-file-label" for="responsiva">Choose file</label>
-									<small class="form-text text-danger" th:if="${#fields.hasErrors('responsiva')}" th:errors="*{responsiva}"></small> -->
+									<div class="input-group">
+										<div class="custom-file">
+											<input id="responsiva" type="file" th:field="*{responsiva}" class="custom-file-input" th:errorclass="'form-control alert-danger'"/>
+											<label class="custom-file-label" for="responsiva">Seleccionar archivo</label>
+										</div>
+									</div>
+									<small class="form-text text-danger" th:if="${#fields.hasErrors('responsiva')}" th:errors="*{responsiva}"></small>
 								</div>
 							</div>
 							
 							<div class="row">
-								<div class="form-group col-12 col-md-12">
+								<div class="form-group col-6 col-md-6">
 									<label class="col-form-label">Fecha Pr&eacute;stamo</label>
-									<input type="date" class="form-control"/>
-									<!-- <input type="date" th:field="*{fecPrestamo}" class="form-control" th:errorclass="'form-control alert-danger'"/>
-									<small class="form-text text-danger" th:if="${#fields.hasErrors('fecPrestamo')}" th:errors="*{fecPrestamo}"></small> -->
+									<input type="date" th:field="*{fecPrestamo}" class="form-control" th:errorclass="'form-control alert-danger'"/>
+									<small class="form-text text-danger" th:if="${#fields.hasErrors('fecPrestamo')}" th:errors="*{fecPrestamo}"></small>
 								</div>
-								<div class="form-group col-12 col-md-12">
+								<div class="form-group col-6 col-md-6">
 									<label class="col-form-label">Fecha Devoluci&oacute;n</label>
-									<input type="date" class="form-control"/>
-									<!-- <input type="date" th:field="*{fecDevolucion}" class="form-control" th:errorclass="'form-control alert-danger'"/>
-									<small class="form-text text-danger" th:if="${#fields.hasErrors('fecDevolucion')}" th:errors="*{fecDevolucion}"></small> -->
+									<input type="date" th:field="*{fecDevolucion}" class="form-control" th:errorclass="'form-control alert-danger'"/>
+									<small class="form-text text-danger" th:if="${#fields.hasErrors('fecDevolucion')}" th:errors="*{fecDevolucion}"></small>
 								</div>
 							</div>
-							
+							<input type="hidden" th:field="*{fecRegistro}"/>
 							</form>
 						</div>
 				       <div class="modal-footer">
@@ -699,50 +634,49 @@
 				          </button>
 				        </div>
 				        <div class="modal-body" style="font-size: 14px;">
-						<form th:Object="${herramienta}" method="post">
+						<form th:object="${herramienta}" method="post">
 							<div class="row">
 								<div class="form-group col-12 col-md-12">
 									<label class="col-form-label">Observaciones*</label>
-									<input type="text" class="form-control"/>
-									<!-- <input type="text" th:field="*{descObservaciones}" class="form-control" th:errorclass="'form-control alert-danger'"/>
-									<small class="form-text text-danger" th:if="${#fields.hasErrors('descObservaciones')}" th:errors="*{descObservaciones}"></small> -->
+									<input type="text" th:field="*{descObservaciones}" class="form-control" th:errorclass="'form-control alert-danger'"/>
+									<small class="form-text text-danger" th:if="${#fields.hasErrors('descObservaciones')}" th:errors="*{descObservaciones}"></small>
 								</div>
 							</div>
 							
 							<div class="row">
 								<div class="form-group col-12 col-md-12">
 									<label class="col-form-label">No. Serie*</label>
-									<input type="text" class="form-control"/>
-									<!-- <input type="text" th:field="*{descNumeroSerie}" class="form-control" th:errorclass="'form-control alert-danger'"/>
-									<small class="form-text text-danger" th:if="${#fields.hasErrors('descNumeroSerie')}" th:errors="*{descNumeroSerie}"></small> -->
+									<input type="text" th:field="*{descNumeroSerie}" class="form-control" th:errorclass="'form-control alert-danger'"/>
+									<small class="form-text text-danger" th:if="${#fields.hasErrors('descNumeroSerie')}" th:errors="*{descNumeroSerie}"></small>
 								</div>
 							</div>
 							
 							<div class="row">
 								<div class="form-group col-12 col-md-12">
 									<label class="col-form-label">Responsiva*</label>
-									<input type="file" class="form-control"/>
-									<!-- <input id="responsiva" type="file" th:field="*{responsiva}" class="form-control" th:errorclass="'form-control alert-danger'"/>
-									<label class="custom-file-label" for="responsiva">Choose file</label>
-									<small class="form-text text-danger" th:if="${#fields.hasErrors('responsiva')}" th:errors="*{responsiva}"></small> -->
+									<div class="input-group">
+										<div class="custom-file">
+											<input id="responsiva" type="file" th:field="*{responsiva}" class="custom-file-input" th:errorclass="'form-control alert-danger'"/>
+											<label class="custom-file-label" for="responsiva">Seleccionar archivo</label>
+										</div>
+									</div>
+									<small class="form-text text-danger" th:if="${#fields.hasErrors('responsiva')}" th:errors="*{responsiva}"></small>
 								</div>
 							</div>
 							
 							<div class="row">
-								<div class="form-group col-12 col-md-12">
+								<div class="form-group col-6 col-md-6">
 									<label class="col-form-label">Fecha Pr&eacute;stamo</label>
-									<input type="date" class="form-control"/>
-									<!-- <input type="date" th:field="*{fecPrestamo}" class="form-control" th:errorclass="'form-control alert-danger'"/>
-									<small class="form-text text-danger" th:if="${#fields.hasErrors('fecPrestamo')}" th:errors="*{fecPrestamo}"></small> -->
+									<input type="date" th:field="*{fecPrestamo}" class="form-control" th:errorclass="'form-control alert-danger'"/>
+									<small class="form-text text-danger" th:if="${#fields.hasErrors('fecPrestamo')}" th:errors="*{fecPrestamo}"></small>
 								</div>
-								<div class="form-group col-12 col-md-12">
+								<div class="form-group col-6 col-md-6">
 									<label class="col-form-label">Fecha Devoluci&oacute;n</label>
-									<input type="date" class="form-control"/>
-									<!-- <input type="date" th:field="*{fecDevolucion}" class="form-control" th:errorclass="'form-control alert-danger'"/>
-									<small class="form-text text-danger" th:if="${#fields.hasErrors('fecDevolucion')}" th:errors="*{fecDevolucion}"></small> -->
+									<input type="date" th:field="*{fecDevolucion}" class="form-control" th:errorclass="'form-control alert-danger'"/>
+									<small class="form-text text-danger" th:if="${#fields.hasErrors('fecDevolucion')}" th:errors="*{fecDevolucion}"></small>
 								</div>
 							</div>
-							
+							<input type="hidden" th:field="*{fecRegistro}"/>
 							</form>
 						</div>
 				       <div class="modal-footer">
