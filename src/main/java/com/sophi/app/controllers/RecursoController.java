@@ -26,9 +26,11 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.sophi.app.Utiles;
+import com.sophi.app.models.entity.Herramienta;
 import com.sophi.app.models.entity.Recurso;
 import com.sophi.app.models.service.IAreaRecursoService;
 import com.sophi.app.models.service.IEstadoCivilService;
+import com.sophi.app.models.service.IHerramientaService;
 import com.sophi.app.models.service.IJornadaService;
 import com.sophi.app.models.service.IProveedorService;
 import com.sophi.app.models.service.IPuestoService;
@@ -62,13 +64,17 @@ public class RecursoController {
 	@Autowired
 	private ITipoSangreService tipoSangreService;
   
-  @Autowired
-  private IAreaRecursoService areaRecursoService;
+	@Autowired
+	private IAreaRecursoService areaRecursoService;
+	
+	@Autowired
+	private IHerramientaService herramientaService;
 	
 	@GetMapping(value = "/verRecurso/{id}")
 	public String verRecurso(@PathVariable(value="id") Long codRecurso, Map<String, Object> model, RedirectAttributes flash, HttpServletResponse response) {
 		response.setContentType("image/jpeg");
 		Recurso recurso = recursoService.findOne(codRecurso);
+		Herramienta herramienta = new Herramienta();
 		if (codRecurso > 0) {
 			recurso = recursoService.findOne(codRecurso);
 			if(recurso == null) {
@@ -91,6 +97,7 @@ public class RecursoController {
 		model.put("titulo", "Información de " + recurso.getDescRecurso());
 		model.put("listaEstadoCivil", estadoCivilService.findAll());
 		model.put("listaTipoSangre", tipoSangreService.findAll());
+		model.put("herramienta", herramienta);
 		
 		return "verRecurso";
 	}
@@ -181,21 +188,6 @@ public class RecursoController {
 		status.setComplete();
 		flash.addFlashAttribute("success", mensajeFlash);
 		return "redirect:listarRecursos";
-	}
-	
-	@RequestMapping(value = "/guardarDatosEmpresaRecurso", method = RequestMethod.POST)
-	public String guardarDatosEmpresaRecurso(@Valid Recurso recurso, BindingResult result, RedirectAttributes flash, SessionStatus status) {
-		if(result.hasErrors()) {
-			return "verRecurso/"+recurso.getCodRecurso();
-		}
-		
-		String mensajeFlash = "Recurso editado con éxito!";
-		System.out.println("Tiene que pasar por aquí a fuerza");
-		
-		recursoService.save(recurso);
-		status.setComplete();
-		flash.addFlashAttribute("success", mensajeFlash);
-		return "redirect:verRecurso/"+recurso.getCodRecurso();
 	}
 	
 	@RequestMapping(value = "/formRecurso/{id}")
