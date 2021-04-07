@@ -27,11 +27,14 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.sophi.app.Utiles;
+import com.sophi.app.models.entity.Herramienta;
 import com.sophi.app.models.entity.Recurso;
 import com.sophi.app.models.entity.RecursoEscolaridad;
 import com.sophi.app.models.service.IEstadoCivilService;
 import com.sophi.app.models.service.IEtapaEscolarService;
 import com.sophi.app.models.service.IGradoEscolarService;
+import com.sophi.app.models.service.IAreaRecursoService;
+import com.sophi.app.models.service.IHerramientaService;
 import com.sophi.app.models.service.IJornadaService;
 import com.sophi.app.models.service.IProveedorService;
 import com.sophi.app.models.service.IPuestoService;
@@ -55,7 +58,7 @@ public class RecursoController {
 	private IPuestoService puestoService;
 	
 	@Autowired
-	private ITipoRecursoService tipoREcursoService;
+	private ITipoRecursoService tipoRecursoService;
 	
 	@Autowired
 	private IJornadaService jornadaService;
@@ -65,6 +68,12 @@ public class RecursoController {
 	
 	@Autowired
 	private ITipoSangreService tipoSangreService;
+  
+	@Autowired
+	private IAreaRecursoService areaRecursoService;
+	
+	@Autowired
+	private IHerramientaService herramientaService;
 	
 	@Autowired
 	private IRecursoEscolaridadService recursoEscolaridadService;
@@ -79,6 +88,7 @@ public class RecursoController {
 	public String verRecurso(@PathVariable(value="id") Long codRecurso, Map<String, Object> model, RedirectAttributes flash, HttpServletResponse response) {
 		response.setContentType("image/jpeg");
 		Recurso recurso = recursoService.findOne(codRecurso);
+		Herramienta herramienta = new Herramienta();
 		if (codRecurso > 0) {
 			recurso = recursoService.findOne(codRecurso);
 			if(recurso == null) {
@@ -95,9 +105,16 @@ public class RecursoController {
 		
 		model.put("recurso",recurso);
 		model.put("recursoEdit",recurso);
+		model.put("areaRecursoList", areaRecursoService.findAll());
+		model.put("puestoList", puestoService.findAll());
+		model.put("jornadaList", jornadaService.findAll());
+		model.put("tipoRecursoList", tipoRecursoService.findAll());
+		model.put("proveedorList",proveedorService.findAll());
+		model.put("estadoCivilList", estadoCivilService.findAll());
 		model.put("titulo", "Información de " + recurso.getDescRecurso());
 		model.put("listaEstadoCivil", estadoCivilService.findAll());
 		model.put("listaTipoSangre", tipoSangreService.findAll());
+		model.put("herramienta", herramienta);
 		
 		model.put("listaEscolaridad", listaEscolaridad);
 		model.put("listaGradoEscolar", gradoEscolarService.findAll());
@@ -139,7 +156,7 @@ public class RecursoController {
 		model.put("etapaList", util.recursosEtapaList());
 		model.put("puestoList", puestoService.findAll());
 		model.put("jornadaList", jornadaService.findAll());
-		model.put("tipoRecursoList", tipoREcursoService.findAll());
+		model.put("tipoRecursoList", tipoRecursoService.findAll());
 		model.put("proveedorList",proveedorService.findAll());
 		model.put("estadoCivilList", estadoCivilService.findAll());
 		return "formRecurso";
@@ -161,7 +178,7 @@ public class RecursoController {
 			model.addAttribute("etapaList", util.recursosEtapaList());
 			model.addAttribute("puestoList", puestoService.findAll());
 			model.addAttribute("jornadaList", jornadaService.findAll());
-			model.addAttribute("tipoRecursoList", tipoREcursoService.findAll());
+			model.addAttribute("tipoRecursoList", tipoRecursoService.findAll());
 			model.addAttribute("proveedorList",proveedorService.findAll());
 			model.addAttribute("estadoCivilList", estadoCivilService.findAll());
 			return "formRecurso";
@@ -213,7 +230,7 @@ public class RecursoController {
 		model.put("etapaList", util.recursosEtapaList());
 		model.put("puestoList", puestoService.findAll());
 		model.put("jornadaList", jornadaService.findAll());
-		model.put("tipoRecursoList", tipoREcursoService.findAll());
+		model.put("tipoRecursoList", tipoRecursoService.findAll());
 		model.put("proveedorList",proveedorService.findAll());
 		model.put("estadoCivilList", estadoCivilService.findAll());
 		return "formRecurso";

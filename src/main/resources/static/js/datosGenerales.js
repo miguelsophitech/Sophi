@@ -24,6 +24,10 @@ $(document).ready(function() {
 	 //Deshabilita todos los elementos para editar
 	 $(".dg-info").attr('disabled','disabled');
 	 
+	 $("#iNuevaHerramienta").click(function(){
+	 	$("#nuevaHerrmientaModal").show();
+	 });
+	 
   });
 
   //funcion que oculta dtalle de enfermedades/alergias/Embarazos a partir de opciones
@@ -44,11 +48,21 @@ $(document).ready(function() {
   //Envia fommulario para guardar/actualizar informacion
   function functionGuardar(){
 	  
-	  var $form = $('#formDatosGenerales');
+	  var $form_datos_generales = $('#formDatosGenerales');
 	  $.ajax({
         method: "POST",
-        url: $form.attr('action'),
-        data: $form.serialize(),
+        url: $form_datos_generales.attr('action'),
+        data: $form_datos_generales.serialize(),
+        success: function(status){
+            console.log(status);
+        }
+	  });
+	  
+	  var $form_datos_empresa = $('#formDatosEmpresa');
+	  $.ajax({
+        method: "POST",
+        url: $form_datos_empresa.attr('action'),
+        data: $form_datos_empresa.serialize(),
         success: function(status){
             console.log(status);
         }
