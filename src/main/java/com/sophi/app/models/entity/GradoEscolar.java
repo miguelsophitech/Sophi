@@ -14,10 +14,10 @@ public class GradoEscolar implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	@Id
-	@Column(name = "cod_grado_escolaridad")
+	@Column(name = "cod_grado_escolar")
 	private	Long codGradoEscolaridad;
 	
-	@Column(name = "desc_grado_escolaridad")
+	@Column(name = "desc_grado_escolar")
 	private String descGradoEscolaridad;
 
 	public Long getCodGradoEscolaridad() {
@@ -35,4 +35,6 @@ public class GradoEscolar implements Serializable {
 	public void setDescGradoEscolaridad(String descGradoEscolaridad) {
 		this.descGradoEscolaridad = descGradoEscolaridad;
 	}
+
+	
 }

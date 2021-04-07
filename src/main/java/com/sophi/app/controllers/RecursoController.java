@@ -3,6 +3,7 @@ package com.sophi.app.controllers;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
@@ -27,10 +28,14 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.sophi.app.Utiles;
 import com.sophi.app.models.entity.Recurso;
+import com.sophi.app.models.entity.RecursoEscolaridad;
 import com.sophi.app.models.service.IEstadoCivilService;
+import com.sophi.app.models.service.IEtapaEscolarService;
+import com.sophi.app.models.service.IGradoEscolarService;
 import com.sophi.app.models.service.IJornadaService;
 import com.sophi.app.models.service.IProveedorService;
 import com.sophi.app.models.service.IPuestoService;
+import com.sophi.app.models.service.IRecursoEscolaridadService;
 import com.sophi.app.models.service.IRecursoService;
 import com.sophi.app.models.service.ITipoRecursoService;
 import com.sophi.app.models.service.ITipoSangreService;
@@ -61,6 +66,15 @@ public class RecursoController {
 	@Autowired
 	private ITipoSangreService tipoSangreService;
 	
+	@Autowired
+	private IRecursoEscolaridadService recursoEscolaridadService;
+	
+	@Autowired
+	private IGradoEscolarService gradoEscolarService;
+	
+	@Autowired
+	private IEtapaEscolarService estapaEscolarService;
+	
 	@GetMapping(value = "/verRecurso/{id}")
 	public String verRecurso(@PathVariable(value="id") Long codRecurso, Map<String, Object> model, RedirectAttributes flash, HttpServletResponse response) {
 		response.setContentType("image/jpeg");
@@ -76,11 +90,18 @@ public class RecursoController {
 			return "redirect:/listarRecursos";
 		}
 		
+		
+		List<RecursoEscolaridad> listaEscolaridad = recursoEscolaridadService.findByCodRecurso(codRecurso);
+		
 		model.put("recurso",recurso);
 		model.put("recursoEdit",recurso);
 		model.put("titulo", "Información de " + recurso.getDescRecurso());
 		model.put("listaEstadoCivil", estadoCivilService.findAll());
 		model.put("listaTipoSangre", tipoSangreService.findAll());
+		
+		model.put("listaEscolaridad", listaEscolaridad);
+		model.put("listaGradoEscolar", gradoEscolarService.findAll());
+		model.put("listaEtapaEscolar", estapaEscolarService.findAll());
 		
 		return "verRecurso";
 	}

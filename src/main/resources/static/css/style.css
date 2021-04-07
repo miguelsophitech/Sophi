@@ -405,5 +405,11 @@ font-size: 12px;
 	width: 100%;
 	border: none;
   	border-bottom: 1px solid green;
-/* 	border-color: #c02c27; */
+}
+
+.cardCE{
+	font-size: 14px;
+	font-weight: 700;
+	max-width: 20rem;
+	border-color: #e3e6f0;
 }

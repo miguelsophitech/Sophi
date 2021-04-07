@@ -69,7 +69,6 @@ $(document).ready(function() {
   }
   
   function hideByAlergias(valor){
-	  console.log(valor);
 	  if(valor==='Si'){
 		  $("#divAlergias").show();
 	  }else{
@@ -78,7 +77,6 @@ $(document).ready(function() {
   }
   
   function hideByEnfermedades(valor){
-	  console.log(valor);
 	  if(valor==='Si'){
 		  $("#divEnfermedades").show();
 	  }else{
