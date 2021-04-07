@@ -62,8 +62,8 @@ public class RecursoController {
 	@Autowired
 	private ITipoSangreService tipoSangreService;
   
-  @Autowired
-  private IAreaRecursoService areaRecursoService;
+	@Autowired
+	private IAreaRecursoService areaRecursoService;
 	
 	@GetMapping(value = "/verRecurso/{id}")
 	public String verRecurso(@PathVariable(value="id") Long codRecurso, Map<String, Object> model, RedirectAttributes flash, HttpServletResponse response) {
@@ -181,21 +181,6 @@ public class RecursoController {
 		status.setComplete();
 		flash.addFlashAttribute("success", mensajeFlash);
 		return "redirect:listarRecursos";
-	}
-	
-	@RequestMapping(value = "/guardarDatosEmpresaRecurso", method = RequestMethod.POST)
-	public String guardarDatosEmpresaRecurso(@Valid Recurso recurso, BindingResult result, RedirectAttributes flash, SessionStatus status) {
-		if(result.hasErrors()) {
-			return "verRecurso/"+recurso.getCodRecurso();
-		}
-		
-		String mensajeFlash = "Recurso editado con éxito!";
-		System.out.println("Tiene que pasar por aquí a fuerza");
-		
-		recursoService.save(recurso);
-		status.setComplete();
-		flash.addFlashAttribute("success", mensajeFlash);
-		return "redirect:verRecurso/"+recurso.getCodRecurso();
 	}
 	
 	@RequestMapping(value = "/formRecurso/{id}")
