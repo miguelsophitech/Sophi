@@ -6,4 +6,5 @@ import com.sophi.app.models.entity.Herramienta;
 
 public interface IHerramientaDao extends CrudRepository<Herramienta, Long>{
 
+	Herramienta findByCodRecurso(Long codRecurso);
 }
