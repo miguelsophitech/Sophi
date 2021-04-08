@@ -300,7 +300,8 @@
 																				<i class="fa fa-phone mr-2"></i><span style="font-size: small;" th:text="${contactoEmergencia.descTelContactoEmergencia}"></span>
 																			</div>
 																			<div class="button mt-2 d-flex flex-row align-items-center"> 
-																				<button class="btn btn-sm btn-outline-primary w-100">Editar</button> 
+																				<button class="btn btn-sm btn-outline-primary w-100" th:id="${contactoEmergencia.codContactoEmergencia}" onclick="editarContactoEmergencia(this.id);">Editar</button> 
+																				<button class="btn btn-sm btn-primary w-100 ml-2" th:id="${contactoEmergencia.codContactoEmergencia}" onclick="borrarContactoEmergencia(this.id);">Borrar</button> 
 																			</div>
 																		</div>
 																	</div>
@@ -742,6 +743,8 @@
 									</div>
 								</div>
 							</div>
+							<input type="hidden" id="codContactoEmergencia" value="" /> 
+							
 							
 						</div>
 				       <div class="modal-footer">

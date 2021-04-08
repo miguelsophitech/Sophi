@@ -263,11 +263,10 @@ public class RecursoController {
 			@RequestParam String fi,
 			@RequestParam String ff, Model model) {
 		
-		RecursoEscolaridad re ;
 		
-		re = recursoEscolaridadService.findById(cre);
-		if (re == null) {
-			re = new RecursoEscolaridad();
+		System.out.println("cre"  + cre);
+		if (cre == null) {
+			RecursoEscolaridad re = new RecursoEscolaridad();
 			re.setCodEtapaEscolar(ee);
 			re.setDescInstitucionAcademica(ia);
 			re.setDescCedulaProfesional(cp);
@@ -276,7 +275,9 @@ public class RecursoController {
 			re.setDescCarrera(ca);
 			re.setFecInicio(fi);
 			re.setFecFin(ff);
+			recursoEscolaridadService.save(re);
 		} else {
+		RecursoEscolaridad re =	recursoEscolaridadService.findById(cre);
 		re.setCodEtapaEscolar(ee);
 		re.setDescInstitucionAcademica(ia);
 		re.setDescCedulaProfesional(cp);
@@ -285,8 +286,9 @@ public class RecursoController {
 		re.setDescCarrera(ca);
 		re.setFecInicio(fi);
 		re.setFecFin(ff);
-		}
 		recursoEscolaridadService.save(re);
+		}
+		
 		return "ok";
 
 	}
@@ -328,20 +330,34 @@ public class RecursoController {
 	
 	@RequestMapping(value="/guardaContactoEmergencia",method = RequestMethod.GET)
 	@ResponseBody
-	public String guardaContactoEmergencia(@RequestParam String nc, 
+	public String guardaContactoEmergencia(@RequestParam Long crc, @RequestParam String nc, 
 			@RequestParam String tc, 
 			@RequestParam Long pc,
 			@RequestParam Long ed,  
 			@RequestParam Long cr, Model model) {
 		
-		ContactoEmergencia ce = new ContactoEmergencia();
-		ce.setDescNombreContacto(nc);
-		ce.setCodParentesco(pc);
-		ce.setValDependienteEconomico(ed);
-		ce.setCodRecurso(cr);
-		ce.setDescTelContactoEmergencia(tc);
 		
-		contactoEmergenciaService.save(ce);
+		if (crc == null) {
+			ContactoEmergencia ce = new ContactoEmergencia();
+			ce.setDescNombreContacto(nc);
+			ce.setCodParentesco(pc);
+			ce.setValDependienteEconomico(ed);
+			ce.setCodRecurso(cr);
+			ce.setDescTelContactoEmergencia(tc);
+			contactoEmergenciaService.save(ce);
+		}else {
+			ContactoEmergencia ce = contactoEmergenciaService.findOne(crc);
+			ce.setDescNombreContacto(nc);
+			ce.setCodParentesco(pc);
+			ce.setValDependienteEconomico(ed);
+			ce.setCodRecurso(cr);
+			ce.setDescTelContactoEmergencia(tc);
+			contactoEmergenciaService.save(ce);
+		}
+		
+		
+		
+		
 		return "ok";
 
 	}
@@ -353,6 +369,29 @@ public class RecursoController {
 		model.addAttribute("listaParentesco", parentescoService.findAll());
 		
 		return "verRecurso :: fragmentContactoEmergencia";
+	}
+	
+	@RequestMapping(value="/obtieneContactosEmergenciaUnico",method = RequestMethod.GET)
+	@ResponseBody
+	public List<String> obtieneContactosEmergenciaUnico(@RequestParam Long ce, Model model) {
+		
+		ContactoEmergencia contactoEmergencia = contactoEmergenciaService.findOne(ce);
+		List<String> listaDetalle = new ArrayList<String>();
+		listaDetalle.add(contactoEmergencia.getCodContactoEmergencia().toString());
+		listaDetalle.add(contactoEmergencia.getDescNombreContacto());
+		listaDetalle.add(contactoEmergencia.getDescTelContactoEmergencia());
+		listaDetalle.add(contactoEmergencia.getValDependienteEconomico().toString());
+		listaDetalle.add(contactoEmergencia.getParentesco().getCodParentesco().toString());
+
+		return listaDetalle;
+	}
+	
+	@RequestMapping(value="/borrarContactoEmergencia",method = RequestMethod.GET)
+	@ResponseBody
+	public String borrarContactoEmergencia(@RequestParam Long cre, Model model) {
+		ContactoEmergencia ce = contactoEmergenciaService.findOne(cre);
+		contactoEmergenciaService.delete(ce);
+		return "ok";
 	}
 	
 }

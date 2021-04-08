@@ -73,7 +73,10 @@
 								<p style="font-size: 13px;"><i class="fa fa-envelope mr-2"></i>[[${recurso.descCorreoElectronico}]]</p>
 								<p style="font-size: 13px;"><i class="fa fa-phone mr-2"></i>[[${recurso.descTelCelular}]] <img style="width: 12px; cursor: pointer; padding-bottom: 3px;" th:src="@{/img/whapp.png}" th:attr="onclick=|loadWA('${recurso.descTelCelular}','${recurso.descRecurso}')|" ></p>
 							</div>
-							<div class="button mt-2 d-flex flex-row align-items-center"> <a th:href="@{/verRecurso/} + ${recurso.codRecurso}" class="btn btn-sm btn-outline-primary w-100">Ver</a> <a th:href="@{/formRecurso/} + ${recurso.codRecurso}" class="btn btn-sm btn-primary w-100 ml-2">Editar</a> </div>
+							<div class="button mt-2 d-flex flex-row align-items-center"> 
+							<a th:href="@{/verRecurso/} + ${recurso.codRecurso}" class="btn btn-sm btn-outline-primary w-100">Ver</a> 
+<!-- 							<a th:href="@{/formRecurso/} + ${recurso.codRecurso}" class="btn btn-sm btn-primary w-100 ml-2">Editar</a>  -->
+							</div>
 						</div>
 					</div>
           		</div>

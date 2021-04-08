@@ -1,9 +1,5 @@
 $(document).ready(function() {
 	  
-	 $("#descRecurso").keypress(function() {
-		 myFunction(this);
-		 }
-	 ); 
 	 
 	 resetFormEscolaridad();
 	 resetFormContactoEmergencia();
@@ -53,12 +49,14 @@ $(document).ready(function() {
 	$("#telefonoContactoEmergencia").val("");
 	$("#validNombreContactoEmergencia").hide();
 	$("#validTelefonoContactoEmergencia").hide();
+	$("#codContactoEmergencia").val("");
 	$("#esDependiente").prop( "checked", false );
   }
   
   
   function registraContactoEmergencia(){
 	  var codRecurso = $("#codRecurso").val();
+	  var crc = $("#codContactoEmergencia").val();
 	  var nombreContacto = $("#nombreContactoEmergencia").val();
 	  var telefonoContacto =  $("#telefonoContactoEmergencia").val(); 
 	  var parentescoContacto = $("#parentescoContactoEmergencia").val();
@@ -79,7 +77,8 @@ $(document).ready(function() {
 		  $.ajax({
 			    type: "GET",
 			    url: "/guardaContactoEmergencia",
-			    data: {nc: nombreContacto, 
+			    data: {crc:crc,
+			    	nc: nombreContacto, 
 			    	tc: telefonoContacto,
 			    	pc: parentescoContacto,
 			    	ed: esDependiente,
@@ -93,6 +92,33 @@ $(document).ready(function() {
 			});	
 	  }
 			
+  }
+  
+  function editarContactoEmergencia(codContactoEmergencia){ 
+	  $.ajax({
+		    type: "GET",
+		    url: "/obtieneContactosEmergenciaUnico",
+		    data: {ce: codContactoEmergencia},
+			success: function(contacto){
+				var crc = encodeURIComponent(contacto[0]); //codRecursoContacto
+				var cn = contacto[1]; //nombre
+				var ct = contacto[2]; //telefono
+				var cp = encodeURIComponent(contacto[3]); //valdependiente
+				var vd = encodeURIComponent(contacto[4]); //parentesco
+				
+				
+				$("#codContactoEmergencia").val(crc);
+				$("#nombreContactoEmergencia").val(cn);
+				$("#telefonoContactoEmergencia").val(ct); 
+				$("#parentescoContactoEmergencia").val(vd);
+				if(cp === '1'){
+					$("#esDependiente").prop( "checked", true );
+				} else {
+					$("#esDependiente").prop( "checked", false );
+				}
+				$("#nuevaContactoEmergenciaModal").modal('show');
+		    }
+		});
   }
   
 
@@ -204,6 +230,23 @@ $(document).ready(function() {
 		    }
 		});	
   }
+  
+  //funcion que borra un registro de escolaridad
+  function borrarContactoEmergencia(codContactoEmergencia){
+	  var codRecurso = $("#codRecurso").val();
+	  $.ajax({
+		    type: "GET",
+		    url: "/borrarContactoEmergencia",
+		    data: {cre: codContactoEmergencia },
+			success: function(result){
+				var url = "/obtieneContactosEmergencia/?codRecurso="+codRecurso;
+				$("#divContactoEmergencia").load(url);
+		    }
+		});	
+  }
+  
+  
+  borrarContactoEmergencia
   
   //Envia fommulario para guardar/actualizar informacion
   function functionGuardar(){
