@@ -42,6 +42,7 @@ import com.sophi.app.models.service.IEstadoHerramientaService;
 import com.sophi.app.models.service.IHerramientaService;
 import com.sophi.app.models.service.IJornadaService;
 import com.sophi.app.models.service.IParentescoService;
+import com.sophi.app.models.service.IPerfilRecursoService;
 import com.sophi.app.models.service.IProveedorService;
 import com.sophi.app.models.service.IPuestoService;
 import com.sophi.app.models.service.IRecursoEscolaridadService;
@@ -103,6 +104,9 @@ public class RecursoController {
 	@Autowired
 	private IEstadoHerramientaService estadoHerramientaService;
 	
+	@Autowired
+	private IPerfilRecursoService perfilRecursoService;
+	
 	@GetMapping(value = "/verRecurso/{id}")
 	public String verRecurso(@PathVariable(value="id") Long codRecurso, Map<String, Object> model, RedirectAttributes flash, HttpServletResponse response) {
 		response.setContentType("image/jpeg");
@@ -129,6 +133,7 @@ public class RecursoController {
 		model.put("jornadaList", jornadaService.findAll());
 		model.put("tipoRecursoList", tipoRecursoService.findAll());
 		model.put("proveedorList",proveedorService.findAll());
+		model.put("perfilRecursoList", perfilRecursoService.findAll());
 		model.put("estadoCivilList", estadoCivilService.findAll());
 		model.put("titulo", "Información de " + recurso.getDescRecurso());
 		model.put("listaEstadoCivil", estadoCivilService.findAll());
