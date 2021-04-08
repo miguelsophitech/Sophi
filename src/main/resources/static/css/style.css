@@ -411,7 +411,8 @@ font-size: 12px;
 .cardCE{
 	font-size: 14px;
 	font-weight: 700;
-	max-width: 20rem;
+/* 	max-width: 20rem; */
+	width: 100%;
 	border-color: #e3e6f0;
 }
 

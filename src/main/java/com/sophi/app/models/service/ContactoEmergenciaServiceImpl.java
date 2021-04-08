@@ -39,4 +39,10 @@ public class ContactoEmergenciaServiceImpl implements IContactoEmergenciaService
 		contactoEmergenciaDao.delete(contactoEmergencia);
 	}
 
+	@Override
+	@Transactional(readOnly = true)
+	public List<ContactoEmergencia> findByCodRecurso(Long codRecurso) {
+		return contactoEmergenciaDao.findByCodRecurso(codRecurso);
+	}
+
 }

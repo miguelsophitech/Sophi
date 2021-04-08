@@ -10,7 +10,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -18,6 +18,8 @@ import javax.persistence.TemporalType;
 import javax.validation.constraints.NotEmpty;
 
 import org.springframework.format.annotation.DateTimeFormat;
+
+import com.sophi.app.Utiles;
 
 @Entity
 @Table(name = "RECURSOS_CONTACTO_EMERGENCIA")
@@ -30,17 +32,21 @@ public class ContactoEmergencia implements Serializable {
 	@Column(name = "cod_contacto_emergencia")
 	private Long codContactoEmergencia;
 	
-	@NotEmpty(message = "Este dato no debe estar vacío")
+	@Column(name = "cod_recurso")
+	private Long codRecurso;
+	
 	@Column(name = "desc_nombre_contacto")
 	private String descNombreContacto;
 	
-	@NotEmpty(message = "Este dato no debe estar vacío")
 	@Column(name = "desc_tel_contacto_emergencia")
 	private String descTelContactoEmergencia;
 	
-	@NotEmpty(message = "Este dato no debe estar vacío")
 	@Column(name = "cod_parentesco")
 	private Long codParentesco;
+	
+	@OneToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "cod_parentesco",insertable = false, updatable = false)
+	private Parentesco parentesco;
 	
 	@Column(name = "fec_registro")
 	@Temporal(TemporalType.TIMESTAMP)
@@ -49,22 +55,26 @@ public class ContactoEmergencia implements Serializable {
 	
 	@Column(name = "val_dependiente_economico")
 	private Long valDependienteEconomico;
-	
+
 	@PrePersist
 	public void prePersist() {
-		fecRegistro = new Date();
+		fecRegistro = new Utiles().getFechaActual();
 	}
 	
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "cod_recurso")
-	private Recurso recurso;
-
 	public Long getCodContactoEmergencia() {
 		return codContactoEmergencia;
 	}
 
 	public void setCodContactoEmergencia(Long codContactoEmergencia) {
 		this.codContactoEmergencia = codContactoEmergencia;
+	}
+
+	public Long getCodRecurso() {
+		return codRecurso;
+	}
+
+	public void setCodRecurso(Long codRecurso) {
+		this.codRecurso = codRecurso;
 	}
 
 	public String getDescNombreContacto() {
@@ -91,6 +101,14 @@ public class ContactoEmergencia implements Serializable {
 		this.codParentesco = codParentesco;
 	}
 
+	public Parentesco getParentesco() {
+		return parentesco;
+	}
+
+	public void setParentesco(Parentesco parentesco) {
+		this.parentesco = parentesco;
+	}
+
 	public Date getFecRegistro() {
 		return fecRegistro;
 	}
@@ -98,7 +116,7 @@ public class ContactoEmergencia implements Serializable {
 	public void setFecRegistro(Date fecRegistro) {
 		this.fecRegistro = fecRegistro;
 	}
-	
+
 	public Long getValDependienteEconomico() {
 		return valDependienteEconomico;
 	}
@@ -106,18 +124,6 @@ public class ContactoEmergencia implements Serializable {
 	public void setValDependienteEconomico(Long valDependienteEconomico) {
 		this.valDependienteEconomico = valDependienteEconomico;
 	}
-
-	public Recurso getRecurso() {
-		return recurso;
-	}
-
-	public void setRecurso(Recurso recurso) {
-		this.recurso = recurso;
-	}
-
-	public static long getSerialversionuid() {
-		return serialVersionUID;
-	}
-
+	
 	
 }

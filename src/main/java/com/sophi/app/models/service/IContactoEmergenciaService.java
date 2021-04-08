@@ -13,5 +13,7 @@ public interface IContactoEmergenciaService {
 	public ContactoEmergencia findOne(Long codContactoEmergencia);
 	
 	public void delete(ContactoEmergencia contactoEmergencia);
+	
+	public List<ContactoEmergencia> findByCodRecurso(Long codRecurso);
 
 }

@@ -251,13 +251,16 @@
 	   											
 	   											<fieldset class="border p-2">
 	   												<legend  class="w-auto dg-campo">&nbsp;ESCOLARIDAD&nbsp;</legend>
-	   												<ul class="list-group">
+	   												<div id="divEscolaridad">
+	   												<ul th:fragment="fragmentEscolaridad"  class="list-group">
 													  <li class="list-group-item d-flex justify-content-between align-items-center dg-info" th:each="recursoEscolaridad : ${listaEscolaridad}">
 													     [[${recursoEscolaridad.descInstitucionAcademica}]] - [[${recursoEscolaridad.gradoEscolar.descGradoEscolaridad}]] - [[${recursoEscolaridad.etapaEscolar.descEtapaEscolar}]]
-													    <i class="fas fa-trash-alt dg-edit-escolar" style="cursor: pointer;" th:id="${recursoEscolaridad.codRecursoEscolaridad}"></i>
+													    <i class="fas fa-trash-alt dg-edit-escolar" style="cursor: pointer;" th:id="${recursoEscolaridad.codRecursoEscolaridad}" onclick="borrarEscolaridad(this.id);"></i>
 													  </li>
 													</ul>
-													&nbsp;<i class="fa fa-plus dg-campo dg-edit-escolar" aria-hidden="true" style="cursor: pointer;"></i><span style="cursor: pointer;" class="dg-campo dg-edit-escolar">&nbsp;Agregar</span>
+													</div>
+													<br>
+													&nbsp;<i class="fa fa-plus dg-campo dg-edit-escolar" data-toggle="modal" data-target="#nuevaEscolaridadModal" aria-hidden="true" style="cursor: pointer;"></i><span data-toggle="modal" data-target="#nuevaEscolaridadModal" style="cursor: pointer;" class="dg-campo dg-edit-escolar">&nbsp;Agregar</span>
 	   											</fieldset>
 	   											
 	   											<br>
@@ -265,48 +268,45 @@
 												<!-- Cierre de bloque fomulario para con datos editable -->
 												
 												<!-- Inicia bloque de contactos de emergencia -->
-													<div class="card mb-3 cardCE">
+												<div id="divContactoEmergencia">
+													<div th:fragment="fragmentContactoEmergencia" class="card mb-3 cardCE" >
 														<div class="card-header" style="color: #898796; ">
 															<div class="d-flex justify-content-between">
 																<span>Contactos de emergencia</span>
-																<i class="fa fa-plus" aria-hidden="true"></i>
+																<i class="fa fa-plus" style="cursor: pointer;" aria-hidden="true" data-toggle="modal" data-target="#nuevaContactoEmergenciaModal"></i>
 															</div>
 														</div>
 														<div class="card-body text-secondary">
 														
 														<div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+														  
 														  <ol class="carousel-indicators">
-														    <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
-														    <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
-<!-- 														    <li data-target="#carouselExampleIndicators" data-slide-to="2"></li> -->
+														    <li th:each="contactoEmergencia, iterator : ${listaContactoEmergencia}" th:class="${iterator.index == 0} ? 'active' : '' " data-target="#carouselExampleIndicators" th:data-slide-to="${iterator.index}" class=""></li>
+<!-- 														    <li data-target="#carouselExampleIndicators" data-slide-to="1"></li> -->
 														  </ol>
+														  
 														  <div class="carousel-inner">
-														    <div class="carousel-item active">
-														    
-														    <div class="p-3">
-																<div class="d-flex align-items-center">
-																
-																	<div class=" w-100">
-																		<h6 class="mb-0 mt-0" >Deniss Jimenez</h6>
-																		<span style="font-size: 10px;">Esposa</span>
-																		<div style="margin: 10px 0px;">
-																			<i class="fa fa-phone mr-2"></i><span style="font-size: small;">5559530820</span>
-																		</div>
-																		<div class="button mt-2 d-flex flex-row align-items-center"> 
-																			<button class="btn btn-sm btn-outline-primary w-100">Editar</button> 
+														    <div class="carousel-item" th:each="contactoEmergencia, iterator : ${listaContactoEmergencia}" th:classappend="${iterator.index == 0} ? 'active' : '' ">
+															    <div class="card p-3">
+																	<div class="d-flex align-items-center">
+																	
+																		<div class=" w-100">
+																			<h6 class="mb-0 mt-0" th:text="${contactoEmergencia.descNombreContacto}"></h6>
+																			<span style="font-size: 10px;" th:text="${contactoEmergencia.parentesco.descParentesco}"></span> &nbsp;<i th:if="${contactoEmergencia.valDependienteEconomico == 1}" style="color:green;" class="fas fa-hand-holding-usd"></i>
+																			<div style="margin: 10px 0px;">
+																				<i class="fa fa-phone mr-2"></i><span style="font-size: small;" th:text="${contactoEmergencia.descTelContactoEmergencia}"></span>
+																			</div>
+																			<div class="button mt-2 d-flex flex-row align-items-center"> 
+																				<button class="btn btn-sm btn-outline-primary w-100">Editar</button> 
+																			</div>
 																		</div>
 																	</div>
 																</div>
-															</div>
-														      
 														    </div>
-														    <div class="carousel-item">
-														      <img class="d-block w-100" src="" alt="Second slide">
-														    </div>
-<!-- 														    <div class="carousel-item"> -->
-<!-- 														      <img class="d-block w-100" src="..." alt="Third slide"> -->
-<!-- 														    </div> -->
+														    
+														    
 														  </div>
+														  
 														  <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
 														    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
 														    <span class="sr-only">Previous</span>
@@ -315,14 +315,16 @@
 														    <span class="carousel-control-next-icon" aria-hidden="true"></span>
 														    <span class="sr-only">Next</span>
 														  </a>
+														  
 														</div>
 														
 														</div>
 													</div>
+													</div>
 													<!-- Termina bloque de contactos de emergencia -->
 
 											</div>
-                            					<div class="tab-pane fade show active" id="datos-empresa" role="tabpanel" aria-labelledby="datos-empresa-tab">
+                            					<div class="tab-pane fade show" id="datos-empresa" role="tabpanel" aria-labelledby="datos-empresa-tab">
                             						<form id="formDatosEmpresa" th:action="@{/guardaActualizaRecurso}" th:object="${recurso}" method="post">
                                         			<table class="table table-borderless">
 														<tr>
@@ -615,6 +617,123 @@
 
 				</div>
 				<!-- End of Main Content -->
+				
+				
+				<!-- Modal Crear Escolaridad -->
+				<div class="modal fade" id="nuevaEscolaridadModal" tabindex="-1" role="dialog" aria-labelledby="nuevaEscolaridadModalLabel" aria-hidden="true">
+				    <div class="modal-dialog" role="document">
+				      <div class="modal-content">
+				        <div class="modal-header">
+				          	<h6 class="modal-title" id="nuevaEscolaridadModalLabel">Escolaridad</h6>
+				          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+				            <span aria-hidden="true">&times;</span>
+				          </button>
+				        </div>
+				        <div class="modal-body" style="font-size: 14px;">
+<!-- 						<form th:object="${herramienta}" method="post"> -->
+							<div class="row">
+								<div class="form-group col-12 col-md-12">
+									<label class="col-form-label">Instituci&oacute;n acad&eacute;mica*</label>
+									<input type="text" id="institucionAcademica" class="form-control" maxlength="40">
+									<small id="validInstitucionAcademica" class="form-text text-danger">Dato requerido</small>
+								</div>
+							</div>
+							m
+							<div class="row">
+								<div class="form-group col-6 col-md-6">
+									<label class="col-form-label">Grado escolar*</label>
+									<select class="form-control" id="gradoEscolar">
+										<option th:each="gradoEscolar : ${listaGradoEscolar}" th:value="${gradoEscolar.codGradoEscolaridad}" th:text="${gradoEscolar.descGradoEscolaridad}"> </option>
+									</select> 
+								</div>
+								
+								<div class="form-group col-6 col-md-6">
+									<label class="col-form-label">Etapa escolar*</label>
+									<select class="form-control" id="etapaEscolar">
+										<option th:each="etapaEscolar : ${listaEtapaEscolar}" th:value="${etapaEscolar.codEtapaEscolar}" th:text="${etapaEscolar.descEtapaEscolar}"> </option>
+									</select>
+								</div>
+							</div>
+							
+							<div class="row">
+								<div class="form-group col-6 col-md-6">
+									<label class="col-form-label">Cedula profesional</label>
+									<input type="text" id="cedulaProfesional" class="form-control" maxlength="20"/>
+								</div>
+								<div class="form-group col-6 col-md-6">
+									<label class="col-form-label">Carrera:</label>
+									<input type="text" id="carreraEscolaridad" class="form-control" maxlength="50"/>
+								</div>
+							</div>
+							<input type="hidden" id="codRecurso" th:value="${recurso.codRecurso}" /> 
+							
+<!-- 							</form> -->
+						</div>
+				       <div class="modal-footer">
+				    		<button class="btn btn-secondary" onclick="resetFormEscolaridad();" type="button" data-dismiss="modal">Cancelar</button>
+				          	<button type="submit" onclick="registraEscolaridad();" class="btn btn-primary">Aceptar</button>
+				  		</div>
+				          
+				        </div>
+				      </div>
+				    </div>
+				    
+				<!-- Modal Crear ContactoEmergencia -->
+				<div class="modal fade" id="nuevaContactoEmergenciaModal" tabindex="-1" role="dialog" aria-labelledby="nuevaEContactoEmergenciaModalLabel" aria-hidden="true">
+				    <div class="modal-dialog" role="document">
+				      <div class="modal-content">
+				        <div class="modal-header">
+				          	<h6 class="modal-title" id="nuevaContactoEmergenciaModalLabel">Contacto de emergencia</h6>
+				          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+				            <span aria-hidden="true">&times;</span>
+				          </button>
+				        </div>
+				        <div class="modal-body" style="font-size: 14px;">
+							<div class="row">
+								<div class="form-group col-12 col-md-12">
+									<label class="col-form-label">Nombre del contacto*</label>
+									<input type="text" id="nombreContactoEmergencia" class="form-control" maxlength="60">
+									<small id="validNombreContactoEmergencia" class="form-text text-danger">Dato requerido</small>
+								</div>
+							</div>
+							
+							<div class="row">
+								<div class="form-group col-6 col-md-6">
+									<label class="col-form-label">Telefono del contacto*</label>
+									<input type="text" id="telefonoContactoEmergencia" class="form-control" maxlength="12" onkeypress='return event.charCode >= 48 && event.charCode <= 57'>
+									<small id="validTelefonoContactoEmergencia" class="form-text text-danger">Dato requerido</small>
+								</div>
+								
+								<div class="form-group col-6 col-md-6">
+									<label class="col-form-label">Parentesco*</label>
+									<select class="form-control" id="parentescoContactoEmergencia">
+										<option th:each="parentesco : ${listaParentesco}" th:value="${parentesco.codParentesco}" th:text="${parentesco.descParentesco}"> </option>
+									</select>
+								</div>
+							</div>
+							
+							<div class="row">
+								<div class="col-6 col-md-6">
+									<div class="form-check">
+										<input class="form-check-input" type="checkbox" value="" id="esDependiente"> 
+										<label class="form-check-label" for="esDependiente"> Es dependiente economico </label>
+									</div>
+								</div>
+							</div>
+							
+						</div>
+				       <div class="modal-footer">
+				    		<button class="btn btn-secondary" onclick="resetFormContactoEmergencia();" type="button" data-dismiss="modal">Cancelar</button>
+				          	<button type="submit" onclick="registraContactoEmergencia();" class="btn btn-primary">Aceptar</button>
+				  		</div>
+				          
+				        </div>
+				      </div>
+				    </div>
+				
+				
+				
+				
 				
 				<!-- Modal Crear Herramienta -->
 				<div class="modal fade" id="nuevaHerramientaModal" tabindex="-1" role="dialog" aria-labelledby="nuevaHerramientaModalLabel" aria-hidden="true">
