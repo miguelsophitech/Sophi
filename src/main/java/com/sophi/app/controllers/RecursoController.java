@@ -3,6 +3,8 @@ package com.sophi.app.controllers;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
@@ -10,6 +12,7 @@ import javax.validation.Valid;
 
 import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -26,14 +29,21 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.sophi.app.Utiles;
+import com.sophi.app.models.entity.ContactoEmergencia;
 import com.sophi.app.models.entity.Herramienta;
 import com.sophi.app.models.entity.Recurso;
-import com.sophi.app.models.service.IAreaRecursoService;
+import com.sophi.app.models.entity.RecursoEscolaridad;
 import com.sophi.app.models.service.IEstadoCivilService;
+import com.sophi.app.models.service.IEtapaEscolarService;
+import com.sophi.app.models.service.IGradoEscolarService;
+import com.sophi.app.models.service.IAreaRecursoService;
+import com.sophi.app.models.service.IContactoEmergenciaService;
 import com.sophi.app.models.service.IHerramientaService;
 import com.sophi.app.models.service.IJornadaService;
+import com.sophi.app.models.service.IParentescoService;
 import com.sophi.app.models.service.IProveedorService;
 import com.sophi.app.models.service.IPuestoService;
+import com.sophi.app.models.service.IRecursoEscolaridadService;
 import com.sophi.app.models.service.IRecursoService;
 import com.sophi.app.models.service.ITipoRecursoService;
 import com.sophi.app.models.service.ITipoSangreService;
@@ -70,6 +80,21 @@ public class RecursoController {
 	@Autowired
 	private IHerramientaService herramientaService;
 	
+	@Autowired
+	private IRecursoEscolaridadService recursoEscolaridadService;
+	
+	@Autowired
+	private IGradoEscolarService gradoEscolarService;
+	
+	@Autowired
+	private IEtapaEscolarService estapaEscolarService;
+	
+	@Autowired
+	private IParentescoService parentescoService;
+	
+	@Autowired
+	private IContactoEmergenciaService contactoEmergenciaService;
+	
 	@GetMapping(value = "/verRecurso/{id}")
 	public String verRecurso(@PathVariable(value="id") Long codRecurso, Map<String, Object> model, RedirectAttributes flash, HttpServletResponse response) {
 		response.setContentType("image/jpeg");
@@ -86,6 +111,9 @@ public class RecursoController {
 			return "redirect:/listarRecursos";
 		}
 		
+		
+		List<RecursoEscolaridad> listaEscolaridad = recursoEscolaridadService.findByCodRecurso(codRecurso);
+		
 		model.put("recurso",recurso);
 		model.put("recursoEdit",recurso);
 		model.put("areaRecursoList", areaRecursoService.findAll());
@@ -98,6 +126,13 @@ public class RecursoController {
 		model.put("listaEstadoCivil", estadoCivilService.findAll());
 		model.put("listaTipoSangre", tipoSangreService.findAll());
 		model.put("herramienta", herramienta);
+		
+		model.put("listaEscolaridad", listaEscolaridad);
+		model.put("listaGradoEscolar", gradoEscolarService.findAll());
+		model.put("listaEtapaEscolar", estapaEscolarService.findAll());
+		
+		model.put("listaContactoEmergencia", contactoEmergenciaService.findByCodRecurso(codRecurso));
+		model.put("listaParentesco", parentescoService.findAll());
 		
 		return "verRecurso";
 	}
@@ -214,4 +249,74 @@ public class RecursoController {
 		model.put("estadoCivilList", estadoCivilService.findAll());
 		return "formRecurso";
 	}
+	
+	
+	@RequestMapping(value="/guardaEscolaridad",method = RequestMethod.GET)
+	@ResponseBody
+	public String guardaEscolaridad(@RequestParam Long cr, 
+			@RequestParam String ia, 
+			@RequestParam Long ge,
+			@RequestParam Long ee,  
+			@RequestParam String cp, Model model) {
+		
+		RecursoEscolaridad re = new RecursoEscolaridad();
+		re.setCodEtapaEscolar(ee);
+		re.setDescInstitucionAcademica(ia);
+		re.setDescCedulaProfesional(cp);
+		re.setCodGradoEscolar(ge);
+		re.setCodRecurso(cr);
+		
+		recursoEscolaridadService.save(re);
+		return "ok";
+
+	}
+	
+	@RequestMapping(value="/obtieneEscolaridad",method = RequestMethod.GET)
+	public String obtieneEscolaridad(@RequestParam Long codRecurso, Model model) {
+		
+		model.addAttribute("listaGradoEscolar", gradoEscolarService.findAll());
+		model.addAttribute("listaEtapaEscolar", estapaEscolarService.findAll());
+		
+		List<RecursoEscolaridad> listaEscolaridad = recursoEscolaridadService.findByCodRecurso(codRecurso);
+		model.addAttribute("listaEscolaridad", listaEscolaridad);
+		return "verRecurso :: fragmentEscolaridad";
+	}
+	
+	@RequestMapping(value="/borrarEscolaridad",method = RequestMethod.GET)
+	@ResponseBody
+	public String borrarEscolaridad(@RequestParam Long cre, Model model) {
+		recursoEscolaridadService.delete(cre);
+		return "ok";
+
+	}
+	
+	@RequestMapping(value="/guardaContactoEmergencia",method = RequestMethod.GET)
+	@ResponseBody
+	public String guardaContactoEmergencia(@RequestParam String nc, 
+			@RequestParam String tc, 
+			@RequestParam Long pc,
+			@RequestParam Long ed,  
+			@RequestParam Long cr, Model model) {
+		
+		ContactoEmergencia ce = new ContactoEmergencia();
+		ce.setDescNombreContacto(nc);
+		ce.setCodParentesco(pc);
+		ce.setValDependienteEconomico(ed);
+		ce.setCodRecurso(cr);
+		ce.setDescTelContactoEmergencia(tc);
+		
+		contactoEmergenciaService.save(ce);
+		return "ok";
+
+	}
+	
+	@RequestMapping(value="/obtieneContactosEmergencia",method = RequestMethod.GET)
+	public String obtieneContactosEmergencia(@RequestParam Long codRecurso, Model model) {
+		
+		model.addAttribute("listaContactoEmergencia", contactoEmergenciaService.findByCodRecurso(codRecurso));
+		model.addAttribute("listaParentesco", parentescoService.findAll());
+		
+		return "verRecurso :: fragmentContactoEmergencia";
+	}
+	
 }

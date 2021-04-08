@@ -5,6 +5,9 @@ $(document).ready(function() {
 		 }
 	 ); 
 	 
+	 resetFormEscolaridad();
+	 resetFormContactoEmergencia();
+	 
 	//funcion que oculta dtalle de enfermedades/alergias/Embarazos a partir de opciones
 	 validaEnfermedadAlergias();
 	 
@@ -30,6 +33,93 @@ $(document).ready(function() {
 	 
   });
 
+
+  //funcion que resetea el formulario de escolaridad
+  function resetFormEscolaridad(){
+	$("#institucionAcademica").val("");
+	$("#validInstitucionAcademica").hide();
+  }
+  
+  function resetFormContactoEmergencia(){
+	$("#nombreContactoEmergencia").val("");
+	$("#telefonoContactoEmergencia").val("");
+	$("#validNombreContactoEmergencia").hide();
+	$("#validTelefonoContactoEmergencia").hide();
+	$("#esDependiente").prop( "checked", false );
+  }
+  
+  
+  function registraContactoEmergencia(){
+	  var codRecurso = $("#codRecurso").val();
+	  var nombreContacto = $("#nombreContactoEmergencia").val();
+	  var telefonoContacto =  $("#telefonoContactoEmergencia").val(); 
+	  var parentescoContacto = $("#parentescoContactoEmergencia").val();
+	  var esDependiente = 0;
+	  
+	  if( $('#esDependiente').prop('checked') ) {
+		  esDependiente = 1;
+		} else {
+			esDependiente = 0;
+		}
+	  
+	  if(nombreContacto.length === 0){
+		  $("#validNombreContactoEmergencia").show();
+	  } else if (telefonoContacto.length === 0){
+		  $("#validTelefonoContactoEmergencia").show();
+	  } else {
+		  
+		  $.ajax({
+			    type: "GET",
+			    url: "/guardaContactoEmergencia",
+			    data: {nc: nombreContacto, 
+			    	tc: telefonoContacto,
+			    	pc: parentescoContacto,
+			    	ed: esDependiente,
+			    	cr: codRecurso },
+				success: function(result){
+					var url = "/obtieneContactosEmergencia/?codRecurso="+codRecurso;
+					$("#divContactoEmergencia").load(url);
+					$("#nuevaContactoEmergenciaModal").modal('hide');
+					resetFormContactoEmergencia();
+			    }
+			});	
+	  }
+			
+  }
+  
+
+  //funcion que registra la escolaridad
+  function registraEscolaridad(){
+	  var instAcademica = $("#institucionAcademica").val();
+	  var gradoEscolar = $("#gradoEscolar").val();
+	  var etapaEscolar = $("#etapaEscolar").val();
+	  var codRecurso = $("#codRecurso").val();
+	  var cedProf = $("#cedulaProfesional").val();
+	  
+	  
+	  if(instAcademica.length === 0){
+		  $("#validInstitucionAcademica").show();
+	  } else {
+		  
+		  $.ajax({
+			    type: "GET",
+			    url: "/guardaEscolaridad",
+			    data: {cr: codRecurso, 
+			    	ia: instAcademica,
+			    	ge: gradoEscolar,
+			    	ee: etapaEscolar,
+			    	cp: cedProf },
+				success: function(result){
+					var url = "/obtieneEscolaridad/?codRecurso="+codRecurso;
+					$("#divEscolaridad").load(url);
+					$("#nuevaEscolaridadModal").modal('hide');
+					resetFormEscolaridad();
+			    }
+			});	
+	  }
+	  
+  }
+
   //funcion que oculta dtalle de enfermedades/alergias/Embarazos a partir de opciones
   function validaEnfermedadAlergias(){
 	  hideByAlergias($("#selectAlergias").val());
@@ -43,6 +133,21 @@ $(document).ready(function() {
 	  $("#divBtnGuardar").show();
 	  $(".dg-edit").removeAttr('disabled');
 	  $(".dg-edit").removeClass("dg-info").addClass("dg-info-edit");
+  }
+  
+  
+  //funcion que borra un registro de escolaridad
+  function borrarEscolaridad(codRegEscolaridad){
+	  var codRecurso = $("#codRecurso").val();
+	  $.ajax({
+		    type: "GET",
+		    url: "/borrarEscolaridad",
+		    data: {cre: codRegEscolaridad },
+			success: function(result){
+				var url = "/obtieneEscolaridad/?codRecurso="+codRecurso;
+				$("#divEscolaridad").load(url);
+		    }
+		});	
   }
   
   //Envia fommulario para guardar/actualizar informacion
@@ -83,7 +188,6 @@ $(document).ready(function() {
   }
   
   function hideByAlergias(valor){
-	  console.log(valor);
 	  if(valor==='Si'){
 		  $("#divAlergias").show();
 	  }else{
@@ -92,7 +196,6 @@ $(document).ready(function() {
   }
   
   function hideByEnfermedades(valor){
-	  console.log(valor);
 	  if(valor==='Si'){
 		  $("#divEnfermedades").show();
 	  }else{

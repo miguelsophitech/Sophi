@@ -4,7 +4,12 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -14,6 +19,7 @@ public class RecursoEscolaridad implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "cod_recurso_escolaridad")
 	private Long codRecursoEscolaridad;
 	
@@ -31,6 +37,14 @@ public class RecursoEscolaridad implements Serializable {
 	
 	@Column(name = "cod_etapa_escolar")
 	private Long codEtapaEscolar;
+	
+	@OneToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "cod_grado_escolar",insertable = false, updatable = false)
+	private GradoEscolar gradoEscolar ;
+	
+	@OneToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "cod_etapa_escolar",insertable = false, updatable = false)
+	private EtapaEscolar etapaEscolar;
 
 	public Long getCodRecursoEscolaridad() {
 		return codRecursoEscolaridad;
@@ -83,4 +97,22 @@ public class RecursoEscolaridad implements Serializable {
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
+
+	public GradoEscolar getGradoEscolar() {
+		return gradoEscolar;
+	}
+
+	public void setGradoEscolar(GradoEscolar gradoEscolar) {
+		this.gradoEscolar = gradoEscolar;
+	}
+
+	public EtapaEscolar getEtapaEscolar() {
+		return etapaEscolar;
+	}
+
+	public void setEtapaEscolar(EtapaEscolar etapaEscolar) {
+		this.etapaEscolar = etapaEscolar;
+	}
+	
+	
 }
