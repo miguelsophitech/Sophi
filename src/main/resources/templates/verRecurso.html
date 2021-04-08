@@ -1,250 +1,581 @@
 <!DOCTYPE html>
-<html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html lang="es" xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head th:replace="layout/layout::head"></head>
 
 <body id="page-top">
-	<input id="authGetName" type="hidden" th:value="${#authentication.getName()}"></input>
-	
+	<input id="authGetName" type="hidden"
+		th:value="${#authentication.getName()}"></input>
+
 	<!-- Page Wrapper -->
 	<div id="wrapper">
 
-	    <!-- Sidebar -->
-	    <ul th:replace="layout/layout::menu"> </ul>
-	    <!-- End of Sidebar -->
+		<!-- Sidebar -->
+		<ul th:replace="layout/layout::menu">
+		</ul>
+		<!-- End of Sidebar -->
 
-    	<!-- Content Wrapper -->
+		<!-- Content Wrapper -->
 		<div id="content-wrapper" class="d-flex flex-column">
 
 			<!-- Main Content -->
 			<div id="content">
-				
-				<header th:replace="layout/layout :: header"></header>
-         
-					<!-- Begin Page Content -->
-					<div class="container-fluid">
-						<!-- Page Heading -->
-						<h1 class="h3 mb-2 text-gray-800">Informaci&oacute;n del recurso</h1>
-						<a sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_RH')" th:href="@{'/listarRecursos'}" th:text="'&laquo; regresar al listado de recursos'"></a>
-			
-						<div class="card shadow mb-4">
-							<div class="collapse show">
-								<div class="card-body">
-									<div class="row">
-									
-					                    <div class="col-md-3">
-					                        <div class="profile-img">
-					                            <img th:if="${recurso.foto} != null" th:src="@{'/fotoRecursoPerfil/' + ${recurso.codRecurso}}" class="imgPrevRecurso mx-auto mb-3" alt="${recurso.descRecurso}"/>
-					                            <div class="file btn btn-lg btn-primary">
-					                                Cambiar foto
-					                                <input type="file" name="file"/>
-					                            </div>
-					                        </div>
-					                        <div class="profile-work" style="color: #495057; font-size: 12px; font-weight: 600">
-					                            <p style="font-size: 12px; font-weight: 700">Informaci&oacute;n</p>
-					                            
-					                            <i class="fa fa-user mr-2"></i><span th:text="${recurso.descRecurso} + ' ' + ${recurso.descApellidoPaterno}" class="mb-1" ></span><br>
-					                            <i class="fas fa-id-badge mr-2"></i><span class="mb-1">[[${recurso.puesto.descPuesto}]]</span><br>
-					                            <i class="fa fa-envelope mr-2"></i><span class="mb-1">[[${recurso.descCorreoElectronico}]]</span><br>
-					                            <i class="fa fa-envelope mr-2"></i><span class="mb-1">[[${recurso.descCorreoPersonal}]]</span><br>
-					                            <i class="fa fa-phone mr-2"></i><span class="mb-1">[[${recurso.descTelCelular}]]</span>
-                        					</div>
-					                    </div>
-					                    
-										<div class="col-md-9">
-                        					<div class="profile-head">
-                                    			<div class="d-flex justify-content-between">
-                                    				<h5 th:text="${recurso.descRecurso} + ' ' + ${recurso.descApellidoPaterno} + ' ' + ${recurso.descApellidoMaterno}"> </h5>
-                                    				<div id="divBtnEditar"><input id="iEditar" type="button" class="profile-edit-btn" onclick="functionEditar();" value="Editar"/></div>
-                                    				<div id="divBtnGuardar"><input id="iGuardar" type="submit" class="profile-edit-btn" onclick="functionGuardar();" value="Guardar"/></div>
-                                    			</div>
-                                    			<h6 style="font-size: 12px;" th:text="${recurso.puesto.descPuesto}"></h6>
-                                    			<p class="proile-rating">Evaluaci&oacute;n Q: <span>8/10</span></p>
-                            					
-                            					<ul class="nav nav-tabs" id="myTab" style="padding: 0px; margin: 0px;" role="tablist">
-                            					
-					                                <li class="nav-item">
-					                                    <a class="nav-link active" id="datos-generales-tab" data-toggle="tab" href="#datos-generales" aria-controls="datos-generales" role="tab" aria-selected="true">Datos generales</a>
-					                                </li>
-					                                <li class="nav-item">
-					                                    <a class="nav-link" id="datos-empresa-tab" data-toggle="tab" href="#datos-empresa" role="tab" aria-controls="datos-empresa" aria-selected="false">Datos empresa</a>
-					                                </li>
-					                                <li class="nav-item">
-					                                    <a class="nav-link" id="trayectoria-tab" data-toggle="tab" href="#trayectoria" role="tab" aria-controls="trayectoria" aria-selected="true">Trayectoria</a>
-					                                </li>
-                                					<li class="nav-item">
-					                                    <a class="nav-link" id="expediente-digital-tab" data-toggle="tab" href="#expediente-digital" role="tab" aria-controls="expediente-digital" aria-selected="true">Expediente digital</a>
-					                                </li>
-					                                
-                            					</ul>
-                        					</div>
-                        					
-                        					
-											<div class="tab-content profile-tab" id="myTabContent">
-<!-- 												<form id="formDatosGenerales" action="#" th:action="@{/guardaActualizaRecurso}" th:object="${recurso}" method="post"> -->
-												<div class="tab-pane fade show active" id="datos-generales" role="tabpanel" aria-labelledby="datos-generales-tab">
-												<br>
-												<form id="formDatosGenerales" th:action="@{/guardaActualizaRecurso}" th:object="${recurso}" method="post">
 
-												<fieldset class="border p-2">
-	   												<legend  class="w-auto dg-campo" >&nbsp;GENERALES&nbsp;</legend>
-	   												<div class="row">
-														<div class="col-xl-3 col-sm-4 col-md-4 col-lg-3 form-group"> 
-															<span class="dg-campo">Nombre: </span>
-															<input class="form-control dg-info dg-edit"  type="text" placeholder="Sin informaci&oacute;n" th:field="*{descRecurso}"/>
+				<header th:replace="layout/layout :: header"></header>
+
+				<!-- Begin Page Content -->
+				<div class="container-fluid">
+					<!-- Page Heading -->
+					<h1 class="h3 mb-2 text-gray-800">Informaci&oacute;n del
+						recurso</h1>
+					<a sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_RH')"
+						th:href="@{'/listarRecursos'}"
+						th:text="'&laquo; regresar al listado de recursos'"></a>
+
+					<div class="card shadow mb-4">
+						<div class="collapse show">
+							<div class="card-body">
+								<div class="row">
+
+									<div class="col-md-3">
+										<div class="profile-img">
+											<img th:if="${recurso.foto} != null"
+												th:src="@{'/fotoRecursoPerfil/' + ${recurso.codRecurso}}"
+												class="imgPrevRecurso mx-auto mb-3"
+												alt="${recurso.descRecurso}" />
+											<div class="file btn btn-lg btn-primary">
+												Cambiar foto <input type="file" name="file" />
+											</div>
+										</div>
+										<div class="profile-work"
+											style="color: #495057; font-size: 12px; font-weight: 600">
+											<p style="font-size: 12px; font-weight: 700">Informaci&oacute;n</p>
+
+											<i class="fa fa-user mr-2"></i><span
+												th:text="${recurso.descRecurso} + ' ' + ${recurso.descApellidoPaterno}"
+												class="mb-1"></span><br> <i
+												class="fas fa-id-badge mr-2"></i><span class="mb-1">[[${recurso.puesto.descPuesto}]]</span><br>
+											<i class="fa fa-envelope mr-2"></i><span class="mb-1">[[${recurso.descCorreoElectronico}]]</span><br>
+											<i class="fa fa-envelope mr-2"></i><span class="mb-1">[[${recurso.descCorreoPersonal}]]</span><br>
+											<i class="fa fa-phone mr-2"></i><span class="mb-1">[[${recurso.descTelCelular}]]</span>
+										</div>
+									</div>
+
+									<div class="col-md-9">
+										<div class="profile-head">
+											<div class="d-flex justify-content-between">
+												<h5
+													th:text="${recurso.descRecurso} + ' ' + ${recurso.descApellidoPaterno} + ' ' + ${recurso.descApellidoMaterno}">
+												</h5>
+												<div id="divBtnEditar">
+													<input id="iEditar" type="button" class="profile-edit-btn"
+														onclick="functionEditar();" value="Editar" />
+												</div>
+												<div id="divBtnGuardar">
+													<input id="iGuardar" type="submit" class="profile-edit-btn"
+														onclick="functionGuardar();" value="Guardar" />
+												</div>
+											</div>
+											<h6 style="font-size: 12px;"
+												th:text="${recurso.puesto.descPuesto}"></h6>
+											<p class="proile-rating">
+												Evaluaci&oacute;n Q: <span>8/10</span>
+											</p>
+
+											<ul class="nav nav-tabs" id="myTab"
+												style="padding: 0px; margin: 0px;" role="tablist">
+
+												<li class="nav-item"><a class="nav-link active"
+													id="datos-generales-tab" data-toggle="tab"
+													href="#datos-generales" aria-controls="datos-generales"
+													role="tab" aria-selected="true">Datos generales</a></li>
+												<li class="nav-item"><a class="nav-link"
+													id="datos-empresa-tab" data-toggle="tab"
+													href="#datos-empresa" role="tab"
+													aria-controls="datos-empresa" aria-selected="false">Datos
+														empresa</a></li>
+												<li class="nav-item"><a class="nav-link"
+													id="trayectoria-tab" data-toggle="tab" href="#trayectoria"
+													role="tab" aria-controls="trayectoria" aria-selected="true">Trayectoria</a>
+												</li>
+												<li class="nav-item"><a class="nav-link"
+													id="expediente-digital-tab" data-toggle="tab"
+													href="#expediente-digital" role="tab"
+													aria-controls="expediente-digital" aria-selected="true">Expediente
+														digital</a></li>
+
+											</ul>
+										</div>
+
+
+										<div class="tab-content profile-tab" id="myTabContent">
+											<!-- 												<form id="formDatosGenerales" action="#" th:action="@{/guardaActualizaRecurso}" th:object="${recurso}" method="post"> -->
+											<div class="tab-pane fade show active" id="datos-generales"
+												role="tabpanel" aria-labelledby="datos-generales-tab">
+												<br>
+												<form id="formDatosGenerales"
+													th:action="@{/guardaActualizaRecurso}"
+													th:object="${recurso}" method="post">
+
+													<fieldset class="border p-2">
+														<legend class="w-auto dg-campo">&nbsp;GENERALES&nbsp;</legend>
+														<div class="row">
+															<div
+																class="col-xl-3 col-sm-4 col-md-4 col-lg-3 form-group">
+																<span class="dg-campo">Nombre: </span> <input
+																	class="form-control dg-info dg-edit" type="text"
+																	placeholder="Sin informaci&oacute;n"
+																	th:field="*{descRecurso}" />
+															</div>
+															<div
+																class="col-xl-2 col-sm-4 col-md-4 col-lg-3 form-group">
+																<span class="dg-campo">Ap. Materno: </span> <input
+																	class="form-control dg-info dg-edit" type="text"
+																	placeholder="Sin informaci&oacute;n"
+																	th:field="*{descApellidoPaterno}" />
+															</div>
+															<div
+																class="col-xl-2 col-sm-4 col-md-4 col-lg-3 form-group">
+																<span class="dg-campo">Ap. Paterno: </span> <input
+																	class="form-control dg-info dg-edit" type="text"
+																	placeholder="Sin informaci&oacute;n"
+																	th:field="*{descApellidoMaterno}" />
+															</div>
+															<div
+																class="col-xl-2 col-sm-4 col-md-4 col-lg-3 form-group">
+																<span class="dg-campo">Tel: </span> <input
+																	class="form-control dg-info dg-edit" type="text"
+																	placeholder="Sin informaci&oacute;n"
+																	th:field="*{descTelCelular}" />
+															</div>
+															<div
+																class="col-xl-3 col-sm-4 col-md-4 col-lg-3 form-group">
+																<span class="dg-campo">Correo personal: </span> <input
+																	class="form-control dg-info dg-edit" type="email"
+																	placeholder="Sin informaci&oacute;n"
+																	th:field="*{descCorreoPersonal}" />
+															</div>
+															<div
+																class="col-xl-3 col-sm-4 col-md-4 col-lg-3 form-group">
+																<span class="dg-campo">Nacimiento: </span> <input
+																	class="form-control dg-info dg-edit" type="date"
+																	placeholder="Sin informaci&oacute;n"
+																	th:field="*{fecNacimiento}" />
+															</div>
+															<div
+																class="col-xl-1 col-sm-4 col-md-4 col-lg-3 form-group">
+																<span class="dg-campo">Genero: </span> <select
+																	id="selectGenero" class="form-control dg-info dg-edit"
+																	style="padding: 0;"
+																	onchange="hideByGenero(this.value);"
+																	th:field="*{descGenero}">
+																	<option th:value="'M'" th:text="M"></option>
+																	<option th:value="'F'" th:text="F"></option>
+																</select>
+															</div>
+															<div
+																class="col-xl-3 col-sm-4 col-md-4 col-lg-3 form-group">
+																<span class="dg-campo">RFC: </span> <input
+																	class="form-control dg-info dg-edit" type="text"
+																	placeholder="Sin informaci&oacute;n"
+																	th:field="*{descRfc}" />
+															</div>
+															<div
+																class="col-xl-3 col-sm-4 col-md-4 col-lg-3 form-group">
+																<span class="dg-campo">CURP: </span> <input
+																	class="form-control dg-info dg-edit" type="text"
+																	placeholder="Sin informaci&oacute;n"
+																	th:field="*{descCurp}" />
+															</div>
+															<div
+																class="col-xl-2 col-sm-4 col-md-4 col-lg-3 form-group">
+																<span class="dg-campo">NSS: </span> <input
+																	class="form-control dg-info dg-edit" type="text"
+																	placeholder="Sin informaci&oacute;n"
+																	th:field="*{descNss}" />
+															</div>
+
+															<div
+																class="col-xl-3 col-sm-4 col-md-4 col-lg-3 form-group">
+																<span class="dg-campo">Estado civil: </span> <select
+																	class="form-control dg-info dg-edit"
+																	style="padding: 0;" th:field="*{codEstadoCivil}">
+																	<option th:each="estadoCivil : ${listaEstadoCivil}"
+																		th:value="${estadoCivil.codEstadoCivil}"
+																		th:text="${estadoCivil.descEstadoCivil}"></option>
+																</select>
+															</div>
+															<div
+																class="col-xl-2 col-sm-4 col-md-4 col-lg-3 form-group">
+																<span class="dg-campo">No. hijos: </span> <input
+																	class="form-control dg-info dg-edit" type="number"
+																	max="10" min="0" step="1"
+																	placeholder="Sin informaci&oacute;n"
+																	th:field="*{valNumeroHijos}" />
+															</div>
 														</div>
-														<div class="col-xl-2 col-sm-4 col-md-4 col-lg-3 form-group"> 
-														 	<span class="dg-campo">Ap. Materno: </span>
-														 	<input class="form-control dg-info dg-edit"  type="text" placeholder="Sin informaci&oacute;n" th:field="*{descApellidoPaterno}"/>
-														 </div>
-														 <div class="col-xl-2 col-sm-4 col-md-4 col-lg-3 form-group"> 
-															<span class="dg-campo">Ap. Paterno: </span>
-															<input class="form-control dg-info dg-edit"  type="text" placeholder="Sin informaci&oacute;n" th:field="*{descApellidoMaterno}"/>
+													</fieldset>
+
+													<fieldset class="border p-2">
+														<legend class="w-auto dg-campo">&nbsp;DIRECCI&Oacute;N&nbsp;</legend>
+														<div class="row">
+															<div
+																class="col-xl-4 col-sm-4 col-md-4 col-lg-3 form-group">
+																<span class="dg-campo">Calle: </span> <input
+																	class="form-control dg-info dg-edit" type="text"
+																	placeholder="Sin informaci&oacute;n"
+																	th:field="*{dirCalle}" />
+															</div>
+															<div
+																class="col-xl-3 col-sm-4 col-md-4 col-lg-3 form-group">
+																<span class="dg-campo">No. ext: </span> <input
+																	class="form-control dg-info dg-edit" type="text"
+																	placeholder="Sin informaci&oacute;n"
+																	th:field="*{dirNumeroExt}" />
+															</div>
+															<div
+																class="col-xl-2 col-sm-4 col-md-4 col-lg-3 form-group">
+																<span class="dg-campo">No. int: </span> <input
+																	class="form-control dg-info dg-edit" type="text"
+																	placeholder="Sin informaci&oacute;n"
+																	th:field="*{dirNumeroInt}" />
+															</div>
+
+															<div
+																class="col-xl-3 col-sm-4 col-md-4 col-lg-3 form-group">
+																<span class="dg-campo">Colonia: </span> <input
+																	class="form-control dg-info dg-edit" type="text"
+																	placeholder="Sin informaci&oacute;n"
+																	th:field="*{dirColonia}" />
+															</div>
+															<div
+																class="col-xl-3 col-sm-4 col-md-4 col-lg-3 form-group">
+																<span class="dg-campo">Municipio: </span> <input
+																	class="form-control dg-info dg-edit" type="text"
+																	placeholder="Sin informaci&oacute;n"
+																	th:field="*{dirAlcaldiaMunicipio}" />
+															</div>
+															<div
+																class="col-xl-3 col-sm-4 col-md-4 col-lg-3 form-group">
+																<span class="dg-campo">Estado: </span> <input
+																	class="form-control dg-info dg-edit" type="text"
+																	placeholder="Sin informaci&oacute;n"
+																	th:field="*{dirEstado}" />
+															</div>
+
+															<div
+																class="col-xl-2 col-sm-4 col-md-4 col-lg-3 form-group">
+																<span class="dg-campo">CP: </span> <input
+																	class="form-control dg-info dg-edit" type="text"
+																	placeholder="Sin informaci&oacute;n"
+																	th:field="*{dirCp}" />
+															</div>
 														</div>
-														<div class="col-xl-2 col-sm-4 col-md-4 col-lg-3 form-group">
-															<span class="dg-campo">Tel: </span>
-															<input class="form-control dg-info dg-edit"  type="text" placeholder="Sin informaci&oacute;n" th:field="*{descTelCelular}"/>
+													</fieldset>
+
+													<fieldset class="border p-2">
+														<legend class="w-auto dg-campo">&nbsp;BANCARIOS&nbsp;</legend>
+														<div class="row">
+															<div
+																class="col-xl-3 col-sm-4 col-md-4 col-lg-3 form-group">
+																<span class="dg-campo">Banco: </span> <input
+																	class="form-control dg-info dg-edit" type="text"
+																	placeholder="Sin informaci&oacute;n"
+																	th:field="*{descBancoNombre}" />
+															</div>
+															<div
+																class="col-xl-3 col-sm-4 col-md-4 col-lg-3 form-group">
+																<span class="dg-campo">Cuenta: </span> <input
+																	class="form-control dg-info dg-edit" type="text"
+																	placeholder="Sin informaci&oacute;n"
+																	th:field="*{descBancoNumeroCuenta}" />
+															</div>
+															<div
+																class="col-xl-3 col-sm-4 col-md-4 col-lg-3 form-group">
+																<span class="dg-campo">CLABE: </span> <input
+																	class="form-control dg-info dg-edit" type="text"
+																	placeholder="Sin informaci&oacute;n"
+																	th:field="*{descBancoClabe}" />
+															</div>
 														</div>
-														<div class="col-xl-3 col-sm-4 col-md-4 col-lg-3 form-group">
-															<span class="dg-campo">Correo personal: </span>
-															<input class="form-control dg-info dg-edit"  type="email" placeholder="Sin informaci&oacute;n" th:field="*{descCorreoPersonal}"/>
+													</fieldset>
+
+													<fieldset class="border p-2">
+														<legend class="w-auto dg-campo">&nbsp;SALUD&nbsp;</legend>
+														<div class="row">
+															<div
+																class="col-xl-2 col-sm-4 col-md-4 col-lg-3 form-group">
+																<span class="dg-campo">Tipo de Sangre: </span> <select
+																	class="form-control dg-info dg-edit"
+																	style="padding: 0;" th:field="*{codTipoSangre}">
+																	<option th:each="tipoSangre : ${listaTipoSangre}"
+																		th:value="${tipoSangre.codTipoSangre}"
+																		th:text="${tipoSangre.descTipoSangre}"></option>
+																</select>
+															</div>
+															<div
+																class="col-xl-2 col-sm-4 col-md-4 col-lg-3 form-group">
+																<span class="dg-campo">Cirugias: </span> <select
+																	class="form-control dg-info dg-edit"
+																	style="padding: 0;" th:field="*{descMedicosCirugias}">
+																	<option th:value="'Si'" th:text="Si"></option>
+																	<option th:value="'No'" th:text="No"></option>
+																</select>
+															</div>
+															<div id="divEmbarazos"
+																class="col-xl-2 col-sm-4 col-md-4 col-lg-3 form-group">
+																<span class="dg-campo">Embarazos: </span> <select
+																	class="form-control dg-info dg-edit"
+																	style="padding: 0;" th:field="*{descMedicosEmbarazos}">
+																	<option th:value="'Si'" th:text="Si"></option>
+																	<option th:value="'No'" th:text="No"></option>
+																</select>
+															</div>
+															<br>
+															<div
+																class="col-xl-2 col-sm-4 col-md-4 col-lg-3 form-group">
+																<span class="dg-campo">Alergias: </span> <select
+																	id="selectAlergias"
+																	class="form-control dg-info dg-edit"
+																	style="padding: 0;">
+																	<option th:value="'Si'" th:text="Si"></option>
+																	<option th:value="'No'" th:text="No"></option>
+																</select>
+															</div>
+															<div
+																class="col-xl-2 col-sm-4 col-md-4 col-lg-3 form-group">
+																<span class="dg-campo">Enfermedades: </span> <select
+																	id="selectEnfermedades"
+																	class="form-control dg-info dg-edit"
+																	style="padding: 0;">
+																	<option th:value="'Si'" th:text="Si"></option>
+																	<option th:value="'No'" th:text="No"></option>
+																</select>
+															</div>
+															<div id="divAlergias"
+																class="col-xl-12 col-sm-12 col-md-12 col-lg-12 form-group">
+																<span class="dg-campo">Detalle de alergias: </span>
+																<textarea class="form-control dg-info dg-edit"
+																	placeholder="Sin informaci&oacute;n"
+																	th:field="*{descMedicosAlergias}"></textarea>
+															</div>
+															<div id="divEnfermedades"
+																class="col-xl-12 col-sm-12 col-md-12 col-lg-12 form-group">
+																<span class="dg-campo">Detalle de enfermedades: </span>
+																<textarea class="form-control dg-info dg-edit"
+																	placeholder="Sin informaci&oacute;n"
+																	th:field="*{descMedicosEnfermedades}"></textarea>
+															</div>
 														</div>
-														<div class="col-xl-3 col-sm-4 col-md-4 col-lg-3 form-group"> 
-															<span class="dg-campo">Nacimiento: </span>
-															<input class="form-control dg-info dg-edit"  type="date" placeholder="Sin informaci&oacute;n" th:field="*{fecNacimiento}"/>
-														</div>
-														<div class="col-xl-1 col-sm-4 col-md-4 col-lg-3 form-group"> 
-														 	<span class="dg-campo">Genero: </span>
-														 	<select id="selectGenero" class="form-control dg-info dg-edit" style="padding: 0;" onchange="hideByGenero(this.value);" th:field="*{descGenero}">
-																<option th:value="'M'" th:text="M"></option>
-																<option th:value="'F'" th:text="F"></option>
-															</select> 
-														 </div>
-														 <div class="col-xl-3 col-sm-4 col-md-4 col-lg-3 form-group"> 
-															<span class="dg-campo">RFC: </span>
-															<input class="form-control dg-info dg-edit"  type="text" placeholder="Sin informaci&oacute;n" th:field="*{descRfc}"/>
-														</div>
-														<div class="col-xl-3 col-sm-4 col-md-4 col-lg-3 form-group">
-															<span class="dg-campo">CURP: </span>
-															<input class="form-control dg-info dg-edit"  type="text" placeholder="Sin informaci&oacute;n" th:field="*{descCurp}"/>
-														</div>
-														<div class="col-xl-2 col-sm-4 col-md-4 col-lg-3 form-group">
-															<span class="dg-campo">NSS: </span>
-															<input class="form-control dg-info dg-edit"  type="text" placeholder="Sin informaci&oacute;n" th:field="*{descNss}"/>
-														</div>
-													
-														<div class="col-xl-3 col-sm-4 col-md-4 col-lg-3 form-group"> 
-															<span class="dg-campo">Estado civil: </span>
-															<select class="form-control dg-info dg-edit" style="padding: 0;" th:field="*{codEstadoCivil}">
-																<option th:each="estadoCivil : ${listaEstadoCivil}" th:value="${estadoCivil.codEstadoCivil}" th:text="${estadoCivil.descEstadoCivil}"> </option>
-															</select> 
-														</div>
-														<div class="col-xl-2 col-sm-4 col-md-4 col-lg-3 form-group"> 
-														 	<span class="dg-campo">No. hijos: </span>
-														 	<input class="form-control dg-info dg-edit"  type="number" max="10" min="0" step="1" placeholder="Sin informaci&oacute;n" th:field="*{valNumeroHijos}"/>
-														 </div>
+													</fieldset>
+													<br>
+												</form>
+												<div class="card border-secondary mb-3"
+													style="font-size: 14px; font-weight: 700; max-width: 20rem;">
+													<div class="card-header" style="color: #495057;">Contactos
+														de emergencia</div>
+													<div class="card-body text-secondary">
+														<h5 class="card-title">Secondary card title</h5>
+														<p class="card-text">Some quick example text to build
+															on the card title and make up the bulk of the card's
+															content.</p>
 													</div>
-												</fieldset>
-												
-												<fieldset class="border p-2">
-	   												<legend  class="w-auto dg-campo">&nbsp;DIRECCI&Oacute;N&nbsp;</legend>
-	   												<div class="row">
-	   													<div class="col-xl-4 col-sm-4 col-md-4 col-lg-3 form-group"> 
-															<span class="dg-campo">Calle: </span>
-															<input class="form-control dg-info dg-edit"  type="text" placeholder="Sin informaci&oacute;n" th:field="*{dirCalle}"/>
+												</div>
+											</div>
+											<div class="tab-pane fade show active" id="datos-empresa"
+												role="tabpanel" aria-labelledby="datos-empresa-tab">
+												<br />
+												<form id="formDatosEmpresa"
+													th:action="@{/guardaActualizaRecurso}"
+													th:object="${recurso}" method="post">
+													<fieldset class="border p-2">
+														<div class="row">
+															<div id="emailEmpresa"
+																class="col-xl-3 col-sm-4 col-md-4 col-lg-3 form-group">
+																<span class="dg-campo">E-mail empresa: </span> <input
+																	type="text" placeholder="Sin informaci&oacute;n"
+																	class="form-control dg-info dg-edit"
+																	th:field="${recurso.descCorreoElectronico}"
+																	disabled="disabled" />
+															</div>
+															<div id="telEmpresa"
+																class="col-xl-3 col-sm-4 col-md-4 col-lg-3 form-group">
+																<span class="dg-campo">Tel. empresa: </span> <input
+																	type="text" placeholder="Sin informaci&oacute;n"
+																	class="form-control dg-info dg-edit"
+																	th:field="${recurso.descTelEmpresa}"
+																	disabled="disabled" />
+															</div>
+															<div id="Ext"
+																class="col-xl-3 col-sm-4 col-md-4 col-lg-3 form-group">
+																<span class="dg-campo">Ext.: </span> <input type="text"
+																	placeholder="Sin informaci&oacute;n"
+																	class="form-control dg-info dg-edit"
+																	th:field="${recurso.descTelExt}" disabled="disabled" />
+															</div>
+															<div id="fecIngreso"
+																class="col-xl-3 col-sm-4 col-md-4 col-lg-3 form-group">
+																<span class="dg-campo">Fec. Ingreso: </span> <input
+																	type="date" class="form-control dg-info dg-edit"
+																	th:field="${recurso.fecIngresoEmpresa}"
+																	disabled="disabled" />
+															</div>
 														</div>
-														<div class="col-xl-3 col-sm-4 col-md-4 col-lg-3 form-group"> 
-														 	<span class="dg-campo">No. ext: </span>
-														 	<input class="form-control dg-info dg-edit"  type="text" placeholder="Sin informaci&oacute;n" th:field="*{dirNumeroExt}"/>
-														 </div>
-														 <div class="col-xl-2 col-sm-4 col-md-4 col-lg-3 form-group"> 
-															<span class="dg-campo">No. int: </span>
-															<input class="form-control dg-info dg-edit"  type="text" placeholder="Sin informaci&oacute;n" th:field="*{dirNumeroInt}"/>
+														<div class="row">
+															<div id="area"
+																class="col-xl-3 col-sm-4 col-md-4 col-lg-3 form-group">
+																<span class="dg-campo">&Aacute;rea: </span> <select
+																	th:field="${recurso.codAreaRecurso}"
+																	class="form-control dg-info dg-edit"
+																	style="padding: 0;" disabled="disabled">
+																	<option value="-1">Todos</option>
+																	<option th:each="areaRecursoLista : ${areaRecursoList}"
+																		th:value="${areaRecursoLista.codConsultor}"
+																		th:text="${areaRecursoLista.descConsultor}"></option>
+																</select>
+															</div>
+															<div id="activo1"
+																class="col-xl-3 col-sm-4 col-md-4 col-lg-3 form-group"
+																th:if="${recurso.valActivo == 1}">
+																<span class="dg-campo">Activo: </span> <select
+																	th:field="${recurso.valActivo}"
+																	class="form-control dg-info dg-edit"
+																	style="padding: 0;" disabled="disabled">
+																	<option value="0">No</option>
+																	<option value="1">S&iacute;</option>
+																</select>
+															</div>
+															<div id="activo0"
+																class="col-xl-3 col-sm-4 col-md-4 col-lg-3 form-group"
+																th:if="${recurso.valActivo == 0}">
+																<span class="dg-campo">Activo: </span> <select
+																	th:field="${recurso.valActivo}"
+																	class="form-control dg-info dg-edit"
+																	style="padding: 0;" disabled="disabled">
+																	<option value="0">No</option>
+																	<option value="1">S&iacute;</option>
+																</select>
+															</div>
+															<div id="responsable1"
+																class="col-xl-3 col-sm-4 col-md-4 col-lg-3 form-group"
+																th:if="${recurso.valResponsable == 1}">
+																<span class="dg-campo">Es responsable: </span> <select
+																	th:field="${recurso.valResponsable}"
+																	class="form-control dg-info dg-edit"
+																	style="padding: 0;" disabled="disabled">
+																	<option value="0">No</option>
+																	<option value="1">S&iacute;</option>
+																</select>
+															</div>
+															<div id="responsable0"
+																class="col-xl-3 col-sm-4 col-md-4 col-lg-3 form-group"
+																th:if="${recurso.valResponsable == 0}">
+																<span class="dg-campo">Es responsable: </span> <select
+																	th:field="${recurso.valResponsable}"
+																	class="form-control dg-info dg-edit"
+																	style="padding: 0;" disabled="disabled">
+																	<option value="0">No</option>
+																	<option value="1">S&iacute;</option>
+																</select>
+															</div>
+															<div id="aprobador1"
+																class="col-xl-3 col-sm-4 col-md-4 col-lg-3 form-group"
+																th:if="${recurso.valAprobador == 1}">
+																<span class="dg-campo">Es aprobador: </span> <select
+																	th:field="${recurso.valAprobador}"
+																	class="form-control dg-info dg-edit"
+																	style="padding: 0;" disabled="disabled">
+																	<option value="0">No</option>
+																	<option value="1">S&iacute;</option>
+																</select>
+															</div>
+															<div id="aprobador0"
+																class="col-xl-3 col-sm-4 col-md-4 col-lg-3 form-group"
+																th:if="${recurso.valAprobador == 0}">
+																<span class="dg-campo">Es aprobador: </span> <select
+																	th:field="${recurso.valAprobador}"
+																	class="form-control dg-info dg-edit"
+																	style="padding: 0;" disabled="disabled">
+																	<option value="0">No</option>
+																	<option value="1">S&iacute;</option>
+																</select>
+															</div>
 														</div>
-														
-														<div class="col-xl-3 col-sm-4 col-md-4 col-lg-3 form-group"> 
-															<span class="dg-campo">Colonia: </span>
-															<input class="form-control dg-info dg-edit"  type="text" placeholder="Sin informaci&oacute;n" th:field="*{dirColonia}"/>
+														<div class="row"
+															th:if="${recurso.fecSalidaEmpresa != null && recurso.descMotivoSalida != null}">
+															<div id="fecSalida"
+																class="col-xl-3 col-sm-4 col-md-4 col-lg-3 form-group">
+																<span class="dg-campo">Fec. Salida: </span> <input
+																	type="date" class="form-control dg-info dg-edit"
+																	th:field="${recurso.fecSalidaEmpresa}"
+																	disabled="disabled" />
+															</div>
+															<div id="motivo"
+																class="col-xl-3 col-sm-4 col-md-4 col-lg-3 form-group">
+																<span class="dg-campo">Motivo: </span> <input
+																	type="text" placeholder="Sin informaci&oacute;n"
+																	class="form-control dg-info dg-edit"
+																	th:field="${recurso.descMotivoSalida}"
+																	disabled="disabled" />
+															</div>
 														</div>
-														<div class="col-xl-3 col-sm-4 col-md-4 col-lg-3 form-group"> 
-														 	<span class="dg-campo">Municipio: </span>
-														 	<input class="form-control dg-info dg-edit"  type="text" placeholder="Sin informaci&oacute;n" th:field="*{dirAlcaldiaMunicipio}"/>
-														 </div>
-														 <div class="col-xl-3 col-sm-4 col-md-4 col-lg-3 form-group"> 
-															<span class="dg-campo">Estado: </span>
-															<input class="form-control dg-info dg-edit"  type="text" placeholder="Sin informaci&oacute;n" th:field="*{dirEstado}"/>
-														</div>
-														
-														<div class="col-xl-2 col-sm-4 col-md-4 col-lg-3 form-group">
-															<span class="dg-campo">CP: </span>
-															<input class="form-control dg-info dg-edit"  type="text" placeholder="Sin informaci&oacute;n" th:field="*{dirCp}"/>
-														</div>
-													</div>
-	   											</fieldset>
-	   											
-	   											<fieldset class="border p-2">
-	   												<legend  class="w-auto dg-campo">&nbsp;BANCARIOS&nbsp;</legend>
-	   												<div class="row">
-	   													<div class="col-xl-3 col-sm-4 col-md-4 col-lg-3 form-group"> 
-															<span class="dg-campo">Banco: </span>
-															<input class="form-control dg-info dg-edit"  type="text" placeholder="Sin informaci&oacute;n" th:field="*{descBancoNombre}"/>
-														</div>
-														<div class="col-xl-3 col-sm-4 col-md-4 col-lg-3 form-group"> 
-														 	<span class="dg-campo">Cuenta: </span>
-														 	<input class="form-control dg-info dg-edit"  type="text" placeholder="Sin informaci&oacute;n" th:field="*{descBancoNumeroCuenta}"/>
-														 </div>
-														 <div class="col-xl-3 col-sm-4 col-md-4 col-lg-3 form-group"> 
-															<span class="dg-campo">CLABE: </span>
-															<input class="form-control dg-info dg-edit"  type="text" placeholder="Sin informaci&oacute;n" th:field="*{descBancoClabe}"/>
-														</div>
-													</div>
-	   											</fieldset>
-	   											
-	   											<fieldset class="border p-2">
-	   												<legend  class="w-auto dg-campo">&nbsp;SALUD&nbsp;</legend>
-	   												<div class="row">
-	   													<div class="col-xl-2 col-sm-4 col-md-4 col-lg-3 form-group"> 
-															<span class="dg-campo">Tipo de Sangre: </span>
-															<select class="form-control dg-info dg-edit" style="padding: 0;" th:field="*{codTipoSangre}">
-																<option th:each="tipoSangre : ${listaTipoSangre}" th:value="${tipoSangre.codTipoSangre}" th:text="${tipoSangre.descTipoSangre}"> </option>
-															</select> 
-														</div>
-														<div class="col-xl-2 col-sm-4 col-md-4 col-lg-3 form-group"> 
-															<span class="dg-campo">Cirugias: </span>
-															<select class="form-control dg-info dg-edit" style="padding: 0;" th:field="*{descMedicosCirugias}">
-																<option th:value="'Si'" th:text="Si"></option>
-																<option th:value="'No'" th:text="No"></option>
-															</select> 
-														</div>
-														<div id="divEmbarazos" class="col-xl-2 col-sm-4 col-md-4 col-lg-3 form-group"> 
-															<span class="dg-campo">Embarazos: </span>
-															<select class="form-control dg-info dg-edit" style="padding: 0;" th:field="*{descMedicosEmbarazos}">
-																<option th:value="'Si'" th:text="Si"></option>
-																<option th:value="'No'" th:text="No"></option>
-															</select> 
-														</div>
-														<br>
-														<div class="col-xl-2 col-sm-4 col-md-4 col-lg-3 form-group"> 
-														 	<span class="dg-campo">Alergias: </span>
-														 	<select id="selectAlergias" class="form-control dg-info dg-edit" style="padding: 0;">
-																<option th:value="'Si'" th:text="Si"></option>
-																<option th:value="'No'" th:text="No"></option>
-															</select>
-														</div>
-														<div class="col-xl-2 col-sm-4 col-md-4 col-lg-3 form-group"> 
-														 	<span class="dg-campo">Enfermedades: </span>
-														 	<select id="selectEnfermedades" class="form-control dg-info dg-edit" style="padding: 0;">
-																<option th:value="'Si'" th:text="Si"></option>
-																<option th:value="'No'" th:text="No"></option>
-															</select>
-														</div>
-														<div id="divAlergias" class="col-xl-12 col-sm-12 col-md-12 col-lg-12 form-group"> 
-															<span class="dg-campo">Detalle de alergias: </span>
-															<textarea class="form-control dg-info dg-edit" placeholder="Sin informaci&oacute;n" th:field="*{descMedicosAlergias}"></textarea>
-														</div>
-														<div id="divEnfermedades" class="col-xl-12 col-sm-12 col-md-12 col-lg-12 form-group"> 
-															<span class="dg-campo">Detalle de enfermedades: </span>
-															<textarea class="form-control dg-info dg-edit" placeholder="Sin informaci&oacute;n" th:field="*{descMedicosEnfermedades}"></textarea>
+														<div class="row">
+															<div id="puesto"
+																class="col-xl-3 col-sm-4 col-md-4 col-lg-3 form-group">
+																<span class="dg-campo">Puesto: </span> <select
+																	th:field="${recurso.codPuesto}"
+																	class="form-control dg-info dg-edit"
+																	style="padding: 0;" disabled="disabled">
+																	<option value="-1">Todos</option>
+																	<option th:each="puestoLista : ${puestoList}"
+																		th:value="${puestoLista.codPuesto}"
+																		th:text="${puestoLista.descPuesto}"></option>
+																</select>
+															</div>
+															<div id="jornada"
+																class="col-xl-3 col-sm-4 col-md-4 col-lg-3 form-group">
+																<span class="dg-campo">Jornada: </span> <select
+																	th:field="${recurso.codJornada}"
+																	class="form-control dg-info dg-edit"
+																	style="padding: 0;" disabled="disabled">
+																	<option value="-1">Todos</option>
+																	<option th:each="jornadaLista : ${jornadaList}"
+																		th:value="${jornadaLista.codJornada}"
+																		th:text="${jornadaLista.descJornada}"></option>
+																</select>
+															</div>
+															<div id="tipoRecurso"
+																class="col-xl-3 col-sm-4 col-md-4 col-lg-3 form-group">
+																<span class="dg-campo">Tipo recurso: </span> <select
+																	th:field="${recurso.codTipoRecurso}"
+																	class="form-control dg-info dg-edit"
+																	style="padding: 0;" disabled="disabled">
+																	<option value="-1">Todos</option>
+																	<option th:each="tipoRecursoLista : ${tipoRecursoList}"
+																		th:value="${tipoRecursoLista.codTipoRecurso}"
+																		th:text="${tipoRecursoLista.descTipoRecurso}"></option>
+																</select>
+															</div>
+															<div id="proveedor"
+																class="col-xl-3 col-sm-4 col-md-4 col-lg-3 form-group">
+																<span class="dg-campo">Proveedor: </span> <select
+																	th:field="${recurso.codProveedor}"
+																	class="form-control dg-info dg-edit"
+																	style="padding: 0;" disabled="disabled">
+																	<option value="-1">Todos</option>
+																	<option th:each="proveedorLista : ${proveedorList}"
+																		th:value="${proveedorLista.codProveedor}"
+																		th:text="${proveedorLista.descProveedor}"></option>
+																</select>
+															</div>
+															<div id="costoMinimo"
+																class="col-xl-3 col-sm-4 col-md-4 col-lg-3 form-group">
+																<span class="dg-campo">Costo m&iacute;nimo: </span> <input
+																	type="number" step="0.10" class="form-control dg-info"
+																	th:field="${recurso.valCostoMinimo}" placeholder="$"
+																	disabled="disabled" />
+															</div>
 														</div>
 													</div>
 	   											</fieldset>
@@ -315,12 +646,30 @@
 														    <span class="carousel-control-next-icon" aria-hidden="true"></span>
 														    <span class="sr-only">Next</span>
 														  </a>
-														  
+                              
+													</fieldset>
+												</form>
+												<br />
+												<div class="card border-dark mb-3" style="max-width: 460px;">
+													<div class="card-header">
+														<div class="row">
+															<div class="col-8">
+																<span style="color: #495057;">Herramientas</span>
+															</div>
+															<div class="col-4" style="float: right;">
+																<a id="iNuevaHerramienta" class="btn btn-info"
+																	data-toggle="modal"
+																	data-target="#nuevaHerramientaModal" href="#"
+																	style="float: right;"> <i
+																	class="fas fa-plus fa-sm text-gray-50"></i>
+																</a>
+															</div>
 														</div>
 														
 														</div>
 													</div>
 													</div>
+                          
 													<!-- Termina bloque de contactos de emergencia -->
 
 											</div>
@@ -444,177 +793,241 @@
 																					<div class=" w-100">
 																						<h4 class="mb-0 mt-0">Laptop</h4> <span style="font-size: small;">DELL Inspiron</span>
 																						<!-- <div class="p-2 mt-2 bg-primary d-flex justify-content-between rounded text-white stats">
+
+													<div class="card-body text-dark">
+														<div id="carouselExampleIndicators"
+															class="carousel slide carousel-fade" data-ride="carousel">
+															<ol class="carousel-indicators">
+																<li data-target="#carouselExampleIndicators"
+																	data-slide-to="0" class="active"></li>
+																<li data-target="#carouselExampleIndicators"
+																	data-slide-to="1"></li>
+																<li data-target="#carouselExampleIndicators"
+																	data-slide-to="2"></li>
+															</ol>
+															<div class="carousel-inner">
+																<div class="carousel-item active">
+																	<div class="card-deck">
+																		<div class="row">
+																			<div class="col">
+																				<div class="card p-3 mb-3">
+																					<div class="d-flex align-items-center">
+																						<!-- <div class="image"> <img src="img/user1.jpg" class="rounded" width="155"> </div> -->
+																						<div class=" w-100">
+																							<h4 class="mb-0 mt-0">Laptop</h4>
+																							<span style="font-size: small;">DELL
+																								Inspiron</span>
+																							<!-- <div class="p-2 mt-2 bg-primary d-flex justify-content-between rounded text-white stats">
 																							<div class="d-flex flex-column"> <span class="articles">Articles</span> <span class="number1">38</span> </div>
 																							<div class="d-flex flex-column"> <span class="followers">Followers</span> <span class="number2">980</span> </div>
 																							<div class="d-flex flex-column"> <span class="rating">Rating</span> <span class="number3">8.9</span> </div>
 																						</div> -->
-																						<div style="margin: 10px 0px;">
-																							<span style="font-size: small;">S/N 2225411105246548</span><br>
-																							<span style="font-size: small;">i7 / 250 SSD / 16 RAM</span>
-																						</div>
-																						<div class="button mt-2 d-flex flex-row align-items-center"> 
-																							<button class="btn btn-sm btn-outline-primary w-100" data-toggle="modal" data-target="#editHerramientaModal">Editar</button> 
-																							<!-- <button class="btn btn-sm btn-primary w-100 ml-2">Editar</button>  -->
+																							<div style="margin: 10px 0px;">
+																								<span style="font-size: small;">S/N
+																									2225411105246548</span><br> <span
+																									style="font-size: small;">i7 / 250 SSD /
+																									16 RAM</span>
+																							</div>
+																							<div
+																								class="button mt-2 d-flex flex-row align-items-center">
+																								<button
+																									class="btn btn-sm btn-outline-primary w-100"
+																									data-toggle="modal"
+																									data-target="#editHerramientaModal">Editar</button>
+																								<!-- <button class="btn btn-sm btn-primary w-100 ml-2">Editar</button>  -->
+																							</div>
 																						</div>
 																					</div>
 																				</div>
 																			</div>
-																	    		</div>
-																	    		<div class="col">
-																	    			<div class="card p-3 mb-3">
-																				<div class="d-flex align-items-center">
-																					<!-- <div class="image"> <img src="img/user1.jpg" class="rounded" width="155"> </div> -->
-																					<div class=" w-100">
-																						<h4 class="mb-0 mt-0">Laptop</h4> <span style="font-size: small;">DELL Inspiron</span>
-																						<!-- <div class="p-2 mt-2 bg-primary d-flex justify-content-between rounded text-white stats">
+																			<div class="col">
+																				<div class="card p-3 mb-3">
+																					<div class="d-flex align-items-center">
+																						<!-- <div class="image"> <img src="img/user1.jpg" class="rounded" width="155"> </div> -->
+																						<div class=" w-100">
+																							<h4 class="mb-0 mt-0">Laptop</h4>
+																							<span style="font-size: small;">DELL
+																								Inspiron</span>
+																							<!-- <div class="p-2 mt-2 bg-primary d-flex justify-content-between rounded text-white stats">
 																							<div class="d-flex flex-column"> <span class="articles">Articles</span> <span class="number1">38</span> </div>
 																							<div class="d-flex flex-column"> <span class="followers">Followers</span> <span class="number2">980</span> </div>
 																							<div class="d-flex flex-column"> <span class="rating">Rating</span> <span class="number3">8.9</span> </div>
 																						</div> -->
-																						<div style="margin: 10px 0px;">
-																							<span style="font-size: small;">S/N 2225411105246548</span><br>
-																							<span style="font-size: small;">i7 / 250 SSD / 16 RAM</span>
-																						</div>
-																						<div class="button mt-2 d-flex flex-row align-items-center"> 
-																							<button class="btn btn-sm btn-outline-primary w-100" data-toggle="modal" data-target="#editHerramientaModal">Editar</button> 
-																							<!-- <button class="btn btn-sm btn-primary w-100 ml-2">Editar</button>  -->
-																						</div>
-																					</div>
-																				</div>
-																			</div>
-																	    		</div>
-																	    	</div>
-																	    	</div>
-																				  </div>
-																				  <div class="carousel-item">
-																					<div class="card-deck">
-																	    	<div class="row">
-																	    		<div class="col">
-																	    			<div class="card p-3 mb-3">
-																				<div class="d-flex align-items-center">
-																					<!-- <div class="image"> <img src="img/user1.jpg" class="rounded" width="155"> </div> -->
-																					<div class=" w-100">
-																						<h4 class="mb-0 mt-0">Laptop</h4> <span style="font-size: small;">HP</span>
-																						<!-- <div class="p-2 mt-2 bg-primary d-flex justify-content-between rounded text-white stats">
-																							<div class="d-flex flex-column"> <span class="articles">Articles</span> <span class="number1">38</span> </div>
-																							<div class="d-flex flex-column"> <span class="followers">Followers</span> <span class="number2">980</span> </div>
-																							<div class="d-flex flex-column"> <span class="rating">Rating</span> <span class="number3">8.9</span> </div>
-																						</div> -->
-																						<div style="margin: 10px 0px;">
-																							<span style="font-size: small;">S/N 2225411105246548</span><br>
-																							<span style="font-size: small;">i7 / 250 SSD / 32 RAM</span>
-																						</div>
-																						<div class="button mt-2 d-flex flex-row align-items-center"> 
-																							<button class="btn btn-sm btn-outline-primary w-100" data-toggle="modal" data-target="#editHerramientaModal">Editar</button> 
-																							<!-- <button class="btn btn-sm btn-primary w-100 ml-2">Editar</button>  -->
+																							<div style="margin: 10px 0px;">
+																								<span style="font-size: small;">S/N
+																									2225411105246548</span><br> <span
+																									style="font-size: small;">i7 / 250 SSD /
+																									16 RAM</span>
+																							</div>
+																							<div
+																								class="button mt-2 d-flex flex-row align-items-center">
+																								<button
+																									class="btn btn-sm btn-outline-primary w-100"
+																									data-toggle="modal"
+																									data-target="#editHerramientaModal">Editar</button>
+																								<!-- <button class="btn btn-sm btn-primary w-100 ml-2">Editar</button>  -->
+																							</div>
 																						</div>
 																					</div>
 																				</div>
 																			</div>
-																	    		</div>
-																	    		<div class="col">
-																	    			<div class="card p-3 mb-3">
-																				<div class="d-flex align-items-center">
-																					<!-- <div class="image"> <img src="img/user1.jpg" class="rounded" width="155"> </div> -->
-																					<div class=" w-100">
-																						<h4 class="mb-0 mt-0">Laptop</h4> <span style="font-size: small;">HP</span>
-																						<!-- <div class="p-2 mt-2 bg-primary d-flex justify-content-between rounded text-white stats">
-																							<div class="d-flex flex-column"> <span class="articles">Articles</span> <span class="number1">38</span> </div>
-																							<div class="d-flex flex-column"> <span class="followers">Followers</span> <span class="number2">980</span> </div>
-																							<div class="d-flex flex-column"> <span class="rating">Rating</span> <span class="number3">8.9</span> </div>
-																						</div> -->
-																						<div style="margin: 10px 0px;">
-																							<span style="font-size: small;">S/N 2225411105246548</span><br>
-																							<span style="font-size: small;">i7 / 250 SSD / 32 RAM</span>
-																						</div>
-																						<div class="button mt-2 d-flex flex-row align-items-center"> 
-																							<button class="btn btn-sm btn-outline-primary w-100" data-toggle="modal" data-target="#editHerramientaModal">Editar</button> 
-																							<!-- <button class="btn btn-sm btn-primary w-100 ml-2">Editar</button>  -->
-																						</div>
-																					</div>
-																				</div>
-																			</div>
-																	    		</div>
-																	    	</div>
-																	    	</div>
-																				  </div>
-																				  <div class="carousel-item">
-																					<div class="card-deck">
-																	    	<div class="row">
-																	    		<div class="col">
-																	    			<div class="card p-3 mb-3">
-																				<div class="d-flex align-items-center">
-																					<!-- <div class="image"> <img src="img/user1.jpg" class="rounded" width="155"> </div> -->
-																					<div class=" w-100">
-																						<h4 class="mb-0 mt-0">Laptop</h4> <span style="font-size: small;">Asus</span>
-																						<!-- <div class="p-2 mt-2 bg-primary d-flex justify-content-between rounded text-white stats">
-																							<div class="d-flex flex-column"> <span class="articles">Articles</span> <span class="number1">38</span> </div>
-																							<div class="d-flex flex-column"> <span class="followers">Followers</span> <span class="number2">980</span> </div>
-																							<div class="d-flex flex-column"> <span class="rating">Rating</span> <span class="number3">8.9</span> </div>
-																						</div> -->
-																						<div style="margin: 10px 0px;">
-																							<span style="font-size: small;">S/N 2225411105246548</span><br>
-																							<span style="font-size: small;">i7 / 250 SSD / 8 RAM</span>
-																						</div>
-																						<div class="button mt-2 d-flex flex-row align-items-center"> 
-																							<button class="btn btn-sm btn-outline-primary w-100" data-toggle="modal" data-target="#editHerramientaModal">Editar</button> 
-																							<!-- <button class="btn btn-sm btn-primary w-100 ml-2">Editar</button>  -->
-																						</div>
-																					</div>
-																				</div>
-																			</div>
-																	    		</div>
-																	    		<div class="col">
-																	    			<div class="card p-3 mb-3">
-																				<div class="d-flex align-items-center">
-																					<!-- <div class="image"> <img src="img/user1.jpg" class="rounded" width="155"> </div> -->
-																					<div class=" w-100">
-																						<h4 class="mb-0 mt-0">Laptop</h4> <span style="font-size: small;">Asus</span>
-																						<!-- <div class="p-2 mt-2 bg-primary d-flex justify-content-between rounded text-white stats">
-																							<div class="d-flex flex-column"> <span class="articles">Articles</span> <span class="number1">38</span> </div>
-																							<div class="d-flex flex-column"> <span class="followers">Followers</span> <span class="number2">980</span> </div>
-																							<div class="d-flex flex-column"> <span class="rating">Rating</span> <span class="number3">8.9</span> </div>
-																						</div> -->
-																						<div style="margin: 10px 0px;">
-																							<span style="font-size: small;">S/N 2225411105246548</span><br>
-																							<span style="font-size: small;">i7 / 250 SSD / 8 RAM</span>
-																						</div>
-																						<div class="button mt-2 d-flex flex-row align-items-center"> 
-																							<button class="btn btn-sm btn-outline-primary w-100" data-toggle="modal" data-target="#editHerramientaModal">Editar</button> 
-																							<!-- <button class="btn btn-sm btn-primary w-100 ml-2">Editar</button>  -->
-																						</div>
-																					</div>
-																				</div>
-																			</div>
-																	    		</div>
-																	    	</div>
-																	    	</div>
-																				  </div>
-																				</div>
-																				<a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
-																				  <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-																				  <span class="sr-only">Previous</span>
-																				</a>
-																				<a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
-																				  <span class="carousel-control-next-icon" aria-hidden="true"></span>
-																				  <span class="sr-only">Next</span>
-																				</a>
-																			 </div>
-																	  </div>
+																		</div>
+																	</div>
 																</div>
-															</td>
-														</tr>
-													</table>
+																<div class="carousel-item">
+																	<div class="card-deck">
+																		<div class="row">
+																			<div class="col">
+																				<div class="card p-3 mb-3">
+																					<div class="d-flex align-items-center">
+																						<!-- <div class="image"> <img src="img/user1.jpg" class="rounded" width="155"> </div> -->
+																						<div class=" w-100">
+																							<h4 class="mb-0 mt-0">Laptop</h4>
+																							<span style="font-size: small;">HP</span>
+																							<!-- <div class="p-2 mt-2 bg-primary d-flex justify-content-between rounded text-white stats">
+																							<div class="d-flex flex-column"> <span class="articles">Articles</span> <span class="number1">38</span> </div>
+																							<div class="d-flex flex-column"> <span class="followers">Followers</span> <span class="number2">980</span> </div>
+																							<div class="d-flex flex-column"> <span class="rating">Rating</span> <span class="number3">8.9</span> </div>
+																						</div> -->
+																							<div style="margin: 10px 0px;">
+																								<span style="font-size: small;">S/N
+																									2225411105246548</span><br> <span
+																									style="font-size: small;">i7 / 250 SSD /
+																									32 RAM</span>
+																							</div>
+																							<div
+																								class="button mt-2 d-flex flex-row align-items-center">
+																								<button
+																									class="btn btn-sm btn-outline-primary w-100"
+																									data-toggle="modal"
+																									data-target="#editHerramientaModal">Editar</button>
+																								<!-- <button class="btn btn-sm btn-primary w-100 ml-2">Editar</button>  -->
+																							</div>
+																						</div>
+																					</div>
+																				</div>
+																			</div>
+																			<div class="col">
+																				<div class="card p-3 mb-3">
+																					<div class="d-flex align-items-center">
+																						<!-- <div class="image"> <img src="img/user1.jpg" class="rounded" width="155"> </div> -->
+																						<div class=" w-100">
+																							<h4 class="mb-0 mt-0">Laptop</h4>
+																							<span style="font-size: small;">HP</span>
+																							<!-- <div class="p-2 mt-2 bg-primary d-flex justify-content-between rounded text-white stats">
+																							<div class="d-flex flex-column"> <span class="articles">Articles</span> <span class="number1">38</span> </div>
+																							<div class="d-flex flex-column"> <span class="followers">Followers</span> <span class="number2">980</span> </div>
+																							<div class="d-flex flex-column"> <span class="rating">Rating</span> <span class="number3">8.9</span> </div>
+																						</div> -->
+																							<div style="margin: 10px 0px;">
+																								<span style="font-size: small;">S/N
+																									2225411105246548</span><br> <span
+																									style="font-size: small;">i7 / 250 SSD /
+																									32 RAM</span>
+																							</div>
+																							<div
+																								class="button mt-2 d-flex flex-row align-items-center">
+																								<button
+																									class="btn btn-sm btn-outline-primary w-100"
+																									data-toggle="modal"
+																									data-target="#editHerramientaModal">Editar</button>
+																								<!-- <button class="btn btn-sm btn-primary w-100 ml-2">Editar</button>  -->
+																							</div>
+																						</div>
+																					</div>
+																				</div>
+																			</div>
+																		</div>
+																	</div>
+																</div>
+																<div class="carousel-item">
+																	<div class="card-deck">
+																		<div class="row">
+																			<div class="col">
+																				<div class="card p-3 mb-3">
+																					<div class="d-flex align-items-center">
+																						<!-- <div class="image"> <img src="img/user1.jpg" class="rounded" width="155"> </div> -->
+																						<div class=" w-100">
+																							<h4 class="mb-0 mt-0">Laptop</h4>
+																							<span style="font-size: small;">Asus</span>
+																							<!-- <div class="p-2 mt-2 bg-primary d-flex justify-content-between rounded text-white stats">
+																							<div class="d-flex flex-column"> <span class="articles">Articles</span> <span class="number1">38</span> </div>
+																							<div class="d-flex flex-column"> <span class="followers">Followers</span> <span class="number2">980</span> </div>
+																							<div class="d-flex flex-column"> <span class="rating">Rating</span> <span class="number3">8.9</span> </div>
+																						</div> -->
+																							<div style="margin: 10px 0px;">
+																								<span style="font-size: small;">S/N
+																									2225411105246548</span><br> <span
+																									style="font-size: small;">i7 / 250 SSD /
+																									8 RAM</span>
+																							</div>
+																							<div
+																								class="button mt-2 d-flex flex-row align-items-center">
+																								<button
+																									class="btn btn-sm btn-outline-primary w-100"
+																									data-toggle="modal"
+																									data-target="#editHerramientaModal">Editar</button>
+																								<!-- <button class="btn btn-sm btn-primary w-100 ml-2">Editar</button>  -->
+																							</div>
+																						</div>
+																					</div>
+																				</div>
+																			</div>
+																			<div class="col">
+																				<div class="card p-3 mb-3">
+																					<div class="d-flex align-items-center">
+																						<!-- <div class="image"> <img src="img/user1.jpg" class="rounded" width="155"> </div> -->
+																						<div class=" w-100">
+																							<h4 class="mb-0 mt-0">Laptop</h4>
+																							<span style="font-size: small;">Asus</span>
+																							<!-- <div class="p-2 mt-2 bg-primary d-flex justify-content-between rounded text-white stats">
+																							<div class="d-flex flex-column"> <span class="articles">Articles</span> <span class="number1">38</span> </div>
+																							<div class="d-flex flex-column"> <span class="followers">Followers</span> <span class="number2">980</span> </div>
+																							<div class="d-flex flex-column"> <span class="rating">Rating</span> <span class="number3">8.9</span> </div>
+																						</div> -->
+																							<div style="margin: 10px 0px;">
+																								<span style="font-size: small;">S/N
+																									2225411105246548</span><br> <span
+																									style="font-size: small;">i7 / 250 SSD /
+																									8 RAM</span>
+																							</div>
+																							<div
+																								class="button mt-2 d-flex flex-row align-items-center">
+																								<button
+																									class="btn btn-sm btn-outline-primary w-100"
+																									data-toggle="modal"
+																									data-target="#editHerramientaModal">Editar</button>
+																								<!-- <button class="btn btn-sm btn-primary w-100 ml-2">Editar</button>  -->
+																							</div>
+																						</div>
+																					</div>
+																				</div>
+																			</div>
+																		</div>
+																	</div>
+																</div>
+															</div>
+															<a class="carousel-control-prev"
+																href="#carouselExampleIndicators" role="button"
+																data-slide="prev"> <span
+																class="carousel-control-prev-icon" aria-hidden="true"></span>
+																<span class="sr-only">Previous</span>
+															</a> <a class="carousel-control-next"
+																href="#carouselExampleIndicators" role="button"
+																data-slide="next"> <span
+																class="carousel-control-next-icon" aria-hidden="true"></span>
+																<span class="sr-only">Next</span>
+															</a>
+														</div>
+													</div>
 												</div>
-                        					</div>
-                    					</div>
-                					</div>
+											</div>
+										</div>
+									</div>
 								</div>
 							</div>
-						</div>	
+						</div>
 					</div>
-			        <!-- /.container-fluid -->
-
 				</div>
 				<!-- End of Main Content -->
 				
@@ -742,141 +1155,213 @@
 				        <div class="modal-header">
 				          	<h5 class="modal-title" id="nuevaHerramientaModalLabel">
 							    Nueva herramienta<br>
+				<!-- /.container-fluid -->
+
+			</div>
+			<!-- End of Main Content -->
+
+			<!-- Modal Crear Herramienta -->
+			<div class="modal fade" id="nuevaHerramientaModal" tabindex="-1"
+				role="dialog" aria-labelledby="nuevaHerramientaModalLabel"
+				aria-hidden="true">
+				<div class="modal-dialog" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title" id="nuevaHerramientaModalLabel">
+								Nueva herramienta<br>
 							</h5>
-				          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-				            <span aria-hidden="true">×</span>
-				          </button>
-				        </div>
-				        <div class="modal-body" style="font-size: 14px;">
-						<form th:object="${herramienta}" method="post">
-							<div class="row">
-								<div class="form-group col-12 col-md-12">
-									<label class="col-form-label">Observaciones*</label>
-									<input type="text" th:field="*{descObservaciones}" class="form-control" th:errorclass="'form-control alert-danger'"/>
-									<small class="form-text text-danger" th:if="${#fields.hasErrors('descObservaciones')}" th:errors="*{descObservaciones}"></small>
-								</div>
-							</div>
-							
-							<div class="row">
-								<div class="form-group col-12 col-md-12">
-									<label class="col-form-label">No. Serie*</label>
-									<input type="text" th:field="*{descNumeroSerie}" class="form-control" th:errorclass="'form-control alert-danger'"/>
-									<small class="form-text text-danger" th:if="${#fields.hasErrors('descNumeroSerie')}" th:errors="*{descNumeroSerie}"></small>
-								</div>
-							</div>
-							
-							<div class="row">
-								<div class="form-group col-12 col-md-12">
-									<label class="col-form-label">Responsiva*</label>
-									<div class="input-group">
-										<div class="custom-file">
-											<input id="responsiva" type="file" th:field="*{responsiva}" class="custom-file-input" th:errorclass="'form-control alert-danger'"/>
-											<label class="custom-file-label" for="responsiva">Seleccionar archivo</label>
-										</div>
+							<button class="close" type="button" data-dismiss="modal"
+								aria-label="Close">
+								<span aria-hidden="true">×</span>
+							</button>
+						</div>
+						<div class="modal-body" style="font-size: 14px;">
+							<form th:object="${herramienta}" method="post">
+								<div class="row">
+									<div class="form-group col-12 col-md-12">
+										<label class="col-form-label">Observaciones*</label> <input
+											type="text" th:field="*{descObservaciones}"
+											class="form-control"
+											th:errorclass="'form-control alert-danger'" /> <small
+											class="form-text text-danger"
+											th:if="${#fields.hasErrors('descObservaciones')}"
+											th:errors="*{descObservaciones}"></small>
 									</div>
-									<small class="form-text text-danger" th:if="${#fields.hasErrors('responsiva')}" th:errors="*{responsiva}"></small>
 								</div>
-							</div>
-							
-							<div class="row">
-								<div class="form-group col-6 col-md-6">
-									<label class="col-form-label">Fecha Pr&eacute;stamo</label>
-									<input type="date" th:field="*{fecPrestamo}" class="form-control" th:errorclass="'form-control alert-danger'"/>
-									<small class="form-text text-danger" th:if="${#fields.hasErrors('fecPrestamo')}" th:errors="*{fecPrestamo}"></small>
+
+								<div class="row">
+									<div class="form-group col-12 col-md-12">
+										<label class="col-form-label">No. Serie*</label> <input
+											type="text" th:field="*{descNumeroSerie}"
+											class="form-control"
+											th:errorclass="'form-control alert-danger'" /> <small
+											class="form-text text-danger"
+											th:if="${#fields.hasErrors('descNumeroSerie')}"
+											th:errors="*{descNumeroSerie}"></small>
+									</div>
 								</div>
-								<div class="form-group col-6 col-md-6">
-									<label class="col-form-label">Fecha Devoluci&oacute;n</label>
-									<input type="date" th:field="*{fecDevolucion}" class="form-control" th:errorclass="'form-control alert-danger'"/>
-									<small class="form-text text-danger" th:if="${#fields.hasErrors('fecDevolucion')}" th:errors="*{fecDevolucion}"></small>
+
+								<div class="row">
+									<div class="form-group col-12 col-md-12">
+										<label class="col-form-label">Responsiva*</label>
+										<div class="input-group">
+											<div class="custom-file">
+												<input id="responsiva" type="file" th:field="*{responsiva}"
+													class="custom-file-input"
+													th:errorclass="'form-control alert-danger'" /> <label
+													class="custom-file-label" for="responsiva">Seleccionar
+													archivo</label>
+											</div>
+										</div>
+										<small class="form-text text-danger"
+											th:if="${#fields.hasErrors('responsiva')}"
+											th:errors="*{responsiva}"></small>
+									</div>
 								</div>
-							</div>
-							<input type="hidden" th:field="*{fecRegistro}"/>
+
+								<div class="row">
+									<div class="form-group col-6 col-md-6">
+										<label class="col-form-label">Fecha Pr&eacute;stamo</label> <input
+											type="date" th:field="*{fecPrestamo}" class="form-control"
+											th:errorclass="'form-control alert-danger'" /> <small
+											class="form-text text-danger"
+											th:if="${#fields.hasErrors('fecPrestamo')}"
+											th:errors="*{fecPrestamo}"></small>
+									</div>
+									<div class="form-group col-6 col-md-6">
+										<label class="col-form-label">Fecha Devoluci&oacute;n</label>
+										<input type="date" th:field="*{fecDevolucion}"
+											class="form-control"
+											th:errorclass="'form-control alert-danger'" /> <small
+											class="form-text text-danger"
+											th:if="${#fields.hasErrors('fecDevolucion')}"
+											th:errors="*{fecDevolucion}"></small>
+									</div>
+								</div>
+								<input type="hidden" th:field="*{fecRegistro}" />
 							</form>
 						</div>
-				       <div class="modal-footer">
-				    		<button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
-				          	<button type="submit" onclick="registraHerramienta();" class="btn btn-primary">Aceptar</button>
-				  		</div>
-				          
-				        </div>
-				      </div>
-				    </div>
-				    
-				    <!-- Modal Editar Herramienta -->
-				    <div class="modal fade" id="editHerramientaModal" tabindex="-1" role="dialog" aria-labelledby="editHerramientaModalLabel" aria-hidden="true">
-				    <div class="modal-dialog" role="document">
-				      <div class="modal-content">
-				        <div class="modal-header">
-				          	<h5 class="modal-title" id="editHerramientaModalLabel">
-							    Editar herramienta<br>
+						<div class="modal-footer">
+							<button class="btn btn-secondary" type="button"
+								data-dismiss="modal">Cancelar</button>
+							<button type="submit" onclick="registraHerramienta();"
+								class="btn btn-primary">Aceptar</button>
+						</div>
+
+					</div>
+				</div>
+			</div>
+
+			<!-- Modal Editar Herramienta -->
+			<div class="modal fade" id="editHerramientaModal" tabindex="-1"
+				role="dialog" aria-labelledby="editHerramientaModalLabel"
+				aria-hidden="true">
+				<div class="modal-dialog" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title" id="editHerramientaModalLabel">
+								Editar herramienta<br>
 							</h5>
-				          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-				            <span aria-hidden="true">×</span>
-				          </button>
-				        </div>
-				        <div class="modal-body" style="font-size: 14px;">
-						<form th:object="${herramienta}" method="post">
-							<div class="row">
-								<div class="form-group col-12 col-md-12">
-									<label class="col-form-label">Observaciones*</label>
-									<input type="text" th:field="*{descObservaciones}" class="form-control" th:errorclass="'form-control alert-danger'"/>
-									<small class="form-text text-danger" th:if="${#fields.hasErrors('descObservaciones')}" th:errors="*{descObservaciones}"></small>
-								</div>
-							</div>
-							
-							<div class="row">
-								<div class="form-group col-12 col-md-12">
-									<label class="col-form-label">No. Serie*</label>
-									<input type="text" th:field="*{descNumeroSerie}" class="form-control" th:errorclass="'form-control alert-danger'"/>
-									<small class="form-text text-danger" th:if="${#fields.hasErrors('descNumeroSerie')}" th:errors="*{descNumeroSerie}"></small>
-								</div>
-							</div>
-							
-							<div class="row">
-								<div class="form-group col-12 col-md-12">
-									<label class="col-form-label">Responsiva*</label>
-									<div class="input-group">
-										<div class="custom-file">
-											<input id="responsiva" type="file" th:field="*{responsiva}" class="custom-file-input" th:errorclass="'form-control alert-danger'"/>
-											<label class="custom-file-label" for="responsiva">Seleccionar archivo</label>
-										</div>
+							<button class="close" type="button" data-dismiss="modal"
+								aria-label="Close">
+								<span aria-hidden="true">×</span>
+							</button>
+						</div>
+						<div class="modal-body" style="font-size: 14px;">
+							<form th:object="${herramienta}" method="post">
+								<div class="row">
+									<div class="form-group col-12 col-md-12">
+										<label class="col-form-label">Observaciones*</label> <input
+											type="text" th:field="*{descObservaciones}"
+											class="form-control"
+											th:errorclass="'form-control alert-danger'" /> <small
+											class="form-text text-danger"
+											th:if="${#fields.hasErrors('descObservaciones')}"
+											th:errors="*{descObservaciones}"></small>
 									</div>
-									<small class="form-text text-danger" th:if="${#fields.hasErrors('responsiva')}" th:errors="*{responsiva}"></small>
 								</div>
-							</div>
-							
-							<div class="row">
-								<div class="form-group col-6 col-md-6">
-									<label class="col-form-label">Fecha Pr&eacute;stamo</label>
-									<input type="date" th:field="*{fecPrestamo}" class="form-control" th:errorclass="'form-control alert-danger'"/>
-									<small class="form-text text-danger" th:if="${#fields.hasErrors('fecPrestamo')}" th:errors="*{fecPrestamo}"></small>
+
+								<div class="row">
+									<div class="form-group col-12 col-md-12">
+										<label class="col-form-label">No. Serie*</label> <input
+											type="text" th:field="*{descNumeroSerie}"
+											class="form-control"
+											th:errorclass="'form-control alert-danger'" /> <small
+											class="form-text text-danger"
+											th:if="${#fields.hasErrors('descNumeroSerie')}"
+											th:errors="*{descNumeroSerie}"></small>
+									</div>
 								</div>
-								<div class="form-group col-6 col-md-6">
-									<label class="col-form-label">Fecha Devoluci&oacute;n</label>
-									<input type="date" th:field="*{fecDevolucion}" class="form-control" th:errorclass="'form-control alert-danger'"/>
-									<small class="form-text text-danger" th:if="${#fields.hasErrors('fecDevolucion')}" th:errors="*{fecDevolucion}"></small>
+
+								<div class="row">
+									<div class="form-group col-12 col-md-12">
+										<label class="col-form-label">Responsiva*</label>
+										<div class="input-group">
+											<div class="custom-file">
+												<input id="responsiva" type="file" th:field="*{responsiva}"
+													class="custom-file-input"
+													th:errorclass="'form-control alert-danger'" /> <label
+													class="custom-file-label" for="responsiva">Seleccionar
+													archivo</label>
+											</div>
+										</div>
+										<small class="form-text text-danger"
+											th:if="${#fields.hasErrors('responsiva')}"
+											th:errors="*{responsiva}"></small>
+									</div>
 								</div>
-							</div>
-							<input type="hidden" th:field="*{fecRegistro}"/>
+
+								<div class="row">
+									<div class="form-group col-6 col-md-6">
+										<label class="col-form-label">Fecha Pr&eacute;stamo</label> <input
+											type="date" th:field="*{fecPrestamo}" class="form-control"
+											th:errorclass="'form-control alert-danger'" /> <small
+											class="form-text text-danger"
+											th:if="${#fields.hasErrors('fecPrestamo')}"
+											th:errors="*{fecPrestamo}"></small>
+									</div>
+									<div class="form-group col-6 col-md-6">
+										<label class="col-form-label">Fecha Devoluci&oacute;n</label>
+										<input type="date" th:field="*{fecDevolucion}"
+											class="form-control"
+											th:errorclass="'form-control alert-danger'" /> <small
+											class="form-text text-danger"
+											th:if="${#fields.hasErrors('fecDevolucion')}"
+											th:errors="*{fecDevolucion}"></small>
+									</div>
+								</div>
+								<input type="hidden" th:field="*{fecRegistro}" />
 							</form>
 						</div>
-				       <div class="modal-footer">
-				    		<button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
-				          	<button type="submit" onclick="registraHerramienta();" class="btn btn-primary">Aceptar</button>
-				  		</div>
-				          
-				        </div>
-				      </div>
-				    </div>
+						<div class="modal-footer">
+							<button class="btn btn-secondary" type="button"
+								data-dismiss="modal">Cancelar</button>
+							<button type="submit" onclick="registraHerramienta();"
+								class="btn btn-primary">Aceptar</button>
+						</div>
 
-				<!-- Footer -->
-				<footer th:replace="layout/layout :: footer"></footer>
-				<!-- End of Footer -->
-		
-		
-		    </div>
-			<!-- End of Content Wrapper -->
+					</div>
+				</div>
+			</div>
 
+			<!-- Footer -->
+			<footer th:replace="layout/layout :: footer"></footer>
+			<!-- End of Footer -->
+
+
+		</div>
+		<!-- End of Content Wrapper -->
+
+	</div>
+	<!-- End of Page Wrapper -->
+
+	<!-- Scroll to Top Button-->
+	<div class="st-actionContainer right-bottom" id="btnFlash">
+		<div class="st-btn-container right-bottom"
+			onclick="flashSurvey(); return false;">
+			<div class="st-button-main">
+				<i class="fa fa-bolt" aria-hidden="true"></i>
+			</div>
 		</div>
 		<!-- End of Page Wrapper -->
 		
@@ -912,14 +1397,6 @@
   
   <script th:src="@{/js/datosRecursoSesion.js}"></script>
   <script th:src="@{/js/datosGenerales.js}"></script>
-  
-  
-  
-  <script type="text/javascript">
-  	$(document).ready(function(){
-  		$('.carousel').carousel('pause');
-  	});
-  </script>
 
 </body>
 
