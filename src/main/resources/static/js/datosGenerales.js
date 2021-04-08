@@ -37,7 +37,15 @@ $(document).ready(function() {
   //funcion que resetea el formulario de escolaridad
   function resetFormEscolaridad(){
 	$("#institucionAcademica").val("");
+	$("#cedulaProfesional").val("");
+	$("#carrera").val("");
+	$("#fecInicioEscolaridad").val("");
+	$("#fecFinEscolaridad").val("");
+	$("#codRecursoEscolaridad").val("");
 	$("#validInstitucionAcademica").hide();
+	$("#validCarrera").hide();
+	$("#validFecInicio").hide();
+	$("#validFecFin").hide();
   }
   
   function resetFormContactoEmergencia(){
@@ -95,20 +103,35 @@ $(document).ready(function() {
 	  var etapaEscolar = $("#etapaEscolar").val();
 	  var codRecurso = $("#codRecurso").val();
 	  var cedProf = $("#cedulaProfesional").val();
+	  var carrera = $("#carrera").val();
+	  var fecInicio = $("#fecInicioEscolaridad").val();
+	  var fecFin = $("#fecFinEscolaridad").val();
+	  
+	  var cre = $("#codRecursoEscolaridad").val();
 	  
 	  
 	  if(instAcademica.length === 0){
 		  $("#validInstitucionAcademica").show();
+	  } else if(carrera.length === 0){
+		  $("#validCarrera").show();
+	  } else if(fecInicio.length === 0){
+		  $("#validFecInicio").show();
+	  } else if(fecFin.length === 0){
+		  $("#validFecFin").show();
 	  } else {
 		  
 		  $.ajax({
 			    type: "GET",
 			    url: "/guardaEscolaridad",
-			    data: {cr: codRecurso, 
+			    data: {cre: cre,
+			    	cr: codRecurso, 
 			    	ia: instAcademica,
 			    	ge: gradoEscolar,
 			    	ee: etapaEscolar,
-			    	cp: cedProf },
+			    	cp: cedProf,
+			    	ca:carrera,
+			    	fi:fecInicio,
+			    	ff: fecFin},
 				success: function(result){
 					var url = "/obtieneEscolaridad/?codRecurso="+codRecurso;
 					$("#divEscolaridad").load(url);
@@ -119,6 +142,38 @@ $(document).ready(function() {
 	  }
 	  
   }
+  
+  
+  function editEscolaridad(codEscolaridad){
+	  $.ajax({
+		    type: "GET",
+		    url: "/obtieneEscolaridadUnica",
+		    data: {ce: codEscolaridad},
+			success: function(escolaridad){
+				var cre = encodeURIComponent(escolaridad[0]); //codRecursoEscolaridad
+				var ia = escolaridad[1]; //institucion
+				var ca = escolaridad[2]; //carrera
+				var ge = encodeURIComponent(escolaridad[3]); //gradoEscolar
+				var ee = encodeURIComponent(escolaridad[4]); //etapaescolar
+				var fi = escolaridad[5]; //fechainicio
+				var ff = escolaridad[6]; //fechafin
+				var cp = escolaridad[7]; //cedula prof
+				
+				
+				$("#codRecursoEscolaridad").val(cre);
+				$("#institucionAcademica").val(ia);
+				$("#gradoEscolar").val(ge);
+				$("#etapaEscolar").val(ee);
+				$("#cedulaProfesional").val(cp);
+				$("#carrera").val(ca);
+				$("#fecInicioEscolaridad").val(fi);
+				$("#fecFinEscolaridad").val(ff);
+				
+				$("#nuevaEscolaridadModal").modal('show');
+		    }
+		});	
+  }
+  
 
   //funcion que oculta dtalle de enfermedades/alergias/Embarazos a partir de opciones
   function validaEnfermedadAlergias(){

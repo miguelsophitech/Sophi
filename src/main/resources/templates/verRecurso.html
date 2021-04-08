@@ -252,14 +252,17 @@
 	   											<fieldset class="border p-2">
 	   												<legend  class="w-auto dg-campo">&nbsp;ESCOLARIDAD&nbsp;</legend>
 	   												<div id="divEscolaridad">
-	   												<ul th:fragment="fragmentEscolaridad"  class="list-group">
-													  <li class="list-group-item d-flex justify-content-between align-items-center dg-info" th:each="recursoEscolaridad : ${listaEscolaridad}">
-													     [[${recursoEscolaridad.descInstitucionAcademica}]] - [[${recursoEscolaridad.gradoEscolar.descGradoEscolaridad}]] - [[${recursoEscolaridad.etapaEscolar.descEtapaEscolar}]]
-													    <i class="fas fa-trash-alt dg-edit-escolar" style="cursor: pointer;" th:id="${recursoEscolaridad.codRecursoEscolaridad}" onclick="borrarEscolaridad(this.id);"></i>
-													  </li>
-													</ul>
+	   												<div th:fragment="fragmentEscolaridad">
+													  <div class="row" style="font-size: 14px;" th:each="recursoEscolaridad : ${listaEscolaridad}">
+														    <div class="col-md-11" th:text="${recursoEscolaridad.descInstitucionAcademica} + ' - ' + ${recursoEscolaridad.gradoEscolar.descGradoEscolaridad} + ' en ' + ${recursoEscolaridad.descCarrera} + ' del ' + ${recursoEscolaridad.fecInicio} + ' al ' + ${recursoEscolaridad.fecFin} + ' (' + ${recursoEscolaridad.etapaEscolar.descEtapaEscolar} + ')' + ' ' + ${recursoEscolaridad.descCedulaProfesional}">
+														    </div>
+														    <div class="col-md-1">
+														    	<i class="fas fa-edit dg-edit-escolar" style="cursor: pointer;" th:id="${recursoEscolaridad.codRecursoEscolaridad}" onclick="editEscolaridad(this.id);"></i>
+														    	<i class="fas fa-trash-alt dg-edit-escolar" style="cursor: pointer;" th:id="${recursoEscolaridad.codRecursoEscolaridad}" onclick="borrarEscolaridad(this.id);"></i>
+														    </div>
+													  </div>
 													</div>
-													<br>
+													</div>
 													&nbsp;<i class="fa fa-plus dg-campo dg-edit-escolar" data-toggle="modal" data-target="#nuevaEscolaridadModal" aria-hidden="true" style="cursor: pointer;"></i><span data-toggle="modal" data-target="#nuevaEscolaridadModal" style="cursor: pointer;" class="dg-campo dg-edit-escolar">&nbsp;Agregar</span>
 	   											</fieldset>
 	   											
@@ -634,11 +637,19 @@
 							<div class="row">
 								<div class="form-group col-12 col-md-12">
 									<label class="col-form-label">Instituci&oacute;n acad&eacute;mica*</label>
-									<input type="text" id="institucionAcademica" class="form-control" maxlength="40">
+									<input type="text" id="institucionAcademica" class="form-control" maxlength="50">
 									<small id="validInstitucionAcademica" class="form-text text-danger">Dato requerido</small>
 								</div>
 							</div>
-							m
+							
+							<div class="row">
+								<div class="form-group col-12 col-md-12">
+									<label class="col-form-label">Carrera*</label>
+									<input type="text" id="carrera" class="form-control" maxlength="50">
+									<small id="validCarrera" class="form-text text-danger">Dato requerido</small>
+								</div>
+							</div>
+							
 							<div class="row">
 								<div class="form-group col-6 col-md-6">
 									<label class="col-form-label">Grado escolar*</label>
@@ -657,15 +668,26 @@
 							
 							<div class="row">
 								<div class="form-group col-6 col-md-6">
+									<label class="col-form-label">Fecha de inicio*</label>
+									<input class="form-control" id="fecInicioEscolaridad" type="month" min="1950-01" max="2099-12" pattern="[0-9]{4}-[0-9]{2}">
+									<small id="validFecInicio" class="form-text text-danger">Dato requerido</small>
+								</div>
+								
+								<div class="form-group col-6 col-md-6">
+									<label class="col-form-label">Fecha de fin*</label>
+									<input class="form-control" id="fecFinEscolaridad" type="month" min="1950-01" max="2099-12" pattern="[0-9]{4}-[0-9]{2}">
+									<small id="validFecFin" class="form-text text-danger">Dato requerido</small>
+								</div>
+							</div>
+							
+							<div class="row">
+								<div class="form-group col-6 col-md-6">
 									<label class="col-form-label">Cedula profesional</label>
 									<input type="text" id="cedulaProfesional" class="form-control" maxlength="20"/>
 								</div>
-								<div class="form-group col-6 col-md-6">
-									<label class="col-form-label">Carrera:</label>
-									<input type="text" id="carreraEscolaridad" class="form-control" maxlength="50"/>
-								</div>
 							</div>
 							<input type="hidden" id="codRecurso" th:value="${recurso.codRecurso}" /> 
+							<input type="hidden" id="codRecursoEscolaridad" value="" /> 
 							
 <!-- 							</form> -->
 						</div>

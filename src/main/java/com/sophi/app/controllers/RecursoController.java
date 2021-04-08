@@ -3,6 +3,7 @@ package com.sophi.app.controllers;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -253,19 +254,38 @@ public class RecursoController {
 	
 	@RequestMapping(value="/guardaEscolaridad",method = RequestMethod.GET)
 	@ResponseBody
-	public String guardaEscolaridad(@RequestParam Long cr, 
+	public String guardaEscolaridad(@RequestParam Long cre, @RequestParam Long cr, 
 			@RequestParam String ia, 
 			@RequestParam Long ge,
 			@RequestParam Long ee,  
-			@RequestParam String cp, Model model) {
+			@RequestParam String cp,
+			@RequestParam String ca,
+			@RequestParam String fi,
+			@RequestParam String ff, Model model) {
 		
-		RecursoEscolaridad re = new RecursoEscolaridad();
+		RecursoEscolaridad re ;
+		
+		re = recursoEscolaridadService.findById(cre);
+		if (re == null) {
+			re = new RecursoEscolaridad();
+			re.setCodEtapaEscolar(ee);
+			re.setDescInstitucionAcademica(ia);
+			re.setDescCedulaProfesional(cp);
+			re.setCodGradoEscolar(ge);
+			re.setCodRecurso(cr);
+			re.setDescCarrera(ca);
+			re.setFecInicio(fi);
+			re.setFecFin(ff);
+		} else {
 		re.setCodEtapaEscolar(ee);
 		re.setDescInstitucionAcademica(ia);
 		re.setDescCedulaProfesional(cp);
 		re.setCodGradoEscolar(ge);
 		re.setCodRecurso(cr);
-		
+		re.setDescCarrera(ca);
+		re.setFecInicio(fi);
+		re.setFecFin(ff);
+		}
 		recursoEscolaridadService.save(re);
 		return "ok";
 
@@ -280,6 +300,22 @@ public class RecursoController {
 		List<RecursoEscolaridad> listaEscolaridad = recursoEscolaridadService.findByCodRecurso(codRecurso);
 		model.addAttribute("listaEscolaridad", listaEscolaridad);
 		return "verRecurso :: fragmentEscolaridad";
+	}
+	
+	@RequestMapping(value="/obtieneEscolaridadUnica",method = RequestMethod.GET)
+	@ResponseBody
+	public List<String> obtieneEscolaridadUnica(@RequestParam Long ce, Model model) {
+		RecursoEscolaridad recursoEscolaridad = recursoEscolaridadService.findById(ce);
+		List<String> listaDetalle = new ArrayList<String>();
+		listaDetalle.add(recursoEscolaridad.getCodRecursoEscolaridad().toString());
+		listaDetalle.add(recursoEscolaridad.getDescInstitucionAcademica());
+		listaDetalle.add(recursoEscolaridad.getDescCarrera());
+		listaDetalle.add(recursoEscolaridad.getGradoEscolar().getCodGradoEscolaridad().toString());
+		listaDetalle.add(recursoEscolaridad.getEtapaEscolar().getCodEtapaEscolar().toString());
+		listaDetalle.add(recursoEscolaridad.getFecInicio());
+		listaDetalle.add(recursoEscolaridad.getFecFin());
+		listaDetalle.add(recursoEscolaridad.getDescCedulaProfesional());
+		return listaDetalle;
 	}
 	
 	@RequestMapping(value="/borrarEscolaridad",method = RequestMethod.GET)
