@@ -14,4 +14,6 @@ public interface IRecursoEscolaridadService {
 	
 	public RecursoEscolaridad findById(Long codRecursoEscolaridad);
 
+	public RecursoEscolaridad findById(Long codRecursoEscolaridad);
+	
 }
