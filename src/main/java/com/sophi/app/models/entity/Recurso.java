@@ -191,6 +191,13 @@ public class Recurso implements Serializable  {
 	@Column(name = "cod_proveedor")
 	private Long codProveedor;
 	
+	@Column(name = "cod_perfil")
+	private Long codPerfil;
+	
+	@OneToOne
+	@JoinColumn(name = "cod_perfil", insertable = false, updatable = false)
+	private PerfilRecurso perfilRecurso;
+	
 	@OneToOne
 	@JoinColumn(name = "cod_proveedor", insertable = false, updatable = false)
 	private Proveedor proveedor;
@@ -787,6 +794,21 @@ public class Recurso implements Serializable  {
 	public void setDescGenero(String descGenero) {
 		this.descGenero = descGenero;
 	}
-	
+
+	public Long getCodPerfil() {
+		return codPerfil;
+	}
+
+	public void setCodPerfil(Long codPerfil) {
+		this.codPerfil = codPerfil;
+	}
+
+	public PerfilRecurso getPerfilRecurso() {
+		return perfilRecurso;
+	}
+
+	public void setPerfilRecurso(PerfilRecurso perfilRecurso) {
+		this.perfilRecurso = perfilRecurso;
+	}
 
 }

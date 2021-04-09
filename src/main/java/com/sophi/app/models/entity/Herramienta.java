@@ -27,35 +27,12 @@ public class Herramienta implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "cod_herramienta")
 	private Long codHerramienta;
 	
-	//@NotEmpty(message = "Este dato no debe estar vacío")
-	@Column(name = "desc_herramienta")
-	private String descHerramienta;
-	
-	//@NotEmpty(message = "Este dato no debe estar vacío")
-	@Column(name = "desc_observaciones")
-	private String descObservaciones;
-	
-	//@NotEmpty(message = "Este dato no debe estar vacío")
-	@Column(name = "desc_num_serie")
-	private String descNumSerie;
-	
-	//@NotEmpty(message = "Este dato no debe estar vacío")
-	@Column(name = "desc_modelo")
-	private String descModelo;
-	
-	@Column(name = "fec_registro")
-	@Temporal(TemporalType.TIMESTAMP)
-	@DateTimeFormat(pattern = "yyyy-MM-dd hh:mm:ss")
-	private Date fecRegistro;
-	
-	@PrePersist
-	public void prePersist() {
-		fecRegistro = new Date();
-	}
+	@OneToOne
+	@JoinColumn(name = "cod_herramienta")
+	private Equipo equipo;
 	
 	@Column(name = "cod_recurso")
 	private Long codRecurso;
@@ -63,6 +40,10 @@ public class Herramienta implements Serializable{
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "cod_recurso", insertable=false, updatable=false)
 	private Recurso recurso;
+	
+	//@NotEmpty(message = "Este dato no debe estar vacío")
+	@Column(name = "desc_observaciones")
+	private String descObservaciones;
 	
 	@Column(name = "responsiva")
 	private byte[] responsiva;
@@ -77,19 +58,15 @@ public class Herramienta implements Serializable{
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date fecDevolucion;
 	
-	@Column(name = "cod_tipo_herramienta")
-	private Long codTipoHerramienta;
+	@Column(name = "fec_registro")
+	@Temporal(TemporalType.TIMESTAMP)
+	@DateTimeFormat(pattern = "yyyy-MM-dd hh:mm:ss")
+	private Date fecRegistro;
 	
-	@Column(name = "cod_estado_herramienta")
-	private Long codEstadoHerramienta;
-	
-	@OneToOne
-	@JoinColumn(name = "cod_tipo_herramienta", insertable=false, updatable=false)
-	private TipoHerramienta tipoHerramienta;
-	
-	@OneToOne
-	@JoinColumn(name = "cod_estado_herramienta", insertable=false, updatable=false)
-	private EstadoHerramienta estadoHerramienta;
+	@PrePersist
+	public void prePersist() {
+		fecRegistro = new Date();
+	}
 
 	public Long getCodHerramienta() {
 		return codHerramienta;
@@ -99,28 +76,20 @@ public class Herramienta implements Serializable{
 		this.codHerramienta = codHerramienta;
 	}
 
-	public String getDescObservaciones() {
-		return descObservaciones;
+	public Equipo getEquipo() {
+		return equipo;
 	}
 
-	public void setDescObservaciones(String descObservaciones) {
-		this.descObservaciones = descObservaciones;
+	public void setEquipo(Equipo equipo) {
+		this.equipo = equipo;
 	}
 
-	public String getDescNumSerie() {
-		return descNumSerie;
+	public Long getCodRecurso() {
+		return codRecurso;
 	}
 
-	public void setDescNumSerie(String descNumSerie) {
-		this.descNumSerie = descNumSerie;
-	}
-
-	public Date getFecRegistro() {
-		return fecRegistro;
-	}
-
-	public void setFecRegistro(Date fecRegistro) {
-		this.fecRegistro = fecRegistro;
+	public void setCodRecurso(Long codRecurso) {
+		this.codRecurso = codRecurso;
 	}
 
 	public Recurso getRecurso() {
@@ -129,6 +98,14 @@ public class Herramienta implements Serializable{
 
 	public void setRecurso(Recurso recurso) {
 		this.recurso = recurso;
+	}
+
+	public String getDescObservaciones() {
+		return descObservaciones;
+	}
+
+	public void setDescObservaciones(String descObservaciones) {
+		this.descObservaciones = descObservaciones;
 	}
 
 	public byte[] getResponsiva() {
@@ -155,60 +132,12 @@ public class Herramienta implements Serializable{
 		this.fecDevolucion = fecDevolucion;
 	}
 
-	public String getDescHerramienta() {
-		return descHerramienta;
+	public Date getFecRegistro() {
+		return fecRegistro;
 	}
 
-	public void setDescHerramienta(String descHerramienta) {
-		this.descHerramienta = descHerramienta;
-	}
-
-	public String getDescModelo() {
-		return descModelo;
-	}
-
-	public void setDescModelo(String descModelo) {
-		this.descModelo = descModelo;
-	}
-
-	public TipoHerramienta getTipoHerramienta() {
-		return tipoHerramienta;
-	}
-
-	public void setTipoHerramienta(TipoHerramienta tipoHerramienta) {
-		this.tipoHerramienta = tipoHerramienta;
-	}
-
-	public EstadoHerramienta getEstadoHerramienta() {
-		return estadoHerramienta;
-	}
-
-	public void setEstadoHerramienta(EstadoHerramienta estadoHerramienta) {
-		this.estadoHerramienta = estadoHerramienta;
-	}
-
-	public Long getCodTipoHerramienta() {
-		return codTipoHerramienta;
-	}
-
-	public void setCodTipoHerramienta(Long codTipoHerramienta) {
-		this.codTipoHerramienta = codTipoHerramienta;
-	}
-
-	public Long getCodEstadoHerramienta() {
-		return codEstadoHerramienta;
-	}
-
-	public void setCodEstadoHerramienta(Long codEstadoHerramienta) {
-		this.codEstadoHerramienta = codEstadoHerramienta;
-	}
-
-	public Long getCodRecurso() {
-		return codRecurso;
-	}
-
-	public void setCodRecurso(Long codRecurso) {
-		this.codRecurso = codRecurso;
+	public void setFecRegistro(Date fecRegistro) {
+		this.fecRegistro = fecRegistro;
 	}
 
 	public static long getSerialversionuid() {

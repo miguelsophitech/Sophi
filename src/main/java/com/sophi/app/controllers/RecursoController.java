@@ -3,6 +3,8 @@ package com.sophi.app.controllers;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -10,6 +12,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+import org.springframework.web.multipart.MultipartFile;
 
 import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +29,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.sophi.app.Utiles;
@@ -39,6 +41,7 @@ import com.sophi.app.models.service.IEtapaEscolarService;
 import com.sophi.app.models.service.IGradoEscolarService;
 import com.sophi.app.models.service.IAreaRecursoService;
 import com.sophi.app.models.service.IContactoEmergenciaService;
+import com.sophi.app.models.service.IEquipoService;
 import com.sophi.app.models.service.IEstadoHerramientaService;
 import com.sophi.app.models.service.IHerramientaService;
 import com.sophi.app.models.service.IJornadaService;
@@ -108,6 +111,9 @@ public class RecursoController {
 	@Autowired
 	private IPerfilRecursoService perfilRecursoService;
 	
+	@Autowired
+	private IEquipoService equipoService;
+	
 	@GetMapping(value = "/verRecurso/{id}")
 	public String verRecurso(@PathVariable(value="id") Long codRecurso, Map<String, Object> model, RedirectAttributes flash, HttpServletResponse response) {
 		response.setContentType("image/jpeg");
@@ -146,6 +152,7 @@ public class RecursoController {
 		model.put("listaContactoEmergencia", contactoEmergenciaService.findByCodRecurso(codRecurso));
 		model.put("listaParentesco", parentescoService.findAll());
 		model.put("listaHerramientas", herramientaService.findByCodRecurso(codRecurso));
+		model.put("listaEquipos", equipoService.findAll());
 		model.put("tipoHerramientaList", tipoHerramientaService.findAll());
 		model.put("estadoHerramientaList", estadoHerramientaService.findAll());
 		return "verRecurso";
@@ -367,10 +374,7 @@ public class RecursoController {
 			ce.setDescTelContactoEmergencia(tc);
 			contactoEmergenciaService.save(ce);
 		}
-		
-		
-		
-		
+    
 		return "ok";
 
 	}
@@ -407,4 +411,82 @@ public class RecursoController {
 		return "ok";
 	}
 	
+// Herramientas
+	@RequestMapping(value="/guardaHerramienta",method = RequestMethod.GET)
+	@ResponseBody
+	public String guardaHerramienta(@RequestParam Long codHerramienta, @RequestParam Long codRecurso, 
+			@RequestParam String observaciones, 
+			@RequestParam MultipartFile responsiva, 
+			@RequestParam String fecPrestamoString,
+			@RequestParam String fecDevolucionString, Model model) {
+		
+		SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
+		Date fecPrestamo = null;
+		Date fecDevolucion = null;
+		byte[] bytesResponsiva = null;
+		
+		try {
+			fecPrestamo = formato.parse(fecPrestamoString);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			fecDevolucion = formato.parse(fecDevolucionString);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		if(!responsiva.isEmpty()) {
+			try {
+				bytesResponsiva = responsiva.getBytes();
+				//flash.addFlashAttribute("info", "Ha subido correctamente "+ responsiva.getOriginalFilename());
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		if (codHerramienta == null) {
+			Herramienta h = new Herramienta();
+			h.setDescObservaciones(observaciones);
+			h.setResponsiva(bytesResponsiva);
+			h.setFecPrestamo(fecPrestamo);
+			h.setFecDevolucion(fecDevolucion);
+			h.setCodRecurso(codRecurso);
+		}else {
+			Herramienta h = herramientaService.findOne(codHerramienta);
+			h.setDescObservaciones(observaciones);
+			h.setResponsiva(bytesResponsiva);
+			h.setFecPrestamo(fecPrestamo);
+			h.setFecDevolucion(fecDevolucion);
+			h.setCodRecurso(codRecurso);
+		}
+		
+		return "ok";
+
+	}
+	
+	@RequestMapping(value="/obtieneHerramienta",method = RequestMethod.GET)
+	public String obtieneHerramienta(@RequestParam Long codRecurso, Model model) {
+		
+		model.addAttribute("listaHerramienta", herramientaService.findByCodRecurso(codRecurso));
+		
+		return "verRecurso :: fragmentHerramienta";
+	}
+	
+	@RequestMapping(value="/obtieneHerramientaUnico",method = RequestMethod.GET)
+	@ResponseBody
+	public List<String> obtieneHerramientaUnico(@RequestParam Long h, Model model) {
+		
+		Herramienta herramienta = herramientaService.findOne(h);
+		List<String> listaDetalle = new ArrayList<String>();
+		listaDetalle.add(herramienta.getCodHerramienta().toString());
+		listaDetalle.add(herramienta.getDescObservaciones());
+		listaDetalle.add(herramienta.getResponsiva().toString());
+		listaDetalle.add(herramienta.getFecPrestamo().toString());
+		listaDetalle.add(herramienta.getFecDevolucion().toString());
+
+		return listaDetalle;
+	}
 }

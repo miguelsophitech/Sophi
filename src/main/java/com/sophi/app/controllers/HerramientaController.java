@@ -49,10 +49,10 @@ public class HerramientaController {
 	}
 	
 	@RequestMapping(value = "/formHerramienta/{id}")
-	public String editarHerramienta(@PathVariable(value = "id") Long codEquipo, Map<String, Object> model, RedirectAttributes flash) {
+	public String editarHerramienta(@PathVariable(value = "id") Long codHerramienta, Map<String, Object> model, RedirectAttributes flash) {
 		Herramienta herramienta = null;
-		if (codEquipo > 0) {
-			herramienta = herramientaService.findOne(codEquipo);
+		if (codHerramienta > 0) {
+			herramienta = herramientaService.findOne(codHerramienta);
 			if(herramienta == null) {
 				flash.addFlashAttribute("error", "El codigo de la herramienta no existe en base de datos!");
 				return "redirect:/listarRecursos";
@@ -102,10 +102,10 @@ public class HerramientaController {
 	}
 	
 	@RequestMapping(value = "/borrarHerramienta/{id}")
-	public String borrarHerramienta(@PathVariable(value = "id") Long codEquipo, Map<String, Object> model, RedirectAttributes flash) {
+	public String borrarHerramienta(@PathVariable(value = "id") Long codHerramienta, Map<String, Object> model, RedirectAttributes flash) {
 		Herramienta herramienta= null;
-		if (codEquipo > 0) {
-			herramienta = herramientaService.findOne(codEquipo);
+		if (codHerramienta > 0) {
+			herramienta = herramientaService.findOne(codHerramienta);
 			if(herramienta == null) {
 				flash.addFlashAttribute("error", "El codigo de la herramienta no existe en base de datos!");
 				return "redirect:/listarRecursos";

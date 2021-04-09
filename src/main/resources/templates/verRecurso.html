@@ -372,28 +372,32 @@
 													<fieldset class="border p-2">
 														<legend class="w-auto dg-campo">&nbsp;ESCOLARIDAD&nbsp;</legend>
 														<div id="divEscolaridad">
-															<ul th:fragment="fragmentEscolaridad" class="list-group">
-																<li
-																	class="list-group-item d-flex justify-content-between align-items-center dg-info"
+															<div th:fragment="fragmentEscolaridad">
+																<div class="row" style="font-size: 14px;"
 																	th:each="recursoEscolaridad : ${listaEscolaridad}">
-																	[[${recursoEscolaridad.descInstitucionAcademica}]] -
-																	[[${recursoEscolaridad.gradoEscolar.descGradoEscolaridad}]]
-																	-
-																	[[${recursoEscolaridad.etapaEscolar.descEtapaEscolar}]]
-																	<i class="fas fa-trash-alt dg-edit-escolar"
-																	style="cursor: pointer;"
-																	th:id="${recursoEscolaridad.codRecursoEscolaridad}"
-																	onclick="borrarEscolaridad(this.id);"></i>
-																</li>
-															</ul>
+																	<div class="col-md-11"
+																		th:text="${recursoEscolaridad.descInstitucionAcademica} + ' - ' + ${recursoEscolaridad.gradoEscolar.descGradoEscolaridad} + ' en ' + ${recursoEscolaridad.descCarrera} + ' del ' + ${recursoEscolaridad.fecInicio} + ' al ' + ${recursoEscolaridad.fecFin} + ' (' + ${recursoEscolaridad.etapaEscolar.descEtapaEscolar} + ')' + ' ' + ${recursoEscolaridad.descCedulaProfesional}">
+																	</div>
+																	<div class="col-md-1">
+																		<i class="fas fa-edit dg-edit-escolar"
+																			style="cursor: pointer;"
+																			th:id="${recursoEscolaridad.codRecursoEscolaridad}"
+																			onclick="editEscolaridad(this.id);"></i> <i
+																			class="fas fa-trash-alt dg-edit-escolar"
+																			style="cursor: pointer;"
+																			th:id="${recursoEscolaridad.codRecursoEscolaridad}"
+																			onclick="borrarEscolaridad(this.id);"></i>
+																	</div>
+																</div>
+															</div>
 														</div>
-														<br> &nbsp;<i
-															class="fa fa-plus dg-campo dg-edit-escolar"
+														&nbsp;<i class="fa fa-plus dg-campo dg-edit-escolar"
 															data-toggle="modal" data-target="#nuevaEscolaridadModal"
 															aria-hidden="true" style="cursor: pointer;"></i><span
 															data-toggle="modal" data-target="#nuevaEscolaridadModal"
 															style="cursor: pointer;" class="dg-campo dg-edit-escolar">&nbsp;Agregar</span>
 													</fieldset>
+													<!-- Cierre de bloque fomulario para con datos editable -->
 													<br>
 												</form>
 												<!-- Inicia bloque de contactos de emergencia -->
@@ -410,7 +414,7 @@
 														</div>
 														<div class="card-body text-secondary">
 
-															<div id="carouselContactosEmergencia"
+															<div id="carouselExampleIndicators"
 																class="carousel slide" data-ride="carousel">
 
 																<ol class="carousel-indicators">
@@ -446,7 +450,12 @@
 																					<div
 																						class="button mt-2 d-flex flex-row align-items-center">
 																						<button
-																							class="btn btn-sm btn-outline-primary w-100">Editar</button>
+																							class="btn btn-sm btn-outline-primary w-100"
+																							th:id="${contactoEmergencia.codContactoEmergencia}"
+																							onclick="editarContactoEmergencia(this.id);">Editar</button>
+																						<button class="btn btn-sm btn-primary w-100 ml-2"
+																							th:id="${contactoEmergencia.codContactoEmergencia}"
+																							onclick="borrarContactoEmergencia(this.id);">Borrar</button>
 																					</div>
 																				</div>
 																			</div>
@@ -547,7 +556,7 @@
 															<div id="responsable1"
 																class="col-xl-3 col-sm-4 col-md-4 col-lg-3 form-group"
 																th:if="${recurso.valResponsable == 1}">
-																<span class="dg-campo">Es responsable: </span> <select
+																<span class="dg-campo">Es lÃ­der: </span> <select
 																	th:field="${recurso.valResponsable}"
 																	class="form-control dg-info dg-edit"
 																	style="padding: 0;">
@@ -558,7 +567,7 @@
 															<div id="responsable0"
 																class="col-xl-3 col-sm-4 col-md-4 col-lg-3 form-group"
 																th:if="${recurso.valResponsable == 0}">
-																<span class="dg-campo">Es responsable: </span> <select
+																<span class="dg-campo">Es lÃ­der: </span> <select
 																	th:field="${recurso.valResponsable}"
 																	class="form-control dg-info dg-edit"
 																	style="padding: 0;">
@@ -691,7 +700,7 @@
 														</div>
 														<div class="card-body text-secondary">
 
-															<div id="carouselHerramientas"
+															<div id="carouselExampleIndicators"
 																class="carousel" data-ride="carousel">
 
 																<ol class="carousel-indicators">
@@ -714,16 +723,22 @@
 		
 																						<div class=" w-100">
 																							<h6 class="mb-0 mt-0"
-																								th:text="${herramienta.descHerramienta}"></h6>
+																								th:text="${herramienta.Equipo.descHerramienta}"></h6>
 																							<span style="font-size: 10px;"
-																								th:text="${herramienta.descModelo}"></span>
+																								th:text="${herramienta.Equipo.descModelo}"></span>
 																							&nbsp;
 																							<div style="margin: 10px 0px;">
-																								<span style="font-size: small;">S/N: [[${herramienta.descNumSerie}]]</span>
+																								<span style="font-size: small;">S/N: [[${herramienta.Equipo.descNumSerie}]]</span>
 																							</div>
 																							<div
 																								class="button mt-2 d-flex flex-row align-items-center">
-																								<button class="btn btn-sm btn-outline-primary w-100" data-toggle="modal" data-target="#editHerramientaModal">Editar</button>
+																								<button
+																									class="btn btn-sm btn-outline-primary w-100"
+																									th:id="${herramienta.codHerramienta}"
+																									onclick="editarHerramienta(this.id);">Editar</button>
+																								<button class="btn btn-sm btn-primary w-100 ml-2"
+																									th:id="${herramienta.codHerramienta}"
+																									onclick="borrarHerramienta(this.id);">Borrar</button>
 																							</div>
 																						</div>
 																					</div>
@@ -786,7 +801,16 @@
 															class="form-text text-danger">Dato requerido</small>
 													</div>
 												</div>
-
+												
+												<div class="row">
+													<div class="form-group col-12 col-md-12">
+														<label class="col-form-label">Carrera*</label> <input
+															type="text" id="carrera" class="form-control"
+															maxlength="50"> <small id="validCarrera"
+															class="form-text text-danger">Dato requerido</small>
+													</div>
+												</div>
+												
 												<div class="row">
 													<div class="form-group col-6 col-md-6">
 														<label class="col-form-label">Grado escolar*</label> <select
@@ -895,7 +919,7 @@
 														</div>
 													</div>
 												</div>
-
+													<input type="hidden" id="codContactoEmergencia" value="" />
 											</div>
 											<div class="modal-footer">
 												<button class="btn btn-secondary"
@@ -923,176 +947,62 @@
 											</h5>
 											<button class="close" type="button" data-dismiss="modal"
 												aria-label="Close">
-												<span aria-hidden="true">×</span>
+												<span aria-hidden="true">Ã—</span>
 											</button>
 										</div>
 										<div class="modal-body" style="font-size: 14px;">
-											<form th:object="${herramienta}" method="post">
-												<div class="row">
-													<div class="form-group col-12 col-md-12">
-														<label class="col-form-label">Herramienta*</label> <select
-															th:field="${herramienta.codHerramienta}"
-															class="form-control" style="padding: 0;">
-															<option value="-1">--- Seleccione ---</option>
-															<option
-																th:each="equipoLista : ${listaEquipos}"
-																th:value="${equipoLista.codHerramienta}"
-																th:text="${equipoLista.descHerramienta} + ' ' + ${equipoLista.descModelo}"></option>
-														</select>
-													</div>
+											<div class="row">
+												<div class="form-group col-12 col-md-12">
+													<label class="col-form-label">Herramienta*</label> <select
+														id="codHerramienta" class="form-control" style="padding: 0;">
+														<option value="-1">--- Seleccione ---</option>
+														<option
+															th:each="equipoLista : ${listaEquipos}"
+															th:value="${equipoLista.codHerramienta}"
+															th:text="${equipoLista.descHerramienta} + ' ' + ${equipoLista.descModelo}"></option>
+													</select>
 												</div>
+											</div>
 
-												<div class="row">
-													<div class="form-group col-12 col-md-12">
-														<label class="col-form-label">Observaciones*</label>
-														<textarea th:field="*{descObservaciones}"
-															class="form-control"
-															th:errorclass="'form-control alert-danger'"></textarea>
-														<small class="form-text text-danger"
-															th:if="${#fields.hasErrors('descObservaciones')}"
-															th:errors="*{descObservaciones}"></small>
-													</div>
+											<div class="row">
+												<div class="form-group col-12 col-md-12">
+													<label class="col-form-label">Observaciones*</label>
+													<textarea id="observaciones" class="form-control"></textarea>
+													<small id="validObservaciones" class="form-text text-danger">Dato requerido</small>
 												</div>
+											</div>
 
-												<div class="row">
-													<div class="form-group col-12 col-md-12">
-														<label class="col-form-label">Responsiva*</label>
-														<div class="input-group">
-															<div class="custom-file">
-																<input id="responsiva" type="file"
-																	th:field="*{responsiva}" class="custom-file-input"
-																	th:errorclass="'form-control alert-danger'" /> <label
-																	class="custom-file-label" for="responsiva">Seleccionar
-																	archivo</label>
-															</div>
+											<div class="row">
+												<div class="form-group col-12 col-md-12">
+													<label class="col-form-label">Responsiva*</label>
+													<div class="input-group">
+														<div class="custom-file">
+															<!-- <form th:action="@{/guardaResponsiva}" th:object="${herramienta}" method="post" enctype="multipart/form-data"> -->
+																<input id="inputResponsiva" name="responsiva" type="file" class="custom-file-input" accept="image/png, image/jpeg, image/jpg"/>
+																<label class="custom-file-label" for="responsiva">Seleccionar archivo</label>
+															<!-- </form> -->
 														</div>
-														<small class="form-text text-danger"
-															th:if="${#fields.hasErrors('responsiva')}"
-															th:errors="*{responsiva}"></small>
 													</div>
+													<small id="validResponsiva" class="form-text text-danger">Dato requerido</small>
+													<small th:if="${herramienta.responsiva} != null" id="fillResponsiva" class="form-text text-danger">Ya se adjunt&oacute; un archivo</small>
 												</div>
+											</div>
 
-												<div class="row">
-													<div class="form-group col-6 col-md-6">
-														<label class="col-form-label">Fecha
-															Pr&eacute;stamo</label> <input type="date"
-															th:field="*{fecPrestamo}" class="form-control"
-															th:errorclass="'form-control alert-danger'" /> <small
-															class="form-text text-danger"
-															th:if="${#fields.hasErrors('fecPrestamo')}"
-															th:errors="*{fecPrestamo}"></small>
-													</div>
-													<div class="form-group col-6 col-md-6">
-														<label class="col-form-label">Fecha
-															Devoluci&oacute;n</label> <input type="date"
-															th:field="*{fecDevolucion}" class="form-control"
-															th:errorclass="'form-control alert-danger'" /> <small
-															class="form-text text-danger"
-															th:if="${#fields.hasErrors('fecDevolucion')}"
-															th:errors="*{fecDevolucion}"></small>
-													</div>
+											<div class="row">
+												<div class="form-group col-6 col-md-6">
+													<label class="col-form-label">Fecha Pr&eacute;stamo</label>
+													<input type="date" id="fecPrestamo" class="form-control"/>
 												</div>
-												<input type="hidden" th:field="*{fecRegistro}" />
-											</form>
+												<div class="form-group col-6 col-md-6">
+													<label class="col-form-label">Fecha Devoluci&oacute;n</label>
+													<input type="date" id="fecDevolucion" class="form-control"/>
+												</div>
+											</div>
+											<input type="hidden" id="codHerramienta" value="" />
 										</div>
 										<div class="modal-footer">
 											<button class="btn btn-secondary" type="button"
-												data-dismiss="modal">Cancelar</button>
-											<button type="submit" onclick="registraHerramienta();"
-												class="btn btn-primary">Aceptar</button>
-										</div>
-
-									</div>
-								</div>
-							</div>
-
-							<!-- Modal Editar Herramienta -->
-							<div class="modal fade" id="editHerramientaModal" tabindex="-1"
-								role="dialog" aria-labelledby="editHerramientaModalLabel"
-								aria-hidden="true">
-								<div class="modal-dialog" role="document">
-									<div class="modal-content">
-										<div class="modal-header">
-											<h5 class="modal-title" id="editHerramientaModalLabel">
-												Editar herramienta<br>
-											</h5>
-											<button class="close" type="button" data-dismiss="modal"
-												aria-label="Close">
-												<span aria-hidden="true">×</span>
-											</button>
-										</div>
-										<div class="modal-body" style="font-size: 14px;">
-											<form th:object="${herramienta}" method="post">
-												<div class="row">
-													<div class="form-group col-12 col-md-12">
-														<label class="col-form-label">Herramienta*</label> <select
-															th:field="${herramienta.codHerramienta}"
-															class="form-control" style="padding: 0;">
-															<option value="-1">--- Seleccione ---</option>
-															<option
-																th:each="equipoLista : ${listaEquipos}"
-																th:value="${equipoLista.codHerramienta}"
-																th:text="${equipoLista.descHerramienta} + ' ' + ${equipoLista.descModelo}"></option>
-														</select>
-													</div>
-												</div>
-
-												<div class="row">
-													<div class="form-group col-12 col-md-12">
-														<label class="col-form-label">Observaciones*</label>
-														<textarea th:field="*{descObservaciones}"
-															class="form-control"
-															th:errorclass="'form-control alert-danger'"></textarea>
-														<small class="form-text text-danger"
-															th:if="${#fields.hasErrors('descObservaciones')}"
-															th:errors="*{descObservaciones}"></small>
-													</div>
-												</div>
-
-												<div class="row">
-													<div class="form-group col-12 col-md-12">
-														<label class="col-form-label">Responsiva*</label>
-														<div class="input-group">
-															<div class="custom-file">
-																<input id="responsiva" type="file"
-																	th:field="*{responsiva}" class="custom-file-input"
-																	th:errorclass="'form-control alert-danger'" /> <label
-																	class="custom-file-label" for="responsiva">Seleccionar
-																	archivo</label>
-															</div>
-														</div>
-														<small class="form-text text-danger"
-															th:if="${#fields.hasErrors('responsiva')}"
-															th:errors="*{responsiva}"></small>
-													</div>
-												</div>
-
-												<div class="row">
-													<div class="form-group col-6 col-md-6">
-														<label class="col-form-label">Fecha
-															Pr&eacute;stamo</label> <input type="date"
-															th:field="*{fecPrestamo}" class="form-control"
-															th:errorclass="'form-control alert-danger'" /> <small
-															class="form-text text-danger"
-															th:if="${#fields.hasErrors('fecPrestamo')}"
-															th:errors="*{fecPrestamo}"></small>
-													</div>
-													<div class="form-group col-6 col-md-6">
-														<label class="col-form-label">Fecha
-															Devoluci&oacute;n</label> <input type="date"
-															th:field="*{fecDevolucion}" class="form-control"
-															th:errorclass="'form-control alert-danger'" /> <small
-															class="form-text text-danger"
-															th:if="${#fields.hasErrors('fecDevolucion')}"
-															th:errors="*{fecDevolucion}"></small>
-													</div>
-												</div>
-												<input type="hidden" th:field="*{fecRegistro}" />
-											</form>
-										</div>
-										<div class="modal-footer">
-											<button class="btn btn-secondary" type="button"
-												data-dismiss="modal">Cancelar</button>
+												data-dismiss="modal" onclick="resetFormHerramienta();">Cancelar</button>
 											<button type="submit" onclick="registraHerramienta();"
 												class="btn btn-primary">Aceptar</button>
 										</div>
@@ -1152,6 +1062,7 @@
 
 					<script th:src="@{/js/datosRecursoSesion.js}"></script>
 					<script th:src="@{/js/datosGenerales.js}"></script>
+					<script th:src="@{/js/datosEmpresa.js}"></script>
 </body>
 
 </html>

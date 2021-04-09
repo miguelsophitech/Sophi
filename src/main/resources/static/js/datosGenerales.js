@@ -23,10 +23,6 @@ $(document).ready(function() {
 	 //Deshabilita todos los elementos para editar
 	 $(".dg-info").attr('disabled','disabled');
 	 
-	 $("#iNuevaHerramienta").click(function(){
-	 	$("#nuevaHerrmientaModal").show();
-	 });
-	 
   });
 
 
