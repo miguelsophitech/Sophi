@@ -12,6 +12,8 @@ public interface IHerramientaService {
 	
 	public Herramienta findOne(Long codEquipo);
 	
+	public Herramienta findByCodRecurso(Long codRecurso);
+	
 	public void delete(Herramienta herramienta);
 	
 }

@@ -32,6 +32,12 @@ public class HerramientaServiceImpl implements IHerramientaService {
 	public Herramienta findOne(Long codEquipo) {
 		return herramientaDao.findById(codEquipo).orElse(null);
 	}
+	
+	@Override
+	@Transactional(readOnly = true)
+	public Herramienta findByCodRecurso(Long codRecurso) {
+		return herramientaDao.findByCodRecurso(codRecurso);
+	}
 
 	@Override
 	@Transactional

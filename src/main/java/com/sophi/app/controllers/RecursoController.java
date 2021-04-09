@@ -39,13 +39,16 @@ import com.sophi.app.models.service.IEtapaEscolarService;
 import com.sophi.app.models.service.IGradoEscolarService;
 import com.sophi.app.models.service.IAreaRecursoService;
 import com.sophi.app.models.service.IContactoEmergenciaService;
+import com.sophi.app.models.service.IEstadoHerramientaService;
 import com.sophi.app.models.service.IHerramientaService;
 import com.sophi.app.models.service.IJornadaService;
 import com.sophi.app.models.service.IParentescoService;
+import com.sophi.app.models.service.IPerfilRecursoService;
 import com.sophi.app.models.service.IProveedorService;
 import com.sophi.app.models.service.IPuestoService;
 import com.sophi.app.models.service.IRecursoEscolaridadService;
 import com.sophi.app.models.service.IRecursoService;
+import com.sophi.app.models.service.ITipoHerramientaService;
 import com.sophi.app.models.service.ITipoRecursoService;
 import com.sophi.app.models.service.ITipoSangreService;
 
@@ -96,6 +99,15 @@ public class RecursoController {
 	@Autowired
 	private IContactoEmergenciaService contactoEmergenciaService;
 	
+	@Autowired
+	private ITipoHerramientaService tipoHerramientaService;
+	
+	@Autowired
+	private IEstadoHerramientaService estadoHerramientaService;
+	
+	@Autowired
+	private IPerfilRecursoService perfilRecursoService;
+	
 	@GetMapping(value = "/verRecurso/{id}")
 	public String verRecurso(@PathVariable(value="id") Long codRecurso, Map<String, Object> model, RedirectAttributes flash, HttpServletResponse response) {
 		response.setContentType("image/jpeg");
@@ -122,19 +134,20 @@ public class RecursoController {
 		model.put("jornadaList", jornadaService.findAll());
 		model.put("tipoRecursoList", tipoRecursoService.findAll());
 		model.put("proveedorList",proveedorService.findAll());
+		model.put("perfilRecursoList", perfilRecursoService.findAll());
 		model.put("estadoCivilList", estadoCivilService.findAll());
 		model.put("titulo", "Información de " + recurso.getDescRecurso());
 		model.put("listaEstadoCivil", estadoCivilService.findAll());
 		model.put("listaTipoSangre", tipoSangreService.findAll());
 		model.put("herramienta", herramienta);
-		
 		model.put("listaEscolaridad", listaEscolaridad);
 		model.put("listaGradoEscolar", gradoEscolarService.findAll());
 		model.put("listaEtapaEscolar", estapaEscolarService.findAll());
-		
 		model.put("listaContactoEmergencia", contactoEmergenciaService.findByCodRecurso(codRecurso));
 		model.put("listaParentesco", parentescoService.findAll());
-		
+		model.put("listaHerramientas", herramientaService.findByCodRecurso(codRecurso));
+		model.put("tipoHerramientaList", tipoHerramientaService.findAll());
+		model.put("estadoHerramientaList", estadoHerramientaService.findAll());
 		return "verRecurso";
 	}
 	
