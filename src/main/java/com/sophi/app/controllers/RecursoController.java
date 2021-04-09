@@ -374,7 +374,7 @@ public class RecursoController {
 			ce.setDescTelContactoEmergencia(tc);
 			contactoEmergenciaService.save(ce);
 		}
-		
+    
 		return "ok";
 
 	}
@@ -489,5 +489,4 @@ public class RecursoController {
 
 		return listaDetalle;
 	}
-	
 }

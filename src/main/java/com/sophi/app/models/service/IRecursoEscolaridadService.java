@@ -11,6 +11,8 @@ public interface IRecursoEscolaridadService {
 	public void save(RecursoEscolaridad recursoEscolaridad);
 	
 	public void delete(Long codRecursoEscolaridad);
+	
+	public RecursoEscolaridad findById(Long codRecursoEscolaridad);
 
 	public RecursoEscolaridad findById(Long codRecursoEscolaridad);
 	

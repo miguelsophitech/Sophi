@@ -12,6 +12,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+
 @Entity
 @Table(name="RECURSOS_ESCOLARIDAD")
 public class RecursoEscolaridad implements Serializable {
