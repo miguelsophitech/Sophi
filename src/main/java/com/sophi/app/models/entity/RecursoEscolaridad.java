@@ -16,7 +16,7 @@ import javax.persistence.Table;
 @Table(name="RECURSOS_ESCOLARIDAD")
 public class RecursoEscolaridad implements Serializable {
 	
-	private static final long serialVersionUID = 1L;
+private static final long serialVersionUID = 1L;
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,8 +29,17 @@ public class RecursoEscolaridad implements Serializable {
 	@Column(name = "desc_institucion_academica")
 	private String descInstitucionAcademica;
 	
+	@Column(name = "desc_carrera")
+	private String descCarrera;
+	
 	@Column(name = "desc_cedula_profesional")
 	private String descCedulaProfesional;
+	
+	@Column(name = "fec_inicio")
+	private String fecInicio;
+	
+	@Column(name = "fec_fin")
+	private String fecFin;
 	
 	@Column(name = "cod_grado_escolar")
 	private Long codGradoEscolar;
@@ -112,6 +121,30 @@ public class RecursoEscolaridad implements Serializable {
 
 	public void setEtapaEscolar(EtapaEscolar etapaEscolar) {
 		this.etapaEscolar = etapaEscolar;
+	}
+
+	public String getDescCarrera() {
+		return descCarrera;
+	}
+
+	public void setDescCarrera(String descCarrera) {
+		this.descCarrera = descCarrera;
+	}
+
+	public String getFecInicio() {
+		return fecInicio;
+	}
+
+	public void setFecInicio(String fecInicio) {
+		this.fecInicio = fecInicio;
+	}
+
+	public String getFecFin() {
+		return fecFin;
+	}
+
+	public void setFecFin(String fecFin) {
+		this.fecFin = fecFin;
 	}
 	
 	

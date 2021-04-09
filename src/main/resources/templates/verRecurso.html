@@ -516,7 +516,7 @@
 																	th:field="${recurso.codAreaRecurso}"
 																	class="form-control dg-info dg-edit"
 																	style="padding: 0;">
-																	<option value="-1">Todos</option>
+																	<option value="-1">--- Seleccione ---</option>
 																	<option th:each="areaRecursoLista : ${areaRecursoList}"
 																		th:value="${areaRecursoLista.codConsultor}"
 																		th:text="${areaRecursoLista.descConsultor}"></option>
@@ -547,7 +547,7 @@
 															<div id="responsable1"
 																class="col-xl-3 col-sm-4 col-md-4 col-lg-3 form-group"
 																th:if="${recurso.valResponsable == 1}">
-																<span class="dg-campo">Es responsable: </span> <select
+																<span class="dg-campo">Es líder: </span> <select
 																	th:field="${recurso.valResponsable}"
 																	class="form-control dg-info dg-edit"
 																	style="padding: 0;">
@@ -558,7 +558,7 @@
 															<div id="responsable0"
 																class="col-xl-3 col-sm-4 col-md-4 col-lg-3 form-group"
 																th:if="${recurso.valResponsable == 0}">
-																<span class="dg-campo">Es responsable: </span> <select
+																<span class="dg-campo">Es líder: </span> <select
 																	th:field="${recurso.valResponsable}"
 																	class="form-control dg-info dg-edit"
 																	style="padding: 0;">
@@ -613,7 +613,7 @@
 																	th:field="${recurso.codPuesto}"
 																	class="form-control dg-info dg-edit"
 																	style="padding: 0;">
-																	<option value="-1">Todos</option>
+																	<option value="-1">--- Seleccione ---</option>
 																	<option th:each="puestoLista : ${puestoList}"
 																		th:value="${puestoLista.codPuesto}"
 																		th:text="${puestoLista.descPuesto}"></option>
@@ -625,7 +625,7 @@
 																	th:field="${recurso.codJornada}"
 																	class="form-control dg-info dg-edit"
 																	style="padding: 0;">
-																	<option value="-1">Todos</option>
+																	<option value="-1">--- Seleccione ---</option>
 																	<option th:each="jornadaLista : ${jornadaList}"
 																		th:value="${jornadaLista.codJornada}"
 																		th:text="${jornadaLista.descJornada}"></option>
@@ -637,7 +637,7 @@
 																	th:field="${recurso.codTipoRecurso}"
 																	class="form-control dg-info dg-edit"
 																	style="padding: 0;">
-																	<option value="-1">Todos</option>
+																	<option value="-1">--- Seleccione ---</option>
 																	<option th:each="tipoRecursoLista : ${tipoRecursoList}"
 																		th:value="${tipoRecursoLista.codTipoRecurso}"
 																		th:text="${tipoRecursoLista.descTipoRecurso}"></option>
@@ -649,24 +649,24 @@
 																	th:field="${recurso.codProveedor}"
 																	class="form-control dg-info dg-edit"
 																	style="padding: 0;">
-																	<option value="-1">Todos</option>
+																	<option value="-1">--- Seleccione ---</option>
 																	<option th:each="proveedorLista : ${proveedorList}"
 																		th:value="${proveedorLista.codProveedor}"
 																		th:text="${proveedorLista.descProveedor}"></option>
 																</select>
 															</div>
-															<!-- <div id="perfil"
+															<div id="perfil"
 																class="col-xl-3 col-sm-4 col-md-4 col-lg-3 form-group">
 																<span class="dg-campo">Perfil: </span> <select
 																	th:field="${recurso.codPerfil}"
 																	class="form-control dg-info dg-edit"
 																	style="padding: 0;">
-																	<option value="-1">Todos</option>
+																	<option value="-1">--- Seleccione ---</option>
 																	<option th:each="perfilRecursoLista : ${perfilRecursoList}"
 																		th:value="${perfilRecursoLista.codPerfil}"
 																		th:text="${perfilRecursoLista.descPerfil}"></option>
 																</select>
-															</div> -->
+															</div>
 															<div id="costoMinimo"
 																class="col-xl-3 col-sm-4 col-md-4 col-lg-3 form-group">
 																<span class="dg-campo">Costo m&iacute;nimo: </span> <input
@@ -714,16 +714,16 @@
 		
 																						<div class=" w-100">
 																							<h6 class="mb-0 mt-0"
-																								th:text="${herramienta.descHerramienta}"></h6>
+																								th:text="${herramienta.Equipo.descHerramienta}"></h6>
 																							<span style="font-size: 10px;"
-																								th:text="${herramienta.descModelo}"></span>
+																								th:text="${herramienta.Equipo.descModelo}"></span>
 																							&nbsp;
 																							<div style="margin: 10px 0px;">
-																								<span style="font-size: small;">S/N: [[${herramienta.descNumSerie}]]</span>
+																								<span style="font-size: small;">S/N: [[${herramienta.Equipo.descNumSerie}]]</span>
 																							</div>
 																							<div
 																								class="button mt-2 d-flex flex-row align-items-center">
-																								<button class="btn btn-sm btn-outline-primary w-100" data-toggle="modal" data-target="#editHerramientaModal">Editar</button>
+																								<button class="btn btn-sm btn-outline-primary w-100">Editar</button>
 																							</div>
 																						</div>
 																					</div>
@@ -911,7 +911,7 @@
 								</div>
 							</div>
 
-							<!-- Modal Crear Herramienta -->
+							<!-- Modal Asignar Herramienta -->
 							<div class="modal fade" id="nuevaHerramientaModal" tabindex="-1"
 								role="dialog" aria-labelledby="nuevaHerramientaModalLabel"
 								aria-hidden="true">
@@ -927,266 +927,55 @@
 											</button>
 										</div>
 										<div class="modal-body" style="font-size: 14px;">
-											<form th:object="${herramienta}" method="post">
-												<div class="row">
-													<div class="form-group col-12 col-md-12">
-														<label class="col-form-label">Herramienta*</label> <input
-															type="text" th:field="*{descHerramienta}"
-															class="form-control"
-															th:errorclass="'form-control alert-danger'" /> <small
-															class="form-text text-danger"
-															th:if="${#fields.hasErrors('descHerramienta')}"
-															th:errors="*{descHerramienta}"></small>
-													</div>
+											<div class="row">
+												<div class="form-group col-12 col-md-12">
+													<label class="col-form-label">Herramienta*</label> <select
+														id="codHerramienta" class="form-control" style="padding: 0;">
+														<option value="-1">--- Seleccione ---</option>
+														<option
+															th:each="equipoLista : ${listaEquipos}"
+															th:value="${equipoLista.codHerramienta}"
+															th:text="${equipoLista.descHerramienta} + ' ' + ${equipoLista.descModelo}"></option>
+													</select>
 												</div>
+											</div>
 
-												<div class="row">
-													<div class="form-group col-12 col-md-12">
-														<label class="col-form-label">Observaciones*</label>
-														<textarea th:field="*{descObservaciones}"
-															class="form-control"
-															th:errorclass="'form-control alert-danger'"></textarea>
-														<small class="form-text text-danger"
-															th:if="${#fields.hasErrors('descObservaciones')}"
-															th:errors="*{descObservaciones}"></small>
-													</div>
+											<div class="row">
+												<div class="form-group col-12 col-md-12">
+													<label class="col-form-label">Observaciones*</label>
+													<textarea id="observaciones" class="form-control"></textarea>
+													<small id="validObservaciones" class="form-text text-danger">Dato requerido</small>
 												</div>
+											</div>
 
-												<div class="row">
-													<div class="form-group col-12 col-md-12">
-														<label class="col-form-label">Modelo*</label> <input
-															type="text" th:field="*{descModelo}" class="form-control"
-															th:errorclass="'form-control alert-danger'" /> <small
-															class="form-text text-danger"
-															th:if="${#fields.hasErrors('descModelo')}"
-															th:errors="*{descModelo}"></small>
-													</div>
-												</div>
-
-												<div class="row">
-													<div class="form-group col-12 col-md-12">
-														<label class="col-form-label">No. Serie*</label> <input
-															type="text" th:field="*{descNumSerie}"
-															class="form-control"
-															th:errorclass="'form-control alert-danger'" /> <small
-															class="form-text text-danger"
-															th:if="${#fields.hasErrors('descNumSerie')}"
-															th:errors="*{descNumSerie}"></small>
-													</div>
-												</div>
-
-												<div class="row">
-													<div class="form-group col-12 col-md-12">
-														<label class="col-form-label">Responsiva*</label>
-														<div class="input-group">
-															<div class="custom-file">
-																<input id="responsiva" type="file"
-																	th:field="*{responsiva}" class="custom-file-input"
-																	th:errorclass="'form-control alert-danger'" /> <label
-																	class="custom-file-label" for="responsiva">Seleccionar
-																	archivo</label>
-															</div>
+											<div class="row">
+												<div class="form-group col-12 col-md-12">
+													<label class="col-form-label">Responsiva*</label>
+													<div class="input-group">
+														<div class="custom-file">
+															<input id="responsiva" type="file" class="custom-file-input"/>
+															<label class="custom-file-label" for="responsiva">Seleccionar archivo</label>
+															
 														</div>
-														<small class="form-text text-danger"
-															th:if="${#fields.hasErrors('responsiva')}"
-															th:errors="*{responsiva}"></small>
 													</div>
+													<small id="validResponsiva" class="form-text text-danger">Dato requerido</small>
 												</div>
+											</div>
 
-												<div class="row">
-													<div class="form-group col-6 col-md-6">
-														<label class="col-form-label">Tipo Herramienta*</label> <select
-															th:field="${herramienta.codTipoHerramienta}"
-															class="form-control" style="padding: 0;">
-															<option value="-1">Todos</option>
-															<option
-																th:each="tipoHerramientaLista : ${tipoHerramientaList}"
-																th:value="${tipoHerramientaLista.codTipoHerramienta}"
-																th:text="${tipoHerramientaLista.descTipoHerramienta}"></option>
-														</select>
-													</div>
-													<div class="form-group col-6 col-md-6">
-														<label class="col-form-label">Estado Herramienta*</label>
-														<select th:field="${herramienta.codEstadoHerramienta}"
-															class="form-control" style="padding: 0;">
-															<option value="-1">Todos</option>
-															<option
-																th:each="estadoHerramientaLista : ${estadoHerramientaList}"
-																th:value="${estadoHerramientaLista.codEstadoHerramienta}"
-																th:text="${estadoHerramientaLista.descEstadoHerramienta}"></option>
-														</select>
-													</div>
+											<div class="row">
+												<div class="form-group col-6 col-md-6">
+													<label class="col-form-label">Fecha Pr&eacute;stamo</label>
+													<input type="date" id="fecPrestamo" class="form-control"/>
 												</div>
-
-												<div class="row">
-													<div class="form-group col-6 col-md-6">
-														<label class="col-form-label">Fecha
-															Pr&eacute;stamo</label> <input type="date"
-															th:field="*{fecPrestamo}" class="form-control"
-															th:errorclass="'form-control alert-danger'" /> <small
-															class="form-text text-danger"
-															th:if="${#fields.hasErrors('fecPrestamo')}"
-															th:errors="*{fecPrestamo}"></small>
-													</div>
-													<div class="form-group col-6 col-md-6">
-														<label class="col-form-label">Fecha
-															Devoluci&oacute;n</label> <input type="date"
-															th:field="*{fecDevolucion}" class="form-control"
-															th:errorclass="'form-control alert-danger'" /> <small
-															class="form-text text-danger"
-															th:if="${#fields.hasErrors('fecDevolucion')}"
-															th:errors="*{fecDevolucion}"></small>
-													</div>
+												<div class="form-group col-6 col-md-6">
+													<label class="col-form-label">Fecha Devoluci&oacute;n</label>
+													<input type="date" id="fecDevolucion" class="form-control"/>
 												</div>
-												<input type="hidden" th:field="*{codHerramienta}" /> <input
-													type="hidden" th:field="*{fecRegistro}" />
-											</form>
+											</div>
 										</div>
 										<div class="modal-footer">
 											<button class="btn btn-secondary" type="button"
-												data-dismiss="modal">Cancelar</button>
-											<button type="submit" onclick="registraHerramienta();"
-												class="btn btn-primary">Aceptar</button>
-										</div>
-
-									</div>
-								</div>
-							</div>
-
-							<!-- Modal Editar Herramienta -->
-							<div class="modal fade" id="editHerramientaModal" tabindex="-1"
-								role="dialog" aria-labelledby="editHerramientaModalLabel"
-								aria-hidden="true">
-								<div class="modal-dialog" role="document">
-									<div class="modal-content">
-										<div class="modal-header">
-											<h5 class="modal-title" id="editHerramientaModalLabel">
-												Editar herramienta<br>
-											</h5>
-											<button class="close" type="button" data-dismiss="modal"
-												aria-label="Close">
-												<span aria-hidden="true">Ã—</span>
-											</button>
-										</div>
-										<div class="modal-body" style="font-size: 14px;">
-											<form th:object="${herramienta}" method="post">
-												<div class="row">
-													<div class="form-group col-12 col-md-12">
-														<label class="col-form-label">Herramienta*</label> <input
-															type="text" th:field="*{descHerramienta}"
-															class="form-control"
-															th:errorclass="'form-control alert-danger'" /> <small
-															class="form-text text-danger"
-															th:if="${#fields.hasErrors('descHerramienta')}"
-															th:errors="*{descHerramienta}"></small>
-													</div>
-												</div>
-
-												<div class="row">
-													<div class="form-group col-12 col-md-12">
-														<label class="col-form-label">Observaciones*</label>
-														<textarea th:field="*{descObservaciones}"
-															class="form-control"
-															th:errorclass="'form-control alert-danger'"></textarea>
-														<small class="form-text text-danger"
-															th:if="${#fields.hasErrors('descObservaciones')}"
-															th:errors="*{descObservaciones}"></small>
-													</div>
-												</div>
-
-												<div class="row">
-													<div class="form-group col-12 col-md-12">
-														<label class="col-form-label">Modelo*</label> <input
-															type="text" th:field="*{descModelo}" class="form-control"
-															th:errorclass="'form-control alert-danger'" /> <small
-															class="form-text text-danger"
-															th:if="${#fields.hasErrors('descModelo')}"
-															th:errors="*{descModelo}"></small>
-													</div>
-												</div>
-
-												<div class="row">
-													<div class="form-group col-12 col-md-12">
-														<label class="col-form-label">No. Serie*</label> <input
-															type="text" th:field="*{descNumSerie}"
-															class="form-control"
-															th:errorclass="'form-control alert-danger'" /> <small
-															class="form-text text-danger"
-															th:if="${#fields.hasErrors('descNumSerie')}"
-															th:errors="*{descNumSerie}"></small>
-													</div>
-												</div>
-
-												<div class="row">
-													<div class="form-group col-12 col-md-12">
-														<label class="col-form-label">Responsiva*</label>
-														<div class="input-group">
-															<div class="custom-file">
-																<input id="responsiva" type="file"
-																	th:field="*{responsiva}" class="custom-file-input"
-																	th:errorclass="'form-control alert-danger'" /> <label
-																	class="custom-file-label" for="responsiva">Seleccionar
-																	archivo</label>
-															</div>
-														</div>
-														<small class="form-text text-danger"
-															th:if="${#fields.hasErrors('responsiva')}"
-															th:errors="*{responsiva}"></small>
-													</div>
-												</div>
-
-												<div class="row">
-													<div class="form-group col-6 col-md-6">
-														<label class="col-form-label">Tipo Herramienta*</label> <select
-															th:field="${herramienta.codTipoHerramienta}"
-															class="form-control" style="padding: 0;">
-															<option value="-1">Todos</option>
-															<option
-																th:each="tipoHerramientaLista : ${tipoHerramientaList}"
-																th:value="${tipoHerramientaLista.codTipoHerramienta}"
-																th:text="${tipoHerramientaLista.descTipoHerramienta}"></option>
-														</select>
-													</div>
-													<div class="form-group col-6 col-md-6">
-														<label class="col-form-label">Estado Herramienta*</label>
-														<select th:field="${herramienta.codEstadoHerramienta}"
-															class="form-control" style="padding: 0;">
-															<option value="-1">Todos</option>
-															<option
-																th:each="estadoHerramientaLista : ${estadoHerramientaList}"
-																th:value="${estadoHerramientaLista.codEstadoHerramienta}"
-																th:text="${estadoHerramientaLista.descEstadoHerramienta}"></option>
-														</select>
-													</div>
-												</div>
-
-												<div class="row">
-													<div class="form-group col-6 col-md-6">
-														<label class="col-form-label">Fecha
-															Pr&eacute;stamo</label> <input type="date"
-															th:field="*{fecPrestamo}" class="form-control"
-															th:errorclass="'form-control alert-danger'" /> <small
-															class="form-text text-danger"
-															th:if="${#fields.hasErrors('fecPrestamo')}"
-															th:errors="*{fecPrestamo}"></small>
-													</div>
-													<div class="form-group col-6 col-md-6">
-														<label class="col-form-label">Fecha
-															Devoluci&oacute;n</label> <input type="date"
-															th:field="*{fecDevolucion}" class="form-control"
-															th:errorclass="'form-control alert-danger'" /> <small
-															class="form-text text-danger"
-															th:if="${#fields.hasErrors('fecDevolucion')}"
-															th:errors="*{fecDevolucion}"></small>
-													</div>
-												</div>
-												<input type="hidden" th:field="*{codHerramienta}" /> <input
-													type="hidden" th:field="*{fecRegistro}" />
-											</form>
-										</div>
-										<div class="modal-footer">
-											<button class="btn btn-secondary" type="button"
-												data-dismiss="modal">Cancelar</button>
+												data-dismiss="modal" onclick="resetFormHerramienta();">Cancelar</button>
 											<button type="submit" onclick="registraHerramienta();"
 												class="btn btn-primary">Aceptar</button>
 										</div>
@@ -1246,6 +1035,7 @@
 
 					<script th:src="@{/js/datosRecursoSesion.js}"></script>
 					<script th:src="@{/js/datosGenerales.js}"></script>
+					<script th:src="@{/js/datosEmpresa.js}"></script>
 </body>
 
 </html>

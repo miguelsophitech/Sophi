@@ -32,5 +32,11 @@ public class RecursoEscolaridadServiceImpl implements IRecursoEscolaridadService
 	public void delete(Long codRecursoEscolaridad) {
 		recursoEscolaridadDao.deleteById(codRecursoEscolaridad);
 	}
+	
+	@Override
+	@Transactional(readOnly = true)
+	public RecursoEscolaridad findById(Long codRecursoEscolaridad) {
+		return recursoEscolaridadDao.findById(codRecursoEscolaridad).orElse(null);
+	}
 
 }

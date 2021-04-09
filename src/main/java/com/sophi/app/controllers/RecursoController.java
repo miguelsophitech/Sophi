@@ -3,6 +3,7 @@ package com.sophi.app.controllers;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -38,6 +39,7 @@ import com.sophi.app.models.service.IEtapaEscolarService;
 import com.sophi.app.models.service.IGradoEscolarService;
 import com.sophi.app.models.service.IAreaRecursoService;
 import com.sophi.app.models.service.IContactoEmergenciaService;
+import com.sophi.app.models.service.IEquipoService;
 import com.sophi.app.models.service.IEstadoHerramientaService;
 import com.sophi.app.models.service.IHerramientaService;
 import com.sophi.app.models.service.IJornadaService;
@@ -107,6 +109,9 @@ public class RecursoController {
 	@Autowired
 	private IPerfilRecursoService perfilRecursoService;
 	
+	@Autowired
+	private IEquipoService equipoService;
+	
 	@GetMapping(value = "/verRecurso/{id}")
 	public String verRecurso(@PathVariable(value="id") Long codRecurso, Map<String, Object> model, RedirectAttributes flash, HttpServletResponse response) {
 		response.setContentType("image/jpeg");
@@ -145,6 +150,7 @@ public class RecursoController {
 		model.put("listaContactoEmergencia", contactoEmergenciaService.findByCodRecurso(codRecurso));
 		model.put("listaParentesco", parentescoService.findAll());
 		model.put("listaHerramientas", herramientaService.findByCodRecurso(codRecurso));
+		model.put("listaEquipos", equipoService.findAll());
 		model.put("tipoHerramientaList", tipoHerramientaService.findAll());
 		model.put("estadoHerramientaList", estadoHerramientaService.findAll());
 		return "verRecurso";
@@ -266,20 +272,41 @@ public class RecursoController {
 	
 	@RequestMapping(value="/guardaEscolaridad",method = RequestMethod.GET)
 	@ResponseBody
-	public String guardaEscolaridad(@RequestParam Long cr, 
+	public String guardaEscolaridad(@RequestParam Long cre, @RequestParam Long cr, 
 			@RequestParam String ia, 
 			@RequestParam Long ge,
 			@RequestParam Long ee,  
-			@RequestParam String cp, Model model) {
+			@RequestParam String cp,
+			@RequestParam String ca,
+			@RequestParam String fi,
+			@RequestParam String ff, Model model) {
 		
-		RecursoEscolaridad re = new RecursoEscolaridad();
+		
+		System.out.println("cre"  + cre);
+		if (cre == null) {
+			RecursoEscolaridad re = new RecursoEscolaridad();
+			re.setCodEtapaEscolar(ee);
+			re.setDescInstitucionAcademica(ia);
+			re.setDescCedulaProfesional(cp);
+			re.setCodGradoEscolar(ge);
+			re.setCodRecurso(cr);
+			re.setDescCarrera(ca);
+			re.setFecInicio(fi);
+			re.setFecFin(ff);
+			recursoEscolaridadService.save(re);
+		} else {
+		RecursoEscolaridad re =	recursoEscolaridadService.findById(cre);
 		re.setCodEtapaEscolar(ee);
 		re.setDescInstitucionAcademica(ia);
 		re.setDescCedulaProfesional(cp);
 		re.setCodGradoEscolar(ge);
 		re.setCodRecurso(cr);
-		
+		re.setDescCarrera(ca);
+		re.setFecInicio(fi);
+		re.setFecFin(ff);
 		recursoEscolaridadService.save(re);
+		}
+		
 		return "ok";
 
 	}
@@ -295,6 +322,22 @@ public class RecursoController {
 		return "verRecurso :: fragmentEscolaridad";
 	}
 	
+	@RequestMapping(value="/obtieneEscolaridadUnica",method = RequestMethod.GET)
+	@ResponseBody
+	public List<String> obtieneEscolaridadUnica(@RequestParam Long ce, Model model) {
+		RecursoEscolaridad recursoEscolaridad = recursoEscolaridadService.findById(ce);
+		List<String> listaDetalle = new ArrayList<String>();
+		listaDetalle.add(recursoEscolaridad.getCodRecursoEscolaridad().toString());
+		listaDetalle.add(recursoEscolaridad.getDescInstitucionAcademica());
+		listaDetalle.add(recursoEscolaridad.getDescCarrera());
+		listaDetalle.add(recursoEscolaridad.getGradoEscolar().getCodGradoEscolaridad().toString());
+		listaDetalle.add(recursoEscolaridad.getEtapaEscolar().getCodEtapaEscolar().toString());
+		listaDetalle.add(recursoEscolaridad.getFecInicio());
+		listaDetalle.add(recursoEscolaridad.getFecFin());
+		listaDetalle.add(recursoEscolaridad.getDescCedulaProfesional());
+		return listaDetalle;
+	}
+	
 	@RequestMapping(value="/borrarEscolaridad",method = RequestMethod.GET)
 	@ResponseBody
 	public String borrarEscolaridad(@RequestParam Long cre, Model model) {
@@ -305,20 +348,31 @@ public class RecursoController {
 	
 	@RequestMapping(value="/guardaContactoEmergencia",method = RequestMethod.GET)
 	@ResponseBody
-	public String guardaContactoEmergencia(@RequestParam String nc, 
+	public String guardaContactoEmergencia(@RequestParam Long crc, @RequestParam String nc, 
 			@RequestParam String tc, 
 			@RequestParam Long pc,
 			@RequestParam Long ed,  
 			@RequestParam Long cr, Model model) {
 		
-		ContactoEmergencia ce = new ContactoEmergencia();
-		ce.setDescNombreContacto(nc);
-		ce.setCodParentesco(pc);
-		ce.setValDependienteEconomico(ed);
-		ce.setCodRecurso(cr);
-		ce.setDescTelContactoEmergencia(tc);
 		
-		contactoEmergenciaService.save(ce);
+		if (crc == null) {
+			ContactoEmergencia ce = new ContactoEmergencia();
+			ce.setDescNombreContacto(nc);
+			ce.setCodParentesco(pc);
+			ce.setValDependienteEconomico(ed);
+			ce.setCodRecurso(cr);
+			ce.setDescTelContactoEmergencia(tc);
+			contactoEmergenciaService.save(ce);
+		}else {
+			ContactoEmergencia ce = contactoEmergenciaService.findOne(crc);
+			ce.setDescNombreContacto(nc);
+			ce.setCodParentesco(pc);
+			ce.setValDependienteEconomico(ed);
+			ce.setCodRecurso(cr);
+			ce.setDescTelContactoEmergencia(tc);
+			contactoEmergenciaService.save(ce);
+		}
+		
 		return "ok";
 
 	}
@@ -330,6 +384,82 @@ public class RecursoController {
 		model.addAttribute("listaParentesco", parentescoService.findAll());
 		
 		return "verRecurso :: fragmentContactoEmergencia";
+	}
+	
+	@RequestMapping(value="/obtieneContactosEmergenciaUnico",method = RequestMethod.GET)
+	@ResponseBody
+	public List<String> obtieneContactosEmergenciaUnico(@RequestParam Long ce, Model model) {
+		
+		ContactoEmergencia contactoEmergencia = contactoEmergenciaService.findOne(ce);
+		List<String> listaDetalle = new ArrayList<String>();
+		listaDetalle.add(contactoEmergencia.getCodContactoEmergencia().toString());
+		listaDetalle.add(contactoEmergencia.getDescNombreContacto());
+		listaDetalle.add(contactoEmergencia.getDescTelContactoEmergencia());
+		listaDetalle.add(contactoEmergencia.getValDependienteEconomico().toString());
+		listaDetalle.add(contactoEmergencia.getParentesco().getCodParentesco().toString());
+
+		return listaDetalle;
+	}
+	
+	@RequestMapping(value="/borrarContactoEmergencia",method = RequestMethod.GET)
+	@ResponseBody
+	public String borrarContactoEmergencia(@RequestParam Long cre, Model model) {
+		ContactoEmergencia ce = contactoEmergenciaService.findOne(cre);
+		contactoEmergenciaService.delete(ce);
+		return "ok";
+	}
+	
+// Herramientas
+	@RequestMapping(value="/guardaHerramienta",method = RequestMethod.GET)
+	@ResponseBody
+	public String guardaHerramienta(@RequestParam Long codHerramienta, @RequestParam Long codRecurso, 
+			@RequestParam String observaciones, 
+			@RequestParam byte[] responsiva, 
+			@RequestParam Date fecPrestamo,
+			@RequestParam Date fecDevolucion, Model model) {
+		
+		
+		if (codHerramienta == null) {
+			Herramienta h = new Herramienta();
+			h.setDescObservaciones(observaciones);
+			h.setResponsiva(responsiva);
+			h.setFecPrestamo(fecPrestamo);
+			h.setFecDevolucion(fecDevolucion);
+			h.setCodRecurso(codRecurso);
+		}else {
+			Herramienta h = herramientaService.findOne(codHerramienta);
+			h.setDescObservaciones(observaciones);
+			h.setResponsiva(responsiva);
+			h.setFecPrestamo(fecPrestamo);
+			h.setFecDevolucion(fecDevolucion);
+			h.setCodRecurso(codRecurso);
+		}
+		
+		return "ok";
+
+	}
+	
+	@RequestMapping(value="/obtieneHerramienta",method = RequestMethod.GET)
+	public String obtieneHerramienta(@RequestParam Long codRecurso, Model model) {
+		
+		model.addAttribute("listaHerramienta", herramientaService.findByCodRecurso(codRecurso));
+		
+		return "verRecurso :: fragmentHerramienta";
+	}
+	
+	@RequestMapping(value="/obtieneHerramientaUnico",method = RequestMethod.GET)
+	@ResponseBody
+	public List<String> obtieneHerramientaUnico(@RequestParam Long h, Model model) {
+		
+		Herramienta herramienta = herramientaService.findOne(h);
+		List<String> listaDetalle = new ArrayList<String>();
+		listaDetalle.add(herramienta.getCodHerramienta().toString());
+		listaDetalle.add(herramienta.getDescObservaciones());
+		listaDetalle.add(herramienta.getResponsiva().toString());
+		listaDetalle.add(herramienta.getFecPrestamo().toString());
+		listaDetalle.add(herramienta.getFecDevolucion().toString());
+
+		return listaDetalle;
 	}
 	
 }
