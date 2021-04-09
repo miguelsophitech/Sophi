@@ -68,11 +68,11 @@
 												<h5
 													th:text="${recurso.descRecurso} + ' ' + ${recurso.descApellidoPaterno} + ' ' + ${recurso.descApellidoMaterno}">
 												</h5>
-												<div id="divBtnEditar">
+												<div id="divBtnEditar" sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_RH')">
 													<input id="iEditar" type="button" class="profile-edit-btn"
 														onclick="functionEditar();" value="Editar" />
 												</div>
-												<div id="divBtnGuardar">
+												<div id="divBtnGuardar" sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_RH')">
 													<input id="iGuardar" type="submit" class="profile-edit-btn"
 														onclick="functionGuardar();" value="Guardar" />
 												</div>
@@ -518,14 +518,13 @@
 																	th:field="${recurso.fecIngresoEmpresa}" />
 															</div>
 														</div>
-														<div class="row">
+														<div class="row" sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_RH')">
 															<div id="area"
 																class="col-xl-3 col-sm-4 col-md-4 col-lg-3 form-group">
 																<span class="dg-campo">&Aacute;rea: </span> <select
 																	th:field="${recurso.codAreaRecurso}"
 																	class="form-control dg-info dg-edit"
 																	style="padding: 0;">
-																	<option value="-1">--- Seleccione ---</option>
 																	<option th:each="areaRecursoLista : ${areaRecursoList}"
 																		th:value="${areaRecursoLista.codConsultor}"
 																		th:text="${areaRecursoLista.descConsultor}"></option>
@@ -556,7 +555,7 @@
 															<div id="responsable1"
 																class="col-xl-3 col-sm-4 col-md-4 col-lg-3 form-group"
 																th:if="${recurso.valResponsable == 1}">
-																<span class="dg-campo">Es líder: </span> <select
+																<span class="dg-campo">Es &iacute;der: </span> <select
 																	th:field="${recurso.valResponsable}"
 																	class="form-control dg-info dg-edit"
 																	style="padding: 0;">
@@ -567,7 +566,7 @@
 															<div id="responsable0"
 																class="col-xl-3 col-sm-4 col-md-4 col-lg-3 form-group"
 																th:if="${recurso.valResponsable == 0}">
-																<span class="dg-campo">Es líder: </span> <select
+																<span class="dg-campo">Es &iacute;der: </span> <select
 																	th:field="${recurso.valResponsable}"
 																	class="form-control dg-info dg-edit"
 																	style="padding: 0;">
@@ -598,8 +597,7 @@
 																</select>
 															</div>
 														</div>
-														<div class="row"
-															th:if="${recurso.fecSalidaEmpresa != null && recurso.descMotivoSalida != null}">
+														<div class="row" sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_RH')">
 															<div id="fecSalida"
 																class="col-xl-3 col-sm-4 col-md-4 col-lg-3 form-group">
 																<span class="dg-campo">Fec. Salida: </span> <input
@@ -622,7 +620,6 @@
 																	th:field="${recurso.codPuesto}"
 																	class="form-control dg-info dg-edit"
 																	style="padding: 0;">
-																	<option value="-1">--- Seleccione ---</option>
 																	<option th:each="puestoLista : ${puestoList}"
 																		th:value="${puestoLista.codPuesto}"
 																		th:text="${puestoLista.descPuesto}"></option>
@@ -634,7 +631,6 @@
 																	th:field="${recurso.codJornada}"
 																	class="form-control dg-info dg-edit"
 																	style="padding: 0;">
-																	<option value="-1">--- Seleccione ---</option>
 																	<option th:each="jornadaLista : ${jornadaList}"
 																		th:value="${jornadaLista.codJornada}"
 																		th:text="${jornadaLista.descJornada}"></option>
@@ -646,7 +642,6 @@
 																	th:field="${recurso.codTipoRecurso}"
 																	class="form-control dg-info dg-edit"
 																	style="padding: 0;">
-																	<option value="-1">--- Seleccione ---</option>
 																	<option th:each="tipoRecursoLista : ${tipoRecursoList}"
 																		th:value="${tipoRecursoLista.codTipoRecurso}"
 																		th:text="${tipoRecursoLista.descTipoRecurso}"></option>
@@ -658,7 +653,6 @@
 																	th:field="${recurso.codProveedor}"
 																	class="form-control dg-info dg-edit"
 																	style="padding: 0;">
-																	<option value="-1">--- Seleccione ---</option>
 																	<option th:each="proveedorLista : ${proveedorList}"
 																		th:value="${proveedorLista.codProveedor}"
 																		th:text="${proveedorLista.descProveedor}"></option>
@@ -670,16 +664,15 @@
 																	th:field="${recurso.codPerfil}"
 																	class="form-control dg-info dg-edit"
 																	style="padding: 0;">
-																	<option value="-1">--- Seleccione ---</option>
 																	<option th:each="perfilRecursoLista : ${perfilRecursoList}"
 																		th:value="${perfilRecursoLista.codPerfil}"
 																		th:text="${perfilRecursoLista.descPerfil}"></option>
 																</select>
 															</div>
-															<div id="costoMinimo"
+															<div id="costoMinimo" sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_RH')"
 																class="col-xl-3 col-sm-4 col-md-4 col-lg-3 form-group">
 																<span class="dg-campo">Costo m&iacute;nimo: </span> <input
-																	type="number" step="0.10" class="form-control dg-info"
+																	type="number" step="0.10" class="form-control dg-info dg-edit"
 																	th:field="${recurso.valCostoMinimo}" placeholder="$" />
 															</div>
 														</div>
@@ -833,19 +826,28 @@
 												</div>
 
 												<div class="row">
-													<div class="form-group col-6 col-md-6">
+													<div class="form-group col-12 col-md-12">
 														<label class="col-form-label">Cedula profesional</label> <input
 															type="text" id="cedulaProfesional" class="form-control"
 															maxlength="20" />
 													</div>
+												</div>
+												
+												<div class="row">
 													<div class="form-group col-6 col-md-6">
-														<label class="col-form-label">Carrera:</label> <input
-															type="text" id="carreraEscolaridad" class="form-control"
-															maxlength="50" />
+														<label class="col-form-label">Fecha de inicio*</label>
+														<input class="form-control" id="fecInicioEscolaridad" type="month" min="1950-01" max="2099-12" pattern="[0-9]{4}-[0-9]{2}">
+														<small id="validFecInicio" class="form-text text-danger">Dato requerido</small>
+													</div>
+													
+													<div class="form-group col-6 col-md-6">
+														<label class="col-form-label">Fecha de fin*</label>
+														<input class="form-control" id="fecFinEscolaridad" type="month" min="1950-01" max="2099-12" pattern="[0-9]{4}-[0-9]{2}">
+														<small id="validFecFin" class="form-text text-danger">Dato requerido</small>
 													</div>
 												</div>
-												<input type="hidden" id="codRecurso"
-													th:value="${recurso.codRecurso}" />
+												<input type="hidden" id="codRecurso" th:value="${recurso.codRecurso}" />
+												<input type="hidden" id="codRecursoEscolaridad" value="" /> 
 
 												<!-- 							</form> -->
 											</div>
