@@ -489,4 +489,12 @@ public class RecursoController {
 
 		return listaDetalle;
 	}
+	
+	@RequestMapping(value="/borrarHerramienta",method = RequestMethod.GET)
+	@ResponseBody
+	public String borrarHerramienta(@RequestParam Long ch, Model model) {
+		Herramienta h = herramientaService.findOne(ch);
+		herramientaService.delete(h);
+		return "ok";
+	}
 }

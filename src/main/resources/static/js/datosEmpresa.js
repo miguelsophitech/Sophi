@@ -52,7 +52,8 @@ function registraHerramienta(){
 			
   }
   
-  function editarHerramienta(codHerramienta){ 
+  function editarHerramienta(codHerramienta){
+  		console.log(codHerramienta);
 	  $.ajax({
 		    type: "GET",
 		    url: "/obtieneHerramientaUnico",
@@ -80,7 +81,7 @@ function registraHerramienta(){
 	  $.ajax({
 		    type: "GET",
 		    url: "/borrarHerramienta",
-		    data: {codHerramienta: codHerramienta },
+		    data: {ch: codHerramienta },
 			success: function(result){
 				var url = "/obtieneHerramienta/?codRecurso="+codRecurso;
 				$("#divHerramientas").load(url);
