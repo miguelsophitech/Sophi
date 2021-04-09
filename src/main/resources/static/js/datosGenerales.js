@@ -120,6 +120,7 @@ $(document).ready(function() {
 
   //funcion que registra la escolaridad
   function registraEscolaridad(){
+  	  resetFormEscolaridad();
 	  var instAcademica = $("#institucionAcademica").val();
 	  var gradoEscolar = $("#gradoEscolar").val();
 	  var etapaEscolar = $("#etapaEscolar").val();
