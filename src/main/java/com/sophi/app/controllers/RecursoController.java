@@ -3,6 +3,8 @@ package com.sophi.app.controllers;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -10,6 +12,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+import org.springframework.web.multipart.MultipartFile;
 
 import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +29,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.sophi.app.Utiles;
@@ -414,22 +416,48 @@ public class RecursoController {
 	@ResponseBody
 	public String guardaHerramienta(@RequestParam Long codHerramienta, @RequestParam Long codRecurso, 
 			@RequestParam String observaciones, 
-			@RequestParam byte[] responsiva, 
-			@RequestParam Date fecPrestamo,
-			@RequestParam Date fecDevolucion, Model model) {
+			@RequestParam MultipartFile responsiva, 
+			@RequestParam String fecPrestamoString,
+			@RequestParam String fecDevolucionString, Model model) {
 		
+		SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
+		Date fecPrestamo = null;
+		Date fecDevolucion = null;
+		byte[] bytesResponsiva = null;
+		
+		try {
+			fecPrestamo = formato.parse(fecPrestamoString);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			fecDevolucion = formato.parse(fecDevolucionString);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		if(!responsiva.isEmpty()) {
+			try {
+				bytesResponsiva = responsiva.getBytes();
+				//flash.addFlashAttribute("info", "Ha subido correctamente "+ responsiva.getOriginalFilename());
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
 		
 		if (codHerramienta == null) {
 			Herramienta h = new Herramienta();
 			h.setDescObservaciones(observaciones);
-			h.setResponsiva(responsiva);
+			h.setResponsiva(bytesResponsiva);
 			h.setFecPrestamo(fecPrestamo);
 			h.setFecDevolucion(fecDevolucion);
 			h.setCodRecurso(codRecurso);
 		}else {
 			Herramienta h = herramientaService.findOne(codHerramienta);
 			h.setDescObservaciones(observaciones);
-			h.setResponsiva(responsiva);
+			h.setResponsiva(bytesResponsiva);
 			h.setFecPrestamo(fecPrestamo);
 			h.setFecDevolucion(fecDevolucion);
 			h.setCodRecurso(codRecurso);

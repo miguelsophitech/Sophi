@@ -372,28 +372,32 @@
 													<fieldset class="border p-2">
 														<legend class="w-auto dg-campo">&nbsp;ESCOLARIDAD&nbsp;</legend>
 														<div id="divEscolaridad">
-															<ul th:fragment="fragmentEscolaridad" class="list-group">
-																<li
-																	class="list-group-item d-flex justify-content-between align-items-center dg-info"
+															<div th:fragment="fragmentEscolaridad">
+																<div class="row" style="font-size: 14px;"
 																	th:each="recursoEscolaridad : ${listaEscolaridad}">
-																	[[${recursoEscolaridad.descInstitucionAcademica}]] -
-																	[[${recursoEscolaridad.gradoEscolar.descGradoEscolaridad}]]
-																	-
-																	[[${recursoEscolaridad.etapaEscolar.descEtapaEscolar}]]
-																	<i class="fas fa-trash-alt dg-edit-escolar"
-																	style="cursor: pointer;"
-																	th:id="${recursoEscolaridad.codRecursoEscolaridad}"
-																	onclick="borrarEscolaridad(this.id);"></i>
-																</li>
-															</ul>
+																	<div class="col-md-11"
+																		th:text="${recursoEscolaridad.descInstitucionAcademica} + ' - ' + ${recursoEscolaridad.gradoEscolar.descGradoEscolaridad} + ' en ' + ${recursoEscolaridad.descCarrera} + ' del ' + ${recursoEscolaridad.fecInicio} + ' al ' + ${recursoEscolaridad.fecFin} + ' (' + ${recursoEscolaridad.etapaEscolar.descEtapaEscolar} + ')' + ' ' + ${recursoEscolaridad.descCedulaProfesional}">
+																	</div>
+																	<div class="col-md-1">
+																		<i class="fas fa-edit dg-edit-escolar"
+																			style="cursor: pointer;"
+																			th:id="${recursoEscolaridad.codRecursoEscolaridad}"
+																			onclick="editEscolaridad(this.id);"></i> <i
+																			class="fas fa-trash-alt dg-edit-escolar"
+																			style="cursor: pointer;"
+																			th:id="${recursoEscolaridad.codRecursoEscolaridad}"
+																			onclick="borrarEscolaridad(this.id);"></i>
+																	</div>
+																</div>
+															</div>
 														</div>
-														<br> &nbsp;<i
-															class="fa fa-plus dg-campo dg-edit-escolar"
+														&nbsp;<i class="fa fa-plus dg-campo dg-edit-escolar"
 															data-toggle="modal" data-target="#nuevaEscolaridadModal"
 															aria-hidden="true" style="cursor: pointer;"></i><span
 															data-toggle="modal" data-target="#nuevaEscolaridadModal"
 															style="cursor: pointer;" class="dg-campo dg-edit-escolar">&nbsp;Agregar</span>
 													</fieldset>
+													<!-- Cierre de bloque fomulario para con datos editable -->
 													<br>
 												</form>
 												<!-- Inicia bloque de contactos de emergencia -->
@@ -410,7 +414,7 @@
 														</div>
 														<div class="card-body text-secondary">
 
-															<div id="carouselContactosEmergencia"
+															<div id="carouselExampleIndicators"
 																class="carousel slide" data-ride="carousel">
 
 																<ol class="carousel-indicators">
@@ -446,7 +450,12 @@
 																					<div
 																						class="button mt-2 d-flex flex-row align-items-center">
 																						<button
-																							class="btn btn-sm btn-outline-primary w-100">Editar</button>
+																							class="btn btn-sm btn-outline-primary w-100"
+																							th:id="${contactoEmergencia.codContactoEmergencia}"
+																							onclick="editarContactoEmergencia(this.id);">Editar</button>
+																						<button class="btn btn-sm btn-primary w-100 ml-2"
+																							th:id="${contactoEmergencia.codContactoEmergencia}"
+																							onclick="borrarContactoEmergencia(this.id);">Borrar</button>
 																					</div>
 																				</div>
 																			</div>
@@ -691,7 +700,7 @@
 														</div>
 														<div class="card-body text-secondary">
 
-															<div id="carouselHerramientas"
+															<div id="carouselExampleIndicators"
 																class="carousel" data-ride="carousel">
 
 																<ol class="carousel-indicators">
@@ -723,7 +732,13 @@
 																							</div>
 																							<div
 																								class="button mt-2 d-flex flex-row align-items-center">
-																								<button class="btn btn-sm btn-outline-primary w-100">Editar</button>
+																								<button
+																									class="btn btn-sm btn-outline-primary w-100"
+																									th:id="${herramienta.codHerramienta}"
+																									onclick="editarHerramienta(this.id);">Editar</button>
+																								<button class="btn btn-sm btn-primary w-100 ml-2"
+																									th:id="${herramienta.codHerramienta}"
+																									onclick="borrarHerramienta(this.id);">Borrar</button>
 																							</div>
 																						</div>
 																					</div>
@@ -786,7 +801,16 @@
 															class="form-text text-danger">Dato requerido</small>
 													</div>
 												</div>
-
+												
+												<div class="row">
+													<div class="form-group col-12 col-md-12">
+														<label class="col-form-label">Carrera*</label> <input
+															type="text" id="carrera" class="form-control"
+															maxlength="50"> <small id="validCarrera"
+															class="form-text text-danger">Dato requerido</small>
+													</div>
+												</div>
+												
 												<div class="row">
 													<div class="form-group col-6 col-md-6">
 														<label class="col-form-label">Grado escolar*</label> <select
@@ -895,7 +919,7 @@
 														</div>
 													</div>
 												</div>
-
+													<input type="hidden" id="codContactoEmergencia" value="" />
 											</div>
 											<div class="modal-footer">
 												<button class="btn btn-secondary"
@@ -953,12 +977,14 @@
 													<label class="col-form-label">Responsiva*</label>
 													<div class="input-group">
 														<div class="custom-file">
-															<input id="responsiva" type="file" class="custom-file-input"/>
-															<label class="custom-file-label" for="responsiva">Seleccionar archivo</label>
-															
+															<!-- <form th:action="@{/guardaResponsiva}" th:object="${herramienta}" method="post" enctype="multipart/form-data"> -->
+																<input id="inputResponsiva" name="responsiva" type="file" class="custom-file-input" accept="image/png, image/jpeg, image/jpg"/>
+																<label class="custom-file-label" for="responsiva">Seleccionar archivo</label>
+															<!-- </form> -->
 														</div>
 													</div>
 													<small id="validResponsiva" class="form-text text-danger">Dato requerido</small>
+													<small th:if="${herramienta.responsiva} != null" id="fillResponsiva" class="form-text text-danger">Ya se adjunt&oacute; un archivo</small>
 												</div>
 											</div>
 
@@ -972,6 +998,7 @@
 													<input type="date" id="fecDevolucion" class="form-control"/>
 												</div>
 											</div>
+											<input type="hidden" id="codHerramienta" value="" />
 										</div>
 										<div class="modal-footer">
 											<button class="btn btn-secondary" type="button"
