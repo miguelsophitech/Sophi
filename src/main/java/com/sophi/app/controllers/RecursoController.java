@@ -414,16 +414,19 @@ public class RecursoController {
 // Herramientas
 	@RequestMapping(value="/guardaHerramienta",method = RequestMethod.GET)
 	@ResponseBody
-	public String guardaHerramienta(@RequestParam Long codHerramienta, @RequestParam Long codRecurso, 
+	public String guardaHerramienta(@RequestParam Long codHerramientaRecurso,
+			@RequestParam Long codHerramienta, @RequestParam Long codRecurso, 
 			@RequestParam String observaciones, 
-			@RequestParam MultipartFile responsiva, 
+			//@RequestParam MultipartFile responsiva, 
 			@RequestParam String fecPrestamoString,
 			@RequestParam String fecDevolucionString, Model model) {
 		
-		SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
+		System.out.println(codHerramienta + " "+ codRecurso + " " +observaciones + " " +fecPrestamoString+" "+fecDevolucionString);
+		
+		SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
 		Date fecPrestamo = null;
 		Date fecDevolucion = null;
-		byte[] bytesResponsiva = null;
+		//byte[] bytesResponsiva = null;
 		
 		try {
 			fecPrestamo = formato.parse(fecPrestamoString);
@@ -438,29 +441,33 @@ public class RecursoController {
 			e.printStackTrace();
 		}
 		
-		if(!responsiva.isEmpty()) {
+		/*if(!responsiva.isEmpty()) {
 			try {
 				bytesResponsiva = responsiva.getBytes();
 				//flash.addFlashAttribute("info", "Ha subido correctamente "+ responsiva.getOriginalFilename());
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-		}
+//		}*/
 		
-		if (codHerramienta == null) {
+		if (codHerramientaRecurso == null){
 			Herramienta h = new Herramienta();
+			h.setCodHerramienta(codHerramienta);
 			h.setDescObservaciones(observaciones);
-			h.setResponsiva(bytesResponsiva);
+			//h.setResponsiva(bytesResponsiva);
 			h.setFecPrestamo(fecPrestamo);
 			h.setFecDevolucion(fecDevolucion);
 			h.setCodRecurso(codRecurso);
-		}else {
-			Herramienta h = herramientaService.findOne(codHerramienta);
+			herramientaService.save(h);
+		} else {
+			Herramienta h = herramientaService.findOne(codHerramientaRecurso);
+			h.setCodHerramienta(codHerramienta);
 			h.setDescObservaciones(observaciones);
-			h.setResponsiva(bytesResponsiva);
+			//h.setResponsiva(bytesResponsiva);
 			h.setFecPrestamo(fecPrestamo);
 			h.setFecDevolucion(fecDevolucion);
 			h.setCodRecurso(codRecurso);
+			herramientaService.save(h);
 		}
 		
 		return "ok";
@@ -470,23 +477,24 @@ public class RecursoController {
 	@RequestMapping(value="/obtieneHerramienta",method = RequestMethod.GET)
 	public String obtieneHerramienta(@RequestParam Long codRecurso, Model model) {
 		
-		model.addAttribute("listaHerramienta", herramientaService.findByCodRecurso(codRecurso));
+		model.addAttribute("listaHerramientas", herramientaService.findByCodRecurso(codRecurso));
 		
 		return "verRecurso :: fragmentHerramienta";
 	}
 	
 	@RequestMapping(value="/obtieneHerramientaUnico",method = RequestMethod.GET)
 	@ResponseBody
-	public List<String> obtieneHerramientaUnico(@RequestParam Long h, Model model) {
+	public List<String> obtieneHerramientaUnico(@RequestParam Long chr, Model model) {
 		
-		Herramienta herramienta = herramientaService.findOne(h);
+		Herramienta herramienta = herramientaService.findOne(chr);
+		
 		List<String> listaDetalle = new ArrayList<String>();
+		listaDetalle.add(herramienta.getCodHerramientaRecurso().toString());
 		listaDetalle.add(herramienta.getCodHerramienta().toString());
 		listaDetalle.add(herramienta.getDescObservaciones());
-		listaDetalle.add(herramienta.getResponsiva().toString());
+		//listaDetalle.add(herramienta.getResponsiva().toString());
 		listaDetalle.add(herramienta.getFecPrestamo().toString());
 		listaDetalle.add(herramienta.getFecDevolucion().toString());
-
 		return listaDetalle;
 	}
 	

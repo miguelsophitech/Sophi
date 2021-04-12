@@ -3,6 +3,7 @@ $(document).ready(function() {
 	
 	$("#iNuevaHerramienta").click(function(){
 	 	$("#nuevaHerrmientaModal").show();
+	 	resetFormHerramienta();
 	 });
 });
 
@@ -17,62 +18,59 @@ function resetFormHerramienta(){
 }
 
 function registraHerramienta(){
+	  var codHerramientaRecurso = $("#codHerramientaRecurso").val();
 	  var codRecurso = $("#codRecurso").val();
 	  var codHerramienta = $("#codHerramienta").val();
 	  var observaciones = $("#observaciones").val();
-	  var responsiva = document.getElementById('responsiva').files;
+	  //var responsiva = document.getElementById('responsiva').files;
 	  var fecPrestamo =  $("#fecPrestamo").val();
 	  var fecDevolucion = $("#fecDevolucion").val();
 	  
-	  console.log(typeof(responsiva));
-	  
-	  if(observaciones.length === 0){
-		  $("#validObservaciones").show();
-	  } /*else if (responsiva !== null){
-		  $("#validResponsiva").show();
-	  }*/ else {
-		  
-		  $.ajax({
-			    type: "GET",
-			    url: "/guardaHerramienta",
-			    data: {codHerramienta: codHerramienta,
-			    	observaciones: observaciones, 
-			    	responsiva: responsiva,
-			    	fecPrestamo: fecPrestamo,
-			    	fecDevolucion: fecDevolucion,
-			    	codRecurso: codRecurso },
-				success: function(result){
-					var url = "/obtieneHerramienta/?codRecurso="+codRecurso;
-					$("#divHerramientas").load(url);
-					$("#nuevaHerramientaModal").modal('hide');
-					resetFormHerramienta();
-			    }
-			});	
-	  }
+	  $.ajax({
+		    type: "GET",
+		    url: "/guardaHerramienta",
+		    data: {codHerramientaRecurso: codHerramientaRecurso,
+		        codHerramienta: codHerramienta,
+		    	observaciones: observaciones, 
+		    	//responsiva: responsiva,
+		    	fecPrestamoString: fecPrestamo,
+		    	fecDevolucionString: fecDevolucion,
+		    	codRecurso: codRecurso },
+			success: function(result){
+				var url = "/obtieneHerramienta/?codRecurso="+codRecurso;
+				$("#divHerramientas").load(url);
+				$("#nuevaHerramientaModal").modal('hide');
+				resetFormHerramienta();
+		    }
+		});
 			
   }
   
-  function editarHerramienta(codHerramienta){
-  		console.log(codHerramienta);
+  function editarHerramienta(codHerramientaRecurso){
 	  $.ajax({
 		    type: "GET",
 		    url: "/obtieneHerramientaUnico",
-		    data: {h: codHerramienta},
+		    data: {chr: codHerramientaRecurso},
 			success: function(herramienta){
-				var codHerramienta = encodeURIComponent(herramienta[0]); //codHerramienta
-				var observaciones = herramienta[1]; //Observaciones
-				var responsiva = herramienta[2]; //responsiva
+				var codHerramientaRecurso = encodeURIComponent(herramienta[0]); //codHerramienta
+				var codHerramienta = herramienta[1]; //codHerramienta
+				var observaciones = herramienta[2]; //Observaciones
+				//var responsiva = herramienta[3]; //responsiva
 				var fecPrestamo = herramienta[3]; //fecPrestamo
 				var fecDevolucion = herramienta[4]; //fecDevolucion
 				
 				
+				$("#codHerramientaRecurso").val(codHerramientaRecurso);
 				$("#codHerramienta").val(codHerramienta);
 				$("#observaciones").val(observaciones);
-				$("#responsiva").val(responsiva); 
+				//$("#responsiva").val(responsiva); 
 				$("#fecPrestamo").val(fecPrestamo);
 				$("#fecDevolucion").val(fecDevolucion);
 				$("#nuevaHerramientaModal").modal('show');
-		    }
+		    },
+	         error: function (herramienta) {
+	            console.log("Algún dato viene nulo");
+	        }
 		});
   }
   

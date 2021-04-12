@@ -113,7 +113,10 @@ $(document).ready(function() {
 					$("#esDependiente").prop( "checked", false );
 				}
 				$("#nuevaContactoEmergenciaModal").modal('show');
-		    }
+		    },
+	         error: function (contacto) {
+	            console.log("Algún dato viene nulo");
+	        }
 		});
   }
   

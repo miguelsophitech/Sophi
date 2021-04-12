@@ -27,11 +27,15 @@ public class Herramienta implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "cod_herramienta_recurso")
+	private Long codHerramientaRecurso;
+	
 	@Column(name = "cod_herramienta")
 	private Long codHerramienta;
 	
 	@OneToOne
-	@JoinColumn(name = "cod_herramienta")
+	@JoinColumn(name = "cod_herramienta", insertable=false, updatable=false)
 	private Equipo equipo;
 	
 	@Column(name = "cod_recurso")
@@ -66,6 +70,14 @@ public class Herramienta implements Serializable{
 	@PrePersist
 	public void prePersist() {
 		fecRegistro = new Date();
+	}
+
+	public Long getCodHerramientaRecurso() {
+		return codHerramientaRecurso;
+	}
+
+	public void setCodHerramientaRecurso(Long codHerramientaRecurso) {
+		this.codHerramientaRecurso = codHerramientaRecurso;
 	}
 
 	public Long getCodHerramienta() {
