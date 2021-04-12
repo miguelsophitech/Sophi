@@ -68,11 +68,11 @@
 												<h5
 													th:text="${recurso.descRecurso} + ' ' + ${recurso.descApellidoPaterno} + ' ' + ${recurso.descApellidoMaterno}">
 												</h5>
-												<div id="divBtnEditar" sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_RH')">
+												<div id="divBtnEditar">
 													<input id="iEditar" type="button" class="profile-edit-btn"
 														onclick="functionEditar();" value="Editar" />
 												</div>
-												<div id="divBtnGuardar" sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_RH')">
+												<div id="divBtnGuardar">
 													<input id="iGuardar" type="submit" class="profile-edit-btn"
 														onclick="functionGuardar();" value="Guardar" />
 												</div>
@@ -688,7 +688,7 @@
 																<span>Herramientas</span> <i
 																	class="fa fa-plus" style="cursor: pointer;"
 																	aria-hidden="true" data-toggle="modal"
-																	data-target="#nuevaHerramientaModal"></i>
+																	data-target="#nuevaHerramientaModal" sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_RH')"></i>
 															</div>
 														</div>
 														<div class="card-body text-secondary">
@@ -707,18 +707,17 @@
 
 																<div class="carousel-inner">
 																	<div class="row">
-																		<div class="col-xl-3 col-sm-4 col-md-4 col-lg-3">
+																		<div class="col">
 																			<div class="carousel-item"
 																				th:each="herramienta, iterator : ${listaHerramientas}"
 																				th:classappend="${iterator.index == 0} ? 'active' : '' ">
 																				<div class="card p-3">
 																					<div class="d-flex align-items-center">
-		
 																						<div class=" w-100">
 																							<h6 class="mb-0 mt-0"
-																								th:text="${herramienta.Equipo.descHerramienta}"></h6>
+																								th:text="${herramienta.Equipo.descHerramienta}+ ' ' +${herramienta.Equipo.descModelo}"></h6>
 																							<span style="font-size: 10px;"
-																								th:text="${herramienta.Equipo.descModelo}"></span>
+																								th:text="${herramienta.Equipo.descSistemaOperativo}"></span>
 																							&nbsp;
 																							<div style="margin: 10px 0px;">
 																								<span style="font-size: small;">S/N: [[${herramienta.Equipo.descNumSerie}]]</span>
@@ -727,10 +726,10 @@
 																								class="button mt-2 d-flex flex-row align-items-center">
 																								<button
 																									class="btn btn-sm btn-outline-primary w-100"
-																									th:id="${herramienta.codHerramienta}"
+																									th:id="${herramienta.codHerramientaRecurso}"
 																									onclick="editarHerramienta(this.id);">Editar</button>
 																								<button class="btn btn-sm btn-primary w-100 ml-2"
-																									th:id="${herramienta.codHerramienta}"
+																									th:id="${herramienta.codHerramientaRecurso}"
 																									onclick="borrarHerramienta(this.id);">Borrar</button>
 																							</div>
 																						</div>
@@ -945,7 +944,7 @@
 									<div class="modal-content">
 										<div class="modal-header">
 											<h5 class="modal-title" id="nuevaHerramientaModalLabel">
-												Nueva herramienta<br>
+												Registrar herramienta<br>
 											</h5>
 											<button class="close" type="button" data-dismiss="modal"
 												aria-label="Close">
@@ -953,7 +952,7 @@
 											</button>
 										</div>
 										<div class="modal-body" style="font-size: 14px;">
-											<div class="row">
+											<div class="row" sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_RH')">
 												<div class="form-group col-12 col-md-12">
 													<label class="col-form-label">Herramienta*</label> <select
 														id="codHerramienta" class="form-control" style="padding: 0;">
@@ -990,7 +989,7 @@
 												</div>
 											</div>
 
-											<div class="row">
+											<div class="row" sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_RH')">
 												<div class="form-group col-6 col-md-6">
 													<label class="col-form-label">Fecha Pr&eacute;stamo</label>
 													<input type="date" id="fecPrestamo" class="form-control"/>
@@ -1000,7 +999,7 @@
 													<input type="date" id="fecDevolucion" class="form-control"/>
 												</div>
 											</div>
-											<input type="hidden" id="codHerramienta" value="" />
+											<input type="hidden" id="codHerramientaRecurso" value="" />
 										</div>
 										<div class="modal-footer">
 											<button class="btn btn-secondary" type="button"
@@ -1060,8 +1059,17 @@
 					<script th:src="@{/vendor/datatables/dataTables.bootstrap4.min.js}"></script>
 
 					<!-- Page level custom scripts -->
+					<script sec:authorize="hasAnyRole('ROLE_USER', 'ROLE_APROB')" type="text/javascript">
+					$('#datos-generales-tab').click(function(){
+						console.log("Seleccionado datos generales");
+						$("#divBtnEditar").show();
+					});
+					$('#datos-empresa-tab').click(function(){
+						console.log("Seleccionado datos empresa");
+						$("#divBtnEditar").hide();
+					});
+					</script>
 					<script th:src="@{/js/demo/datatables-demo.js}"></script>
-
 					<script th:src="@{/js/datosRecursoSesion.js}"></script>
 					<script th:src="@{/js/datosGenerales.js}"></script>
 					<script th:src="@{/js/datosEmpresa.js}"></script>
