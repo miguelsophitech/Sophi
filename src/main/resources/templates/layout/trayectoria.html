@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+
+
+	<div th:fragment="fragmentTrayectoria">
+		
+		<!-- INICIA Estructura de las 3 secciones -->
+		<div class="row">
+			<div class="col-lg-8">
+				<div class="row p-2">
+					<div class="card cardTR">
+						<div class="card-header" style="color: #898796;">
+							<div class="d-flex justify-content-between">
+								<span>Proyectos</span> <i class="fa fa-plus" style="cursor: pointer;" aria-hidden="true" data-toggle="modal" data-target="#registroProyectoModal"></i>
+							</div>
+						</div>
+						<div class="card-body text-secondary" style="padding: 0px; ">
+							<div class="overflow">
+									<ul class="timeline">
+										<li>
+											<div class="d-flex justify-content-between">
+												<span>Plataforma Sophitech</span>
+												<span>Marzo, 2020</span>
+											</div> 
+											<p style="font-size: 12px; color: gray; margin: 0px;">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque scelerisque diam non nisi semper, et elementum lorem ornare. Maecenas placerat facilisis mollis. Duis sagittis ligula in sodales vehicula....</p>
+											<div class="d-flex justify-content-between">
+												<span style="font-size: 12px; font-weight:400;">Java | SLQ</span>
+												<div style="font-size: 12px; font-weight:100;  color: gray;">
+													<i class="fas fa-edit dg-edit-escolar"
+														style="cursor: pointer;">
+													</i>
+													<i class="fas fa-trash-alt dg-edit-escolar"
+														style="cursor: pointer;" >
+													</i>
+												</div>
+											</div> 
+										</li>
+										<li>
+											<div class="d-flex justify-content-between">
+												<span>GUAY</span>
+												<span>Abril, 2019</span>
+											</div> 
+											<p style="font-size: 12px; color: gray; margin: 0px;">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque scelerisque diam non nisi semper, et elementum lorem ornare. Maecenas placerat facilisis mollis. Duis sagittis ligula in sodales vehicula....</p>
+											<div class="d-flex justify-content-between">
+												<span>Java|SLQ</span>
+												<div style="font-size: 12px; font-weight:100;  color: gray;">
+													<i class="fas fa-edit dg-edit-escolar"
+														style="cursor: pointer;">
+													</i>
+													<i class="fas fa-trash-alt dg-edit-escolar"
+														style="cursor: pointer;" >
+													</i>
+												
+												</div>
+											</div> 
+										</li>
+									</ul>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row p-2" >
+					<div class="card cardTR">
+						<div class="card-header" style="color: #898796;">
+							<div class="d-flex justify-content-between">
+								<span>Cursos / Certificaciones</span> <i class="fa fa-plus" style="cursor: pointer;" aria-hidden="true" data-toggle="modal" data-target="#nuevaHerramientaModal"></i>
+							</div>
+						</div>
+						<div class="card-body text-secondary">
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-lg-4">
+				<div class="row p-2" style="background-color: green;">
+					Nivel
+				</div>
+			</div>
+		</div>
+		<!-- TERMINA Estructura de las 3 secciones -->
+		
+		<!-- INICIAL Modal Registrar proyecto -->
+		<div class="modal fade" id="#registroProyectoModal" tabindex="-1" role="dialog" aria-labelledby="registroProyectoModalLabel"
+			aria-hidden="true">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h6 class="modal-title" id="registroProyectoModalLabel">Proyectos</h6>
+						<button class="close" type="button" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body" style="font-size: 14px;">
+						<div class="row">
+							<div class="form-group col-12 col-md-12">
+								<label class="col-form-label">Nombre del contacto*</label>
+								<input type="text" id="nombreContactoEmergencia" class="form-control" maxlength="60">
+								<small id="validNombreContactoEmergencia" class="form-text text-danger">Dato requerido</small>
+							</div>
+						</div>
+
+						<div class="row">
+							<div class="form-group col-6 col-md-6">
+								<label class="col-form-label">Telefono del
+									contacto*</label> <input type="text"
+									id="telefonoContactoEmergencia" class="form-control"
+									maxlength="12"
+									onkeypress='return event.charCode >= 48 && event.charCode <= 57'>
+								<small id="validTelefonoContactoEmergencia"
+									class="form-text text-danger">Dato requerido</small>
+							</div>
+
+							<div class="form-group col-6 col-md-6">
+								<label class="col-form-label">Parentesco*</label> <select
+									class="form-control" id="parentescoContactoEmergencia">
+									<option th:each="parentesco : ${listaParentesco}"
+										th:value="${parentesco.codParentesco}"
+										th:text="${parentesco.descParentesco}"></option>
+								</select>
+							</div>
+						</div>
+
+						<div class="row">
+							<div class="col-6 col-md-6">
+								<div class="form-check">
+									<input class="form-check-input" type="checkbox" value=""
+										id="esDependiente"> <label
+										class="form-check-label" for="esDependiente"> Es
+										dependiente economico </label>
+								</div>
+							</div>
+						</div>
+							<input type="hidden" id="codContactoEmergencia" value="" />
+					</div>
+					<div class="modal-footer">
+						<button class="btn btn-secondary"
+							onclick="resetFormContactoEmergencia();" type="button"
+							data-dismiss="modal">Cancelar</button>
+						<button type="submit"
+							onclick="registraContactoEmergencia();"
+							class="btn btn-primary">Aceptar</button>
+					</div>
+
+				</div>
+			</div>
+		</div>
+		
+	</div>
+
+
+</body>
+</html>
