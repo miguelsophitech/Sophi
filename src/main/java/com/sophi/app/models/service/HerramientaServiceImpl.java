@@ -29,13 +29,19 @@ public class HerramientaServiceImpl implements IHerramientaService {
 
 	@Override
 	@Transactional(readOnly = true)
-	public Herramienta findOne(Long codHerramienta) {
-		return herramientaDao.findById(codHerramienta).orElse(null);
+	public Herramienta findOne(Long codHerramientaRecurso) {
+		return herramientaDao.findById(codHerramientaRecurso).orElse(null);
 	}
 	
 	@Override
 	@Transactional(readOnly = true)
-	public Herramienta findByCodRecurso(Long codRecurso) {
+	public Herramienta findByCodHerramienta(Long codHerramienta) {
+		return herramientaDao.findByCodHerramienta(codHerramienta);
+	}
+	
+	@Override
+	@Transactional(readOnly = true)
+	public List<Herramienta> findByCodRecurso(Long codRecurso) {
 		return herramientaDao.findByCodRecurso(codRecurso);
 	}
 
