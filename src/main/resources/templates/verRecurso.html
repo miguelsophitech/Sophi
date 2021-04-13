@@ -728,7 +728,7 @@
 																									class="btn btn-sm btn-outline-primary w-100"
 																									th:id="${herramienta.codHerramientaRecurso}"
 																									onclick="editarHerramienta(this.id);">Editar</button>
-																								<button class="btn btn-sm btn-primary w-100 ml-2"
+																								<button class="btn btn-sm btn-primary w-100 ml-2" sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_RH')"
 																									th:id="${herramienta.codHerramientaRecurso}"
 																									onclick="borrarHerramienta(this.id);">Borrar</button>
 																							</div>
