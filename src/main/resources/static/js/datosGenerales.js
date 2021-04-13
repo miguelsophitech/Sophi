@@ -123,7 +123,7 @@ $(document).ready(function() {
 
   //funcion que registra la escolaridad
   function registraEscolaridad(){
-  	  resetFormEscolaridad();
+//  	  resetFormEscolaridad();
 	  var instAcademica = $("#institucionAcademica").val();
 	  var gradoEscolar = $("#gradoEscolar").val();
 	  var etapaEscolar = $("#etapaEscolar").val();
@@ -245,8 +245,6 @@ $(document).ready(function() {
 		});	
   }
   
-  
-  borrarContactoEmergencia
   
   //Envia fommulario para guardar/actualizar informacion
   function functionGuardar(){

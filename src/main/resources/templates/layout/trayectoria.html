@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+
+
+	<div th:fragment="fragmentTrayectoria">
+		<!-- INICIA Estructura de las 3 secciones -->
+		<div class="row">
+			<div class="col-lg-8">
+				<div class="row p-2">
+					<div class="card cardTR">
+						<div class="card-header" style="color: #898796;">
+							<div class="d-flex justify-content-between">
+								<span>Proyectos</span> <i class="fa fa-plus" style="cursor: pointer;" aria-hidden="true" onclick="openModalRegistrarTrayectoriaProyecto();"></i>
+							</div>
+						</div>
+						<div class="card-body text-secondary" style="padding: 0px;" id="cardTrayectoriaProyecto">
+							<div  th:fragment="fragmentTrayectoriaProyecto" class="overflow">
+									<ul class="timeline">
+										<li th:each="trayectoriaProyecto : ${listaTrayectoriaProyectos}">
+											<div class="d-flex justify-content-between">
+												<span th:text="${trayectoriaProyecto.descProyecto} + ' - ' + ${trayectoriaProyecto.descCliente}"></span>
+												<span style="font-size: 12px; color: gray;" th:text="${trayectoriaProyecto.fecInicioParticipacion} + ' al ' + ${trayectoriaProyecto.fecFinParticipacion}"></span>
+											</div> 
+											<p style="font-size: 12px; color: gray; margin: 0px;" th:text="${trayectoriaProyecto.descActividades}"></p>
+											<div class="d-flex justify-content-between">
+												<span style="font-size: 12px; font-weight:400;">Java | SLQ | MSTR</span>
+												<div style="font-size: 12px; font-weight:100;  color: gray;">
+													<i class="fas fa-edit dg-edit-escolar" th:id="${trayectoriaProyecto.codTrayectoriaProyecto}" onclick="editarTrayectoriaProyecto(this.id);" style="cursor: pointer;"></i>
+													<i class="fas fa-trash-alt dg-edit-escolar" th:id="${trayectoriaProyecto.codTrayectoriaProyecto}" onclick="borrarTrayectoriaProyecto(this.id);" style="cursor: pointer;"></i>
+												</div>
+											</div> 
+										</li>
+									</ul>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row p-2" >
+					<div class="card cardTR">
+						<div class="card-header">
+							<div class="d-flex justify-content-between">
+								<span>Cursos / Certificaciones</span> <i class="fa fa-plus" style="cursor: pointer;" aria-hidden="true"></i>
+							</div>
+						</div>
+						<div class="card-body text-secondary">
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-lg-4">
+				<div class="row p-2">
+					<div class="card cardTR">
+						<div class="card-header">
+							<div class="d-flex justify-content-between">
+								<span>Nivel</span>
+							</div>
+						</div>
+						<div class="card-body text-secondary">
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- TERMINA Estructura de las 3 secciones -->
+	</div>
+		
+	<div th:fragment="fragmentModalTrayectoria">
+		<!-- INICIAL Modal Registrar proyecto -->
+		<div class="modal fade" id="registroProyectoModal" tabindex="-1" role="dialog" aria-labelledby="registroProyectoModalLabel"
+			aria-hidden="true">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h6 class="modal-title" id="registroProyectoModalLabel">Proyectos</h6>
+						<button class="close" type="button" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<form id="formularioTrayectoriaProyecto" action="#" th:action="@{/formTrayectoriaProyecto}" th:object="${trayectoriaProyecto}" method="post">
+						<div class="modal-body" style="font-size: 14px;">
+						
+							<div class="row">
+								<div class="form-group col-6 col-md-6">
+									<label class="col-form-label">Proyecto</label>
+									<input type="text" th:field="*{descProyecto}" class="form-control" maxlength="50" required="required">
+								</div>
+								<div class="form-group col-6 col-md-6">
+									<label class="col-form-label">Cliente</label>
+									<input type="text" th:field="*{descCliente}" class="form-control" maxlength="50" required="required">
+								</div>
+							</div>
+							
+							<div class="row">
+								<div class="form-group col-12 col-md-12">
+									<label class="col-form-label">Actividades</label>
+									<textarea type="text" th:field="*{descActividades}" class="form-control" maxlength="500"></textarea>
+								</div>
+							</div>
+	
+							<div class="row">
+								<div class="form-group col-6 col-md-6">
+									<label class="col-form-label">Inicio</label>
+									<input type="date" th:field="*{fecInicioParticipacion}" class="form-control" required="required">
+								</div>
+								
+								<div class="form-group col-6 col-md-6">
+									<label class="col-form-label">Fin</label>
+									<input type="date" th:field="*{fecFinParticipacion}" class="form-control" required="required">
+								</div>
+							</div>
+							
+<!-- 							<div class="row"> -->
+<!-- 								<div class="form-group col-6 col-md-6"> -->
+<!-- 									<label class="col-form-label">Tecnologia</label> -->
+<!-- 									<input type="text" th:field="*{descCliente}" class="form-control" maxlength="50" required="required"> -->
+<!-- 								</div> -->
+<!-- 							</div> -->
+							
+							<input type="hidden" th:field="*{codRecurso}"/>
+							<input type="hidden" th:field="*{codTrayectoriaProyecto}"/>
+						</div>
+						<div class="modal-footer">
+							<button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
+							<button type="button" onclick="enviaDatos();" class="btn btn-primary">Aceptar</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+		<!-- TERMINA Modal Registrar proyecto -->
+	</div>
+
+
+</body>
+</html>
