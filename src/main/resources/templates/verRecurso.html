@@ -1059,14 +1059,10 @@
 					<script th:src="@{/vendor/datatables/dataTables.bootstrap4.min.js}"></script>
 
 					<!-- Page level custom scripts -->
-					<script sec:authorize="hasAnyRole('ROLE_USER', 'ROLE_APROB')" type="text/javascript">
-					$('#datos-generales-tab').click(function(){
-						console.log("Seleccionado datos generales");
-						$("#divBtnEditar").show();
-					});
+					<script type="text/javascript" sec:authorize="hasAnyRole('ROLE_USER', 'ROLE_APROB')">
 					$('#datos-empresa-tab').click(function(){
-						console.log("Seleccionado datos empresa");
-						$("#divBtnEditar").hide();
+						$("#formDatosEmpresa .row div input").removeClass("dg-edit");
+						$("#formDatosEmpresa .row div select").removeClass("dg-edit");
 					});
 					</script>
 					<script th:src="@{/js/demo/datatables-demo.js}"></script>

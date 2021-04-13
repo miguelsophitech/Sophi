@@ -5,6 +5,24 @@ $(document).ready(function() {
 	 	$("#nuevaHerrmientaModal").show();
 	 	resetFormHerramienta();
 	 });
+	 
+	 if($("#valActivo").val() == 1){
+	 		$("#fecSalida").hide();
+	 		$("#motivo").hide();
+	 	} else {
+	 		$("#fecSalida").show();
+	 		$("#motivo").show();
+	 	}
+	 
+	 $("#valActivo").click(function(){
+	 	if($(this).val() == 1){
+	 		$("#fecSalida").hide();
+	 		$("#motivo").hide();
+	 	} else {
+	 		$("#fecSalida").show();
+	 		$("#motivo").show();
+	 	}
+	 });
 });
 
 function resetFormHerramienta(){
