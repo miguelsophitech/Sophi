@@ -4,7 +4,6 @@
 
 
 	<div th:fragment="fragmentTrayectoria">
-		
 		<!-- INICIA Estructura de las 3 secciones -->
 		<div class="row">
 			<div class="col-lg-8">
@@ -12,46 +11,23 @@
 					<div class="card cardTR">
 						<div class="card-header" style="color: #898796;">
 							<div class="d-flex justify-content-between">
-								<span>Proyectos</span> <i class="fa fa-plus" style="cursor: pointer;" aria-hidden="true" data-toggle="modal" data-target="#registroProyectoModal"></i>
+								<span>Proyectos</span> <i class="fa fa-plus" style="cursor: pointer;" aria-hidden="true" onclick="openModalRegistrarTrayectoriaProyecto();"></i>
 							</div>
 						</div>
-						<div class="card-body text-secondary" style="padding: 0px; ">
-							<div class="overflow">
+						<div class="card-body text-secondary" style="padding: 0px;" id="cardTrayectoriaProyecto">
+							<div  th:fragment="fragmentTrayectoriaProyecto" class="overflow">
 									<ul class="timeline">
-										<li>
+										<li th:each="trayectoriaProyecto : ${listaTrayectoriaProyectos}">
 											<div class="d-flex justify-content-between">
-												<span>Plataforma Sophitech</span>
-												<span>Marzo, 2020</span>
+												<span th:text="${trayectoriaProyecto.descProyecto} + ' - ' + ${trayectoriaProyecto.descCliente}"></span>
+												<span style="font-size: 12px; color: gray;" th:text="${trayectoriaProyecto.fecInicioParticipacion} + ' al ' + ${trayectoriaProyecto.fecFinParticipacion}"></span>
 											</div> 
-											<p style="font-size: 12px; color: gray; margin: 0px;">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque scelerisque diam non nisi semper, et elementum lorem ornare. Maecenas placerat facilisis mollis. Duis sagittis ligula in sodales vehicula....</p>
+											<p style="font-size: 12px; color: gray; margin: 0px;" th:text="${trayectoriaProyecto.descActividades}"></p>
 											<div class="d-flex justify-content-between">
-												<span style="font-size: 12px; font-weight:400;">Java | SLQ</span>
+												<span style="font-size: 12px; font-weight:400;">Java | SLQ | MSTR</span>
 												<div style="font-size: 12px; font-weight:100;  color: gray;">
-													<i class="fas fa-edit dg-edit-escolar"
-														style="cursor: pointer;">
-													</i>
-													<i class="fas fa-trash-alt dg-edit-escolar"
-														style="cursor: pointer;" >
-													</i>
-												</div>
-											</div> 
-										</li>
-										<li>
-											<div class="d-flex justify-content-between">
-												<span>GUAY</span>
-												<span>Abril, 2019</span>
-											</div> 
-											<p style="font-size: 12px; color: gray; margin: 0px;">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque scelerisque diam non nisi semper, et elementum lorem ornare. Maecenas placerat facilisis mollis. Duis sagittis ligula in sodales vehicula....</p>
-											<div class="d-flex justify-content-between">
-												<span>Java|SLQ</span>
-												<div style="font-size: 12px; font-weight:100;  color: gray;">
-													<i class="fas fa-edit dg-edit-escolar"
-														style="cursor: pointer;">
-													</i>
-													<i class="fas fa-trash-alt dg-edit-escolar"
-														style="cursor: pointer;" >
-													</i>
-												
+													<i class="fas fa-edit dg-edit-escolar" th:id="${trayectoriaProyecto.codTrayectoriaProyecto}" onclick="editarTrayectoriaProyecto(this.id);" style="cursor: pointer;"></i>
+													<i class="fas fa-trash-alt dg-edit-escolar" th:id="${trayectoriaProyecto.codTrayectoriaProyecto}" onclick="borrarTrayectoriaProyecto(this.id);" style="cursor: pointer;"></i>
 												</div>
 											</div> 
 										</li>
@@ -62,9 +38,9 @@
 				</div>
 				<div class="row p-2" >
 					<div class="card cardTR">
-						<div class="card-header" style="color: #898796;">
+						<div class="card-header">
 							<div class="d-flex justify-content-between">
-								<span>Cursos / Certificaciones</span> <i class="fa fa-plus" style="cursor: pointer;" aria-hidden="true" data-toggle="modal" data-target="#nuevaHerramientaModal"></i>
+								<span>Cursos / Certificaciones</span> <i class="fa fa-plus" style="cursor: pointer;" aria-hidden="true"></i>
 							</div>
 						</div>
 						<div class="card-body text-secondary">
@@ -73,15 +49,25 @@
 				</div>
 			</div>
 			<div class="col-lg-4">
-				<div class="row p-2" style="background-color: green;">
-					Nivel
+				<div class="row p-2">
+					<div class="card cardTR">
+						<div class="card-header">
+							<div class="d-flex justify-content-between">
+								<span>Nivel</span>
+							</div>
+						</div>
+						<div class="card-body text-secondary">
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>
 		<!-- TERMINA Estructura de las 3 secciones -->
+	</div>
 		
+	<div th:fragment="fragmentModalTrayectoria">
 		<!-- INICIAL Modal Registrar proyecto -->
-		<div class="modal fade" id="#registroProyectoModal" tabindex="-1" role="dialog" aria-labelledby="registroProyectoModalLabel"
+		<div class="modal fade" id="registroProyectoModal" tabindex="-1" role="dialog" aria-labelledby="registroProyectoModalLabel"
 			aria-hidden="true">
 			<div class="modal-dialog" role="document">
 				<div class="modal-content">
@@ -91,61 +77,58 @@
 							<span aria-hidden="true">&times;</span>
 						</button>
 					</div>
-					<div class="modal-body" style="font-size: 14px;">
-						<div class="row">
-							<div class="form-group col-12 col-md-12">
-								<label class="col-form-label">Nombre del contacto*</label>
-								<input type="text" id="nombreContactoEmergencia" class="form-control" maxlength="60">
-								<small id="validNombreContactoEmergencia" class="form-text text-danger">Dato requerido</small>
-							</div>
-						</div>
-
-						<div class="row">
-							<div class="form-group col-6 col-md-6">
-								<label class="col-form-label">Telefono del
-									contacto*</label> <input type="text"
-									id="telefonoContactoEmergencia" class="form-control"
-									maxlength="12"
-									onkeypress='return event.charCode >= 48 && event.charCode <= 57'>
-								<small id="validTelefonoContactoEmergencia"
-									class="form-text text-danger">Dato requerido</small>
-							</div>
-
-							<div class="form-group col-6 col-md-6">
-								<label class="col-form-label">Parentesco*</label> <select
-									class="form-control" id="parentescoContactoEmergencia">
-									<option th:each="parentesco : ${listaParentesco}"
-										th:value="${parentesco.codParentesco}"
-										th:text="${parentesco.descParentesco}"></option>
-								</select>
-							</div>
-						</div>
-
-						<div class="row">
-							<div class="col-6 col-md-6">
-								<div class="form-check">
-									<input class="form-check-input" type="checkbox" value=""
-										id="esDependiente"> <label
-										class="form-check-label" for="esDependiente"> Es
-										dependiente economico </label>
+					<form id="formularioTrayectoriaProyecto" action="#" th:action="@{/formTrayectoriaProyecto}" th:object="${trayectoriaProyecto}" method="post">
+						<div class="modal-body" style="font-size: 14px;">
+						
+							<div class="row">
+								<div class="form-group col-6 col-md-6">
+									<label class="col-form-label">Proyecto</label>
+									<input type="text" th:field="*{descProyecto}" class="form-control" maxlength="50" required="required">
+								</div>
+								<div class="form-group col-6 col-md-6">
+									<label class="col-form-label">Cliente</label>
+									<input type="text" th:field="*{descCliente}" class="form-control" maxlength="50" required="required">
 								</div>
 							</div>
+							
+							<div class="row">
+								<div class="form-group col-12 col-md-12">
+									<label class="col-form-label">Actividades</label>
+									<textarea type="text" th:field="*{descActividades}" class="form-control" maxlength="500"></textarea>
+								</div>
+							</div>
+	
+							<div class="row">
+								<div class="form-group col-6 col-md-6">
+									<label class="col-form-label">Inicio</label>
+									<input type="date" th:field="*{fecInicioParticipacion}" class="form-control" required="required">
+								</div>
+								
+								<div class="form-group col-6 col-md-6">
+									<label class="col-form-label">Fin</label>
+									<input type="date" th:field="*{fecFinParticipacion}" class="form-control" required="required">
+								</div>
+							</div>
+							
+<!-- 							<div class="row"> -->
+<!-- 								<div class="form-group col-6 col-md-6"> -->
+<!-- 									<label class="col-form-label">Tecnologia</label> -->
+<!-- 									<input type="text" th:field="*{descCliente}" class="form-control" maxlength="50" required="required"> -->
+<!-- 								</div> -->
+<!-- 							</div> -->
+							
+							<input type="hidden" th:field="*{codRecurso}"/>
+							<input type="hidden" th:field="*{codTrayectoriaProyecto}"/>
 						</div>
-							<input type="hidden" id="codContactoEmergencia" value="" />
-					</div>
-					<div class="modal-footer">
-						<button class="btn btn-secondary"
-							onclick="resetFormContactoEmergencia();" type="button"
-							data-dismiss="modal">Cancelar</button>
-						<button type="submit"
-							onclick="registraContactoEmergencia();"
-							class="btn btn-primary">Aceptar</button>
-					</div>
-
+						<div class="modal-footer">
+							<button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
+							<button type="button" onclick="enviaDatos();" class="btn btn-primary">Aceptar</button>
+						</div>
+					</form>
 				</div>
 			</div>
 		</div>
-		
+		<!-- TERMINA Modal Registrar proyecto -->
 	</div>
 
 

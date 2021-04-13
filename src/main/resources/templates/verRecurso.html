@@ -482,7 +482,7 @@
 												</div>
 												<!-- Termina bloque de contactos de emergencia -->
 											</div>
-											<div class="tab-pane fade show active" id="datos-empresa"
+											<div class="tab-pane fade show" id="datos-empresa"
 												role="tabpanel" aria-labelledby="datos-empresa-tab">
 												<br />
 												<form id="formDatosEmpresa"
@@ -843,7 +843,6 @@
 												</div>
 												
 												<div class="row">
-<<<<<<< HEAD
 													<div class="form-group col-6 col-md-6">
 														<label class="col-form-label">Fecha de inicio*</label>
 														<input class="form-control" id="fecInicioEscolaridad" type="month" min="1950-01" max="2099-12" pattern="[0-9]{4}-[0-9]{2}">
@@ -851,15 +850,6 @@
 													</div>
 													
 													<div class="form-group col-6 col-md-6">
-=======
-													<div class="form-group col-6 col-md-6">
-														<label class="col-form-label">Fecha de inicio*</label>
-														<input class="form-control" id="fecInicioEscolaridad" type="month" min="1950-01" max="2099-12" pattern="[0-9]{4}-[0-9]{2}">
-														<small id="validFecInicio" class="form-text text-danger">Dato requerido</small>
-													</div>
-													
-													<div class="form-group col-6 col-md-6">
->>>>>>> 226810d4818dc7b69624a09fafa12975435b3022
 														<label class="col-form-label">Fecha de fin*</label>
 														<input class="form-control" id="fecFinEscolaridad" type="month" min="1950-01" max="2099-12" pattern="[0-9]{4}-[0-9]{2}">
 														<small id="validFecFin" class="form-text text-danger">Dato requerido</small>
@@ -1031,7 +1021,11 @@
 									</div>
 								</div>
 							</div>
-
+							
+							<div id="recursoTrayectoriaProyectoModal">
+							
+							</div>
+							
 							<!-- Footer -->
 							<footer th:replace="layout/layout :: footer"></footer>
 							<!-- End of Footer -->
@@ -1093,6 +1087,7 @@
 					<script th:src="@{/js/datosRecursoSesion.js}"></script>
 					<script th:src="@{/js/datosGenerales.js}"></script>
 					<script th:src="@{/js/datosEmpresa.js}"></script>
+					<script th:src="@{/js/trayectoria.js}"></script>
 </body>
 
 </html>

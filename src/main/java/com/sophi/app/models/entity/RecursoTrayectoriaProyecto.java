@@ -28,8 +28,8 @@ public class RecursoTrayectoriaProyecto implements Serializable {
 	@Column(name = "cod_recurso")
 	private Long codRecurso;
 	
-	@Column(name = "cod_proyecto")
-	private Long codProyecto;
+	@Column(name = "desc_proyecto")
+	private String descProyecto;
 	
 	@Column(name = "desc_actividades")
 	private String descActividades;
@@ -44,8 +44,8 @@ public class RecursoTrayectoriaProyecto implements Serializable {
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date fecFinParticipacion;
 	
-	@Column(name = "cod_cliente")
-	private Long codCliente;
+	@Column(name = "desc_cliente")
+	private String descCliente;
 
 	public Long getCodTrayectoriaProyecto() {
 		return codTrayectoriaProyecto;
@@ -63,12 +63,12 @@ public class RecursoTrayectoriaProyecto implements Serializable {
 		this.codRecurso = codRecurso;
 	}
 
-	public Long getCodProyecto() {
-		return codProyecto;
+	public String getDescProyecto() {
+		return descProyecto;
 	}
 
-	public void setCodProyecto(Long codProyecto) {
-		this.codProyecto = codProyecto;
+	public void setDescProyecto(String descProyecto) {
+		this.descProyecto = descProyecto;
 	}
 
 	public String getDescActividades() {
@@ -95,15 +95,12 @@ public class RecursoTrayectoriaProyecto implements Serializable {
 		this.fecFinParticipacion = fecFinParticipacion;
 	}
 
-	public Long getCodCliente() {
-		return codCliente;
+	public String getDescCliente() {
+		return descCliente;
 	}
 
-	public void setCodCliente(Long codCliente) {
-		this.codCliente = codCliente;
+	public void setDescCliente(String descCliente) {
+		this.descCliente = descCliente;
 	}
 
-	public static long getSerialversionuid() {
-		return serialVersionUID;
-	}
 }

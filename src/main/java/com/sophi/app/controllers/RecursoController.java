@@ -51,6 +51,7 @@ import com.sophi.app.models.service.IProveedorService;
 import com.sophi.app.models.service.IPuestoService;
 import com.sophi.app.models.service.IRecursoEscolaridadService;
 import com.sophi.app.models.service.IRecursoService;
+import com.sophi.app.models.service.IRecursoTrayectoriaProyectoService;
 import com.sophi.app.models.service.ITipoHerramientaService;
 import com.sophi.app.models.service.ITipoRecursoService;
 import com.sophi.app.models.service.ITipoSangreService;
@@ -114,6 +115,9 @@ public class RecursoController {
 	@Autowired
 	private IEquipoService equipoService;
 	
+	@Autowired
+	private IRecursoTrayectoriaProyectoService recursoTrayectoriaProyectoService;
+	
 	@GetMapping(value = "/verRecurso/{id}")
 	public String verRecurso(@PathVariable(value="id") Long codRecurso, Map<String, Object> model, RedirectAttributes flash, HttpServletResponse response) {
 		response.setContentType("image/jpeg");
@@ -155,6 +159,8 @@ public class RecursoController {
 		model.put("listaEquipos", equipoService.findAll());
 		model.put("tipoHerramientaList", tipoHerramientaService.findAll());
 		model.put("estadoHerramientaList", estadoHerramientaService.findAll());
+		
+		model.put("listaTrayectoriaProyectos", recursoTrayectoriaProyectoService.findByCodRecurso(codRecurso));
 		return "verRecurso";
 	}
 	

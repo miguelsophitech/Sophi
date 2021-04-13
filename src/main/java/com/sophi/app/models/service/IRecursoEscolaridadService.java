@@ -13,9 +13,4 @@ public interface IRecursoEscolaridadService {
 	public void delete(Long codRecursoEscolaridad);
 	
 	public RecursoEscolaridad findById(Long codRecursoEscolaridad);
-<<<<<<< HEAD
-
-=======
-	
->>>>>>> 226810d4818dc7b69624a09fafa12975435b3022
 }
