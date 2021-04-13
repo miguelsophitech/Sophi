@@ -10,6 +10,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.PrePersist;
@@ -49,6 +50,7 @@ public class Herramienta implements Serializable{
 	@Column(name = "desc_observaciones")
 	private String descObservaciones;
 	
+	@Lob
 	@Column(name = "responsiva")
 	private byte[] responsiva;
 	

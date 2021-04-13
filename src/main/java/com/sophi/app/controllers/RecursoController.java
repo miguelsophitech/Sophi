@@ -207,6 +207,12 @@ public class RecursoController {
 	@ResponseBody
 	public String guardarActualizaRecurso(@Valid Recurso recurso, Model model) {
 		System.out.println("entra a guardar");
+		
+		if(recurso.getValActivo() == 1) {
+			recurso.setFecSalidaEmpresa(null);
+			recurso.setDescMotivoSalida(null);
+		}
+		
 		recursoService.save(recurso);
 		return "OK";
 	}
