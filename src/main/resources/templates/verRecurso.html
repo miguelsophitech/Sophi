@@ -414,7 +414,7 @@
 														</div>
 														<div class="card-body text-secondary">
 
-															<div id="carouselExampleIndicators"
+															<div id="carouselContactoEmergenciaIndicators"
 																class="carousel slide" data-ride="carousel">
 
 																<ol class="carousel-indicators">
@@ -464,12 +464,12 @@
 																</div>
 
 																<a class="carousel-control-prev"
-																	href="#carouselExampleIndicators" role="button"
+																	href="#carouselContactoEmergenciaIndicators" role="button"
 																	data-slide="prev"> <span
 																	class="carousel-control-prev-icon" aria-hidden="true"></span>
 																	<span class="sr-only">Previous</span>
 																</a> <a class="carousel-control-next"
-																	href="#carouselExampleIndicators" role="button"
+																	href="#carouselContactoEmergenciaIndicators" role="button"
 																	data-slide="next"> <span
 																	class="carousel-control-next-icon" aria-hidden="true"></span>
 																	<span class="sr-only">Next</span>
@@ -693,8 +693,8 @@
 														</div>
 														<div class="card-body text-secondary">
 
-															<div id="carouselExampleIndicators"
-																class="carousel" data-ride="carousel">
+															<div id="carouselHerramientaIndicators"
+																class="carousel slide" data-ride="carousel">
 
 																<ol class="carousel-indicators">
 																	<li
@@ -728,7 +728,7 @@
 																									class="btn btn-sm btn-outline-primary w-100"
 																									th:id="${herramienta.codHerramientaRecurso}"
 																									onclick="editarHerramienta(this.id);">Editar</button>
-																								<button class="btn btn-sm btn-primary w-100 ml-2"
+																								<button class="btn btn-sm btn-primary w-100 ml-2" sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_RH')"
 																									th:id="${herramienta.codHerramientaRecurso}"
 																									onclick="borrarHerramienta(this.id);">Borrar</button>
 																							</div>
@@ -741,12 +741,12 @@
 																</div>
 
 																<a class="carousel-control-prev"
-																	href="#carouselExampleIndicators" role="button"
+																	href="#carouselHerramientaIndicators" role="button"
 																	data-slide="prev"> <span
 																	class="carousel-control-prev-icon" aria-hidden="true"></span>
 																	<span class="sr-only">Previous</span>
 																</a> <a class="carousel-control-next"
-																	href="#carouselExampleIndicators" role="button"
+																	href="#carouselHerramientaIndicators" role="button"
 																	data-slide="next"> <span
 																	class="carousel-control-next-icon" aria-hidden="true"></span>
 																	<span class="sr-only">Next</span>
@@ -1079,14 +1079,10 @@
 					<script th:src="@{/vendor/datatables/dataTables.bootstrap4.min.js}"></script>
 
 					<!-- Page level custom scripts -->
-					<script sec:authorize="hasAnyRole('ROLE_USER', 'ROLE_APROB')" type="text/javascript">
-					$('#datos-generales-tab').click(function(){
-						console.log("Seleccionado datos generales");
-						$("#divBtnEditar").show();
-					});
+					<script type="text/javascript" sec:authorize="hasAnyRole('ROLE_USER', 'ROLE_APROB')">
 					$('#datos-empresa-tab').click(function(){
-						console.log("Seleccionado datos empresa");
-						$("#divBtnEditar").hide();
+						$("#formDatosEmpresa .row div input").removeClass("dg-edit");
+						$("#formDatosEmpresa .row div select").removeClass("dg-edit");
 					});
 					</script>
 					<script th:src="@{/js/demo/datatables-demo.js}"></script>
