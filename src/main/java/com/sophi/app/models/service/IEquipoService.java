@@ -8,4 +8,10 @@ public interface IEquipoService {
 
 	public List<Equipo> findAll();
 
+	public Equipo findByCodEstadoHerramienta(Long codEstadoHerramienta);
+	
+	public List<Equipo> findByCodTipoHerramienta(Long codTipoHerramienta);
+	
+	public Equipo findByCodHerramienta(Long codHerramienta);
+
 }

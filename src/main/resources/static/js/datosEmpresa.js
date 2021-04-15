@@ -1,8 +1,12 @@
 $(document).ready(function() {
 	resetFormHerramienta();
 	
+	$("#listaTodo").show();
+	$("#listaLaptops").hide();
+	$("#listaTablets").hide();
+	
 	$("#iNuevaHerramienta").click(function(){
-	 	$("#nuevaHerrmientaModal").show();
+	 	$("#nuevaHerramientaModal").show();
 	 	resetFormHerramienta();
 	 });
 	 
@@ -23,14 +27,35 @@ $(document).ready(function() {
 	 		$("#motivo").show();
 	 	}
 	 });
+	 
+	 /*$("#codTipoHerramienta").change(function(){
+	 	console.log("cambiando de tipo");
+	 	if($(this).val() === "1"){
+	 		$("#listaTodo").hide();
+			$("#listaLaptops").show();
+			$("#listaTablets").hide();
+	 	} 
+	 	
+	 	else if($(this).val() === "2") {
+	 		$("#listaTodo").hide();
+			$("#listaLaptops").hide();
+			$("#listaTablets").show();
+	 	} 
+	 	
+	 	else {
+	 		$("#listaTodo").show();
+			$("#listaLaptops").hide();
+			$("#listaTablets").hide();
+	 	}
+	 });*/
 });
 
 function resetFormHerramienta(){
-	$("#codHerramienta").val("");
-	$("#observaciones").val();
-	$("#responsiva").val();
-	$("#fecPrestamo").val();
-	$("#fecDevolucion").val();
+	$("#codHerramientaRecurso").val("");
+	$("#observaciones").val("");
+	//$("#responsiva").val("");
+	$("#fecPrestamo").val("");
+	$("#fecDevolucion").val("");
 	$("#validObservaciones").hide();
 	$("#validResponsiva").hide();
 }
@@ -70,14 +95,16 @@ function registraHerramienta(){
 		    url: "/obtieneHerramientaUnico",
 		    data: {chr: codHerramientaRecurso},
 			success: function(herramienta){
-				var codHerramientaRecurso = encodeURIComponent(herramienta[0]); //codHerramienta
+				var codHerramientaRecurso = encodeURIComponent(herramienta[0]); //codHerramientaRecurso
 				var codHerramienta = herramienta[1]; //codHerramienta
 				var observaciones = herramienta[2]; //Observaciones
 				//var responsiva = herramienta[3]; //responsiva
 				var fecPrestamo = herramienta[3]; //fecPrestamo
 				var fecDevolucion = herramienta[4]; //fecDevolucion
 				
+				console.log(codHerramienta);
 				
+				$("#codHerramienta").val(codHerramienta);
 				$("#codHerramientaRecurso").val(codHerramientaRecurso);
 				$("#codHerramienta").val(codHerramienta);
 				$("#observaciones").val(observaciones);
@@ -85,12 +112,28 @@ function registraHerramienta(){
 				$("#fecPrestamo").val(fecPrestamo);
 				$("#fecDevolucion").val(fecDevolucion);
 				$("#nuevaHerramientaModal").modal('show');
+				
 		    },
 	         error: function (herramienta) {
 	            console.log("Algún dato viene nulo");
 	        }
 		});
   }
+  
+  /*function filtroHerramientaTodo(){
+  	var url = "/filtroHerramienta/"+$("#codTipoHerramienta").val();
+  	$("#listaTodo").load(url);
+  }
+  
+  function filtroHerramientaLaptops(){
+  	var url = "/filtroHerramienta/"+$("#codTipoHerramienta").val();
+  	$("#listaLaptops").load(url);
+  }
+  
+  function filtroHerramientaTablets(){
+  	var url = "/filtroHerramienta/"+$("#codTipoHerramienta").val();
+  	$("#listaLaptops").load(url);
+  }*/
   
   function borrarHerramienta(codHerramienta){
 	  var codRecurso = $("#codRecurso").val();
