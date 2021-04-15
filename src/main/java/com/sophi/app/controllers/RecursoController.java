@@ -7,6 +7,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -33,6 +34,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.sophi.app.Utiles;
 import com.sophi.app.models.entity.ContactoEmergencia;
+import com.sophi.app.models.entity.Equipo;
 import com.sophi.app.models.entity.Herramienta;
 import com.sophi.app.models.entity.Recurso;
 import com.sophi.app.models.entity.RecursoEscolaridad;
@@ -145,7 +147,6 @@ public class RecursoController {
 		model.put("tipoRecursoList", tipoRecursoService.findAll());
 		model.put("proveedorList",proveedorService.findAll());
 		model.put("perfilRecursoList", perfilRecursoService.findAll());
-		model.put("estadoCivilList", estadoCivilService.findAll());
 		model.put("titulo", "Información de " + recurso.getDescRecurso());
 		model.put("listaEstadoCivil", estadoCivilService.findAll());
 		model.put("listaTipoSangre", tipoSangreService.findAll());
@@ -158,7 +159,11 @@ public class RecursoController {
 		model.put("listaHerramientas", herramientaService.findByCodRecurso(codRecurso));
 		model.put("listaEquipos", equipoService.findAll());
 		model.put("tipoHerramientaList", tipoHerramientaService.findAll());
-		model.put("estadoHerramientaList", estadoHerramientaService.findAll());
+		//model.put("estadoHerramientaList", estadoHerramientaService.findAll());
+		
+		model.put("listaEquiposTodo", equipoService.findAll());
+		//model.put("listaEquiposLaptops", equipoService.findByCodTipoHerramienta(1L));
+		//model.put("listaEquiposTablets", equipoService.findByCodTipoHerramienta(2L));
 		
 		model.put("listaTrayectoriaProyectos", recursoTrayectoriaProyectoService.findByCodRecurso(codRecurso));
 		return "verRecurso";
@@ -435,6 +440,22 @@ public class RecursoController {
 		
 		System.out.println(codHerramienta + " "+ codRecurso + " " +observaciones + " " +fecPrestamoString+" "+fecDevolucionString);
 		
+		Equipo equipo = equipoService.findByCodHerramienta(codHerramienta);
+		
+		equipo.setCodEstadoHerramienta(2L);
+		
+		if(observaciones == null) {
+			observaciones = "";
+		}
+		
+		if(fecDevolucionString == "") {
+			fecDevolucionString = "1990-01-01";
+		}
+		
+		if(fecDevolucionString != "1990-01-01") {
+			equipo.setCodEstadoHerramienta(4L);
+		}
+		
 		SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
 		Date fecPrestamo = null;
 		Date fecDevolucion = null;
@@ -442,12 +463,14 @@ public class RecursoController {
 		
 		try {
 			fecPrestamo = formato.parse(fecPrestamoString);
+			System.out.println("Fecha Préstamo: "+fecPrestamo);
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		try {
 			fecDevolucion = formato.parse(fecDevolucionString);
+			System.out.println("Fecha Devolución: "+fecDevolucion);
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -486,12 +509,36 @@ public class RecursoController {
 
 	}
 	
+	/*@GetMapping(value="/filtroHerramienta/{codTipoHerramienta}")
+	public String filtroHerramienta(@PathVariable Long codTipoHerramienta, Model model) {
+		System.out.println("Entra a filtro");
+		
+		if(codTipoHerramienta.equals(1L)) {
+			System.out.println("Tipo 1");
+			model.addAttribute("listaEquipos", equipoService.findByCodTipoHerramienta(1L));
+			return "verRecurso :: listaEquipos";
+			
+		} else if(codTipoHerramienta.equals(2L)) {
+			System.out.println("Tipo 2");
+			model.addAttribute("listaEquipos", equipoService.findByCodTipoHerramienta(2L));
+			return "verRecurso :: listaEquipos";
+			
+		} else {
+			System.out.println("Todos");
+			model.addAttribute("listaEquipos", equipoService.findAll());
+			return "verRecurso :: listaEquipos";
+		}
+	}*/
+	
 	@RequestMapping(value="/obtieneHerramienta",method = RequestMethod.GET)
 	public String obtieneHerramienta(@RequestParam Long codRecurso, Model model) {
 		
 		model.addAttribute("listaHerramientas", herramientaService.findByCodRecurso(codRecurso));
+		model.addAttribute("listaEquiposTodo", equipoService.findAll());
+		//model.addAttribute("listaEquiposLaptops", equipoService.findByCodTipoHerramienta(1L));
+		//model.addAttribute("listaEquiposTablets", equipoService.findByCodTipoHerramienta(2L));	
 		
-		return "verRecurso :: fragmentHerramienta";
+		return "verRecurso :: fragmentHerramientas";
 	}
 	
 	@RequestMapping(value="/obtieneHerramientaUnico",method = RequestMethod.GET)
@@ -514,7 +561,10 @@ public class RecursoController {
 	@ResponseBody
 	public String borrarHerramienta(@RequestParam Long ch, Model model) {
 		Herramienta h = herramientaService.findOne(ch);
+		Equipo equipo = equipoService.findByCodHerramienta(h.getCodHerramienta());
+		equipo.setCodEstadoHerramienta(1L);
 		herramientaService.delete(h);
+		
 		return "ok";
 	}
 }

@@ -68,7 +68,6 @@ public class Recurso implements Serializable  {
 	@Column(name = "desc_correo_electronico")
 	private String descCorreoElectronico;
 	
-	@NotEmpty(message = "Este dato no debe estar vacío")
 	@Email(message = "No es un email correcto")
 	@Column(name = "desc_correo_personal")
 	private String descCorreoPersonal;

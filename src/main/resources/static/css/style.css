@@ -416,6 +416,14 @@ font-size: 12px;
 	border-color: #e3e6f0;
 }
 
+.cardHR{
+	font-size: 14px;
+	font-weight: 700;
+	max-width: 20rem;
+/* 	width: 100%; */
+	border-color: #e3e6f0;
+}
+
 .cardTR{
 	font-size: 14px;
 	font-weight: 700;

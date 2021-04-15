@@ -682,7 +682,7 @@
 												<!-- Inicia bloque herramientas -->
 												<div id="divHerramientas">
 													<div th:fragment="fragmentHerramientas"
-														class="card mb-3 cardCE">
+														class="card mb-3 cardHR">
 														<div class="card-header" style="color: #898796;">
 															<div class="d-flex justify-content-between">
 																<span>Herramientas</span> <i
@@ -706,33 +706,29 @@
 																</ol>
 
 																<div class="carousel-inner">
-																	<div class="row">
-																		<div class="col">
-																			<div class="carousel-item"
-																				th:each="herramienta, iterator : ${listaHerramientas}"
-																				th:classappend="${iterator.index == 0} ? 'active' : '' ">
-																				<div class="card p-3">
-																					<div class="d-flex align-items-center">
-																						<div class=" w-100">
-																							<h6 class="mb-0 mt-0"
-																								th:text="${herramienta.Equipo.descHerramienta}+ ' ' +${herramienta.Equipo.descModelo}"></h6>
-																							<span style="font-size: 10px;"
-																								th:text="${herramienta.Equipo.descSistemaOperativo}"></span>
-																							&nbsp;
-																							<div style="margin: 10px 0px;">
-																								<span style="font-size: small;">S/N: [[${herramienta.Equipo.descNumSerie}]]</span>
-																							</div>
-																							<div
-																								class="button mt-2 d-flex flex-row align-items-center">
-																								<button
-																									class="btn btn-sm btn-outline-primary w-100"
-																									th:id="${herramienta.codHerramientaRecurso}"
-																									onclick="editarHerramienta(this.id);">Editar</button>
-																								<button class="btn btn-sm btn-primary w-100 ml-2" sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_RH')"
-																									th:id="${herramienta.codHerramientaRecurso}"
-																									onclick="borrarHerramienta(this.id);">Borrar</button>
-																							</div>
-																						</div>
+																	<div class="carousel-item"
+																		th:each="herramienta, iterator : ${listaHerramientas}"
+																		th:classappend="${iterator.index == 0} ? 'active' : '' ">
+																		<div class="card p-3">
+																			<div class="d-flex align-items-center">
+																				<div class=" w-100">
+																					<h6 class="mb-0 mt-0"
+																						th:text="${herramienta.Equipo.descHerramienta}+ ' ' +${herramienta.Equipo.descModelo}"></h6>
+																					<span style="font-size: 10px;"
+																						th:text="${herramienta.Equipo.descSistemaOperativo}"></span>
+																					&nbsp;
+																					<div style="margin: 10px 0px;">
+																						<span style="font-size: small;">S/N: [[${herramienta.Equipo.descNumSerie}]]</span>
+																					</div>
+																					<div
+																						class="button mt-2 d-flex flex-row align-items-center">
+																						<button
+																							class="btn btn-sm btn-outline-primary w-100"
+																							th:id="${herramienta.codHerramientaRecurso}"
+																							onclick="editarHerramienta(this.id);">Editar</button>
+																						<button class="btn btn-sm btn-primary w-100 ml-2" sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_RH')"
+																							th:id="${herramienta.codHerramientaRecurso}"
+																							onclick="borrarHerramienta(this.id);">Borrar</button>
 																					</div>
 																				</div>
 																			</div>
@@ -958,17 +954,53 @@
 											</h5>
 											<button class="close" type="button" data-dismiss="modal"
 												aria-label="Close">
-												<span aria-hidden="true">×</span>
+												<span aria-hidden="true">&times;</span>
 											</button>
 										</div>
 										<div class="modal-body" style="font-size: 14px;">
 											<div class="row" sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_RH')">
 												<div class="form-group col-12 col-md-12">
+													<label class="col-form-label">Tipo herramienta*</label>
+													<select id="codTipoHerramienta" class="form-control" style="padding: 0;">
+														<option value="-1" selected disabled hidden>--- Seleccione ---</option>
+														<option
+															th:each="tipoHerramientaLista : ${tipoHerramientaList}"
+															th:value="${tipoHerramientaLista.codTipoHerramienta}"
+															th:text="${tipoHerramientaLista.descTipoHerramienta}"></option>
+													</select>
+												</div>
+											</div>
+											<div class="row" sec:authorize="hasAnyRole('ROLE_USER','ROLE_APROB')">
+												<div class="form-group col-12 col-md-12">
+													<label class="col-form-label">Tipo herramienta*</label>
+													<select id="codTipoHerramienta" class="form-control" style="padding: 0;" disabled>
+														<option value="-1" selected disabled hidden>--- Seleccione ---</option>
+														<option
+															th:each="tipoHerramientaLista : ${tipoHerramientaList}"
+															th:value="${tipoHerramientaLista.codTipoHerramienta}"
+															th:text="${tipoHerramientaLista.descTipoHerramienta}"></option>
+													</select>
+												</div>
+											</div>
+											<div class="row" sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_RH')">
+												<div id="listaTodo" class="form-group col-12 col-md-12">
 													<label class="col-form-label">Herramienta*</label> <select
-														id="codHerramienta" class="form-control" style="padding: 0;">
+														class="form-control" id="codHerramienta" style="padding: 0;">
 														<option value="-1">--- Seleccione ---</option>
 														<option
-															th:each="equipoLista : ${listaEquipos}"
+															th:each="equipoLista : ${listaEquiposTodo}"
+															th:value="${equipoLista.codHerramienta}"
+															th:text="${equipoLista.descHerramienta} + ' ' + ${equipoLista.descModelo}"></option>
+													</select>
+												</div>
+											</div>
+											<div class="row" sec:authorize="hasAnyRole('ROLE_USER','ROLE_APROB')">
+												<div id="listaTodo" class="form-group col-12 col-md-12">
+													<label class="col-form-label">Herramienta*</label> <select
+														class="form-control" id="codHerramienta" style="padding: 0;" disabled>
+														<option value="-1">--- Seleccione ---</option>
+														<option
+															th:each="equipoLista : ${listaEquiposTodo}"
 															th:value="${equipoLista.codHerramienta}"
 															th:text="${equipoLista.descHerramienta} + ' ' + ${equipoLista.descModelo}"></option>
 													</select>
@@ -983,21 +1015,20 @@
 												</div>
 											</div>
 
+											<!-- 
 											<div class="row">
 												<div class="form-group col-12 col-md-12">
 													<label class="col-form-label">Responsiva*</label>
 													<div class="input-group">
 														<div class="custom-file">
-															<!-- <form th:action="@{/guardaResponsiva}" th:object="${herramienta}" method="post" enctype="multipart/form-data"> -->
 																<input id="inputResponsiva" name="responsiva" type="file" class="custom-file-input" accept="image/png, image/jpeg, image/jpg"/>
 																<label class="custom-file-label" for="responsiva">Seleccionar archivo</label>
-															<!-- </form> -->
 														</div>
 													</div>
 													<small id="validResponsiva" class="form-text text-danger">Dato requerido</small>
 													<small th:if="${herramienta.responsiva} != null" id="fillResponsiva" class="form-text text-danger">Ya se adjunt&oacute; un archivo</small>
 												</div>
-											</div>
+											</div> -->
 
 											<div class="row" sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_RH')">
 												<div class="form-group col-6 col-md-6">
@@ -1007,6 +1038,16 @@
 												<div class="form-group col-6 col-md-6">
 													<label class="col-form-label">Fecha Devoluci&oacute;n</label>
 													<input type="date" id="fecDevolucion" class="form-control"/>
+												</div>
+											</div>
+											<div class="row" sec:authorize="hasAnyRole('ROLE_USER','ROLE_APROB')">
+												<div class="form-group col-6 col-md-6">
+													<label class="col-form-label">Fecha Pr&eacute;stamo</label>
+													<input type="date" id="fecPrestamo" class="form-control" disabled/>
+												</div>
+												<div class="form-group col-6 col-md-6">
+													<label class="col-form-label">Fecha Devoluci&oacute;n</label>
+													<input type="date" id="fecDevolucion" class="form-control" disabled/>
 												</div>
 											</div>
 											<input type="hidden" id="codHerramientaRecurso" value="" />
