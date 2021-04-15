@@ -1,10 +1,6 @@
 $(document).ready(function() {
 	resetFormHerramienta();
 	
-	$("#listaTodo").show();
-	$("#listaLaptops").hide();
-	$("#listaTablets").hide();
-	
 	$("#iNuevaHerramienta").click(function(){
 	 	$("#nuevaHerramientaModal").show();
 	 	resetFormHerramienta();
@@ -30,30 +26,15 @@ $(document).ready(function() {
 	 
 	 $("#codTipoHerramienta").change(function(){
 	 	console.log("cambiando de tipo");
+	 	$("#validCodTipoHerramienta").hide();
 	 	var codTipoHerramienta = $(this).val();
 	 	var url = "/cargaHerramientas/?cth=" + codTipoHerramienta;
 	 	$("#divSelectHerramientas").load(url);
 	 });
-	 	
-/*
-	 	if($(this).val() === "1"){
-	 		$("#listaTodo").hide();
-			$("#listaLaptops").show();
-			$("#listaTablets").hide();
-	 	} 
-	 	
-	 	else if($(this).val() === "2") {
-	 		$("#listaTodo").hide();
-			$("#listaLaptops").hide();
-			$("#listaTablets").show();
-	 	} 
-	 	
-	 	else {
-	 		$("#listaTodo").show();
-			$("#listaLaptops").hide();
-			$("#listaTablets").hide();
-	 	}
-	 });*/
+	 
+	 $("#codHerramienta").change(function(){
+	 	$("#validCodHerramienta").hide();
+	 });
 });
 
 function resetFormHerramienta(){
@@ -64,6 +45,8 @@ function resetFormHerramienta(){
 	$("#fecDevolucion").val("");
 	$("#validObservaciones").hide();
 	$("#validResponsiva").hide();
+	$("#validCodHerramienta").hide();
+	$("#validCodTipoHerramienta").hide();
 }
 
 function registraHerramienta(){
@@ -75,7 +58,17 @@ function registraHerramienta(){
 	  var fecPrestamo =  $("#fecPrestamo").val();
 	  var fecDevolucion = $("#fecDevolucion").val();
 	  
-	  $.ajax({
+	  if($("#codTipoHerramienta").val() <= 0){
+	  	$("#validCodTipoHerramienta").show();
+	  }
+	  
+	  if($("#codHerramienta").val() <= 0){
+	  	$("#validCodHerramienta").show();
+	  }
+	  
+	  else {
+	  	$("#validCodHerramienta").hide();
+	  	$.ajax({
 		    type: "GET",
 		    url: "/guardaHerramienta",
 		    data: {codHerramientaRecurso: codHerramientaRecurso,
@@ -92,6 +85,7 @@ function registraHerramienta(){
 				resetFormHerramienta();
 		    }
 		});
+	  }
 			
   }
   
