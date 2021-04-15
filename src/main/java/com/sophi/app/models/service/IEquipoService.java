@@ -13,5 +13,9 @@ public interface IEquipoService {
 	public List<Equipo> findByCodTipoHerramienta(Long codTipoHerramienta);
 	
 	public Equipo findByCodHerramienta(Long codHerramienta);
+	
+	public List<Equipo> findListEquiposDisponibles();
+	
+	public List<Equipo> findListEquiposDisponiblesPorTipoHerramienta(Long codTipoHerramienta);
 
 }
