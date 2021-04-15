@@ -128,7 +128,7 @@ public class HerramientaController {
 	
 	@RequestMapping(value = "/cargaHerramientas")
 	public String cargaHerramienta(@RequestParam Long cth, Map<String, Object> model) {
-		model.put("listaEquiposTodo", equipoService.findListEquiposDisponiblesPorTipoHerramienta(cth));
+		model.put("listaEquipos", equipoService.findListEquiposDisponiblesPorTipoHerramienta(cth));
 		return "verRecurso :: fragmentHerramientasPorTipo";
 	}
 	

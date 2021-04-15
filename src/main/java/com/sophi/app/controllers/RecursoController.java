@@ -160,7 +160,8 @@ public class RecursoController {
 		
 		// Herramientas - tipo y cat de equipos
 		model.put("tipoHerramientaList", tipoHerramientaService.findAll());
-		model.put("listaEquiposTodo", equipoService.findListEquiposDisponibles());
+		model.put("listaEquipos", equipoService.findListEquiposDisponibles());
+		model.put("listaEquiposTodo", equipoService.findAll());
 		
 		model.put("listaTrayectoriaProyectos", recursoTrayectoriaProyectoService.findByCodRecurso(codRecurso));
 		return "verRecurso";
@@ -449,9 +450,9 @@ public class RecursoController {
 			fecDevolucionString = "1990-01-01";
 		}
 		
-		if(fecDevolucionString != "1990-01-01") {
+		/*if(fecDevolucionString != "1990-01-01") {
 			equipo.setCodEstadoHerramienta(4L);
-		}
+		}*/
 		
 		SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
 		Date fecPrestamo = null;
@@ -532,8 +533,6 @@ public class RecursoController {
 		
 		model.addAttribute("listaHerramientas", herramientaService.findByCodRecurso(codRecurso));
 		model.addAttribute("listaEquiposTodo", equipoService.findAll());
-		//model.addAttribute("listaEquiposLaptops", equipoService.findByCodTipoHerramienta(1L));
-		//model.addAttribute("listaEquiposTablets", equipoService.findByCodTipoHerramienta(2L));	
 		
 		return "verRecurso :: fragmentHerramientas";
 	}
