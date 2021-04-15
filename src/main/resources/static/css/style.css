@@ -502,3 +502,72 @@ ul.timeline > li:before {
 	height: 250px;
 	
 }
+
+/* time line css para cursos */
+
+.tracking-item {
+ border-left:1px solid #e5e5e5;
+ position:relative;
+ padding:2rem 1.5rem .5rem 2.5rem;
+ font-size:12px;
+ margin-left:3rem;
+ min-height:5rem
+}
+.tracking-item:last-child {
+ padding-bottom:4rem
+}
+.tracking-item .tracking-date {
+ margin-bottom:.5rem
+}
+.tracking-item .tracking-date span {
+ color:grey;
+ font-size:12px;
+ padding-left:.4rem
+}
+.tracking-item .tracking-content {
+ padding:.5rem .8rem;
+ background-color:#f4f4f4;
+ border-radius:.5rem;
+ padding: 5px;
+}
+.tracking-item .tracking-content span {
+ display:block;
+ font-size:12px;
+ font-weight: 300;
+}
+.tracking-item .tracking-icon {
+ line-height:2.6rem;
+ position:absolute;
+ left:-1.3rem;
+ width:2.6rem;
+ height:2.6rem;
+ text-align:center;
+ border-radius:50%;
+ font-size:1.1rem;
+ background-color:#fff;
+ color:#fff
+}
+
+.tracking-item .tracking-icon.status {
+ color:#e5e5e5;
+ border:1px solid #e5e5e5;
+ font-size:20px;
+}
+@media(min-width:992px) {
+ .tracking-item {
+  margin-left:10rem
+ }
+ .tracking-item .tracking-date {
+  position:absolute;
+  left:-10rem;
+  width:7.5rem;
+  text-align:right
+ }
+ .tracking-item .tracking-date span {
+  display:block
+ }
+ .tracking-item .tracking-content {
+  padding:0;
+  background-color:transparent
+ }
+}

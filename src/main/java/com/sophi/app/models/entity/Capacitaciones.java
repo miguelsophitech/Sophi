@@ -31,16 +31,6 @@ public class Capacitaciones implements Serializable {
 	@Column(name = "desc_detalle_capacitacion")
 	private String descDetalleCapacitacion;
 	
-	@Column(name = "fec_inicio_capacitacion")
-	@Temporal(TemporalType.DATE)
-	@DateTimeFormat(pattern = "yyyy-MM-dd")
-	private Date fecInicioCapacitacion;
-	
-	@Column(name = "fec_fin_capacitacion")
-	@Temporal(TemporalType.DATE)
-	@DateTimeFormat(pattern = "yyyy-MM-dd")
-	private Date fecFinCapacitacion;
-	
 	@Column(name = "val_hrs_capacitacion")
 	private Long valHrsCapacitacion;
 	
@@ -83,22 +73,6 @@ public class Capacitaciones implements Serializable {
 
 	public void setDescDetalleCapacitacion(String descDetalleCapacitacion) {
 		this.descDetalleCapacitacion = descDetalleCapacitacion;
-	}
-
-	public Date getFecInicioCapacitacion() {
-		return fecInicioCapacitacion;
-	}
-
-	public void setFecInicioCapacitacion(Date fecInicioCapacitacion) {
-		this.fecInicioCapacitacion = fecInicioCapacitacion;
-	}
-
-	public Date getFecFinCapacitacion() {
-		return fecFinCapacitacion;
-	}
-
-	public void setFecFinCapacitacion(Date fecFinCapacitacion) {
-		this.fecFinCapacitacion = fecFinCapacitacion;
 	}
 
 	public Long getValHrsCapacitacion() {

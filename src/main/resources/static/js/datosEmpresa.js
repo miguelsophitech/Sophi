@@ -28,8 +28,14 @@ $(document).ready(function() {
 	 	}
 	 });
 	 
-	 /*$("#codTipoHerramienta").change(function(){
+	 $("#codTipoHerramienta").change(function(){
 	 	console.log("cambiando de tipo");
+	 	var codTipoHerramienta = $(this).val();
+	 	var url = "/cargaHerramientas/?cth=" + codTipoHerramienta;
+	 	$("#divSelectHerramientas").load(url);
+	 });
+	 	
+/*
 	 	if($(this).val() === "1"){
 	 		$("#listaTodo").hide();
 			$("#listaLaptops").show();

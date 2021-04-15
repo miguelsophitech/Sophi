@@ -157,13 +157,10 @@ public class RecursoController {
 		model.put("listaContactoEmergencia", contactoEmergenciaService.findByCodRecurso(codRecurso));
 		model.put("listaParentesco", parentescoService.findAll());
 		model.put("listaHerramientas", herramientaService.findByCodRecurso(codRecurso));
-		model.put("listaEquipos", equipoService.findAll());
-		model.put("tipoHerramientaList", tipoHerramientaService.findAll());
-		//model.put("estadoHerramientaList", estadoHerramientaService.findAll());
 		
-		model.put("listaEquiposTodo", equipoService.findAll());
-		//model.put("listaEquiposLaptops", equipoService.findByCodTipoHerramienta(1L));
-		//model.put("listaEquiposTablets", equipoService.findByCodTipoHerramienta(2L));
+		// Herramientas - tipo y cat de equipos
+		model.put("tipoHerramientaList", tipoHerramientaService.findAll());
+		model.put("listaEquiposTodo", equipoService.findListEquiposDisponibles());
 		
 		model.put("listaTrayectoriaProyectos", recursoTrayectoriaProyectoService.findByCodRecurso(codRecurso));
 		return "verRecurso";

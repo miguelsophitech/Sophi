@@ -11,12 +11,14 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.sophi.app.models.entity.Herramienta;
 import com.sophi.app.models.entity.Recurso;
+import com.sophi.app.models.service.IEquipoService;
 import com.sophi.app.models.service.IHerramientaService;
 import com.sophi.app.models.service.IRecursoService;
 
@@ -29,6 +31,9 @@ public class HerramientaController {
 	
 	@Autowired
 	private IHerramientaService herramientaService;
+	
+	@Autowired
+	private IEquipoService equipoService;
 	
 	@RequestMapping(value = "/listarHerramientas/{id}")
 	public String listarHerramientas(@PathVariable(value = "id") Long codRecurso, Map<String, Object> model, RedirectAttributes flash) {
@@ -120,6 +125,12 @@ public class HerramientaController {
 		return "redirect:../listarHerramientas/" + herramienta.getRecurso().getCodRecurso().toString();
 	}
 	
+	
+	@RequestMapping(value = "/cargaHerramientas")
+	public String cargaHerramienta(@RequestParam Long cth, Map<String, Object> model) {
+		model.put("listaEquiposTodo", equipoService.findListEquiposDisponiblesPorTipoHerramienta(cth));
+		return "verRecurso :: fragmentHerramientasPorTipo";
+	}
 	
 
 }

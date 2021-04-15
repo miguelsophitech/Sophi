@@ -984,28 +984,30 @@
 											</div>
 											<div class="row" sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_RH')">
 												<div id="listaTodo" class="form-group col-12 col-md-12">
-													<label class="col-form-label">Herramienta*</label> <select
-														class="form-control" id="codHerramienta" style="padding: 0;">
-														<option value="-1">--- Seleccione ---</option>
-														<option
-															th:each="equipoLista : ${listaEquiposTodo}"
-															th:value="${equipoLista.codHerramienta}"
-															th:text="${equipoLista.descHerramienta} + ' ' + ${equipoLista.descModelo}"></option>
-													</select>
+													<label class="col-form-label">Herramienta*</label>
+													<div id="divSelectHerramientas">
+														<select th:fragment="fragmentHerramientasPorTipo" class="form-control" id="codHerramienta" style="padding: 0;">
+															<option value="-1">--- Seleccione ---</option>
+															<option th:each="equipoLista : ${listaEquiposTodo}"
+																th:value="${equipoLista.codHerramienta}"
+																th:text="${equipoLista.descHerramienta} + ' ' + ${equipoLista.descModelo}">
+															</option>
+														</select>
+													</div>
 												</div>
 											</div>
-											<div class="row" sec:authorize="hasAnyRole('ROLE_USER','ROLE_APROB')">
-												<div id="listaTodo" class="form-group col-12 col-md-12">
-													<label class="col-form-label">Herramienta*</label> <select
-														class="form-control" id="codHerramienta" style="padding: 0;" disabled>
-														<option value="-1">--- Seleccione ---</option>
-														<option
-															th:each="equipoLista : ${listaEquiposTodo}"
-															th:value="${equipoLista.codHerramienta}"
-															th:text="${equipoLista.descHerramienta} + ' ' + ${equipoLista.descModelo}"></option>
-													</select>
-												</div>
-											</div>
+<!-- 											<div class="row" sec:authorize="hasAnyRole('ROLE_USER','ROLE_APROB')"> -->
+<!-- 												<div id="listaTodo" class="form-group col-12 col-md-12"> -->
+<!-- 													<label class="col-form-label">Herramienta*</label> <select -->
+<!-- 														class="form-control" id="codHerramienta" style="padding: 0;" disabled> -->
+<!-- 														<option value="-1">--- Seleccione ---</option> -->
+<!-- 														<option -->
+<!-- 															th:each="equipoLista : ${listaEquiposTodo}" -->
+<!-- 															th:value="${equipoLista.codHerramienta}" -->
+<!-- 															th:text="${equipoLista.descHerramienta} + ' ' + ${equipoLista.descModelo}"></option> -->
+<!-- 													</select> -->
+<!-- 												</div> -->
+<!-- 											</div> -->
 
 											<div class="row">
 												<div class="form-group col-12 col-md-12">
@@ -1064,6 +1066,10 @@
 							</div>
 							
 							<div id="recursoTrayectoriaProyectoModal">
+							
+							</div>
+							
+							<div id="recursoTrayectoriaCapacitacionModal">
 							
 							</div>
 							

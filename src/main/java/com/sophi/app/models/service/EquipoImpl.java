@@ -39,4 +39,15 @@ public class EquipoImpl implements IEquipoService {
 		return equipoDao.findByCodHerramienta(codHerramienta);
 	}
 
+	@Override
+	@Transactional(readOnly = true)
+	public List<Equipo> findListEquiposDisponibles() {
+		return equipoDao.findListEquiposDisponibles();
+	}
+
+	@Override
+	public List<Equipo> findListEquiposDisponiblesPorTipoHerramienta(Long codTipoHerramienta) {
+		return equipoDao.findListEquiposDisponiblesPorTipoHerramienta(codTipoHerramienta);
+	}
+
 }
