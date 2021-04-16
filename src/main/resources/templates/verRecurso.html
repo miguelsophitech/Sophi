@@ -687,8 +687,7 @@
 															<div class="d-flex justify-content-between">
 																<span>Herramientas</span> <i
 																	class="fa fa-plus" style="cursor: pointer;"
-																	aria-hidden="true" data-toggle="modal"
-																	data-target="#nuevaHerramientaModal" sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_RH')"></i>
+																	aria-hidden="true" onclick="abrirFormHerramienta();" sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_RH')"></i>
 															</div>
 														</div>
 														<div class="card-body text-secondary">
@@ -717,11 +716,12 @@
 																					<span style="font-size: 10px;"
 																						th:text="${herramienta.Equipo.descSistemaOperativo}"></span>
 																					&nbsp;
-																					<div style="margin: 10px 0px;">
+																					<div class="d-flex justify-content-between" style="margin: 10px 0px;">
 																						<span style="font-size: small;">S/N: [[${herramienta.Equipo.descNumSerie}]]</span>
+																						<small><a th:if="${herramienta.responsiva} != null" th:href="'/herramienta/responsiva?rh=' + ${herramienta.codHerramientaRecurso}" target="_blank">Responsiva</a></small> 
 																					</div>
 																					<div style="margin: 10px 0px;">
-																						<span style="font-size: small;" maxlength="50">Observ.: [[${herramienta.descObservaciones}]]</span>
+																						<small><span>[[${herramienta.descObservaciones}]]</span></small>
 																					</div>
 																					<div
 																						class="button mt-2 d-flex flex-row align-items-center">
@@ -945,130 +945,11 @@
 								</div>
 							</div>
 
-							<!-- Modal Asignar Herramienta -->
-							<div class="modal fade" id="nuevaHerramientaModal" tabindex="-1"
-								role="dialog" aria-labelledby="nuevaHerramientaModalLabel"
-								aria-hidden="true">
-								<div class="modal-dialog" role="document">
-									<div class="modal-content">
-										<div class="modal-header">
-											<h5 class="modal-title" id="nuevaHerramientaModalLabel">
-												Registrar herramienta<br>
-											</h5>
-											<button class="close" type="button" data-dismiss="modal"
-												aria-label="Close">
-												<span aria-hidden="true">&times;</span>
-											</button>
-										</div>
-										<div class="modal-body" style="font-size: 14px;">
-											<div class="row" sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_RH')">
-												<div class="form-group col-12 col-md-12">
-													<label class="col-form-label">Tipo herramienta*</label>
-													<select id="codTipoHerramienta" class="form-control" style="padding: 0;">
-														<option value="-1" selected disabled hidden>--- Seleccione ---</option>
-														<option
-															th:each="tipoHerramientaLista : ${tipoHerramientaList}"
-															th:value="${tipoHerramientaLista.codTipoHerramienta}"
-															th:text="${tipoHerramientaLista.descTipoHerramienta}"></option>
-													</select>
-													<small id="validCodTipoHerramienta" class="form-text text-danger">Seleccione un tipo de herramienta</small>
-												</div>												
-											</div>
-											<div class="row" sec:authorize="hasAnyRole('ROLE_USER','ROLE_APROB')">
-												<div class="form-group col-12 col-md-12">
-													<label class="col-form-label">Tipo herramienta*</label>
-													<select id="codTipoHerramienta" class="form-control" style="padding: 0;" disabled>
-														<option value="-1" selected disabled hidden>--- Seleccione ---</option>
-														<option
-															th:each="tipoHerramientaLista : ${tipoHerramientaList}"
-															th:value="${tipoHerramientaLista.codTipoHerramienta}"
-															th:text="${tipoHerramientaLista.descTipoHerramienta}"></option>
-													</select>
-												</div>
-											</div>
-											<div class="row" sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_RH')">
-												<div id="listaTodo" class="form-group col-12 col-md-12">
-													<label class="col-form-label">Herramienta*</label>
-													<div id="divSelectHerramientas">
-														<select th:fragment="fragmentHerramientasPorTipo" class="form-control" id="codHerramienta" style="padding: 0;">
-															<option value="-1">--- Seleccione ---</option>
-															<option th:each="equipoLista : ${listaEquipos}"
-																th:value="${equipoLista.codHerramienta}"
-																th:text="${equipoLista.descHerramienta} + ' ' + ${equipoLista.descModelo}">
-															</option>
-														</select>
-													</div>
-													<small id="validCodHerramienta" class="form-text text-danger">Seleccione una herramienta en caso de tener disponibles</small>
-												</div>
-											</div>
- 											<div class="row" sec:authorize="hasAnyRole('ROLE_USER','ROLE_APROB')">
- 												<div id="listaTodo" class="form-group col-12 col-md-12">
- 													<label class="col-form-label">Herramienta*</label> <select
- 														class="form-control" id="codHerramienta" style="padding: 0;" disabled>
- 														<option value="-1">--- Seleccione ---</option>
- 														<option
- 															th:each="equipoLista : ${listaEquiposTodo}"
- 															th:value="${equipoLista.codHerramienta}"
- 															th:text="${equipoLista.descHerramienta} + ' ' + ${equipoLista.descModelo}"></option>
- 													</select>
- 												</div>
-	 										</div>
-
-											<div class="row">
-												<div class="form-group col-12 col-md-12">
-													<label class="col-form-label">Observaciones*</label>
-													<textarea id="observaciones" class="form-control"></textarea>
-													<small id="validObservaciones" class="form-text text-danger">Dato requerido</small>
-												</div>
-											</div>
-
-											<!-- 
-											<div class="row">
-												<div class="form-group col-12 col-md-12">
-													<label class="col-form-label">Responsiva*</label>
-													<div class="input-group">
-														<div class="custom-file">
-																<input id="inputResponsiva" name="responsiva" type="file" class="custom-file-input" accept="image/png, image/jpeg, image/jpg"/>
-																<label class="custom-file-label" for="responsiva">Seleccionar archivo</label>
-														</div>
-													</div>
-													<small id="validResponsiva" class="form-text text-danger">Dato requerido</small>
-													<small th:if="${herramienta.responsiva} != null" id="fillResponsiva" class="form-text text-danger">Ya se adjunt&oacute; un archivo</small>
-												</div>
-											</div> -->
-
-											<div class="row" sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_RH')">
-												<div class="form-group col-6 col-md-6">
-													<label class="col-form-label">Fecha Pr&eacute;stamo</label>
-													<input type="date" id="fecPrestamo" class="form-control"/>
-												</div>
-												<div class="form-group col-6 col-md-6">
-													<label class="col-form-label">Fecha Devoluci&oacute;n</label>
-													<input type="date" id="fecDevolucion" class="form-control"/>
-												</div>
-											</div>
-											<div class="row" sec:authorize="hasAnyRole('ROLE_USER','ROLE_APROB')">
-												<div class="form-group col-6 col-md-6">
-													<label class="col-form-label">Fecha Pr&eacute;stamo</label>
-													<input type="date" id="fecPrestamo" class="form-control" disabled/>
-												</div>
-												<div class="form-group col-6 col-md-6">
-													<label class="col-form-label">Fecha Devoluci&oacute;n</label>
-													<input type="date" id="fecDevolucion" class="form-control" disabled/>
-												</div>
-											</div>
-											<input type="hidden" id="codHerramientaRecurso" value="" />
-										</div>
-										<div class="modal-footer">
-											<button class="btn btn-secondary" type="button"
-												data-dismiss="modal" onclick="resetFormHerramienta();">Cancelar</button>
-											<button type="submit" onclick="registraHerramienta();"
-												class="btn btn-primary">Aceptar</button>
-										</div>
-
-									</div>
-								</div>
+							<!-- INICIO Modal Asignar Herramienta -->
+							<div id="recursoHerramientaModal">
+							
 							</div>
+							<!-- FIN Modal Asignar Herramienta -->
 							
 							<div id="recursoTrayectoriaProyectoModal">
 							

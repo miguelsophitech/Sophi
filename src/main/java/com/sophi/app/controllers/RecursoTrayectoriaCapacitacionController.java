@@ -89,7 +89,7 @@ public class RecursoTrayectoriaCapacitacionController {
 	}
 	
 	@GetMapping(value = "/capacitacion/evidencia")
-	public void verFotoRecursoPerfil(@RequestParam Long rtc,  HttpServletResponse response) throws IOException{
+	public void verFotoEvidenciaCapacitacion(@RequestParam Long rtc,  HttpServletResponse response) throws IOException{
 		response.setContentType("image/jpeg");
 		RecursoCapacitacion recursoCapacitacion = recursoCapacitacionService.findById(rtc);
 		InputStream is = new ByteArrayInputStream(recursoCapacitacion.getDescDocumentoEvidencia());

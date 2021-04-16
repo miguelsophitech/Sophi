@@ -432,7 +432,7 @@ public class RecursoController {
 	public String guardaHerramienta(@RequestParam Long codHerramientaRecurso,
 			@RequestParam Long codHerramienta, @RequestParam Long codRecurso, 
 			@RequestParam String observaciones, 
-			//@RequestParam MultipartFile responsiva, 
+			@RequestParam("responsiva") MultipartFile responsiva, 
 			@RequestParam String fecPrestamoString,
 			@RequestParam String fecDevolucionString, Model model) {
 		
@@ -457,7 +457,7 @@ public class RecursoController {
 		SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
 		Date fecPrestamo = null;
 		Date fecDevolucion = null;
-		//byte[] bytesResponsiva = null;
+		byte[] bytesResponsiva = null;
 		
 		try {
 			fecPrestamo = formato.parse(fecPrestamoString);
@@ -474,20 +474,19 @@ public class RecursoController {
 			e.printStackTrace();
 		}
 		
-		/*if(!responsiva.isEmpty()) {
+		if(!responsiva.isEmpty()) {
 			try {
 				bytesResponsiva = responsiva.getBytes();
-				//flash.addFlashAttribute("info", "Ha subido correctamente "+ responsiva.getOriginalFilename());
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-//		}*/
+		}
 		
 		if (codHerramientaRecurso == null){
 			Herramienta h = new Herramienta();
 			h.setCodHerramienta(codHerramienta);
 			h.setDescObservaciones(observaciones);
-			//h.setResponsiva(bytesResponsiva);
+			h.setResponsiva(bytesResponsiva);
 			h.setFecPrestamo(fecPrestamo);
 			h.setFecDevolucion(fecDevolucion);
 			h.setCodRecurso(codRecurso);
@@ -496,7 +495,7 @@ public class RecursoController {
 			Herramienta h = herramientaService.findOne(codHerramientaRecurso);
 			h.setCodHerramienta(codHerramienta);
 			h.setDescObservaciones(observaciones);
-			//h.setResponsiva(bytesResponsiva);
+			h.setResponsiva(bytesResponsiva);
 			h.setFecPrestamo(fecPrestamo);
 			h.setFecDevolucion(fecDevolucion);
 			h.setCodRecurso(codRecurso);
@@ -506,6 +505,9 @@ public class RecursoController {
 		return "ok";
 
 	}
+	
+	
+	
 	
 	/*@GetMapping(value="/filtroHerramienta/{codTipoHerramienta}")
 	public String filtroHerramienta(@PathVariable Long codTipoHerramienta, Model model) {
