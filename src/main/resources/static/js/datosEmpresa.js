@@ -1,4 +1,5 @@
 $(document).ready(function() {
+
 	resetFormHerramienta();
 	
 	$("#listaTodo").show();
@@ -28,12 +29,7 @@ $(document).ready(function() {
 	 	}
 	 });
 	 
-	 $("#codTipoHerramienta").change(function(){
-	 	console.log("cambiando de tipo");
-	 	var codTipoHerramienta = $(this).val();
-	 	var url = "/cargaHerramientas/?cth=" + codTipoHerramienta;
-	 	$("#divSelectHerramientas").load(url);
-	 });
+	 
 	 	
 /*
 	 	if($(this).val() === "1"){
@@ -67,24 +63,29 @@ function resetFormHerramienta(){
 }
 
 function registraHerramienta(){
-	  var codHerramientaRecurso = $("#codHerramientaRecurso").val();
-	  var codRecurso = $("#codRecurso").val();
-	  var codHerramienta = $("#codHerramienta").val();
-	  var observaciones = $("#observaciones").val();
-	  //var responsiva = document.getElementById('responsiva').files;
-	  var fecPrestamo =  $("#fecPrestamo").val();
-	  var fecDevolucion = $("#fecDevolucion").val();
+//	  var codHerramientaRecurso = $("#codHerramientaRecurso").val();
+//	  var codRecurso = $("#codRecurso").val();
+//	  var codHerramienta = $("#codHerramienta").val();
+//	  var observaciones = $("#observaciones").val();
+//	  var responsiva = new FormData($("#upload-file-form")[0]);
+//	  var fecPrestamo =  $("#fecPrestamo").val();
+//	  var fecDevolucion = $("#fecDevolucion").val();
 	  
 	  $.ajax({
-		    type: "GET",
+		    type: "POST",
 		    url: "/guardaHerramienta",
-		    data: {codHerramientaRecurso: codHerramientaRecurso,
-		        codHerramienta: codHerramienta,
-		    	observaciones: observaciones, 
-		    	//responsiva: responsiva,
-		    	fecPrestamoString: fecPrestamo,
-		    	fecDevolucionString: fecDevolucion,
-		    	codRecurso: codRecurso },
+//		    data: {codHerramientaRecurso: codHerramientaRecurso,
+//		        codHerramienta: codHerramienta,
+//		    	observaciones: observaciones, 
+//		    	responsiva : responsiva,
+//		    	fecPrestamoString: fecPrestamo,
+//		    	fecDevolucionString: fecDevolucion,
+//		    	codRecurso: codRecurso },
+		    data: new FormData($("#upload-file-form")[0]),
+		    enctype: 'multipart/form-data',
+		    processData: false,
+		    contentType: false,
+		    cache: false,
 			success: function(result){
 				var url = "/obtieneHerramienta/?codRecurso="+codRecurso;
 				$("#divHerramientas").load(url);
@@ -94,62 +95,56 @@ function registraHerramienta(){
 		});
 			
   }
+
+
+function submitFormHerramientas(){
+	var $form_herramientas = $('#formularioHerramientas')[0];
+	var data = new FormData($form_herramientas);
+//	$("#btnAceptarCapacitacion").prop("disabled", true);
+	
+    $.ajax({
+        type: "POST",
+        enctype: 'multipart/form-data',
+        url: '/formCrearEditarHerramienta',
+        data: data,
+        processData: false,
+        contentType: false,
+        cache: false,
+        timeout: 1000000,
+        success: function(data) {
+//            $("#btnAceptarCapacitacion").prop("disabled", false);
+        	var url = "/obtieneHerramienta/?codRecurso="+$("#codRecurso").val();
+			$("#divHerramientas").load(url);
+            $("#registroHerramientaModal").modal('hide');
+//            verTrayectoriaCapacitacion($("#codRecurso").val());
+        }
+    });
+}
+
+function abrirFormHerramienta(){
+	var url = "/formCrearEditarHerramienta/?codRecurso=" + $("#codRecurso").val();
+	$("#recursoHerramientaModal").load(url,function(){
+		$("#registroHerramientaModal").modal('show');
+	});
+}
   
-  function editarHerramienta(codHerramientaRecurso){
-	  $.ajax({
-		    type: "GET",
-		    url: "/obtieneHerramientaUnico",
-		    data: {chr: codHerramientaRecurso},
-			success: function(herramienta){
-				var codHerramientaRecurso = encodeURIComponent(herramienta[0]); //codHerramientaRecurso
-				var codHerramienta = herramienta[1]; //codHerramienta
-				var observaciones = herramienta[2]; //Observaciones
-				//var responsiva = herramienta[3]; //responsiva
-				var fecPrestamo = herramienta[3]; //fecPrestamo
-				var fecDevolucion = herramienta[4]; //fecDevolucion
-				
-				console.log(codHerramienta);
-				
-				$("#codHerramienta").val(codHerramienta);
-				$("#codHerramientaRecurso").val(codHerramientaRecurso);
-				$("#codHerramienta").val(codHerramienta);
-				$("#observaciones").val(observaciones);
-				//$("#responsiva").val(responsiva); 
-				$("#fecPrestamo").val(fecPrestamo);
-				$("#fecDevolucion").val(fecDevolucion);
-				$("#nuevaHerramientaModal").modal('show');
-				
-		    },
-	         error: function (herramienta) {
-	            console.log("Algún dato viene nulo");
-	        }
-		});
-  }
+function editarHerramienta(codHerramientaRecurso){
+	var url = "/formEditarHerramienta/?chr=" + codHerramientaRecurso;
+	$("#recursoHerramientaModal").load(url,function(){
+		$("#registroHerramientaModal").modal('show');
+	});
+}
   
-  /*function filtroHerramientaTodo(){
-  	var url = "/filtroHerramienta/"+$("#codTipoHerramienta").val();
-  	$("#listaTodo").load(url);
-  }
-  
-  function filtroHerramientaLaptops(){
-  	var url = "/filtroHerramienta/"+$("#codTipoHerramienta").val();
-  	$("#listaLaptops").load(url);
-  }
-  
-  function filtroHerramientaTablets(){
-  	var url = "/filtroHerramienta/"+$("#codTipoHerramienta").val();
-  	$("#listaLaptops").load(url);
-  }*/
-  
-  function borrarHerramienta(codHerramienta){
-	  var codRecurso = $("#codRecurso").val();
-	  $.ajax({
-		    type: "GET",
-		    url: "/borrarHerramienta",
-		    data: {ch: codHerramienta },
-			success: function(result){
-				var url = "/obtieneHerramienta/?codRecurso="+codRecurso;
-				$("#divHerramientas").load(url);
-		    }
-		});	
-  }
+
+function borrarHerramienta(codHerramienta){
+	var codRecurso = $("#codRecurso").val();
+	$.ajax({
+		type: "GET",
+		url: "/borrarHerramienta",
+		data: {ch: codHerramienta },
+		success: function(result){
+			var url = "/obtieneHerramienta/?codRecurso="+codRecurso;
+			$("#divHerramientas").load(url);
+	    }
+	});
+}
