@@ -2,10 +2,6 @@ $(document).ready(function() {
 
 	resetFormHerramienta();
 	
-	$("#listaTodo").show();
-	$("#listaLaptops").hide();
-	$("#listaTablets").hide();
-	
 	$("#iNuevaHerramienta").click(function(){
 	 	$("#nuevaHerramientaModal").show();
 	 	resetFormHerramienta();
@@ -29,27 +25,6 @@ $(document).ready(function() {
 	 	}
 	 });
 	 
-	 
-	 	
-/*
-	 	if($(this).val() === "1"){
-	 		$("#listaTodo").hide();
-			$("#listaLaptops").show();
-			$("#listaTablets").hide();
-	 	} 
-	 	
-	 	else if($(this).val() === "2") {
-	 		$("#listaTodo").hide();
-			$("#listaLaptops").hide();
-			$("#listaTablets").show();
-	 	} 
-	 	
-	 	else {
-	 		$("#listaTodo").show();
-			$("#listaLaptops").hide();
-			$("#listaTablets").hide();
-	 	}
-	 });*/
 });
 
 function resetFormHerramienta(){
@@ -60,41 +35,11 @@ function resetFormHerramienta(){
 	$("#fecDevolucion").val("");
 	$("#validObservaciones").hide();
 	$("#validResponsiva").hide();
+	$("#validCodHerramienta").hide();
+	$("#validCodTipoHerramienta").hide();
 }
 
-function registraHerramienta(){
-//	  var codHerramientaRecurso = $("#codHerramientaRecurso").val();
-//	  var codRecurso = $("#codRecurso").val();
-//	  var codHerramienta = $("#codHerramienta").val();
-//	  var observaciones = $("#observaciones").val();
-//	  var responsiva = new FormData($("#upload-file-form")[0]);
-//	  var fecPrestamo =  $("#fecPrestamo").val();
-//	  var fecDevolucion = $("#fecDevolucion").val();
-	  
-	  $.ajax({
-		    type: "POST",
-		    url: "/guardaHerramienta",
-//		    data: {codHerramientaRecurso: codHerramientaRecurso,
-//		        codHerramienta: codHerramienta,
-//		    	observaciones: observaciones, 
-//		    	responsiva : responsiva,
-//		    	fecPrestamoString: fecPrestamo,
-//		    	fecDevolucionString: fecDevolucion,
-//		    	codRecurso: codRecurso },
-		    data: new FormData($("#upload-file-form")[0]),
-		    enctype: 'multipart/form-data',
-		    processData: false,
-		    contentType: false,
-		    cache: false,
-			success: function(result){
-				var url = "/obtieneHerramienta/?codRecurso="+codRecurso;
-				$("#divHerramientas").load(url);
-				$("#nuevaHerramientaModal").modal('hide');
-				resetFormHerramienta();
-		    }
-		});
-			
-  }
+
 
 
 function submitFormHerramientas(){

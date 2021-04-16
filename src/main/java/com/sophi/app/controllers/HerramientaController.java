@@ -51,67 +51,7 @@ public class HerramientaController {
 	@Autowired
 	private ITipoHerramientaService tipoHerramientaService;
 	
-//	@RequestMapping(value = "/listarHerramientas/{id}")
-//	public String listarHerramientas(@PathVariable(value = "id") Long codRecurso, Map<String, Object> model, RedirectAttributes flash) {
-//		Recurso recurso = null;
-//		if (codRecurso > 0) {
-//			recurso = recursoService.findOne(codRecurso);
-//			if(recurso == null) {
-//				flash.addFlashAttribute("error", "El codigo del recurso no existe en base de datos!");
-//				return "redirect:/listarRecursos";
-//			}
-//		} else {
-//			flash.addFlashAttribute("error", "El codigo del recurso no debe ser cero!");
-//			return "redirect:/listarRecursos";
-//		}
-//		model.put("recurso", recurso);
-//		model.put("titulo", "Herramientas de " + recurso.getDescRecurso());
-//		return "listaHerramientas";
-//	}
-//	
-//	@RequestMapping(value = "/formHerramienta/{id}")
-//	public String editarHerramienta(@PathVariable(value = "id") Long codHerramienta, Map<String, Object> model, RedirectAttributes flash) {
-//		Herramienta herramienta = null;
-//		if (codHerramienta > 0) {
-//			herramienta = herramientaService.findOne(codHerramienta);
-//			if(herramienta == null) {
-//				flash.addFlashAttribute("error", "El codigo de la herramienta no existe en base de datos!");
-//				return "redirect:/listarRecursos";
-//			}
-//		} else {
-//			flash.addFlashAttribute("error", "El codigo de la herramienta no debe ser cero!");
-//			return "redirect:/listarRecursos";
-//		}
-//		model.put("herramienta", herramienta);
-//		model.put("titulo", "Formulario de herramientas");
-//		
-//		return "formHerramienta";
-//	}
-//	
-//	
-//	
-//	@RequestMapping(value = "/asignarHerramienta/{id}")
-//	public String crearHerramienta(@PathVariable(value = "id") Long codRecurso, Map<String, Object> model, RedirectAttributes flash) {
-//		Recurso recurso = null;
-//		if (codRecurso > 0) {
-//			recurso = recursoService.findOne(codRecurso);
-//			if(recurso == null) {
-//				flash.addFlashAttribute("error", "El codigo del recurso no existe en base de datos!");
-//				return "redirect:/listarRecursos";
-//			}
-//		} else {
-//			flash.addFlashAttribute("error", "El codigo del recurso no debe ser cero!");
-//			return "redirect:/listarRecursos";
-//		}
-//		Herramienta herramienta = new Herramienta();
-//		herramienta.setRecurso(recurso);
-//		model.put("herramienta", herramienta);
-//		model.put("titulo", "Formulario de herramientas");
-//		
-//		return "formHerramienta";
-//	}
-//	
-	
+
 	@RequestMapping(value="/formHerramienta", method = RequestMethod.POST)
 	public String guardarHerramienta(@Valid Herramienta herramienta, BindingResult result, Model model,RedirectAttributes flash,SessionStatus status) {
 		if(result.hasErrors()) {
@@ -158,14 +98,6 @@ public class HerramientaController {
 	@RequestMapping(value="/formCrearEditarHerramienta", method = RequestMethod.POST)
 	@ResponseBody
 	public String guardarHerramienta(@ModelAttribute Herramienta recursoHerramienta, @RequestParam("fotoResponsiva") MultipartFile fotoResponsiva, Model model) {
-		
-		System.out.println(recursoHerramienta.getDescObservaciones());
-		System.out.println(recursoHerramienta.getCodHerramienta());
-		System.out.println(recursoHerramienta.getCodHerramientaRecurso());
-		System.out.println(recursoHerramienta.getFecDevolucion());
-		System.out.println(recursoHerramienta.getFecPrestamo());
-		System.out.println(recursoHerramienta.getResponsiva());
-		
 		
 		Equipo equipo = equipoService.findByCodHerramienta(recursoHerramienta.getCodHerramienta());
 		
