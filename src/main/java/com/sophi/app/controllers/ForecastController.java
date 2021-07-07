@@ -262,10 +262,16 @@ public class ForecastController {
 	@RequestMapping(value = "/resumenForecast", method = RequestMethod.GET)
 	public String resumenForecast(Model model) {
 		List<Recurso> listaRecursosConsultores = new ArrayList<>();
+		List<Recurso> listaRecursosConsultoresTMP = new ArrayList<>();
 		
 		//Recursos consultores cod = 1
-		listaRecursosConsultores = recursoService.findByCodAreaRecurso(1L);
+		listaRecursosConsultoresTMP = recursoService.findByCodAreaRecurso(1L);
 		
+		for (Recurso recurso : listaRecursosConsultoresTMP) {
+			if(recurso.getValActivo().equals(1L)) {
+				listaRecursosConsultores.add(recurso);
+			}
+		}
 		
 		Utiles utiles = new Utiles();
 		

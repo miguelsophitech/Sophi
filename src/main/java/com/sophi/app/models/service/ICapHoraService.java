@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.sophi.app.models.entity.CapHora;
 import com.sophi.app.models.entity.DetalleRecursoHoras;
+import com.sophi.app.models.entity.LiderProyectoEvaluacion;
 
 public interface ICapHoraService {
 
@@ -37,5 +38,9 @@ public interface ICapHoraService {
 	public List<CapHora> findListCapHoraByPeriodoFechaRecurso(Long codRecurso, Date fecInicial, Date fecFinal);
 	
 	public List<DetalleRecursoHoras> findProyectoRecursosResumenSemanal(Long codProyecto, Date fecInicial, Date fecFinal);
+	
+	public List<LiderProyectoEvaluacion> findCodAprobadoresByCodRecursoAndFechaInicioAndFechaFin(Long codRecurso, Date fechaInicio, Date fechaFin);
+	
+	public List<String> findProyectosByCodRecursoAndFechaInicioAndFechaFin(Long codRecurso, Date fechaInicio, Date fechaFin);
 	
 }

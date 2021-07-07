@@ -46,11 +46,11 @@ public class Recurso implements Serializable  {
     @Column(name = "desc_foto_cv", columnDefinition="BLOB")
     private byte[] fotoCv;
 	
-	@NotEmpty(message = "Este dato no debe estar vacío")
+//	@NotEmpty(message = "Este dato no debe estar vacío")
 	@Column(name = "desc_recurso")
 	private String descRecurso;
 	
-	@NotEmpty(message = "Este dato no debe estar vacío")
+//	@NotEmpty(message = "Este dato no debe estar vacío")
 	@Column(name = "desc_apellido_paterno")
 	private String descApellidoPaterno;
 	
@@ -63,7 +63,7 @@ public class Recurso implements Serializable  {
 	@Column(name = "val_responsable")
 	private Long valResponsable;
 	
-	@NotEmpty(message = "Este dato no debe estar vacío")
+//	@NotEmpty(message = "Este dato no debe estar vacío")
 	@Email(message = "No es un email correcto")
 	@Column(name = "desc_correo_electronico")
 	private String descCorreoElectronico;
@@ -79,24 +79,24 @@ public class Recurso implements Serializable  {
 	@Column(name = "desc_tel_empresa")
 	private String descTelEmpresa;
 	
-	@NotEmpty(message = "Este dato no debe estar vacío")
+//	@NotEmpty(message = "Este dato no debe estar vacío")
 	@Column(name = "desc_rfc")
 	private String descRfc;
 	
 	@Column(name = "desc_tel_ext")
 	private String descTelExt;
 	
-	@NotEmpty(message = "Este dato no debe estar vacío")
+//	@NotEmpty(message = "Este dato no debe estar vacío")
 	@Column(name = "desc_curp")
 	private String descCurp;
 	
-	@NotNull(message = "Este dato no debe estar vacío")
+//	@NotNull(message = "Este dato no debe estar vacío")
 	@Column(name = "fec_nacimiento")
 	@Temporal(TemporalType.DATE)
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date fecNacimiento;
 	
-	@NotEmpty(message = "Este dato no debe estar vacío")
+//	@NotEmpty(message = "Este dato no debe estar vacío")
 	@Column(name = "dir_calle")
 	private String dirCalle;
 	
@@ -106,23 +106,23 @@ public class Recurso implements Serializable  {
 	@Column(name = "dir_numero_int")
 	private String dirNumeroInt;
 	
-	@NotEmpty(message = "Este dato no debe estar vacío")
+//	@NotEmpty(message = "Este dato no debe estar vacío")
 	@Column(name = "dir_colonia")
 	private String dirColonia;
 	
-	@NotEmpty(message = "Este dato no debe estar vacío")
+//	@NotEmpty(message = "Este dato no debe estar vacío")
 	@Column(name = "dir_cp")
 	private String dirCp;
 	
-	@NotEmpty(message = "Este dato no debe estar vacío")
+//	@NotEmpty(message = "Este dato no debe estar vacío")
 	@Column(name = "dir_alcaldia_municipio")
 	private String dirAlcaldiaMunicipio;
 	
-	@NotEmpty(message = "Este dato no debe estar vacío")
+//	@NotEmpty(message = "Este dato no debe estar vacío")
 	@Column(name = "dir_estado")
 	private String dirEstado;
 	
-	@NotEmpty(message = "Este dato no debe estar vacío")
+//	@NotEmpty(message = "Este dato no debe estar vacío")
 	@Column(name = "desc_nss")
 	private String descNss;
 
@@ -142,7 +142,7 @@ public class Recurso implements Serializable  {
 	@Column(name = "val_numero_hijos")
 	private Long valNumeroHijos;
 	
-	@NotNull(message = "Este dato no debe estar vacío")
+//	@NotNull(message = "Este dato no debe estar vacío")
 	@Column(name = "fec_ingreso_empresa")
 	@Temporal(TemporalType.DATE)
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
@@ -232,6 +232,9 @@ public class Recurso implements Serializable  {
 	@Column(name = "desc_medicos_alergias")
 	private String descMedicosAlergias;
 	
+	@Column(name = "val_medicos_alergias")
+	public String valMedicosAlergias;
+	
 	@Column(name = "desc_medicos_embarazos")
 	private String descMedicosEmbarazos;
 	
@@ -240,6 +243,9 @@ public class Recurso implements Serializable  {
 	
 	@Column(name = "desc_medicos_enfermedades")
 	private String descMedicosEnfermedades;
+	
+	@Column(name = "val_medicos_enfermedades")
+	public String valMedicosEnfermedades;
 	
 	@Column(name = "fec_registro")
 	@Temporal(TemporalType.TIMESTAMP)
@@ -279,6 +285,13 @@ public class Recurso implements Serializable  {
 	@PrePersist
 	public void prePersist() {
 		fecRegistro = new Date();
+		valMedicosAlergias="No";
+		valMedicosEnfermedades="No";
+		descMedicosEmbarazos="No";
+		descMedicosCirugias="No";
+		valActivo=1L;
+		codTipoSangre=0L;
+		
 	}
 	
 	public Long getCodTipoSangre() {
@@ -810,4 +823,20 @@ public class Recurso implements Serializable  {
 		this.perfilRecurso = perfilRecurso;
 	}
 
+	public String getValMedicosAlergias() {
+		return valMedicosAlergias;
+	}
+
+	public void setValMedicosAlergias(String valMedicosAlergias) {
+		this.valMedicosAlergias = valMedicosAlergias;
+	}
+
+	public String getValMedicosEnfermedades() {
+		return valMedicosEnfermedades;
+	}
+
+	public void setValMedicosEnfermedades(String valMedicosEnfermedades) {
+		this.valMedicosEnfermedades = valMedicosEnfermedades;
+	}
+	
 }

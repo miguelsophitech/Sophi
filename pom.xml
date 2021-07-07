@@ -111,7 +111,18 @@
 <!-- 			<version>8.4.1.jre11</version> -->
 			<version>7.2.2.jre8</version>
 		</dependency>
-
+		
+		<dependency>
+            <groupId>com.itextpdf</groupId>
+            <artifactId>kernel</artifactId>
+            <version>7.1.12</version>
+        </dependency>
+        
+        <dependency>
+            <groupId>com.itextpdf</groupId>
+            <artifactId>html2pdf</artifactId>
+            <version>3.0.1</version>
+        </dependency>
 		
 	</dependencies>
 

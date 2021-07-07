@@ -4,14 +4,18 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 @Entity
 @Table(name = "RECURSOS_TRAYECTORIA_NIVEL")
-public class RecursoTrayectoria implements Serializable {
+public class RecursoTrayectoriaNivel implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	
@@ -23,6 +27,10 @@ public class RecursoTrayectoria implements Serializable {
 	@Column(name = "cod_nivel_experiencia")
 	private Long codNivelExperiencia;
 	
+	@OneToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "cod_conocimiento",insertable = false, updatable = false)
+	private Conocimientos conocimiento;
+	
 	@Column(name = "cod_recurso")
 	private Long codRecurso;
 	
@@ -31,6 +39,9 @@ public class RecursoTrayectoria implements Serializable {
 	
 	@Column(name = "porcentaje_experiencia")
 	private Long porcentajeExperiencia;
+	
+	@Transient
+	private Long banderaBorrar;
 
 	public Long getCodNivelTrayectoria() {
 		return codNivelTrayectoria;
@@ -72,7 +83,21 @@ public class RecursoTrayectoria implements Serializable {
 		this.porcentajeExperiencia = porcentajeExperiencia;
 	}
 
-	public static long getSerialversionuid() {
-		return serialVersionUID;
+	public Conocimientos getConocimiento() {
+		return conocimiento;
 	}
+
+	public void setConocimiento(Conocimientos conocimiento) {
+		this.conocimiento = conocimiento;
+	}
+
+	public Long getBanderaBorrar() {
+		return banderaBorrar;
+	}
+
+	public void setBanderaBorrar(Long banderaBorrar) {
+		this.banderaBorrar = banderaBorrar;
+	}
+	
+
 }

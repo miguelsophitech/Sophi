@@ -24,7 +24,9 @@
 											</div> 
 											<p style="font-size: 12px; color: gray; margin: 0px; font-weight: 300;" th:text="${trayectoriaProyecto.descActividades}"></p>
 											<div class="d-flex justify-content-between">
-												<span style="font-size: 12px; font-weight:400;">Java | SLQ | MSTR</span>
+												<div>
+													<small th:each="detalleConocimientoProyecto : ${trayectoriaProyecto.detalleConocimientosProyecto}"><span class="badge badge-pill badge-info"  th:text="${detalleConocimientoProyecto.conocimiento.descConocimiento}"></span>&nbsp;</small>
+												</div>
 												<div style="font-size: 12px; font-weight:100;  color: gray;">
 													<i class="fas fa-edit dg-edit-escolar" th:id="${trayectoriaProyecto.codTrayectoriaProyecto}" onclick="editarTrayectoriaProyecto(this.id);" style="cursor: pointer;"></i>
 													<i class="fas fa-trash-alt dg-edit-escolar" th:id="${trayectoriaProyecto.codTrayectoriaProyecto}" onclick="borrarTrayectoriaProyecto(this.id);" style="cursor: pointer;"></i>
@@ -86,7 +88,25 @@
 								<span>Nivel</span>
 							</div>
 						</div>
-						<div class="card-body text-secondary">
+						<div class="card-body text-secondary" style="padding-top: 0px;" id="cardTrayectoriaNivel">
+						<div  th:fragment="fragmentTrayectoriaNivel">
+							<div class="row" th:each="nivel : ${listaTrayectoriaNivel}">
+							    <div class="col-12">
+							        <div class="progress_bar">
+							            <div class="pro-bar">
+							                <small class="progress_bar_title">[[${nivel.conocimiento.descConocimiento}]]
+							                    <i th:if ="${nivel.codNivelExperiencia} == 1" th:id="${nivel.codNivelTrayectoria}" onclick="formEvaluarNivel(this.id);" class="fa fa-check-square-o" style="cursor: pointer; color: #36b9cc;"></i>
+							                    <i th:if ="${nivel.codNivelExperiencia} != 1" th:id="${nivel.codNivelTrayectoria}" onclick="formEvaluarNivel(this.id);" class="fa fa-check-square-o" style="cursor: pointer; color: green;"></i>
+							                </small>
+							                <span th:if ="${nivel.codNivelExperiencia} == 1" class="progress-bar-inner" style="background-color: #36b9cc; width: 0%;" data-value="0" data-percentage-value="0"></span>
+							                <span th:if ="${nivel.codNivelExperiencia} == 2" class="progress-bar-inner" th:style="'background-color: red; width: ' + ${nivel.porcentajeExperiencia} +'%;'" th:data-value="${nivel.porcentajeExperiencia}" th:data-percentage-value="${nivel.porcentajeExperiencia}"></span>
+							                <span th:if ="${nivel.codNivelExperiencia} == 3" class="progress-bar-inner" th:style="'background-color: yellow; width: ' + ${nivel.porcentajeExperiencia} +'%;'" th:data-value="${nivel.porcentajeExperiencia}" th:data-percentage-value="${nivel.porcentajeExperiencia}"></span>
+							                <span th:if ="${nivel.codNivelExperiencia} == 4" class="progress-bar-inner" th:style="'background-color: green; width: ' + ${nivel.porcentajeExperiencia} +'%;'" th:data-value="${nivel.porcentajeExperiencia}" th:data-percentage-value="${nivel.porcentajeExperiencia}"></span>
+							            </div>
+							        </div>
+								</div>
+							</div>
+						</div>
 						</div>
 					</div>
 				</div>
@@ -140,6 +160,31 @@
 								</div>
 							</div>
 							
+							<div class="row">
+								<div class="form-group col-12 col-md-12">
+                    				<label class="col-form-label">Conocimientos</label>
+				                    <select style="width: 100%; border-color: gray;" class="js-example-basic-multiple form-control" name="conocimientos" multiple="multiple">
+										<option th:each="conocimiento : ${listConocimientos}"
+											th:value="${conocimiento.codConocimiento}"
+											th:text="${conocimiento.descConocimiento}"
+											th:selected="${listActualConocimientos.contains(conocimiento.codConocimiento)}">
+<!-- 											th:selected="${conocimiento.codConocimiento  == 1}"> -->
+										</option>
+				                    </select>
+                 				 </div>
+							</div>	
+
+
+
+						
+						
+						
+						
+						<script>
+							// Select2 Multiple
+							$('.js-example-basic-multiple').select2();
+						</script>
+						
 							<input type="hidden" th:field="*{codRecurso}"/>
 							<input type="hidden" th:field="*{codTrayectoriaProyecto}"/>
 						</div>
@@ -249,6 +294,64 @@
 			</div>
 		</div>
 		<!-- TERMINA Modal Registrar proyecto -->
+	</div>
+	
+	
+		<div th:fragment="fragmentModalEvaluarNivel">
+		<!-- INICIAL Modal Registrar evaluar Nivel -->
+		<div class="modal fade" id="registroEvaluarNivelModal" tabindex="-1" role="dialog" aria-labelledby="registroEvaluarNivelModalLabel"
+			aria-hidden="true">
+			<div class="modal-dialog modal-sm" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h6 class="modal-title" id="registroEvaluarNivelModalLabel">Evaluar [[${descripcionConocimiento}]]</h6>
+						<button class="close" type="button" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<form id="formularioTrayectoriaNivel" th:action="@{/formTrayectoriaNivel}" role="form" th:object="${trayectoriaNivel}" method="post">
+						<div class="modal-body" style="font-size: 14px;">
+						
+							<div class="row">
+								<div class="form-group col-12 col-md-12">
+									<label class="col-form-label">Nivel</label>
+									<select th:field="*{codNivelExperiencia}" class="form-control" >
+										<option th:each="nivelExperiencia : ${listNivelesExperiencia}"
+												th:value="${nivelExperiencia.codNivelExperiencia}"
+												th:text="${nivelExperiencia.descNivelExperiencia}">
+										</option>
+									</select>
+								</div>
+							</div>
+							
+							<div class="row">
+								<div class="form-group col-12 col-md-12">
+									<label class="col-form-label">Porcentaje</label>
+									<input type="number" max="100" min="0" step="5" maxlength="3" onkeypress="return false;" th:field="*{porcentajeExperiencia}" class="form-control" required="required">
+								</div>
+							</div>
+							
+							<input type="hidden" th:field="*{codNivelTrayectoria}"/>
+							<input type="hidden" th:field="*{codRecurso}"/>
+							<input type="hidden" th:field="*{codConocimiento}"/>
+						</div>
+						<script type="text/javascript">
+							$('#codNivelExperiencia').on('change', function() {
+								var val = $(this).val();
+								if(val == 1){
+									$("#porcentajeExperiencia").val('0');
+								}
+							});
+						</script>
+						<div class="modal-footer">
+							<button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
+							<button onclick="submitFormNivel();" id="btnSubmitFormNivel" type="button" class="btn btn-primary">Aceptar</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+		<!-- TERMINA Modal Evaluar Nivel -->
 	</div>
 
 

@@ -288,6 +288,7 @@ $(document).ready(function() {
 		  $("#divAlergias").show();
 	  }else{
 		  $("#divAlergias").hide();
+		  $("#descMedicosAlergias").text("");
 	  }
   }
   
@@ -296,6 +297,7 @@ $(document).ready(function() {
 		  $("#divEnfermedades").show();
 	  }else{
 		  $("#divEnfermedades").hide();
+		  $("#descMedicosEnfermedades").text("");
 	  }
   }
   

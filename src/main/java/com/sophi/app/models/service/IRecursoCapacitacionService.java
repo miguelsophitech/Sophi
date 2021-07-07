@@ -13,5 +13,7 @@ public interface IRecursoCapacitacionService {
 	public void delete(Long codRecursoCapaciacion);
 	
 	public RecursoCapacitacion findById(Long codRecursoCapacitacion);
+	
+	public Long countByCodCapacitacion(Long codCapacitacion);
 
 }

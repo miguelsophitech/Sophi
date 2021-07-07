@@ -135,14 +135,19 @@ public class FlashController {
 		
 		diaSemana = calendar.get(Calendar.DAY_OF_WEEK);
 		if(diaSemana == 6) {
-			model.addAttribute("preguntaFlash", preguntaClimaService.findOne(1L));
+			PreguntaClima pC1 = preguntaClimaService.findOne(1L);
+			model.addAttribute("preguntaFlash",pC1);
 			model.addAttribute("pregunta", 1);
 			model.addAttribute("respuestasFlash",preguntaRespuestaClimaService.findByCodPregunta(1L));
+			
 		} else {
-			model.addAttribute("preguntaFlash", preguntaClimaService.findOne(2L));
+			PreguntaClima pC2 = preguntaClimaService.findOne(2L);
+			model.addAttribute("preguntaFlash", pC2);
 			model.addAttribute("pregunta", 2);
 			model.addAttribute("respuestasFlash",preguntaRespuestaClimaService.findByCodPregunta(2L));
 		}
+		
+		
 		return "layout/layout :: modalFlash";
 	}
 	
@@ -154,7 +159,28 @@ public class FlashController {
 		if (listadoRespuesta.size() > 0) {
 			return "0";
 		} else {
-			return "1";
+			int diaSemana = 0;
+			Date fechaHoy = new Utiles().getFechaActual();
+			Calendar calendar = Calendar.getInstance();
+			calendar.setTime(fechaHoy);
+			
+			diaSemana = calendar.get(Calendar.DAY_OF_WEEK);
+			if(diaSemana == 6) {
+				PreguntaClima pC1 = preguntaClimaService.findOne(1L);
+				if (pC1.isValActivo()) {
+					return "1";
+				} else {
+					return "0";
+				}
+			} else {
+				PreguntaClima pC2 = preguntaClimaService.findOne(2L);
+				if (pC2.isValActivo()) {
+					return "1";
+				} else {
+					return "0";
+				}
+			}
+			
 		}
 	} 
 	
@@ -167,6 +193,21 @@ public class FlashController {
 		model.addAttribute("catRespuestas",respuestaFlashService.findAll());
 		return "clima";
 	} 
+	
+	@RequestMapping(value = "/activarEncuestaFlash")
+	@ResponseBody
+	public String activarEncuestaFlash(@RequestParam Long idEncuesta,@RequestParam Boolean valActivo) {
+		PreguntaClima preguntaClima = preguntaClimaService.findOne(idEncuesta);
+		preguntaClima.setValActivo(valActivo);
+		try {
+			preguntaClimaService.save(preguntaClima);
+			return "1";
+		} catch (Exception e) {
+			return "0";
+		}
+	} 
+	
+	
 	
 	
 

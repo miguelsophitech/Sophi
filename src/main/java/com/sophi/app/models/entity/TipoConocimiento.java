@@ -36,7 +36,4 @@ public class TipoConocimiento implements Serializable {
 		this.descTipoConocimiento = descTipoConocimiento;
 	}
 
-	public static long getSerialversionuid() {
-		return serialVersionUID;
-	}
 }

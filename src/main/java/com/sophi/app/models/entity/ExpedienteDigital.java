@@ -36,6 +36,9 @@ public class ExpedienteDigital implements Serializable {
 	@Column(name = "cod_recurso")
 	private Long codRecurso;
 	
+	@Column(name = "val_aprobado")
+	private Long valAprobado;
+	
 	@Column(name = "fec_registro")
 	@Temporal(TemporalType.TIMESTAMP)
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
@@ -81,7 +84,12 @@ public class ExpedienteDigital implements Serializable {
 		this.fecRegistro = fecRegistro;
 	}
 
-	public static long getSerialversionuid() {
-		return serialVersionUID;
+	public Long getValAprobado() {
+		return valAprobado;
 	}
+
+	public void setValAprobado(Long valAprobado) {
+		this.valAprobado = valAprobado;
+	}
+	
 }

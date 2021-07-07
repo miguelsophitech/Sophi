@@ -137,7 +137,8 @@ public class VacacionesController {
 		String pattern = "yyyyMMdd";
 		DateFormat df = new SimpleDateFormat(pattern);
 		String hoyVal = df.format(new Date(new Utiles().getFechaActual().getTime() + (1000 * 60 * 60 * 24 * 1) ));
-		
+//		String hoyVal = df.format(new Date(new Utiles().getFechaActual().getTime()));
+		System.out.println(hoyVal);
 		List<String> aprobadores = new ArrayList<String>();
 		
 		listaPR = proyectoRecursoService.findProyectoRecursoActivo(codRecurso);

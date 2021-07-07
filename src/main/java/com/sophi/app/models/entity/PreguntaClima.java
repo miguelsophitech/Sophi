@@ -27,11 +27,14 @@ public class PreguntaClima implements Serializable {
 	
 	@Column(name = "val_tipo")
 	private Long valTipo;
+	
+	@Column(name = "val_activo")
+	public boolean valActivo;
 
 	public Long getCodPreguntaClima() {
 		return codPreguntaClima;
 	}
-
+	
 	public void setCodPreguntaClima(Long codPreguntaClima) {
 		this.codPreguntaClima = codPreguntaClima;
 	}
@@ -50,6 +53,14 @@ public class PreguntaClima implements Serializable {
 
 	public void setValTipo(Long valTipo) {
 		this.valTipo = valTipo;
+	}
+
+	public boolean isValActivo() {
+		return valActivo;
+	}
+
+	public void setValActivo(boolean valActivo) {
+		this.valActivo = valActivo;
 	}
 	
 }

@@ -11,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -43,8 +44,11 @@ public class Capacitaciones implements Serializable {
 	@Column(name = "desc_categoria")
 	private String descCategoria;
 	
-	@Column(name = "val_durante_periodo_laboral")
-	private Long valDurantePeriodoLaboral;
+	@Column(name = "desc_solicitado")
+	private String descSolicitado;
+	
+	@Transient
+	private Long valBorrar;
 	
 	@Column(name = "fec_registro")
 	@Temporal(TemporalType.TIMESTAMP)
@@ -107,13 +111,6 @@ public class Capacitaciones implements Serializable {
 		this.descCategoria = descCategoria;
 	}
 
-	public Long getValDurantePeriodoLaboral() {
-		return valDurantePeriodoLaboral;
-	}
-
-	public void setValDurantePeriodoLaboral(Long valDurantePeriodoLaboral) {
-		this.valDurantePeriodoLaboral = valDurantePeriodoLaboral;
-	}
 
 	public Date getFecRegistro() {
 		return fecRegistro;
@@ -122,4 +119,21 @@ public class Capacitaciones implements Serializable {
 	public void setFecRegistro(Date fecRegistro) {
 		this.fecRegistro = fecRegistro;
 	}
+
+	public String getDescSolicitado() {
+		return descSolicitado;
+	}
+
+	public void setDescSolicitado(String descSolicitado) {
+		this.descSolicitado = descSolicitado;
+	}
+
+	public Long getValBorrar() {
+		return valBorrar;
+	}
+
+	public void setValBorrar(Long valBorrar) {
+		this.valBorrar = valBorrar;
+	}
+ 	
 }

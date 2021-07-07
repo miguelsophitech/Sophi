@@ -18,13 +18,37 @@ public class PerfilRecursoServiceImpl implements IPerfilRecursoService {
 	@Override
 	@Transactional(readOnly = true)
 	public List<PerfilRecurso> findAll() {
-		return (List<PerfilRecurso>) perfilRecursoDao.findAll();
+		return (List<PerfilRecurso>) perfilRecursoDao.findAllByOrderByValOrdenAsc();
 	}
 
 	@Override
 	@Transactional(readOnly = true)
 	public PerfilRecurso findByCodPerfil(Long codPerfil) {
 		return perfilRecursoDao.findByCodPerfil(codPerfil);
+	}
+
+	@Override
+	@Transactional
+	public void guardar(PerfilRecurso perfil) {
+		perfilRecursoDao.save(perfil);
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public Long totalRecursosAsignados(Long codPerfil) {
+		return perfilRecursoDao.totalRecursosAsignados(codPerfil);
+	}
+
+	@Override
+	@Transactional
+	public void borrar(Long codPerfil) {
+		perfilRecursoDao.deleteById(codPerfil);
+	}
+
+	@Override
+	@Transactional
+	public void guardarAll(List<PerfilRecurso> perfiles) {
+		perfilRecursoDao.saveAll(perfiles);
 	}
 
 }

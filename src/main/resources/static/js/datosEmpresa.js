@@ -1,5 +1,7 @@
 $(document).ready(function() {
 
+	$('.js-example-basic-multiple').select2();
+	
 	resetFormHerramienta();
 	
 	$("#iNuevaHerramienta").click(function(){

@@ -10150,11 +10150,11 @@ a:focus {
 	cursor: pointer;
 }
 
-.add_answer:hover{
-	-webkit-transform:scale(1.030);
-	-ms-transform:scale(1.030);
-	transform:scale(1.030)
-}
+/* .add_answer:hover{ */
+/* 	-webkit-transform:scale(1.030); */
+/* 	-ms-transform:scale(1.030); */
+/* 	transform:scale(1.030) */
+/* } */
 
 .imgPrevCircle20{
 	border-radius: 50%; 

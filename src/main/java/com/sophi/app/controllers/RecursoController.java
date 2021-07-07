@@ -1,26 +1,24 @@
 package com.sophi.app.controllers;
 
 import java.io.ByteArrayInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URL;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import org.springframework.web.multipart.MultipartFile;
-
-import org.apache.tomcat.util.http.fileupload.IOUtils;
+import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -43,8 +41,8 @@ import com.sophi.app.models.service.IEtapaEscolarService;
 import com.sophi.app.models.service.IGradoEscolarService;
 import com.sophi.app.models.service.IAreaRecursoService;
 import com.sophi.app.models.service.IContactoEmergenciaService;
+import com.sophi.app.models.service.IDocumentacionGeneralService;
 import com.sophi.app.models.service.IEquipoService;
-import com.sophi.app.models.service.IEstadoHerramientaService;
 import com.sophi.app.models.service.IHerramientaService;
 import com.sophi.app.models.service.IJornadaService;
 import com.sophi.app.models.service.IParentescoService;
@@ -109,7 +107,7 @@ public class RecursoController {
 	private ITipoHerramientaService tipoHerramientaService;
 	
 	@Autowired
-	private IEstadoHerramientaService estadoHerramientaService;
+	private IDocumentacionGeneralService documentacionGeneralService;
 	
 	@Autowired
 	private IPerfilRecursoService perfilRecursoService;
@@ -163,7 +161,11 @@ public class RecursoController {
 		model.put("listaEquipos", equipoService.findListEquiposDisponibles());
 		model.put("listaEquiposTodo", equipoService.findAll());
 		
+		model.put("listaDocumentacion", documentacionGeneralService.findAll());
+		
 		model.put("listaTrayectoriaProyectos", recursoTrayectoriaProyectoService.findByCodRecurso(codRecurso));
+		model.put("perfil", perfilRecursoService.findByCodPerfil(recurso.getCodPerfil()));
+//		System.out.println(recurso.getPerfilRecurso().getCodPerfil());
 		return "verRecurso";
 	}
 	
@@ -194,15 +196,16 @@ public class RecursoController {
 	@RequestMapping(value = "/formRecurso")
 	public String crearRecurso(Map<String, Object> model) {
 		Recurso recurso = new Recurso();
-		Utiles util = new Utiles();
+//		Utiles util = new Utiles();
 		model.put("recurso", recurso);
-		model.put("titulo", "Formulario recurso");
-		model.put("etapaList", util.recursosEtapaList());
+		model.put("areaRecursoList", areaRecursoService.findAll());
 		model.put("puestoList", puestoService.findAll());
 		model.put("jornadaList", jornadaService.findAll());
 		model.put("tipoRecursoList", tipoRecursoService.findAll());
 		model.put("proveedorList",proveedorService.findAll());
-		model.put("estadoCivilList", estadoCivilService.findAll());
+		model.put("perfilRecursoList", perfilRecursoService.findAll());
+		model.put("listaEstadoCivil", estadoCivilService.findAll());
+		model.put("listaTipoSangre", tipoSangreService.findAll());
 		return "formRecurso";
 	}
 	
@@ -221,43 +224,21 @@ public class RecursoController {
 	}
 	
 	@RequestMapping(value="/formRecurso", method = RequestMethod.POST)
-	public String guardarRecurso(@Valid Recurso recurso, BindingResult result, Model model, @RequestParam("fotoPerfil") MultipartFile fotoPerfil, RedirectAttributes flash,SessionStatus status) {
-		if(result.hasErrors()) {
-			model.addAttribute("titulo", "Formulario recurso");
-			Utiles util = new Utiles();
-			model.addAttribute("etapaList", util.recursosEtapaList());
-			model.addAttribute("puestoList", puestoService.findAll());
-			model.addAttribute("jornadaList", jornadaService.findAll());
-			model.addAttribute("tipoRecursoList", tipoRecursoService.findAll());
-			model.addAttribute("proveedorList",proveedorService.findAll());
-			model.addAttribute("estadoCivilList", estadoCivilService.findAll());
-			return "formRecurso";
+	public String guardarRecurso(@ModelAttribute Recurso recurso, Model model ,SessionStatus status) {
+		InputStream imgPath = null;
+		try {
+			URL url = new URL("https://sophitech.herokuapp.com/img/defaultUser.png");
+			imgPath = url.openStream ();
+			byte[] bytesFotoPerfil = IOUtils.toByteArray(imgPath);
+			recurso.setFoto(bytesFotoPerfil);
+		} catch (FileNotFoundException e1) {
+			e1.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
-		
-		if(!fotoPerfil.isEmpty()) {
-			try {
-				byte[] bytesFotoPerfil = fotoPerfil.getBytes();
-				flash.addFlashAttribute("info", "Ha subido correctamente "+ fotoPerfil.getOriginalFilename());
-				recurso.setFoto(bytesFotoPerfil);
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
-		
-//		if(!fotoCv.isEmpty()) {
-//			try {
-//				byte[] bytesFotoCv = fotoCv.getBytes();
-//				flash.addFlashAttribute("info", "Ha subido correctamente "+ fotoCv.getOriginalFilename());
-//				recurso.setFotoCv(bytesFotoCv);
-//			} catch (IOException e) {
-//				e.printStackTrace();
-//			}
-//		}
-		String mensajeFlash = (recurso.getCodRecurso() != null)?"Recurso editado con éxito!": "Recurso guardado con éxito";
-		
+				
 		recursoService.save(recurso);
 		status.setComplete();
-		flash.addFlashAttribute("success", mensajeFlash);
 		return "redirect:listarRecursos";
 	}
 	
@@ -450,9 +431,6 @@ public class RecursoController {
 			fecDevolucionString = "1990-01-01";
 		}
 		
-		/*if(fecDevolucionString != "1990-01-01") {
-			equipo.setCodEstadoHerramienta(4L);
-		}*/
 		
 		SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
 		Date fecPrestamo = null;
@@ -461,16 +439,12 @@ public class RecursoController {
 		
 		try {
 			fecPrestamo = formato.parse(fecPrestamoString);
-			System.out.println("Fecha Préstamo: "+fecPrestamo);
 		} catch (ParseException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		try {
 			fecDevolucion = formato.parse(fecDevolucionString);
-			System.out.println("Fecha Devolución: "+fecDevolucion);
 		} catch (ParseException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
@@ -507,29 +481,6 @@ public class RecursoController {
 	}
 	
 	
-	
-	
-	/*@GetMapping(value="/filtroHerramienta/{codTipoHerramienta}")
-	public String filtroHerramienta(@PathVariable Long codTipoHerramienta, Model model) {
-		System.out.println("Entra a filtro");
-		
-		if(codTipoHerramienta.equals(1L)) {
-			System.out.println("Tipo 1");
-			model.addAttribute("listaEquipos", equipoService.findByCodTipoHerramienta(1L));
-			return "verRecurso :: listaEquipos";
-			
-		} else if(codTipoHerramienta.equals(2L)) {
-			System.out.println("Tipo 2");
-			model.addAttribute("listaEquipos", equipoService.findByCodTipoHerramienta(2L));
-			return "verRecurso :: listaEquipos";
-			
-		} else {
-			System.out.println("Todos");
-			model.addAttribute("listaEquipos", equipoService.findAll());
-			return "verRecurso :: listaEquipos";
-		}
-	}*/
-	
 	@RequestMapping(value="/obtieneHerramienta",method = RequestMethod.GET)
 	public String obtieneHerramienta(@RequestParam Long codRecurso, Model model) {
 		
@@ -549,7 +500,6 @@ public class RecursoController {
 		listaDetalle.add(herramienta.getCodHerramientaRecurso().toString());
 		listaDetalle.add(herramienta.getCodHerramienta().toString());
 		listaDetalle.add(herramienta.getDescObservaciones());
-		//listaDetalle.add(herramienta.getResponsiva().toString());
 		listaDetalle.add(herramienta.getFecPrestamo().toString());
 		listaDetalle.add(herramienta.getFecDevolucion().toString());
 		return listaDetalle;

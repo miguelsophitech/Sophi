@@ -241,10 +241,11 @@ public class PlaneacionController {
 	@GetMapping("/verPlanActividades/{codProyecto}")
 	public String verPlanActividades(@PathVariable Long codProyecto, Model model) {
 		List<Actividad> listaActividades =  actividadService.findByCodProyecto(codProyecto);
-		String nombreProyecto = proyectoService.findOne(codProyecto).getDescProyecto();
-		
+		Proyecto proyecto =  proyectoService.findOne(codProyecto);
+		String nombreProyecto =proyecto.getDescProyecto();
 		model.addAttribute("listaActividades", listaActividades);
 		model.addAttribute("nombreProyecto", nombreProyecto);
+		model.addAttribute("proyecto", proyecto);
 		return "listaActividadesProyecto";
 	}
 	

@@ -38,4 +38,10 @@ public class RecursoCapacitacionServiceImpl implements IRecursoCapacitacionServi
 		return recursoCapacitacionDao.findById(codRecursoCapacitacion).orElse(null);
 	}
 
+	@Override
+	@Transactional(readOnly = true)
+	public Long countByCodCapacitacion(Long codCapacitacion) {
+		return recursoCapacitacionDao.countByCodCapacitacion(codCapacitacion);
+	}
+
 }

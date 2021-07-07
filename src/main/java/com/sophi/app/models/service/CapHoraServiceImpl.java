@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.sophi.app.models.dao.ICapHoraDao;
 import com.sophi.app.models.entity.CapHora;
 import com.sophi.app.models.entity.DetalleRecursoHoras;
+import com.sophi.app.models.entity.LiderProyectoEvaluacion;
 
 @Service
 public class CapHoraServiceImpl implements ICapHoraService {
@@ -99,6 +100,18 @@ public class CapHoraServiceImpl implements ICapHoraService {
 	@Transactional(readOnly = true)
 	public List<DetalleRecursoHoras> findProyectoRecursosResumenSemanal(Long codProyecto, Date fecInicial, Date fecFinal) {
 		return capHoraDao.findProyectoRecursosResumenSemanal(codProyecto, fecInicial, fecFinal);
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public List<LiderProyectoEvaluacion> findCodAprobadoresByCodRecursoAndFechaInicioAndFechaFin(Long codRecurso, Date fechaInicio, Date fechaFin) {
+		return capHoraDao.findCodAprobadoresByCodRecursoAndFechaInicioAndFechaFin(codRecurso, fechaInicio, fechaFin);
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public List<String> findProyectosByCodRecursoAndFechaInicioAndFechaFin(Long codRecurso, Date fechaInicio, Date fechaFin) {
+		return capHoraDao.findProyectosByCodRecursoAndFechaInicioAndFechaFin(codRecurso, fechaInicio, fechaFin);
 	}
 	
 	

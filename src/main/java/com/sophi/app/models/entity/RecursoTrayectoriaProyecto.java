@@ -2,9 +2,11 @@ package com.sophi.app.models.entity;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -46,6 +48,9 @@ public class RecursoTrayectoriaProyecto implements Serializable {
 	
 	@Column(name = "desc_cliente")
 	private String descCliente;
+	
+	@OneToMany(mappedBy="recursoTrayectoriaProyecto")
+    private List<DetalleConocimientosProyecto> detalleConocimientosProyecto;
 
 	public Long getCodTrayectoriaProyecto() {
 		return codTrayectoriaProyecto;
@@ -102,5 +107,15 @@ public class RecursoTrayectoriaProyecto implements Serializable {
 	public void setDescCliente(String descCliente) {
 		this.descCliente = descCliente;
 	}
+
+	public List<DetalleConocimientosProyecto> getDetalleConocimientosProyecto() {
+		return detalleConocimientosProyecto;
+	}
+
+	public void setDetalleConocimientosProyecto(List<DetalleConocimientosProyecto> detalleConocimientosProyecto) {
+		this.detalleConocimientosProyecto = detalleConocimientosProyecto;
+	}
+
+	
 
 }

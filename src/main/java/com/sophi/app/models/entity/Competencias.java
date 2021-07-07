@@ -2,10 +2,14 @@ package com.sophi.app.models.entity;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -19,6 +23,7 @@ public class Competencias implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "cod_competencias")
 	private Long codCompetencias;
 	
@@ -27,6 +32,9 @@ public class Competencias implements Serializable {
 	
 	@Column(name = "desc_definicion")
 	private String descDefinicion;
+	
+	@OneToMany(mappedBy = "competencia")
+	List<CompetenciasPerfiles> competenciasPerfiles;
 	
 	@Column(name = "fec_registro")
 	@Temporal(TemporalType.TIMESTAMP)
@@ -64,4 +72,23 @@ public class Competencias implements Serializable {
 	public void setFecRegistro(Date fecRegistro) {
 		this.fecRegistro = fecRegistro;
 	}
+
+	public List<CompetenciasPerfiles> getCompetenciasPerfiles() {
+		return competenciasPerfiles;
+	}
+
+	public void setCompetenciasPerfiles(List<CompetenciasPerfiles> competenciasPerfiles) {
+		this.competenciasPerfiles = competenciasPerfiles;
+	}
+
+//	public List<CompetenciasPerfiles> getPerfiles() {
+//		return perfiles;
+//	}
+//
+//	public void setPerfiles(List<CompetenciasPerfiles> perfiles) {
+//		this.perfiles = perfiles;
+//	}
+	
+	
+	
 }

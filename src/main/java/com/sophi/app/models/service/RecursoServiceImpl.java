@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.sophi.app.models.dao.IRecursoDao;
 import com.sophi.app.models.entity.Recurso;
+import com.sophi.app.models.entity.RecursoIdNombre;
 
 @Service
 public class RecursoServiceImpl implements IRecursoService {
@@ -75,6 +76,38 @@ public class RecursoServiceImpl implements IRecursoService {
 	public List<Recurso> findByCodAreaRecurso(Long codAreaRecurso) {
 		return recursoDao.findByCodAreaRecurso(codAreaRecurso);
 	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public List<Recurso> findRecursosByPerfil(Long codPerfil) {
+		return recursoDao.findRecursosByPerfil(codPerfil);
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public List<RecursoIdNombre> findActivosOnlyIdNombre() {
+		return recursoDao.recursosActivosOnlyIdNombre();
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public String getNombreApellidoById(Long codRecurso) {
+		return recursoDao.getNombreApellidoById(codRecurso);
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public String getEmailRecursoById(Long codRecurso) {
+		return recursoDao.getEmailRecursoById(codRecurso);
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public String getNombreApellidoPuestoById(Long codRecurso) {
+		return recursoDao.getNombreApellidoPuestoById(codRecurso);
+	}
+	
+	
 
 	
 }

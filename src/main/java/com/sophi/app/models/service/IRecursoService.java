@@ -3,6 +3,7 @@ package com.sophi.app.models.service;
 import java.util.List;
 
 import com.sophi.app.models.entity.Recurso;
+import com.sophi.app.models.entity.RecursoIdNombre;
 
 public interface IRecursoService {
 	
@@ -25,5 +26,15 @@ public interface IRecursoService {
 	public List<Recurso> findListRecursosAprobadores();
 	
 	public List<Recurso> findByCodAreaRecurso(Long codAreaRecurso);
+	
+	public List<Recurso> findRecursosByPerfil(Long codPerfil);
 
+	public List<RecursoIdNombre> findActivosOnlyIdNombre();
+	
+	public String getNombreApellidoById(Long codRecurso);
+	
+	public String getNombreApellidoPuestoById(Long codRecurso);
+	
+	public String getEmailRecursoById(Long codRecurso);
+	
 }

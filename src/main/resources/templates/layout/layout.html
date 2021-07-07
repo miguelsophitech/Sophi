@@ -23,6 +23,8 @@
   
   <link th:href="@{/css/calendario.css}" rel="stylesheet">
   <link th:href="@{/css/switch.css}" rel="stylesheet">
+  <link th:href="@{/css/select2.css}" rel="stylesheet">
+  
   
     <!-- Custom styles for this page -->
   <link th:href="@{/vendor/datatables/dataTables.bootstrap4.min.css}" rel="stylesheet">
@@ -162,6 +164,7 @@
         <div id="collapseRecursos" class="collapse" aria-labelledby="menuRecursos" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
             <h6 class="collapse-header">Ver:</h6>
+             <a class="collapse-item" th:href="@{/perfiles}">Perfiles</a>
             <a class="collapse-item" th:href="@{/listarRecursos}">Mis recursos</a>
             <a class="collapse-item" th:href="@{/controlVacaciones}">Control de vacaciones</a>
           </div>
@@ -190,6 +193,43 @@
           </div>
         </div>
       </li>
+      
+      
+       <hr sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_RH')"  class="sidebar-divider my-0">
+
+      <!-- Nav Item - Gastos y tiempo Collapse Menu -->
+      <li class="nav-item">
+        <a sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_RH')" class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseCapacitacion" aria-expanded="true" aria-controls="collapseCapacitacion">
+          <i class="fas fa-laptop-code"></i>
+          <span>Gesti&oacute;n de capacitaci&oacute;n</span>
+        </a>
+        <div id="collapseCapacitacion" class="collapse" aria-labelledby="menuCapacitacion" data-parent="#accordionSidebar">
+          <div class="bg-white py-2 collapse-inner rounded">
+            <h6 class="collapse-header">Ver:</h6>
+            <a sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_RH')" class="collapse-item" th:href="@{/capacitaciones/}">Capacitaciones</a>
+          </div>
+        </div>
+      </li>
+      
+      
+      <hr class="sidebar-divider my-0">
+
+<!--       Nav Item - Gastos y tiempo Collapse Menu -->
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseDesempeno" aria-expanded="true" aria-controls="collapseDesempeno">
+          <i class="fas fa-percent"></i>
+          <span>Evaluaci&oacute;n de desempeño</span>
+        </a>
+        <div id="collapseDesempeno" class="collapse" aria-labelledby="menuDesempeno" data-parent="#accordionSidebar">
+          <div class="bg-white py-2 collapse-inner rounded">
+            <h6 class="collapse-header">Ver:</h6>
+            <a class="collapse-item" th:href="@{/misEvaluaciones}">Mis evaluaciones</a>
+            <a class="collapse-item" th:href="@{/misEvaluados}">Mis evaluados</a>
+            <a sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_RH')" class="collapse-item" th:href="@{/evaluaciones}">Gesti&oacute;n de evaluaciones</a>
+          </div>
+        </div>
+      </li>
+      
 
       <!-- Divider -->
       <hr class="sidebar-divider d-none d-md-block">

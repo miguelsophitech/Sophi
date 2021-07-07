@@ -9,6 +9,7 @@ import org.springframework.data.repository.query.Param;
 
 import com.sophi.app.models.entity.CapHora;
 import com.sophi.app.models.entity.DetalleRecursoHoras;
+import com.sophi.app.models.entity.LiderProyectoEvaluacion;
 
 public interface ICapHoraDao extends CrudRepository<CapHora, Long>{
 	
@@ -57,5 +58,13 @@ public interface ICapHoraDao extends CrudRepository<CapHora, Long>{
 		       "GROUP BY r.descRecurso, ch.codRecurso")
 			List<DetalleRecursoHoras> findProyectoRecursosResumenSemanal(@Param("codProyecto") Long codProyecto, @Param("fecInicial") Date fecInicial,@Param("fecFinal") Date fecFinal);
 	
-
+	@Query("SELECT new com.sophi.app.models.entity.LiderProyectoEvaluacion(p.codRecursoAprobador)"
+			+ " FROM Proyecto p WHERE p.codRecursoAprobador <> ?1 AND p.codProyecto IN ( SELECT DISTINCT(codProyecto) FROM CapHora c"
+			+ " WHERE c.codRecurso = ?1 AND c.fecInicioActividad BETWEEN ?2 AND ?3) group by p.codRecursoAprobador")
+	List<LiderProyectoEvaluacion> findCodAprobadoresByCodRecursoAndFechaInicioAndFechaFin(Long codRecurso, Date fechaInicio, Date fechaFin);
+	
+	@Query("SELECT DISTINCT(p.descProyecto)"
+			+ " FROM Proyecto p WHERE p.codRecursoAprobador <> ?1 AND p.codProyecto IN ( SELECT DISTINCT(codProyecto) FROM CapHora c"
+			+ " WHERE c.codRecurso = ?1 AND c.fecInicioActividad BETWEEN ?2 AND ?3)")
+	List<String> findProyectosByCodRecursoAndFechaInicioAndFechaFin(Long codRecurso, Date fechaInicio, Date fechaFin);
 }

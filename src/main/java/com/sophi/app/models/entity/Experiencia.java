@@ -36,7 +36,4 @@ public class Experiencia implements Serializable {
 		this.descNivelExperiencia = descNivelExperiencia;
 	}
 
-	public static long getSerialversionuid() {
-		return serialVersionUID;
-	}
 }

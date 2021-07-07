@@ -191,41 +191,48 @@ public class AprobacionVacacionesController {
 					for (Long codR : recursosUnicos) {
 					RecursoVacaciones recursoVacaciones = recursoVacacionesService.findById(codR);
 					Recurso recurso = recursoService.findOne(recursoVacaciones.getCodRecurso());
-					recursoVacaciones.setNombreRecurso(recurso.getDescRecurso() + " " + recurso.getDescApellidoPaterno());
 					
-					List<SolicitudVacaciones> listaSolicitudes = new ArrayList<>();
-					listaSolicitudes = solicitudVacacionesService.findByCodRecurso(recursoVacaciones.getCodRecurso());
-					Long diasPendientes = 0L;
-					if (listaSolicitudes.size()>0) {
-						for (SolicitudVacaciones solicitud : listaSolicitudes) {
-							if(solicitud.getFecAprobacion() == null && solicitud.getFecCancelacion() == null && solicitud.getFecRechazo() == null) {
-								diasPendientes += solicitud.getValDiasSolicitados();
+						if (recurso.getValActivo().equals(1L)) {
+						
+							recursoVacaciones.setNombreRecurso(recurso.getDescRecurso() + " " + recurso.getDescApellidoPaterno());
+							
+							List<SolicitudVacaciones> listaSolicitudes = new ArrayList<>();
+							listaSolicitudes = solicitudVacacionesService.findByCodRecurso(recursoVacaciones.getCodRecurso());
+							Long diasPendientes = 0L;
+							if (listaSolicitudes.size()>0) {
+								for (SolicitudVacaciones solicitud : listaSolicitudes) {
+									if(solicitud.getFecAprobacion() == null && solicitud.getFecCancelacion() == null && solicitud.getFecRechazo() == null) {
+										diasPendientes += solicitud.getValDiasSolicitados();
+									}
+								}
 							}
+							recursoVacaciones.setValPendientes(diasPendientes);
+							
+							listaDetalle.add(recursoVacaciones);
 						}
-					}
-					recursoVacaciones.setValPendientes(diasPendientes);
-					
-					listaDetalle.add(recursoVacaciones);
 					}
 				}
 			} else {
 				for (ProyectoRecurso proyectoRecurso : listProyectoRecurso) {
 					RecursoVacaciones recursoVacaciones = recursoVacacionesService.findById(proyectoRecurso.getProyectoRecursoId().getCodRecurso());
 					Recurso recurso = recursoService.findOne(recursoVacaciones.getCodRecurso());
-					recursoVacaciones.setNombreRecurso(recurso.getDescRecurso() + " " + recurso.getDescApellidoPaterno());
-					
-					List<SolicitudVacaciones> listaSolicitudes = new ArrayList<>();
-					listaSolicitudes = solicitudVacacionesService.findByCodRecurso(recursoVacaciones.getCodRecurso());
-					Long diasPendientes = 0L;
-					if (listaSolicitudes.size()>0) {
-						for (SolicitudVacaciones solicitud : listaSolicitudes) {
-							if(solicitud.getFecAprobacion() == null && solicitud.getFecCancelacion() == null && solicitud.getFecRechazo() == null) {
-								diasPendientes += solicitud.getValDiasSolicitados();
+					if (recurso.getValActivo().equals(1L)) {
+						recursoVacaciones.setNombreRecurso(recurso.getDescRecurso() + " " + recurso.getDescApellidoPaterno());
+						
+						List<SolicitudVacaciones> listaSolicitudes = new ArrayList<>();
+						listaSolicitudes = solicitudVacacionesService.findByCodRecurso(recursoVacaciones.getCodRecurso());
+						Long diasPendientes = 0L;
+						if (listaSolicitudes.size()>0) {
+							for (SolicitudVacaciones solicitud : listaSolicitudes) {
+								if(solicitud.getFecAprobacion() == null && solicitud.getFecCancelacion() == null && solicitud.getFecRechazo() == null) {
+									diasPendientes += solicitud.getValDiasSolicitados();
+								}
 							}
 						}
+						recursoVacaciones.setValPendientes(diasPendientes);
+						listaDetalle.add(recursoVacaciones);
 					}
-					recursoVacaciones.setValPendientes(diasPendientes);
-					listaDetalle.add(recursoVacaciones);
+					
 				}
 			}
 			

@@ -1,9 +1,13 @@
 package com.sophi.app.models.entity;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
@@ -22,7 +26,15 @@ public class Conocimientos implements Serializable {
 	
 	@Column(name = "cod_tipo_conocimiento")
 	private Long codTipoConocimiento;
+	
+	@OneToOne
+	@JoinColumn(name = "cod_tipo_conocimiento", insertable=false, updatable=false)
+	private TipoConocimiento tipoConocimiento;
+	
+	@OneToMany(mappedBy="conocimiento")
+    private List<DetalleConocimientosProyecto> detalleConocimientosProyecto;
 
+	
 	public Long getCodConocimiento() {
 		return codConocimiento;
 	}
@@ -47,7 +59,14 @@ public class Conocimientos implements Serializable {
 		this.codTipoConocimiento = codTipoConocimiento;
 	}
 
-	public static long getSerialversionuid() {
-		return serialVersionUID;
+	public TipoConocimiento getTipoConocimiento() {
+		return tipoConocimiento;
 	}
+
+	public void setTipoConocimiento(TipoConocimiento tipoConocimiento) {
+		this.tipoConocimiento = tipoConocimiento;
+	}
+	
+	
+
 }

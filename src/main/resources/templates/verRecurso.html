@@ -42,11 +42,8 @@
 										<div class="profile-img">
 											<img th:if="${recurso.foto} != null"
 												th:src="@{'/fotoRecursoPerfil/' + ${recurso.codRecurso}}"
-												class="imgPrevRecurso mx-auto mb-3"
-												alt="${recurso.descRecurso}" />
-											<div class="file btn btn-lg btn-primary">
-												Cambiar foto <input type="file" name="file" />
-											</div>
+												alt="${recurso.descRecurso}"
+												class="img-profile imgPrevCircleRecurso mx-auto mb-3">
 										</div>
 										<div class="profile-work"
 											style="color: #495057; font-size: 12px; font-weight: 600">
@@ -58,7 +55,8 @@
 												class="fas fa-id-badge mr-2"></i><span class="mb-1">[[${recurso.puesto.descPuesto}]]</span><br>
 											<i class="fa fa-envelope mr-2"></i><span class="mb-1">[[${recurso.descCorreoElectronico}]]</span><br>
 											<i class="fa fa-envelope mr-2"></i><span class="mb-1">[[${recurso.descCorreoPersonal}]]</span><br>
-											<i class="fa fa-phone mr-2"></i><span class="mb-1">[[${recurso.descTelCelular}]]</span>
+											<i class="fa fa-phone mr-2"></i><span class="mb-1">[[${recurso.descTelCelular}]]</span><br>
+
 										</div>
 									</div>
 
@@ -77,8 +75,8 @@
 														onclick="functionGuardar();" value="Guardar" />
 												</div>
 											</div>
-											<h6 style="font-size: 12px;"
-												th:text="${recurso.puesto.descPuesto}"></h6>
+<!-- 											<h6 style="font-size: 12px;" th:text="${recurso.puesto.descPuesto}"></h6> --> 
+												<a style="font-size: 12px;" data-toggle="modal" href="#modalMetasCompetencias" th:text="${perfil.descPerfil} + ' - Ver metas y competencias'"></a>
 											<p class="proile-rating">
 												Evaluaci&oacute;n Q: <span>8/10</span>
 											</p>
@@ -114,6 +112,7 @@
 											<div class="tab-pane fade show active" id="datos-generales"
 												role="tabpanel" aria-labelledby="datos-generales-tab">
 												<br>
+
 												<form id="formDatosGenerales"
 													th:action="@{/guardaActualizaRecurso}"
 													th:object="${recurso}" method="post">
@@ -338,7 +337,7 @@
 																<span class="dg-campo">Alergias: </span> <select
 																	id="selectAlergias"
 																	class="form-control dg-info dg-edit"
-																	style="padding: 0;">
+																	style="padding: 0;" th:field="*{valMedicosAlergias}">
 																	<option th:value="'Si'" th:text="Si"></option>
 																	<option th:value="'No'" th:text="No"></option>
 																</select>
@@ -348,7 +347,7 @@
 																<span class="dg-campo">Enfermedades: </span> <select
 																	id="selectEnfermedades"
 																	class="form-control dg-info dg-edit"
-																	style="padding: 0;">
+																	style="padding: 0; " th:field="*{valMedicosEnfermedades}">
 																	<option th:value="'Si'" th:text="Si"></option>
 																	<option th:value="'No'" th:text="No"></option>
 																</select>
@@ -464,13 +463,13 @@
 																</div>
 
 																<a class="carousel-control-prev"
-																	href="#carouselContactoEmergenciaIndicators" role="button"
-																	data-slide="prev"> <span
+																	href="#carouselContactoEmergenciaIndicators"
+																	role="button" data-slide="prev"> <span
 																	class="carousel-control-prev-icon" aria-hidden="true"></span>
 																	<span class="sr-only">Previous</span>
 																</a> <a class="carousel-control-next"
-																	href="#carouselContactoEmergenciaIndicators" role="button"
-																	data-slide="next"> <span
+																	href="#carouselContactoEmergenciaIndicators"
+																	role="button" data-slide="next"> <span
 																	class="carousel-control-next-icon" aria-hidden="true"></span>
 																	<span class="sr-only">Next</span>
 																</a>
@@ -597,7 +596,8 @@
 																</select>
 															</div>
 														</div>
-														<div class="row" sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_RH')">
+														<div class="row"
+															sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_RH')">
 															<div id="fecSalida"
 																class="col-xl-3 col-sm-4 col-md-4 col-lg-3 form-group">
 																<span class="dg-campo">Fec. Salida: </span> <input
@@ -664,15 +664,18 @@
 																	th:field="${recurso.codPerfil}"
 																	class="form-control dg-info dg-edit"
 																	style="padding: 0;">
-																	<option th:each="perfilRecursoLista : ${perfilRecursoList}"
+																	<option
+																		th:each="perfilRecursoLista : ${perfilRecursoList}"
 																		th:value="${perfilRecursoLista.codPerfil}"
 																		th:text="${perfilRecursoLista.descPerfil}"></option>
 																</select>
 															</div>
-															<div id="costoMinimo" sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_RH')"
+															<div id="costoMinimo"
+																sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_RH')"
 																class="col-xl-3 col-sm-4 col-md-4 col-lg-3 form-group">
 																<span class="dg-campo">Costo m&iacute;nimo: </span> <input
-																	type="number" step="0.10" class="form-control dg-info dg-edit"
+																	type="number" step="0.10"
+																	class="form-control dg-info dg-edit"
 																	th:field="${recurso.valCostoMinimo}" placeholder="$" />
 															</div>
 														</div>
@@ -685,9 +688,10 @@
 														class="card mb-3 cardHR">
 														<div class="card-header" style="color: #898796;">
 															<div class="d-flex justify-content-between">
-																<span>Herramientas</span> <i
-																	class="fa fa-plus" style="cursor: pointer;"
-																	aria-hidden="true" onclick="abrirFormHerramienta();" sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_RH')"></i>
+																<span>Herramientas</span> <i class="fa fa-plus"
+																	style="cursor: pointer;" aria-hidden="true"
+																	onclick="abrirFormHerramienta();"
+																	sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_RH')"></i>
 															</div>
 														</div>
 														<div class="card-body text-secondary">
@@ -716,9 +720,13 @@
 																					<span style="font-size: 10px;"
 																						th:text="${herramienta.Equipo.descSistemaOperativo}"></span>
 																					&nbsp;
-																					<div class="d-flex justify-content-between" style="margin: 10px 0px;">
-																						<span style="font-size: small;">S/N: [[${herramienta.Equipo.descNumSerie}]]</span>
-																						<small><a th:if="${herramienta.responsiva} != null" th:href="'/herramienta/responsiva?rh=' + ${herramienta.codHerramientaRecurso}" target="_blank">Responsiva</a></small> 
+																					<div class="d-flex justify-content-between"
+																						style="margin: 10px 0px;">
+																						<span style="font-size: small;">S/N:
+																							[[${herramienta.Equipo.descNumSerie}]]</span> <small><a
+																							th:if="${herramienta.responsiva} != null"
+																							th:href="'/herramienta/responsiva?rh=' + ${herramienta.codHerramientaRecurso}"
+																							target="_blank">Responsiva</a></small>
 																					</div>
 																					<div style="margin: 10px 0px;">
 																						<small><span>[[${herramienta.descObservaciones}]]</span></small>
@@ -729,7 +737,8 @@
 																							class="btn btn-sm btn-outline-primary w-100"
 																							th:id="${herramienta.codHerramientaRecurso}"
 																							onclick="editarHerramienta(this.id);">Editar</button>
-																						<button class="btn btn-sm btn-primary w-100 ml-2" sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_RH')"
+																						<button class="btn btn-sm btn-primary w-100 ml-2"
+																							sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_RH')"
 																							th:id="${herramienta.codHerramientaRecurso}"
 																							onclick="borrarHerramienta(this.id);">Borrar</button>
 																					</div>
@@ -758,17 +767,28 @@
 												</div>
 											</div>
 											<!-- Termina bloque de herramientas -->
-											
-											
+
+
 											<!-- INICIA bloque de TRAYECTORIA -->
-											<div class="tab-pane fade show" id="trayectoria" role="tabpanel" aria-labelledby="trayectoria-tab">
-												<div th:replace="layout/trayectoria.html :: fragmentTrayectoria">
-												
+											<div class="tab-pane fade show" id="trayectoria"
+												role="tabpanel" aria-labelledby="trayectoria-tab">
+												<div
+													th:replace="layout/trayectoria.html :: fragmentTrayectoria">
+
 												</div>
 											</div>
 											<!-- TERMINA bloque de TRAYECTORIA -->
-											
-											
+
+											<!-- INICIA bloque de EXPEDIENTE DIGITAL-->
+											<div class="tab-pane fade show" id="expediente-digital"
+												role="tabpanel" aria-labelledby="expediente-digital-tab">
+												<!-- 												<div th:replace="layout/expedienteDigital.html :: fragmentExpedienteDigital"> -->
+
+												<!-- 												</div> -->
+											</div>
+											<!-- TERMINA bloque de EXPEDIENTE DIGITAL-->
+
+
 										</div>
 
 									</div>
@@ -802,7 +822,7 @@
 															class="form-text text-danger">Dato requerido</small>
 													</div>
 												</div>
-												
+
 												<div class="row">
 													<div class="form-group col-12 col-md-12">
 														<label class="col-form-label">Carrera*</label> <input
@@ -811,7 +831,7 @@
 															class="form-text text-danger">Dato requerido</small>
 													</div>
 												</div>
-												
+
 												<div class="row">
 													<div class="form-group col-6 col-md-6">
 														<label class="col-form-label">Grado escolar*</label> <select
@@ -840,22 +860,28 @@
 															maxlength="20" />
 													</div>
 												</div>
-												
+
 												<div class="row">
 													<div class="form-group col-6 col-md-6">
-														<label class="col-form-label">Fecha de inicio*</label>
-														<input class="form-control" id="fecInicioEscolaridad" type="month" min="1950-01" max="2099-12" pattern="[0-9]{4}-[0-9]{2}">
-														<small id="validFecInicio" class="form-text text-danger">Dato requerido</small>
+														<label class="col-form-label">Fecha de inicio*</label> <input
+															class="form-control" id="fecInicioEscolaridad"
+															type="month" min="1950-01" max="2099-12"
+															pattern="[0-9]{4}-[0-9]{2}"> <small
+															id="validFecInicio" class="form-text text-danger">Dato
+															requerido</small>
 													</div>
-													
+
 													<div class="form-group col-6 col-md-6">
-														<label class="col-form-label">Fecha de fin*</label>
-														<input class="form-control" id="fecFinEscolaridad" type="month" min="1950-01" max="2099-12" pattern="[0-9]{4}-[0-9]{2}">
-														<small id="validFecFin" class="form-text text-danger">Dato requerido</small>
+														<label class="col-form-label">Fecha de fin*</label> <input
+															class="form-control" id="fecFinEscolaridad" type="month"
+															min="1950-01" max="2099-12" pattern="[0-9]{4}-[0-9]{2}">
+														<small id="validFecFin" class="form-text text-danger">Dato
+															requerido</small>
 													</div>
 												</div>
-												<input type="hidden" id="codRecurso" th:value="${recurso.codRecurso}" />
-												<input type="hidden" id="codRecursoEscolaridad" value="" /> 
+												<input type="hidden" id="codRecurso"
+													th:value="${recurso.codRecurso}" /> <input type="hidden"
+													id="codRecursoEscolaridad" value="" />
 
 												<!-- 							</form> -->
 											</div>
@@ -929,7 +955,7 @@
 														</div>
 													</div>
 												</div>
-													<input type="hidden" id="codContactoEmergencia" value="" />
+												<input type="hidden" id="codContactoEmergencia" value="" />
 											</div>
 											<div class="modal-footer">
 												<button class="btn btn-secondary"
@@ -946,19 +972,89 @@
 							</div>
 
 							<!-- INICIO Modal Asignar Herramienta -->
-							<div id="recursoHerramientaModal">
-							
-							</div>
+							<div id="recursoHerramientaModal"></div>
 							<!-- FIN Modal Asignar Herramienta -->
+
+							<div id="recursoTrayectoriaProyectoModal"></div>
+
+							<div id="recursoTrayectoriaCapacitacionModal"></div>
+
+							<div id="recursoTrayectoriaNivelModal"></div>
+
+							<div id="recursoExpedienteDigitalModal"></div>
 							
-							<div id="recursoTrayectoriaProyectoModal">
-							
+							<div class="modal" id="modalMetasCompetencias" tabindex="-1" role="dialog">
+							  <div class="modal-dialog modal-lg" role="document">
+							    <div class="modal-content">
+							      <div class="modal-header">
+							        <h5 class="modal-title" th:text="${perfil.descPerfil}"></h5>
+							        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							          <span aria-hidden="true">&times;</span>
+							        </button>
+							      </div>
+							      <div class="modal-body">
+							      <ul class="nav nav-tabs" id="myTab" role="tablist">
+							      		<li class="nav-item"><a class="nav-link active"
+											id="funciones-tab" data-toggle="tab" href="#funciones" role="tab"
+											aria-controls="funciones" aria-selected="true">Funciones</a></li>
+										<li class="nav-item"><a class="nav-link"
+											id="metas-tab" data-toggle="tab" href="#metas" role="tab"
+											aria-controls="metas" aria-selected="true">Metas</a></li>
+										<li class="nav-item"><a class="nav-link" id="competencias-tab"
+											data-toggle="tab" href="#competencias" role="tab"
+											aria-controls="competencias" aria-selected="false">Competencias</a></li>
+									</ul>
+									<div class="tab-content" id="myTabContent" style="background-color: #ffffff;">
+										<div class="tab-pane fade show active" id="funciones" role="tabpanel" aria-labelledby="funciones-tab">
+											<ol style="list-style-type: inherit; padding-top: 10px;">
+											  <li th:each="funcion : ${#strings.arraySplit(perfil.descFunciones, '.')}">
+											  	<div>
+											  		<span style="font-size: 14px; font-weight: 500;" th:text="${funcion}"></span>
+											  	</div>
+											  </li>
+											</ol>
+										</div>
+										<div class="tab-pane fade" id="metas" role="tabpanel" aria-labelledby="metas-tab">
+											<ul class="list-group list-group-flush">
+											  <li class="list-group-item" th:each="metas : ${perfil.metasPerfiles}">
+											  	<div>
+											  		<span style="font-size: 14px; font-weight: 700;" th:text="${metas.meta.descMeta}"></span>
+											  		<span style="font-size: 12px; font-weight: 400; font-style: oblique;" th:text="'(' + ${metas.valPorcentaje} + '%)'"></span>
+											  		<br>
+								  					<span style="font-size: 14px; font-weight: 400;" th:text="${metas.meta.descDefinicion}"></span>
+											  	</div>
+											  </li>
+											  <li class="list-group-item">
+											  	<div class="d-flex justify-content-end">
+											  		<span style="font-size: 14px; font-weight: 700; font-style:inherit;" th:text="'TOTAL: '"></span>
+											  		<span style="font-size: 12px; font-weight: 400; font-style: oblique;" th:text="'100%'"></span>
+											  	</div>
+											  </li>
+											</ul>
+											
+										</div>
+										<div class="tab-pane fade" id="competencias" role="tabpanel" aria-labelledby="competencias-tab">
+											<ul class="list-group list-group-flush">
+											  <li class="list-group-item" th:each="competencias : ${perfil.competenciasPerfiles}">
+											  	<div>
+											  		<span style="font-size: 14px; font-weight: 700;" th:text="${competencias.competencia.descCompetencias} + ' :'"></span>
+											  		<span style="font-size: 13px; font-weight: 400;" th:text="${competencias.competencia.descDefinicion} "></span>
+											  		<br>
+											  		<span style="font-size: 14px; font-weight: 700;" th:text="'Competencia a cumplir: '"></span>
+											  		<span style="font-size: 13px; font-weight: 400;" th:text="${competencias.descDefinicion}"></span>
+											  	</div>
+											  </li>
+											</ul>
+										</div>
+									</div>
+							      </div>
+							      <div class="modal-footer">
+							        <button type="button" class="btn btn-primary" data-dismiss="modal">Aceptar</button>
+							      </div>
+							    </div>
+							  </div>
 							</div>
-							
-							<div id="recursoTrayectoriaCapacitacionModal">
-							
-							</div>
-							
+
 							<!-- Footer -->
 							<footer th:replace="layout/layout :: footer"></footer>
 							<!-- End of Footer -->
@@ -972,9 +1068,12 @@
 
 
 
+				</div>
+			</div>
+		</div>
+	</div>
 
-
-					<!-- Scroll to Top Button-->
+	<!-- Scroll to Top Button-->
 					<div class="st-actionContainer right-bottom" id="btnFlash">
 						<div class="st-btn-container right-bottom"
 							onclick="flashSurvey(); return false;">
@@ -1004,12 +1103,18 @@
 					<!-- Page level plugins -->
 					<script th:src="@{/vendor/datatables/jquery.dataTables.min.js}"></script>
 					<script th:src="@{/vendor/datatables/dataTables.bootstrap4.min.js}"></script>
+					<script th:src="@{/js/select2.min.js}"></script>
+					
+<!-- 					<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/js/bootstrap-select.min.js"></script> -->
 
 					<!-- Page level custom scripts -->
 					<script type="text/javascript" sec:authorize="hasAnyRole('ROLE_USER', 'ROLE_APROB')">
 					$(document).ready(function(){
 						$("#formDatosEmpresa .row div input").removeClass("dg-edit");
 						$("#formDatosEmpresa .row div select").removeClass("dg-edit");
+						
+						$('.select2Multiple').select2();
+						
 					});
 					</script>
 					<script th:src="@{/js/demo/datatables-demo.js}"></script>
@@ -1017,6 +1122,7 @@
 					<script th:src="@{/js/datosGenerales.js}"></script>
 					<script th:src="@{/js/datosEmpresa.js}"></script>
 					<script th:src="@{/js/trayectoria.js}"></script>
+					<script th:src="@{/js/expedienteDigital.js}"></script>
 </body>
 
 </html>
