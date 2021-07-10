@@ -25,8 +25,9 @@
           <!-- Page Heading -->
           <div class="d-sm-flex align-items-center justify-content-between mb-1">
             <h1 class="h3 mb-0 text-gray-800"><span class="tituloA">Detalle de gastos</span></h1>
+            
           </div>
-
+			<a href="#" onclick="window.history.go(-1); return false;" th:text="'&laquo; regresar'"></a>
             <!--form-->
               <form class="user" th:action="@{/recursoGastoAlta}" th:Object="${recursoGasto}" method="post">
               
@@ -78,20 +79,20 @@
                   </div>
                 </div>
                 
-                <div class="form-group row">
-                   <div class="col-sm-5 mb-6 mb-sm-0">
-                      <br>
-                       <a class="btn btn-primary" th:href="@{/misGastos/} + ${#authentication.getName()} " role="button">Regresar</a>
-                   </div>
-                   <div class="col-sm-3 mb-6 mb-sm-0">
-                      <br>
+<!--                 <div class="form-group row"> -->
+<!--                    <div class="col-sm-5 mb-6 mb-sm-0"> -->
+<!--                       <br> -->
+<!--                        <a class="btn btn-primary" th:href="@{/misGastos/} + ${#authentication.getName()} " role="button">Regresar</a> -->
+<!--                    </div> -->
+<!--                    <div class="col-sm-3 mb-6 mb-sm-0"> -->
+<!--                       <br> -->
                       
-                   </div>
-                   <div class="col-sm-4 mb-6 mb-sm-0">
-                      <br>
+<!--                    </div> -->
+<!--                    <div class="col-sm-4 mb-6 mb-sm-0"> -->
+<!--                       <br> -->
                       
-                   </div>
-                </div>
+<!--                    </div> -->
+<!--                 </div> -->
               </form>
             <!--form-->
 

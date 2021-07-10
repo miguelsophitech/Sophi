@@ -23,7 +23,7 @@
 		<header th:replace="layout/layout :: header"></header>
 
         <!-- Begin Page Content -->
-        <div class="container-fluid">
+        <div th:if="${listAdminRh.contains(#authentication.getName())}" class="container-fluid">
 
           <!-- Page Heading -->
           
@@ -85,6 +85,14 @@
 
         </div>
         <!-- /.container-fluid -->
+        
+        <div th:unless="${listAdminRh.contains(#authentication.getName())}">
+			<div style="text-align: center;">
+				<img style="width: 30%; border-radius: 20px;"
+					th:src="@{/img/img-accessDenied.png}">
+				<p style="font-size: 14px; color: red; font-stretch: 500;">Acceso denegado</p>
+			</div>
+		</div>
 
       </div>
       <!-- End of Main Content -->

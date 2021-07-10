@@ -454,7 +454,7 @@
 
 									<input
 										th:attr="readonly=${proyecto.codEstatusProyecto == 3}? 'true' : 'false'"
-										th:field="*{valPorcentajeRiesgo}" type="number"
+										th:field="*{valPorcentajeRiesgo}" type="text"
 										class="form-control" id="riesgo" placeholder="Porcentaje"
 										oninvalid="setCustomValidity('Porcentaje inv&aacute;lido')"
 										onchange="try{setCustomValidity('')}catch(e){}" min=0
@@ -474,7 +474,7 @@
 									</div>
 									<input
 										th:attr="readonly=${proyecto.codEstatusProyecto == 3}? 'true' : 'false'"
-										th:field="*{valPorcentajeMargen}" type="number"
+										th:field="*{valPorcentajeMargen}" type="text"
 										class="form-control" id="margen" placeholder="Margen"
 										oninvalid="setCustomValidity('Margen inv&aacute;lido')"
 										onchange="try{setCustomValidity('')}catch(e){}" min=0
@@ -534,8 +534,8 @@
 						</div>
 					</div>
 				</div>
-                <div class="row d-flex justify-content-between">
-					<div class="col-sm-4 mb-6 mb-sm-0">
+                <div class=" d-flex justify-content-between">
+					<div >
 						<input sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_APROB')"
 							th:if="${proyecto.codEstatusProyecto == 1 or proyecto.codEstatusProyecto == 2}"
 							type="submit" value="Guardar y continuar"
@@ -544,7 +544,7 @@
 							type="submit" value="Aceptar" class="btn btn-secondary"
 							id="btnRegresarCierre" />
 					</div>
-					<div class="col-sm-4" id="complementoProyecto">
+					<div id="complementoProyecto">
 						<a  data-toggle="modal" data-target="#modalComplemento" href="#" role="button"><i class="fa fa-info-circle" aria-hidden="true"></i> Informaci&oacute;n de contacto e infraestructura</a>
 					</div>
 				</div>
@@ -674,7 +674,6 @@
   <script src="../../../js/preventaProyectoConsulta.js"></script>
   <script src="https://code.jquery.com/jquery-1.11.2.min.js"></script>
   <script src="../../../js/multiselect.js"></script>
-
   <script th:src="@{/js/datosRecursoSesion.js}"></script>
   <script th:src="@{/js/tipofact.js}"></script>
   <script th:src="@{/js/switch.js}"></script>

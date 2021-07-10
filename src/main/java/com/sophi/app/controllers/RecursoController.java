@@ -52,6 +52,7 @@ import com.sophi.app.models.service.IPuestoService;
 import com.sophi.app.models.service.IRecursoEscolaridadService;
 import com.sophi.app.models.service.IRecursoService;
 import com.sophi.app.models.service.IRecursoTrayectoriaProyectoService;
+import com.sophi.app.models.service.IRolService;
 import com.sophi.app.models.service.ITipoHerramientaService;
 import com.sophi.app.models.service.ITipoRecursoService;
 import com.sophi.app.models.service.ITipoSangreService;
@@ -118,6 +119,9 @@ public class RecursoController {
 	@Autowired
 	private IRecursoTrayectoriaProyectoService recursoTrayectoriaProyectoService;
 	
+	@Autowired
+	private IRolService rolService;
+	
 	@GetMapping(value = "/verRecurso/{id}")
 	public String verRecurso(@PathVariable(value="id") Long codRecurso, Map<String, Object> model, RedirectAttributes flash, HttpServletResponse response) {
 		response.setContentType("image/jpeg");
@@ -126,11 +130,11 @@ public class RecursoController {
 		if (codRecurso > 0) {
 			recurso = recursoService.findOne(codRecurso);
 			if(recurso == null) {
-				flash.addFlashAttribute("error", "El código del recurso no existe en base de datos!");
+				flash.addFlashAttribute("error", "Ups!");
 				return "redirect:/listarRecursos";
 			}
 		} else {
-			flash.addFlashAttribute("error", "El código del recurso no debe ser cero!");
+			flash.addFlashAttribute("error", "Ups!");
 			return "redirect:/listarRecursos";
 		}
 		
@@ -166,6 +170,10 @@ public class RecursoController {
 		model.put("listaTrayectoriaProyectos", recursoTrayectoriaProyectoService.findByCodRecurso(codRecurso));
 		model.put("perfil", perfilRecursoService.findByCodPerfil(recurso.getCodPerfil()));
 //		System.out.println(recurso.getPerfilRecurso().getCodPerfil());
+		
+		model.put("listAdminRh",rolService.getListaAdminRh());
+		
+		
 		return "verRecurso";
 	}
 	
@@ -190,6 +198,7 @@ public class RecursoController {
 	public String listarRecursos(Model model) {
 		model.addAttribute("titulo", "Listado de recursos");
 		model.addAttribute("recursos", recursoService.findAll());
+		model.addAttribute("listAdminRh",rolService.getListaAdminRh());
 		return "listaRecursos";
 	}
 	

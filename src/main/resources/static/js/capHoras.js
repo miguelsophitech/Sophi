@@ -53,6 +53,64 @@ $(document).ready(function() {
 
 });
 
+function valorInicio(valInicio){
+	$("#fecFinReporte").attr("min",valInicio);
+}
+
+function valorFinal(valFinal){
+	$("#fecInicioReporte").attr("max",valFinal);
+}
+
+
+function dwlPdf(){
+	var fecInicioReporte = $("#fecInicioReporte").val();
+	var fecFinReporte = $("#fecFinReporte").val();
+	var fInicioArray = fecInicioReporte.split('-');
+	var fInicio = fInicioArray[1]+'/'+fInicioArray[2]+'/'+fInicioArray[0];
+	var fFinArray = fecFinReporte.split('-');
+	var fFin = fFinArray[1]+'/'+fFinArray[2]+'/'+fFinArray[0];
+	var rec= $("#valCodRecurso").val();
+	if(fecInicioReporte.length > 0 && fecFinReporte.length > 0){
+		$.ajax({
+		    type: "GET",
+		    url: "/getReporteHorasCapturadasPdf",
+		    data: {fInicio: fInicio, 
+		    		fFin: fFin,
+		    		rec:rec},
+			success: function(link){
+		        window.open(link);
+		    }
+		});
+	} else {
+		alert("Selecciona una fecha de inicio y fecha fin correctamente");
+	}
+	
+	
+}
+
+function dwlXlsx(){
+	var fecInicioReporte = $("#fecInicioReporte").val();
+	var fecFinReporte = $("#fecFinReporte").val();
+	var fInicioArray = fecInicioReporte.split('-');
+	var fInicio = fInicioArray[1]+'/'+fInicioArray[2]+'/'+fInicioArray[0];
+	var fFinArray = fecFinReporte.split('-');
+	var fFin = fFinArray[1]+'/'+fFinArray[2]+'/'+fFinArray[0];
+	var rec= $("#valCodRecurso").val();
+	if(fecInicioReporte.length > 0 && fecFinReporte.length > 0){
+		$.ajax({
+		    type: "GET",
+		    url: "/getReporteHorasCapturadasXLSX",
+		    data: {fInicio: fInicio, 
+		    		fFin: fFin,
+		    		rec:rec},
+			success: function(link){
+		        window.open(link);
+		    }
+		});
+	} else {
+		alert("Selecciona una fecha de inicio y fecha fin correctamente");
+	}
+}
 
 function clicProyectoEdit(){
 	cargarActividadesPrimariasProyectoEdit();

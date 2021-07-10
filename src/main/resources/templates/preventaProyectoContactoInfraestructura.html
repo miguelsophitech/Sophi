@@ -43,16 +43,18 @@
 <!--                 </div> -->
                 <div class="row">
                   <div class="col-12 col-sm-6">
+                  	
                      <label for="contacto">Contacto del proyecto</label>
-                     <div class="form-inline" >
-	                     <select class="form-control" id="contacto" style="width: 75%; margin-right: 10px;">
+<!--                      <div class="form-inline" > -->
+<div class="d-flex justify-content-start">
+	                     <select class="form-control" id="contacto" style="width:70%; margin-right: 10px;">
 	                     	<option value="-1">Sin contacto</option>
 	                        <option th:each="contacto : ${contactos}" th:value="${contacto.codContacto}" th:text="${contacto.descContacto}" th:selected="${contacto.codContacto==codCon}"/>
 	                      </select>
+	                     
 <!-- 	                      <a class="btn btn-primary"  th:href="@{/formContacto}"  role="button"> <i class="fas fa-plus-circle fa-sm text-white-50"></i></a> -->
-	                      <a class="btn btn-primary"  th:href="@{/dataCliente/} + ${proyecto.codCliente}"  role="button"> <i class="fas fa-plus-circle fa-sm text-white-50"></i></a>
-                      </div>
-                  </div>
+	                      <a th:href="@{/dataCliente/} + ${proyecto.codCliente}" target="_blank">+ Agregar nuevo contacto <i class="fas fa-external-link-alt"></i></a>
+</div>                  </div>
                   
                   <div class="col-12 col-sm-6">
 						<label for="contacto">Tecnolog&iacute;a</label>

@@ -430,53 +430,55 @@ public class EmailController {
 	@Scheduled(cron="0 0 10 * * THU", zone="America/Mexico_City")
 	public void enviaRecordatoriosForecast() {
 		List<Recurso> listRecursos = new ArrayList<Recurso>();
+		//solo recursos del area Servicios
 		listRecursos = recursoService.findByCodAreaRecurso(1L);
 		if (listRecursos.size()>0) {
 			for (Recurso recurso : listRecursos) {
-				
-				
-				Utiles utiles = new Utiles();
-				
-				Calendar fecha = Calendar.getInstance();
-				fecha.setTime(utiles.getFechaActual());
-				
-				String[] listaMeses = new String[]{"Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"};
-				
-				fecha.add(Calendar.MONTH, 1);
-	        	
-	        	String anio = String.valueOf(fecha.get(Calendar.YEAR));
-	            String mes = String.valueOf(fecha.get(Calendar.MONTH) + 1);
-	            if (mes.length() == 1) {
-	            	mes = "0" + mes;
-	            }
-	            MesHabil mesHabil = mesHabilService.findById(Long.parseLong(anio +  mes));
-	            String nombreMes = listaMeses[fecha.get(Calendar.MONTH)];
-	            
-	            float totalHorasForecast = 0;
-    			List<DetalleForecast> listaForecast = detalleForecastService.findByRecursoAndMesHabil(recurso,mesHabil);
-    			for (DetalleForecast detalleForecast : listaForecast) {
-    				totalHorasForecast += detalleForecast.getValHoras();
-    			}
-				
-    			float alcanceHoras = mesHabil.getValHorasFestivos() + mesHabil.getValHorasHabiles();
-    			
-    			if (totalHorasForecast < alcanceHoras){ 
-    				
-    				MailRequest request = new MailRequest();
-    				request.setName(recurso.getDescRecurso());
-    				request.setSubject("Recordatorio de captura de forecast");
-    				request.setTo(recurso.getDescCorreoElectronico());
-    				
-    				Map<String, Object> model = new HashMap<String, Object>();
-    				model.put("nombreRecurso", request.getName());
-    				model.put("mensaje", "<h3>Recuerda que debes capturar tu forecast del mes de "+ nombreMes +" en la plataforma</h3>");
-    				model.put("pie", "Evita que tu esfuerzo se vaya a la banca");
-    				model.put("imagen","<img data-cfsrc=\"images/forecast.png\" alt=\"\" data-cfstyle=\"width: 200px; max-width: 400px; height: auto; margin: auto; display: block;\" style=\"width: 200px; max-width: 400px; height: auto; margin: auto; display: block;\" src=\"https://sophitech.herokuapp.com/img/img-forecast.png\">");
-    				
-    				MailResponse response = service.sendEmail(request, model);
-    				System.out.println(response.getMessage());
-    			}
-				
+				//solo recurso activos
+				if(recurso.getValActivo().equals(1L)) {
+					Utiles utiles = new Utiles();
+					
+					Calendar fecha = Calendar.getInstance();
+					fecha.setTime(utiles.getFechaActual());
+					
+					String[] listaMeses = new String[]{"Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"};
+					
+					fecha.add(Calendar.MONTH, 1);
+		        	
+		        	String anio = String.valueOf(fecha.get(Calendar.YEAR));
+		            String mes = String.valueOf(fecha.get(Calendar.MONTH) + 1);
+		            if (mes.length() == 1) {
+		            	mes = "0" + mes;
+		            }
+		            MesHabil mesHabil = mesHabilService.findById(Long.parseLong(anio +  mes));
+		            String nombreMes = listaMeses[fecha.get(Calendar.MONTH)];
+		            
+		            float totalHorasForecast = 0;
+	    			List<DetalleForecast> listaForecast = detalleForecastService.findByRecursoAndMesHabil(recurso,mesHabil);
+	    			for (DetalleForecast detalleForecast : listaForecast) {
+	    				totalHorasForecast += detalleForecast.getValHoras();
+	    			}
+					
+	    			float alcanceHoras = mesHabil.getValHorasFestivos() + mesHabil.getValHorasHabiles();
+	    			
+	    			if (totalHorasForecast < alcanceHoras){ 
+	    				
+	    				MailRequest request = new MailRequest();
+	    				request.setName(recurso.getDescRecurso());
+	    				request.setSubject("Recordatorio de captura de forecast");
+	    				request.setTo(recurso.getDescCorreoElectronico());
+	    				
+	    				Map<String, Object> model = new HashMap<String, Object>();
+	    				model.put("nombreRecurso", request.getName());
+	    				model.put("mensaje", "<h3>Recuerda que debes capturar tu forecast del mes de "+ nombreMes +" en la plataforma</h3>");
+	    				model.put("pie", "Evita que tu esfuerzo se vaya a la banca");
+	    				model.put("imagen","<img data-cfsrc=\"images/forecast.png\" alt=\"\" data-cfstyle=\"width: 200px; max-width: 400px; height: auto; margin: auto; display: block;\" style=\"width: 200px; max-width: 400px; height: auto; margin: auto; display: block;\" src=\"https://sophitech.herokuapp.com/img/img-forecast.png\">");
+	    				
+	    				MailResponse response = service.sendEmail(request, model);
+	    				System.out.println(response.getMessage());
+	    			}
+					
+				}
 			}
 		}
 	}
@@ -535,10 +537,17 @@ public class EmailController {
 	//Metodo que genera tabla html con resumen de forecast para enviar por mail a los aprobadores
 		//Llamado desde Notificaciones controller
 		public String tablaMailForecast() {
+			List<Recurso> listaRecursosConsultoresTMP = new ArrayList<>();
 			List<Recurso> listaRecursosConsultores = new ArrayList<>();
 			
 			//Recursos consultores es cod = 1
-			listaRecursosConsultores = recursoService.findByCodAreaRecurso(1L);
+			listaRecursosConsultoresTMP = recursoService.findByCodAreaRecurso(1L);
+			
+			for (Recurso recurso : listaRecursosConsultoresTMP) {
+				if(recurso.getValActivo().equals(1L)) {
+					listaRecursosConsultores.add(recurso);
+				}
+			}
 			
 			
 			Utiles utiles = new Utiles();

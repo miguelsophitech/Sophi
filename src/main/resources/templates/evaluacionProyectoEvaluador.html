@@ -84,7 +84,7 @@
 	                      <th>Concepto</th>
 	                      <th>Comentario</th>
 	                      <th>Evidencia</th>
-	                      <th>Evaluacion</th>
+	                      <th>Evaluaci&oacute;n</th>
 	                      <th>Opciones</th>
                     	</tr>
 	                 </thead>
@@ -314,21 +314,25 @@
   
   function actualizarEncuesta(id){
 	  var idConcepto = id.substring(13);
-	  $("#saveEncuesta_"+idConcepto).hide();
-	  $("#wait_"+idConcepto).show();
 	  var valEvaluacion = $("#evalEncuesta_"+idConcepto).val();
-	  $.ajax({
-			url: "/guardaEvaluacionEncuestaConcepto",
-			data: {codProyecto:$("#codProyecto").val(),
-				   codConcepto:idConcepto,
-				   valEvaluador: $("#authGetName").val(),
-				   valEvaluacion: valEvaluacion},
-			success: function(result){
-				$("#saveEncuesta_"+idConcepto).show();
-				$("#wait_"+idConcepto).hide();
-				$("#check_"+idConcepto).html('<i style="color:green;" class="fas fa-check-circle"></i>');
-			}
-		});
+	  if(valEvaluacion.length < 0){
+		  $("#saveEncuesta_"+idConcepto).hide();
+		  $("#wait_"+idConcepto).show();
+		  $.ajax({
+				url: "/guardaEvaluacionEncuestaConcepto",
+				data: {codProyecto:$("#codProyecto").val(),
+					   codConcepto:idConcepto,
+					   valEvaluador: $("#authGetName").val(),
+					   valEvaluacion: valEvaluacion},
+				success: function(result){
+					$("#saveEncuesta_"+idConcepto).show();
+					$("#wait_"+idConcepto).hide();
+					$("#check_"+idConcepto).html('<i style="color:green;" class="fas fa-check-circle"></i>');
+				}
+			});
+	  } else {
+		  alert("Ingresa una calificaci\u00F3n")
+	  }
   }
   
   function enviarCalidad(){

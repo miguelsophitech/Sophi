@@ -59,4 +59,10 @@ public class DetalleProyectoContactoServiceImpl implements IDetalleProyectoConta
 		detalleProyectoContactoDao.borrarByCodProyectoAndCodEstatusProyectoAndCodCliente( codProyecto, codEstatusProyecto, codCliente);
 	}
 
+	@Override
+	@Transactional(readOnly = true)
+	public Long findTotalProyectosResponsable(Long codContacto) {
+		return detalleProyectoContactoDao.findTotalProyectosResponsable(codContacto);
+	}
+
 }

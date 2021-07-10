@@ -28,6 +28,9 @@ public interface IDetalleProyectoContactoDao extends CrudRepository<DetalleProye
 	@Query(value = "DELETE FROM DETALLE_PROYECTOS_CONTACTOS WHERE cod_proyecto=?1 AND cod_estatus_proyecto=?2 and cod_cliente=?3", nativeQuery = true)
 	void borrarByCodProyectoAndCodEstatusProyectoAndCodCliente(Long codProyecto,Long codEstatusProyecto, Long codCliente);
 	
+	@Query(value = "select count(cod_contacto) from DETALLE_PROYECTOS_CONTACTOS where cod_contacto = ?1", nativeQuery = true)
+	Long findTotalProyectosResponsable(Long codContacto);
+	
 	DetalleProyectoContacto findByDetalleProyectoContactoId(DetalleProyectoContactoId detalleProyectoContactoId);
 	
 	public List<DetalleProyectoContacto> findByDetalleProyectoContactoIdCodProyecto(Long codProyecto);

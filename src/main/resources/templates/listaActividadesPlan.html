@@ -21,12 +21,13 @@
 				<header th:replace="layout/layout :: header"></header>
 
 				<!-- Begin Page Content -->
-				<div class="container-fluid">
+				<div th:if="${status}" class="container-fluid">
 
 					<!-- Page Heading -->
 					<div
-						class="d-sm-flex align-items-center justify-content-between mb-4">
+						class="mb-4">
 						<h1 class="h3 mb-2 text-gray-800" th:text="'Resumen previo a la carga'"></h1>
+						<a href="#" onclick="window.history.go(-1); return false;" th:text="'&laquo; regresar'"></a>
 					</div>
 					
 					 <!-- Content Row -->
@@ -196,6 +197,21 @@
 
 				</div>
 				<!-- /.container-fluid -->
+				<div th:unless="${status}">
+					<div style="text-align: center; padding-top: 20px;">
+						<img style="width: 400px;" th:src="@{/img/img-errorPlan.png}">
+					</div>
+					<p style="text-align: center;">
+						Algo sali&oacute; mal en la lectura del del archivo.<br>Verfica
+						que el archivo este correcto e intenta nuevamente.
+					</p>
+					<div style="text-align: center;">
+						<a href="#" onclick="window.history.go(-1); return false;"
+							class="btn btn-primary">Aceptar</a>
+					</div>
+				</div>
+				
+				
 
 			</div>
 			<!-- End of Main Content -->

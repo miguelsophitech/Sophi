@@ -25,6 +25,7 @@ import com.sophi.app.models.entity.Cliente;
 import com.sophi.app.models.service.IAgendaService;
 import com.sophi.app.models.service.ICargoService;
 import com.sophi.app.models.service.IClienteService;
+import com.sophi.app.models.service.IDetalleProyectoContactoService;
 
 @Controller
 @SessionAttributes("agenda")
@@ -38,6 +39,9 @@ public class AgendaController {
 	
 	@Autowired
 	private ICargoService cargoService;
+	
+	@Autowired
+	private IDetalleProyectoContactoService detalleProyectoContactoService;
 
 	
 	@RequestMapping(value = "/agenda", method = RequestMethod.GET)
@@ -66,6 +70,15 @@ public class AgendaController {
 		Agenda agenda = agendaService.findOne(1L);
 		listaAgenda.remove(agenda);
 
+		for (Agenda contacto : listaAgenda) {
+			Long total = detalleProyectoContactoService.findTotalProyectosResponsable(contacto.getCodContacto());
+			if(total.equals(0L)) {
+				contacto.setEsBorrable(true);
+			} else {
+				contacto.setEsBorrable(false);
+			}
+		}
+		
 		model.addAttribute("contactos",listaAgenda);
 		return "layout/plantilla-filtros :: contacto-listado";
 	}

@@ -74,6 +74,9 @@ public class Agenda implements Serializable {
 	@Transient
 	private String nombreCargo;
 	
+	@Transient
+	private boolean esBorrable;
+	
 	@Column(name = "cod_cargo")
 	private Long codCargo;
 	
@@ -218,6 +221,14 @@ public class Agenda implements Serializable {
 
 	public void setValActivo(Long valActivo) {
 		this.valActivo = valActivo;
+	}
+
+	public boolean getEsBorrable() {
+		return esBorrable;
+	}
+
+	public void setEsBorrable(boolean esBorrable) {
+		this.esBorrable = esBorrable;
 	}
 	
 }

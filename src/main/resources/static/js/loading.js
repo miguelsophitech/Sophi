@@ -26,7 +26,7 @@ function jsShowWindowLoad(mensaje) {
     var heightdivsito = alto/2 - parseInt(height)/2;//Se utiliza en el margen superior, para centrar
  
    //imagen que aparece mientras nuestro div es mostrado y da apariencia de cargando
-    imgCentro = "<div style='text-align:center;height:" + alto + "px;'><div  style='color:#fff;margin-top:" + heightdivsito + "px; font-size:20px;font-weight:bold'>" + mensaje + "</div><img  src='img/logo-img.png'></div>";
+    imgCentro = "<div style='text-align:center;height:" + alto + "px;'><div  style='color:#fff;margin-top:" + heightdivsito + "px; font-size:20px;font-weight:bold'>" + mensaje + "</div><img  src='/img/logo-img.png'></div>";
  
         //creamos el div que bloquea grande------------------------------------------
         div = document.createElement("div");

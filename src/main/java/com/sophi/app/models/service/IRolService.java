@@ -9,5 +9,7 @@ public interface IRolService {
 	public List<Rol> findListaRoles();
 	
 	public List<Rol> findByCodRecurso(Long codRecurso);
+	
+	public List<String> getListaAdminRh();
 
 }

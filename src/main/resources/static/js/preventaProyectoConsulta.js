@@ -122,10 +122,11 @@ $(document).ready(function() {
 	
   
 	$( "#aceptarProyecto" ).click(function() {
+		console.log("entra a cambiar a proyecto");
 		$( "#preventa" ).prop( "disabled", true );
-		$('#pr').show('500');
-		$('#pc').show('500');
-		$('#pm').show('500');		
+		$('#pr').show();
+		$('#pc').show();
+		$('#pm').show();		
 		$('#ig').show('500');	
 		$('#thp').show('500');
 		$('#cp').show('500');

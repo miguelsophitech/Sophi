@@ -135,7 +135,10 @@
 								<!-- <li class="list-group-item">Cargo que ocupa: <strong th:text="${agenda.nombreCargo}"></strong></li> -->
 								<li class="list-group-item">Recursos a cargo: <strong th:text="${agenda.valRecursosACargo}"></strong></li>
 								<li class="list-group-item">Fecha de nacimiento: <strong th:text="${agenda.fecNacimiento}"></strong></li>
-								<li class="list-group-item"><a th:href="@{/formContacto/} + ${agenda.codContacto}" class="badge badge-success">Editar  <i class="far fa-edit"></i></a>	<a th:if="${agenda.detalleProyectoContacto == null}" th:onclick="eliminar([[${agenda.codContacto}]])" href="#" class="badge badge-danger">Eliminar  <i class="far fa-trash-alt"></i></a><input class="codCliente" type="hidden" th:value="${agenda.codCliente}"/></li>
+								<li class="list-group-item">
+									<a th:href="@{/formContacto/} + ${agenda.codContacto}" class="badge badge-success">Editar  <i class="far fa-edit"></i></a>
+									<a th:if="${agenda.esBorrable}" th:onclick="eliminar([[${agenda.codContacto}]])" href="#!" class="badge badge-danger">Eliminar  <i class="far fa-trash-alt"></i></a><input class="codCliente" type="hidden" th:value="${agenda.codCliente}"/>
+								</li>
 							</ul>
 						</td>
 					</tr>
