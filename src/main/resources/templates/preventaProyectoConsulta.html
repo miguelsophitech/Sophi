@@ -108,8 +108,11 @@
                   </div>
 <!--                   <div class="col-sm-5"> -->
                   <div class="form-check form-check-inline">
-                  	<label for="valCliente" th:text="${clienteProyecto.descCliente}"></label>
+                  	<!--<label for="valCliente" th:text="${clienteProyecto.descCliente}"></label>-->
                   	<input id="valCliente" name="valCliente" type="hidden"  th:value="${clienteProyecto.codCliente}">
+                  	<select th:field="*{codCliente}" class="form-control" id="cliente">
+                        <option th:each="listaCliente : ${listaClienteProyecto}" th:value="${listaCliente.codCliente}" th:text="${listaCliente.descCliente}" th:selected="${clienteProyecto.codCliente == listaCliente.codCliente}"/>
+                    </select>
                   </div>
                   </div>
                 </div>

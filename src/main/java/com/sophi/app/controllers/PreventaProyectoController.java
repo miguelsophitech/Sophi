@@ -699,6 +699,7 @@ public class PreventaProyectoController {
 		Cliente cp = clienteService.findOne(proyecto.getCodCliente());
 		modelM.put("proyecto", proyecto);
 		model.addAttribute("clienteProyecto", cp);
+		model.addAttribute("listaClienteProyecto", clienteService.findAll());
 		model.addAttribute("clientes", listaClienteAux);
 		model.addAttribute("contactos", agendaService.findContactosBycodCliente(proyecto.getCodCliente()));
 		
@@ -781,7 +782,10 @@ public class PreventaProyectoController {
 		model.addAttribute("clasificacionesProyecto", clasificacionproyectoService.findAll());
 		model.addAttribute("proyectos", proyectoService.findAll());
 		model.addAttribute("titulo", "Proyecto");
-		Long clienteProyecto = proyectoService.findByCodProyecto(proyecto.getCodProyecto()).getCodCliente();
+		
+		//Long clienteProyecto = proyectoService.findByCodProyecto(proyecto.getCodProyecto()).getCodCliente();
+		Long clienteProyecto = proyecto.getCodCliente();
+		
 		proyecto.setCodCliente(clienteProyecto);
 		
 		if(result.hasErrors()) {
