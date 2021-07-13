@@ -48,7 +48,7 @@
                                         	</div>
 	                                        <div class="form-group col-12 col-md-2">
 	                                            <label class="col-form-label">C&oacute;digo de cliente:</label>
-	                                            <input id="codigocliente" type="text" maxlength="100" th:field="*{descCodigoCliente}" class="form-control" th:errorClass="form-control alert-danger"/>
+	                                            <input id="codigocliente" type="text" maxlength="500" th:field="*{descCodigoCliente}" class="form-control" th:errorClass="form-control alert-danger"/>
 	                                            <small class="form-text text-danger" th:if="${#fields.hasErrors('descCodigoCliente')}" th:errors="*{descCodigoCliente}"></small>
 	                                        </div>
 	                                        <div class="form-group col-12 col-md-4">
