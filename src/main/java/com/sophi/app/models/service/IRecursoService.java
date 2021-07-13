@@ -25,6 +25,8 @@ public interface IRecursoService {
 	
 	public List<Recurso> findListRecursosAprobadores();
 	
+	public List<Recurso> findListRecursosAprobadoresBKP(Long codRecurso);
+	
 	public List<Recurso> findByCodAreaRecurso(Long codAreaRecurso);
 	
 	public List<Recurso> findRecursosByPerfil(Long codPerfil);

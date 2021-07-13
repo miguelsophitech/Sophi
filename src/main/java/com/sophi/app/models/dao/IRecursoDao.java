@@ -21,6 +21,9 @@ public interface IRecursoDao extends CrudRepository<Recurso, Long>{
 	@Query("FROM Recurso R WHERE R.valResponsable = 1")
 	List<Recurso> findListRecursosResponsables();
 	
+	@Query("FROM Recurso R WHERE R.valAprobador = 1 AND R.codRecurso != ?1")
+	List<Recurso> findListRecursosAprobadoresBKP(Long codRecurso);
+	
 	@Query("FROM Recurso R WHERE R.valAprobador = 1")
 	List<Recurso> findListRecursosAprobadores();
 	

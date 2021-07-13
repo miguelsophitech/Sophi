@@ -70,6 +70,12 @@ public class RecursoServiceImpl implements IRecursoService {
 	public List<Recurso> findListRecursosAprobadores() {
 		return recursoDao.findListRecursosAprobadores();
 	}
+	
+	@Override
+	@Transactional(readOnly = true)
+	public List<Recurso> findListRecursosAprobadoresBKP(Long codRecurso) {
+		return recursoDao.findListRecursosAprobadoresBKP(codRecurso);
+	}
 
 	@Override
 	@Transactional(readOnly = true)

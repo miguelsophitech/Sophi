@@ -12,6 +12,7 @@ import java.util.Map;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -130,7 +131,8 @@ public class VacacionesController {
 		recursoVacaciones = recursoVacacionesService.findById(codRecurso);
 		
 		List<Recurso> listaRecursosAprobadores = new ArrayList<Recurso>();
-		listaRecursosAprobadores = recursoService.findListRecursosAprobadores();
+		listaRecursosAprobadores = recursoService.findListRecursosAprobadoresBKP(codRecurso);
+		
 		Recurso recurso = recursoService.findOne(codRecurso);
 		Long valAprobador  = recurso.getValAprobador();
 		
@@ -144,11 +146,16 @@ public class VacacionesController {
 		listaPR = proyectoRecursoService.findProyectoRecursoActivo(codRecurso);
 		for (ProyectoRecurso proyectoRecurso : listaPR) {
 			Proyecto proyecto = proyectoService.findByCodProyectoAndCodEstatusProyecto(proyectoRecurso.getProyectoRecursoId().getCodProyecto(), 2L);
-			if(proyecto != null  && proyecto.getCodEstatusProyecto() == 2) {
+			if(proyecto != null  && proyecto.getCodEstatusProyecto() == 2) {				
 				strb.append("<li>" + proyecto.getDescProyecto());
 				strb.append(" del ");
 				SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
-				strb.append(format.format(proyecto.getFecIncioProyecto()));
+				if(proyecto.getFecIncioProyecto() != null) {
+					strb.append(format.format(proyecto.getFecIncioProyecto()));
+				}
+				else {
+					strb.append("N/A");
+				}
 				strb.append(" al ");
 				if(proyecto.getFecFinProyecto() != null) {
 					strb.append(format.format(proyecto.getFecFinProyecto()));
@@ -263,6 +270,22 @@ public class VacacionesController {
 		//Mail Notificacion FIN 
 		}
 		
+		//Mail Notificacion INICIO recurso BKP
+		/*Recurso recursobackup = recursoService.findOne(recursoBKP);
+		MailRequest requestbkp = new MailRequest();
+		System.out.println(recursobackup.getDescRecurso());
+		requestbkp.setName(recursobackup.getDescRecurso());
+		requestbkp.setSubject("Recurso Backup");
+		requestbkp.setTo(recursobackup.getDescCorreoElectronico());
+		Map<String, Object> modelBKP = new HashMap<String, Object>();
+		modelBKP.put("nombreRecurso", requestbkp.getName());
+		modelBKP.put("mensaje", "<h3>\""+ recursoVacaciones.getNombreRecurso() + " te ha asignado como recurso backup\"</h3>.");
+		modelBKP.put("imagen","<img data-cfsrc=\"images/status.png\" alt=\"\" data-cfstyle=\"width: 200px; max-width: 400px; height: auto; margin: auto; display: block;\" style=\"width: 200px; max-width: 400px; height: auto; margin: auto; display: block;\" src=\"https://sophitech.herokuapp.com/img/img-banca.png\">");
+		modelBKP.put("pie", "");
+		MailResponse response = service.sendEmailEvaluador(requestbkp, modelBKP);
+		System.out.println(response.getMessage());*/
+		//Mail Notificacion FIN recurso BKP
+		
 		return "/misVacaciones/"+usr;
 	}
 	
@@ -374,5 +397,11 @@ public class VacacionesController {
 		return "listaVacaciones :: listaDetalleVacaciones";
 	}
 	
+	/*@Scheduled(cron="0 0 6 * * *", zone="America/Mexico_City")
+	public void cambioRecursoBKP() {
+		System.out.println(new Utiles().getFechaActual());
+		DetalleSolicitud detalleSolicitud = new DetalleSolicitud();
+		detalleSolicitud.getFe
+	}*/
 	
 }
