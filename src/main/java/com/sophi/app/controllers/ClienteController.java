@@ -118,6 +118,7 @@ public class ClienteController {
 	
 	@GetMapping(value = "/listaClientes/{id}")
     public String eliminarCliente(Model model, @PathVariable(value = "id") long codCliente) {
+		System.out.println(codCliente);
         clienteService.delete(codCliente);
         return "redirect:/listaClientes";
     }

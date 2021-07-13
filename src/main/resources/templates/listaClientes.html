@@ -63,8 +63,8 @@
 <!-- 							<a type="button" class="btn btn-info" th:href="@{/formCliente/} + ${cliente.codCliente}" data-toggle="tooltip" title="Editar"><i class="far fa-edit"></i></a> -->
 								<a th:href="@{/dataCliente/} + ${cliente.codCliente}" class="badge badge-info">Ver  <i class="far fa-address-book"></i></a>
 								<a th:href="@{/formCliente/} + ${cliente.codCliente}" class="badge badge-success">Editar  <i class="far fa-edit"></i></a>
-								<a th:if="${cliente.detalleProyectoContacto == null}" th:onclick="eliminar([[${cliente.codCliente}]])" href="#" class="badge badge-danger borrar">Eliminar  <i class="fas fa-trash-alt"></i></a>
-<!-- 						</div> -->
+								<a sec:authorize="hasRole('ROLE_ADMIN')" th:onclick="eliminar([[${cliente.codCliente}]])" href="#" class="badge badge-danger borrar">Eliminar  <i class="fas fa-trash-alt"></i></a>
+<!-- 						</div> th:if="${cliente.detalleProyectoContacto == null}" -->
 							</td>
                             
                             
@@ -81,7 +81,7 @@
               </div>
             </div>
           </div>
-
+          
         </div>
         <!-- /.container-fluid -->
 

@@ -1,17 +1,16 @@
+var borrar_cliente;
+
 function eliminar(id) {
-	$("#codigoCliente").val(id);
+	borrar_cliente = id;
 	$("#eliminarRegistro").modal("show");
 }
 
 function eliminarRegistro(){
 	$.ajax({
 		type: "GET",
-		url:"/listaClientes/"+$("#codigoCliente").val(),
-		success: function(res){
-			console.log(res);
-			if(res == "1"){
-				location.reload();
-			}
+		url:"/listaClientes/"+borrar_cliente,
+		success: function(){
+			location.reload();
 			$("#eliminarRegistro").modal("hide");
 		}
 	})
