@@ -42,7 +42,7 @@
                                         <div class="row">
                                             <div class="form-group col-12 col-md-4">
                                                 <label class="col-form-label">Nombre:</label>
-                                                <input id="Nombre" type="text" maxlength="100" th:field="*{descCliente}" class="form-control" th:errorClass="form-control alert-danger" onkeyup="codigo_cliente();" oninvalid="setCustomValidity('Campo inv\u00E1lido')" onchange="try{setCustomValidity('')}catch(e){}" required/>
+                                                <input id="Nombre" type="text" maxlength="500" th:field="*{descCliente}" class="form-control" th:errorClass="form-control alert-danger" onkeyup="codigo_cliente();" oninvalid="setCustomValidity('Campo inv\u00E1lido')" onchange="try{setCustomValidity('')}catch(e){}" required/>
                                                 <small class="form-text text-danger" th:if="${#fields.hasErrors('descCliente')}" th:errors="*{descCliente}"></small>
                                                 <small id="Nombre_ant" class="form-text" th:if="${cliente.descClienteAnterior != NULL}" th:text="'Anteriormente: ' + ${cliente.descClienteAnterior}"></small>
                                         	</div>
@@ -53,7 +53,7 @@
 	                                        </div>
 	                                        <div class="form-group col-12 col-md-4">
 	                                            <label class="col-form-label">Grupo empresarial:</label>
-	                                            <input id="gpo_empresarial" type="text" maxlength="100" th:field="*{descGrupoEmpresarial}" class="form-control" th:errorClass="form-control alert-danger"/>
+	                                            <input id="gpo_empresarial" type="text" maxlength="500" th:field="*{descGrupoEmpresarial}" class="form-control" th:errorClass="form-control alert-danger"/>
 	                                            <small class="form-text text-danger" th:if="${#fields.hasErrors('descGrupoEmpresarial')}" th:errors="*{descGrupoEmpresarial}"></small>
 	                                        </div>
                                         </div>
